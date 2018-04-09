@@ -1,8 +1,6 @@
 public class Login {
     private String user = new String();
     private String password = new String();
-    //private String inputUser = new String();
-    //private String inputPassword = new String();
 
     public Login(String inputUser, String inputPassword){
         getAccessData();
