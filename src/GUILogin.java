@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUILogin extends JFrame {
     final int WIDTH = 600;
@@ -12,7 +14,7 @@ public class GUILogin extends JFrame {
     JTextField textUser = new JTextField();
     JPasswordField textPwd = new JPasswordField();
     JButton buttonLogin = new JButton("Login");
-    JButton buttonNewAccount = new JButton("Create a new account");
+    JButton buttonNewAccount = new JButton("Create a new account (not work!))");
 
     public GUILogin() {
         setTitle("Login");
@@ -36,6 +38,16 @@ public class GUILogin extends JFrame {
         panelBottom.add(buttonLogin);
         panelBottom.add(buttonNewAccount);
         add(panelBottom, BorderLayout.SOUTH);
+
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (ae.getActionCommand().equals("Login") && !(textUser.equals("")) && !(textPwd.equals(""))){
+                    Login login = new Login(textUser.getText(), new String(textPwd.getPassword()));
+                }
+            }
+        };
+        buttonLogin.addActionListener(al);
     }
 
 }

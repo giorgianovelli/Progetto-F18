@@ -5,9 +5,9 @@ public class Login {
     public Login(String inputUser, String inputPassword){
         getAccessData();
         if(accessDataVerifier(inputUser, inputPassword)){
-            System.out.println("Allowed access");
+            System.out.println("Access allowed!");
         } else{
-            System.out.println("Denied access");
+            System.out.println("Access denied!");
         }
     }
 
