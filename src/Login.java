@@ -1,14 +1,10 @@
 public class Login {
     private String user = new String();
     private String password = new String();
+    private TypeUser typeUser;
 
-    public Login(String inputUser, String inputPassword){
+    public Login(){
         getAccessData();
-        if(accessDataVerifier(inputUser, inputPassword)){
-            System.out.println("Access allowed!");
-        } else{
-            System.out.println("Access denied!");
-        }
     }
 
     private void getAccessData(){
@@ -17,13 +13,20 @@ public class Login {
         //temporary method
         user = "user";
         password = "password";
+        typeUser = TypeUser.CUSTOMER;
     }
 
-    private boolean accessDataVerifier(String inputUser, String inputPasword){
+    public boolean accessDataVerifier(String inputUser, String inputPasword){
         if ((inputUser.equals(user)) && (inputPasword.equals(password))){
+            System.out.println("Access allowed!");
             return true;
         } else{
+            System.out.println("Access denied!");
             return false;
         }
+    }
+
+    public TypeUser getTypeUser() {
+        return typeUser;
     }
 }

@@ -14,7 +14,7 @@ public class GUILogin extends JFrame {
     JTextField textUser = new JTextField();
     JPasswordField textPwd = new JPasswordField();
     JButton buttonLogin = new JButton("Login");
-    JButton buttonNewAccount = new JButton("Create a new account (not work!))");
+    JButton buttonNewAccount = new JButton("Create a new account (not work!)");
 
     public GUILogin() {
         setTitle("Login");
@@ -43,7 +43,19 @@ public class GUILogin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (ae.getActionCommand().equals("Login") && !(textUser.equals("")) && !(textPwd.equals(""))){
-                    Login login = new Login(textUser.getText(), new String(textPwd.getPassword()));
+                    Login login = new Login();
+                    if(login.accessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
+                        if (login.getTypeUser().equals(TypeUser.CUSTOMER)){
+                            //open GUICustomer
+                        } else{
+                            //open GUIDogSitter
+                        }
+
+                    } else{
+                        //show error message
+                        textUser.setText("");
+                        textPwd.setText("");
+                    }
                 }
             }
         };
