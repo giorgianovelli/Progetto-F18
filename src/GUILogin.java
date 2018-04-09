@@ -61,7 +61,7 @@ public class GUILogin extends JFrame {
 
                     } else{
                         //show error message
-                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password", "Login error",
+                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
                                 JOptionPane.ERROR_MESSAGE);
                         textUser.setText("");
                         textPwd.setText("");
