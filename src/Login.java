@@ -16,7 +16,7 @@ public class Login {
     public void getAccessData(){
         //get access data from database
 
-        //temporary submethod
+        //temporary method
         user = "user";
         password = "password";
     }
