@@ -9,8 +9,8 @@ public class GUILogin extends JFrame {
     Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     JPanel panelLoginData = new JPanel();
     JPanel panelBottom = new JPanel();
-    JLabel labelUser = new JLabel("Email", SwingConstants.CENTER);
-    JLabel labelPwd = new JLabel("Password", SwingConstants.CENTER);
+    JLabel labelUser = new JLabel("Email", SwingConstants.LEFT);
+    JLabel labelPwd = new JLabel("Password", SwingConstants.LEFT);
     JTextField textUser = new JTextField();
     JPasswordField textPwd = new JPasswordField();
     JButton buttonLogin = new JButton("Login");
