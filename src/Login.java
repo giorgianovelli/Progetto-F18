@@ -13,6 +13,7 @@ public class Login {
         //temporary method
         user = "user";
         password = "password";
+        //typeUser = TypeUser.DOGSITTER;
         typeUser = TypeUser.CUSTOMER;
     }
 
