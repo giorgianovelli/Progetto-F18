@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+
 public class GUILogin extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 150;
@@ -46,13 +48,21 @@ public class GUILogin extends JFrame {
                     Login login = new Login();
                     if(login.accessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
                         if (login.getTypeUser().equals(TypeUser.CUSTOMER)){
-                            //open GUICustomer
+                            //open GUIDogSitter
+                            GUICustomer guiCustomer = new GUICustomer();
+                            guiCustomer.setVisible(true);
+                            setVisible(false);
                         } else{
                             //open GUIDogSitter
+                            GUIDogSitter guiDogSitter = new GUIDogSitter();
+                            guiDogSitter.setVisible(true);
+                            setVisible(false);
                         }
 
                     } else{
                         //show error message
+                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password", "Login error",
+                                JOptionPane.ERROR_MESSAGE);
                         textUser.setText("");
                         textPwd.setText("");
                     }
