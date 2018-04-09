@@ -11,7 +11,7 @@ public class Login {
         }
     }
 
-    public void getAccessData(){
+    private void getAccessData(){
         //get access data from database
 
         //temporary method
@@ -19,7 +19,7 @@ public class Login {
         password = "password";
     }
 
-    public boolean accessDataVerifier(String inputUser, String inputPasword){
+    private boolean accessDataVerifier(String inputUser, String inputPasword){
         if ((inputUser.equals(user)) && (inputPasword.equals(password))){
             return true;
         } else{
