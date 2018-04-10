@@ -16,7 +16,7 @@ public class GUILogin extends JFrame {
     JTextField textUser = new JTextField();
     JPasswordField textPwd = new JPasswordField();
     JButton buttonLogin = new JButton("Login");
-    JButton buttonNewAccount = new JButton("Create a new account (not work!)");
+    JButton buttonNewAccount = new JButton("Create a new account");
 
     public GUILogin() {
         setTitle("Login");
@@ -67,9 +67,16 @@ public class GUILogin extends JFrame {
                         textPwd.setText("");
                     }
                 }
+
+                if (ae.getActionCommand().equals("Create a new account")){
+                    GUISignIn guiSignIn = new GUISignIn();
+                    guiSignIn.setVisible(true);
+                    setVisible(false);
+                }
             }
         };
         buttonLogin.addActionListener(al);
+        buttonNewAccount.addActionListener(al);
     }
 
 }
