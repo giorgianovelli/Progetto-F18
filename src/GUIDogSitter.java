@@ -4,7 +4,7 @@ import java.awt.*;
 public class GUIDogSitter extends JFrame{
     final int WIDTH = 1024;
     final int HEIGHT = 600;
-    Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     public GUIDogSitter() {
         setTitle("CaniBau (Dog sitter)");

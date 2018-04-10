@@ -4,7 +4,7 @@ import java.awt.*;
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
     final int HEIGHT = 600;
-    Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     public GUICustomer() {
         setTitle("CaniBau (Customer)");

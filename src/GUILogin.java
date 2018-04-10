@@ -8,15 +8,15 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 public class GUILogin extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 150;
-    Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    JPanel panelLoginData = new JPanel();
-    JPanel panelBottom = new JPanel();
-    JLabel labelUser = new JLabel("Email", SwingConstants.LEFT);
-    JLabel labelPwd = new JLabel("Password", SwingConstants.LEFT);
-    JTextField textUser = new JTextField();
-    JPasswordField textPwd = new JPasswordField();
-    JButton buttonLogin = new JButton("Login");
-    JButton buttonNewAccount = new JButton("Create a new account");
+    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private JPanel panelLoginData = new JPanel();
+    private JPanel panelBottom = new JPanel();
+    private JLabel labelUser = new JLabel("Email", SwingConstants.LEFT);
+    private JLabel labelPwd = new JLabel("Password", SwingConstants.LEFT);
+    private JTextField textUser = new JTextField();
+    private JPasswordField textPwd = new JPasswordField();
+    private JButton buttonLogin = new JButton("Login");
+    private JButton buttonNewAccount = new JButton("Create a new account");
 
     public GUILogin() {
         setTitle("Login");
