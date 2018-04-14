@@ -21,5 +21,6 @@ public class TestCustomer {
         Customer c = new Customer("pippo@email.it", "Pippo", "Baudo", "password", "1234567890", birthC);
         DogSitter ds = new DogSitter("paperino@email.it", "Paperino", "Paperini", "pass", "0987654321", birthDS);
         c.addAssignment(ds, dateStartAssignment, dateEndAssignment, selectedDogs);
+        c.removeAssignment("paperino@email.it_30/04/2018 11:00");
     }
 }
