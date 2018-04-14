@@ -50,6 +50,9 @@ public class Customer extends User {
         if (a != null){
             assignmentList.remove(key);
             System.out.println("Selected assignment removed!");
+
+            //aggiungere codice per rimuovere la prenotazione dal database
+
             return true;
         } else {
             System.out.println("Error in removing the selected assignment!");
