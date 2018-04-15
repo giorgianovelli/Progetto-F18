@@ -23,7 +23,6 @@ public class Assignment {
         try {
             return "Customer: " + customer.email + "\nDog sitter: " + dogSitter.email + "\nStart: " + dateStringConverter(dateStart) + " at " + timeStringConverter(dateStart) + "\nEnd: "  + dateStringConverter(dateEnd) + " at " + timeStringConverter(dateEnd);
         } catch (ParseException e) {
-            //e.printStackTrace();
             return "error!";
         }
     }

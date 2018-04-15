@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 public class TestCustomer {
     public static void main(String[] args) throws ParseException {
+        //test addAssignment(...)
         HashSet<String> selectedDogs = new HashSet<String>(2);
         selectedDogs.add("Fuffi");
         selectedDogs.add("Scooby");
@@ -21,6 +22,27 @@ public class TestCustomer {
         Customer c = new Customer("pippo@email.it", "Pippo", "Baudo", "password", "1234567890", birthC);
         DogSitter ds = new DogSitter("paperino@email.it", "Paperino", "Paperini", "pass", "0987654321", birthDS);
         c.addAssignment(ds, dateStartAssignment, dateEndAssignment, selectedDogs);
-        c.removeAssignment("paperino@email.it_30/04/2018 11:00");
+
+        //test removeAssignment(...)
+        c.removeAssignment("30/04/2018 11:00_paperino@email.it_pippo@email.it");
+        //c.removeAssignment("30/04/2018 11:00_paperino@email.it_pippo@email.it");
+
+        //test addReview(...)
+        String strDateReview = "10/05/2018 06:32";
+        Date dateReview = date.parse(strDateReview);
+        int rating = 5;
+        String title = "Very good!";
+        String comment = "This dog sitter is very good";
+        c.addReview(ds, dateReview, rating, title, comment);
+
+        //test removeReview
+        c.removeReview("10/05/2018 06:32_paperino@email.it_pippo@email.it");
+        //c.removeReview("10/05/2018 06:32_paperino@email.it_pippo@email.it");
+
+        //test listAssignment(...)
+        c.listAssignment();
+
+        //test listReview(...)
+        c.listReview();
     }
 }
