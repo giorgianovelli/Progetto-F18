@@ -18,6 +18,11 @@ public class Login {
     }
 
     public boolean accessDataVerifier(String inputUser, String inputPasword){
+
+        //login automatico per velocizzare i test sulla GUI
+        inputUser = "user";
+        inputPasword = "password";
+
         if ((inputUser.equals(user)) && (inputPasword.equals(password))){
             System.out.println("Access allowed!");
             return true;

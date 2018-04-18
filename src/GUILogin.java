@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
@@ -49,7 +50,13 @@ public class GUILogin extends JFrame {
                     if(login.accessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
                         if (login.getTypeUser().equals(TypeUser.CUSTOMER)){
                             //open GUIDogSitter
-                            GUICustomer guiCustomer = new GUICustomer();
+                            GUICustomer guiCustomer = null;
+                            try {
+                                guiCustomer = new GUICustomer();
+                            } catch (ParseException e) {
+                                //e.printStackTrace();
+                                System.out.println("Error in parsing data");
+                            }
                             guiCustomer.setVisible(true);
                             setVisible(false);
                         } else{
