@@ -9,18 +9,18 @@ import java.util.HashSet;
 import java.util.concurrent.locks.ReadWriteLock;
 
 public class Customer extends User {
-    private HashSet<String> dogList;        //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
+    private HashSet<Dog> dogList;        //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
     private HashMap<String, Assignment> assignmentList;
     private HashMap<String, Review> reviewList;
 
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth){
         super(email, name, surname, password, phoneNumber, dateOfBirth);
-        dogList = new HashSet<String>(3);    //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
+        dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
         assignmentList = new HashMap<String, Assignment>();
         reviewList = new HashMap<String, Review>();
     }
 
-    public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<String>selectedDogs){
+    public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs){
         String emailDogSitter = ds.email;
 
         //chiamata alla classe banca per effettuare la transazione (blocco provvisorio)
@@ -115,5 +115,20 @@ public class Customer extends User {
             System.out.println("There are no reviews available!");
         }
         return reviewList;
+    }
+
+    public HashSet<Dog> addDog(String name, String breed, DogSize size, int age, int weight, String ownerName, String ownerSurname, int ID){
+        Dog dog = new Dog(name, breed, size, age, weight, ownerName, ownerSurname, ID);
+        dogList.add(dog);
+        return dogList;
+    }
+
+    public HashSet<Dog> removeDog(Dog dog){
+        if (dogList.contains(dog)){
+            dogList.remove(dog);
+            return dogList;
+        } else {
+            return null;
+        }
     }
 }

@@ -1,14 +1,14 @@
 public class Dog {
     private String name;
     private String breed;
-    private String size;
+    private DogSize size;
     private int age;
     private int weight;
     private String ownerName;
     private String ownerSurname;
     private int ID;
 
-    public Dog(String name, String breed, String size, int age, int weight, String ownerName, String ownerSurname, int ID) {
+    public Dog(String name, String breed, DogSize size, int age, int weight, String ownerName, String ownerSurname, int ID) {
         this.name = name;
         this.breed = breed;
         this.size = size;
@@ -37,7 +37,7 @@ public class Dog {
         this.breed = breed;
     }
 
-    public void setSize(String size) {
+    public void setSize(DogSize size) {
         this.size = size;
     }
 
@@ -59,7 +59,7 @@ public class Dog {
         return breed;
     }
 
-    public String getSize() {
+    public DogSize getSize() {
         return size;
     }
 

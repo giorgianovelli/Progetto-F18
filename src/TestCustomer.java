@@ -6,9 +6,12 @@ import java.util.HashSet;
 public class TestCustomer {
     public static void main(String[] args) throws ParseException {
         //test addAssignment(...)
-        HashSet<String> selectedDogs = new HashSet<String>(2);
-        selectedDogs.add("Fuffi");
-        selectedDogs.add("Scooby");
+        HashSet<Dog> selectedDogs = new HashSet<Dog>(2);
+        //creare oggetti Dog
+        Dog fuffi = new Dog("Fuffi", "Pug", DogSize.SMALL, 3, 7, "Pippo", "Baudo", 1);
+        Dog scooby = new Dog("Scooby", "Danish", DogSize.GIANT, 6, 70, "Pippo", "Baudo", 2);
+        selectedDogs.add(fuffi);
+        selectedDogs.add(scooby);
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
         String strBirthC = "01/01/1970 00:00";
