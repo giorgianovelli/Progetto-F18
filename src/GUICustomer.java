@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
@@ -85,12 +87,53 @@ public class GUICustomer extends JFrame{
             }
         };
 
+        ActionListener ctrlCal = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ctrlAe) {
+                if (ctrlAe.getActionCommand().equals("<")){
+                    try {
+                        goBackMonthCalendar(cal);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                if (ctrlAe.getActionCommand().equals(">")){
+                    try {
+                        goForwardMonthCalendar(cal);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                if (ctrlAe.getActionCommand().equals("<<")){
+                    try {
+                        goBackYearCalendar(cal);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                if (ctrlAe.getActionCommand().equals(">>")){
+                    try {
+                        goForwardYearCalendar(cal);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        };
+
         //prepara il calendario
-        startCalendar(cal);
+        startCalendar(cal, ctrlCal);
 
     }
 
-    private void startCalendar(ActionListener cal) throws ParseException {
+    private void startCalendar(ActionListener cal, ActionListener ctrlCal) throws ParseException {
         calendar.setLayout(new BorderLayout());
         panelDateCalendar.setLayout(new GridLayout(1, 5));
         panelDateCalendar.add(buttonPreviousYear);
@@ -109,11 +152,21 @@ public class GUICustomer extends JFrame{
             i++;
         }
 
+        buttonDay = new JButton[31];
+        for (i = 0; i < 31; i++){
+            buttonDay[i] = new JButton(Integer.toString(i + 1));
+        }
+
         add(calendar, BorderLayout.CENTER);
-        updateCalendar(cal);
+        initializeCalendar(cal);
+
+        buttonPreviousMonth.addActionListener(ctrlCal);
+        buttonNextMonth.addActionListener(ctrlCal);
+        buttonPreviousYear.addActionListener(ctrlCal);
+        buttonNextYear.addActionListener(ctrlCal);
     }
 
-    private void updateCalendar(ActionListener cal) throws ParseException {
+    private void initializeCalendar(ActionListener cal) throws ParseException {
         SimpleDateFormat dateMonth = new SimpleDateFormat("MM");
         Date currentMonth = new Date();
         int monthNumber = Integer.parseInt(dateMonth.format(currentMonth));
@@ -121,6 +174,136 @@ public class GUICustomer extends JFrame{
         SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
         Date currentYear = new Date();
         labelDateMonthYear.setText(dateMonth.format(currentMonth) + "/" + dateYear.format(currentYear));
+        updateCalendar(monthNumber, cal);
+    }
+
+    private void goBackMonthCalendar(ActionListener cal) throws ParseException {
+        panelGridCalendar.removeAll();
+        panelGridCalendar.revalidate();
+        panelGridCalendar.repaint();
+        int i = 0;
+        for (WeekDays wd: WeekDays.values()) {
+            labelDay[i] = new JLabel(wd.toString(), SwingConstants.CENTER);
+            panelGridCalendar.add(labelDay[i]);
+            i++;
+        }
+
+        SimpleDateFormat dateMonthYear = new SimpleDateFormat("MM/yyyy");
+        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
+        SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
+        Date date = dateMonthYear.parse(labelDateMonthYear.getText());
+        String strMonthNumber = dateMonth.format(date);
+        String strYear = dateYear.format(date);
+        //System.out.println(strMonthNumber);
+        int monthNumber = Integer.parseInt(strMonthNumber) - 1;
+        if (monthNumber == 0){
+            monthNumber = 12;
+            Integer newYear = Integer.parseInt(strYear) - 1;
+            strYear = newYear.toString();
+        }
+        if (monthNumber < 10){
+            labelDateMonthYear.setText("0" + monthNumber + "/" + strYear);
+        } else {
+            labelDateMonthYear.setText(monthNumber + "/" + strYear);
+        }
+
+        updateCalendar(monthNumber, cal);
+    }
+
+    private void goBackYearCalendar(ActionListener cal) throws ParseException {
+        panelGridCalendar.removeAll();
+        panelGridCalendar.revalidate();
+        panelGridCalendar.repaint();
+        int i = 0;
+        for (WeekDays wd: WeekDays.values()) {
+            labelDay[i] = new JLabel(wd.toString(), SwingConstants.CENTER);
+            panelGridCalendar.add(labelDay[i]);
+            i++;
+        }
+
+        SimpleDateFormat dateMonthYear = new SimpleDateFormat("MM/yyyy");
+        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
+        SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
+        Date date = dateMonthYear.parse(labelDateMonthYear.getText());
+        String strMonthNumber = dateMonth.format(date);
+        String strYear = dateYear.format(date);
+        //System.out.println(strMonthNumber);
+        int monthNumber = Integer.parseInt(strMonthNumber);
+        Integer newYear = Integer.parseInt(strYear) - 1;
+        strYear = newYear.toString();
+        if (monthNumber < 10){
+            labelDateMonthYear.setText("0" + monthNumber + "/" + strYear);
+        } else {
+            labelDateMonthYear.setText(monthNumber + "/" + strYear);
+        }
+
+        updateCalendar(monthNumber, cal);
+    }
+
+    private void goForwardMonthCalendar(ActionListener cal) throws ParseException {
+        panelGridCalendar.removeAll();
+        panelGridCalendar.revalidate();
+        panelGridCalendar.repaint();
+        int i = 0;
+        for (WeekDays wd: WeekDays.values()) {
+            labelDay[i] = new JLabel(wd.toString(), SwingConstants.CENTER);
+            panelGridCalendar.add(labelDay[i]);
+            i++;
+        }
+
+        SimpleDateFormat dateMonthYear = new SimpleDateFormat("MM/yyyy");
+        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
+        SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
+        Date date = dateMonthYear.parse(labelDateMonthYear.getText());
+        String strMonthNumber = dateMonth.format(date);
+        String strYear = dateYear.format(date);
+        System.out.println(strMonthNumber);
+        int monthNumber = Integer.parseInt(strMonthNumber) + 1;
+        if (monthNumber == 13){
+            monthNumber = 1;
+            Integer newYear = Integer.parseInt(strYear) + 1;
+            strYear = newYear.toString();
+        }
+        if (monthNumber < 10){
+            labelDateMonthYear.setText("0" + monthNumber + "/" + strYear);
+        } else {
+            labelDateMonthYear.setText(monthNumber + "/" + strYear);
+        }
+
+        updateCalendar(monthNumber, cal);
+    }
+
+    private void goForwardYearCalendar(ActionListener cal) throws ParseException {
+        panelGridCalendar.removeAll();
+        panelGridCalendar.revalidate();
+        panelGridCalendar.repaint();
+        int i = 0;
+        for (WeekDays wd: WeekDays.values()) {
+            labelDay[i] = new JLabel(wd.toString(), SwingConstants.CENTER);
+            panelGridCalendar.add(labelDay[i]);
+            i++;
+        }
+
+        SimpleDateFormat dateMonthYear = new SimpleDateFormat("MM/yyyy");
+        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
+        SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
+        Date date = dateMonthYear.parse(labelDateMonthYear.getText());
+        String strMonthNumber = dateMonth.format(date);
+        String strYear = dateYear.format(date);
+        //System.out.println(strMonthNumber);
+        int monthNumber = Integer.parseInt(strMonthNumber);
+        Integer newYear = Integer.parseInt(strYear) + 1;
+        strYear = newYear.toString();
+        if (monthNumber < 10){
+            labelDateMonthYear.setText("0" + monthNumber + "/" + strYear);
+        } else {
+            labelDateMonthYear.setText(monthNumber + "/" + strYear);
+        }
+
+        updateCalendar(monthNumber, cal);
+    }
+
+    private void updateCalendar(int monthNumber, ActionListener cal) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
         Date currentDate = date.parse(strDate);
@@ -128,7 +311,7 @@ public class GUICustomer extends JFrame{
         dateDayNumber.setLenient(false);
         String stringDayNumber = dateDayNumber.format(currentDate);
         int dayNumber = Integer.parseInt(stringDayNumber);
-        int i = 0;
+        int i;
         int ie;
         int ne = 0;
         int cc = 7;
@@ -174,16 +357,21 @@ public class GUICustomer extends JFrame{
             case 2:
                 nd = 28;
                 break;
-                //inserire funzione anno bisestile
+            //inserire funzione anno bisestile
             default:
                 nd = 31;
                 break;
         }
-        buttonDay = new JButton[nd];
-        for (JButton bd : buttonDay){
-            buttonDay[i] = new JButton(Integer.toString(i + 1));
+        //buttonDay = new JButton[nd];
+//        for (JButton bd : buttonDay){
+//            //buttonDay[i] = new JButton(Integer.toString(i + 1));
+//            panelGridCalendar.add(buttonDay[i]);
+//            i++;
+//            cc++;
+//        }
+
+        for (i = 0; i < nd; i++){
             panelGridCalendar.add(buttonDay[i]);
-            i++;
             cc++;
         }
 
