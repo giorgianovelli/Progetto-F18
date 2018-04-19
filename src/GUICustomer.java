@@ -30,6 +30,7 @@ public class GUICustomer extends JFrame{
     private JMenu menuExtra = new JMenu("?");
     private JMenuItem menuItemInfo = new JMenuItem("Info");
     private JMenuItem menuItemAwards = new JMenuItem("Awards");
+    private JMenuItem menuItemCancelAssignment = new JMenuItem("Cancel assignment");
 
     private JPanel calendar = new JPanel();
     private JPanel panelDateCalendar = new JPanel();
@@ -42,6 +43,7 @@ public class GUICustomer extends JFrame{
     private JButton buttonNextYear = new JButton(">>");
     private JButton buttonNextMonth = new JButton(">");
     private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
+    private CalendarState calendarState = CalendarState.NORMAL;
 
 
     public GUICustomer() throws ParseException {
@@ -73,15 +75,26 @@ public class GUICustomer extends JFrame{
         menuBar.add(menuSettings);
         menuExtra.add(menuItemInfo);
         menuExtra.add(menuItemAwards);
+        menuBar.add(menuItemCancelAssignment);
+        menuItemCancelAssignment.setVisible(false);
         menuBar.add(menuExtra);
         add(menuBar, BorderLayout.NORTH);
 
         ActionListener cal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent cae) {
-                if (!(cae.getActionCommand().equals(""))){
+                if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.NORMAL))){
                     JButton pressedButton = (JButton) cae.getSource();
                     System.out.println(pressedButton.getText());
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments();
+                    guiDailyAssignments.setVisible(true);
+                }
+
+                if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
+                    JButton pressedButton = (JButton) cae.getSource();
+                    System.out.println(pressedButton.getText());
+                    GUINewAssignment guiNewAssignment = new GUINewAssignment();
+                    guiNewAssignment.setVisible(true);
                 }
 
             }
@@ -128,8 +141,36 @@ public class GUICustomer extends JFrame{
             }
         };
 
+        ActionListener menuAl = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent menuAe) {
+                if (menuAe.getActionCommand().equals("Exit")){
+                    System.exit(0);
+                }
+
+                if (menuAe.getActionCommand().equals("Logout")){
+                    GUILogin guiLogin = new GUILogin();
+                    guiLogin.setVisible(true);
+                    setVisible(false);
+                }
+
+                if (menuAe.getActionCommand().equals("New assignment")){
+                    newAssignment();
+                }
+
+                if (menuAe.getActionCommand().equals("Cancel assignment")){
+                    cancelAssignment();
+                }
+            }
+        };
+
         //prepara il calendario
         startCalendar(cal, ctrlCal);
+
+        menuItemExit.addActionListener(menuAl);
+        menuItemLogout.addActionListener(menuAl);
+        menuItemAddAssignment.addActionListener(menuAl);
+        menuItemCancelAssignment.addActionListener(menuAl);
 
     }
 
@@ -155,6 +196,7 @@ public class GUICustomer extends JFrame{
         buttonDay = new JButton[31];
         for (i = 0; i < 31; i++){
             buttonDay[i] = new JButton(Integer.toString(i + 1));
+            buttonDay[i].setBackground(new Color(204, 230, 255));
         }
 
         add(calendar, BorderLayout.CENTER);
@@ -399,5 +441,31 @@ public class GUICustomer extends JFrame{
         } else {
             return false;
         }
+    }
+
+    private void newAssignment(){
+        calendarState = CalendarState.ADDING;
+        int i;
+        for (i = 0; i < 31; i++){
+            buttonDay[i].setBackground(new Color(179, 255, 179));
+        }
+        menuAssignment.setVisible(false);
+        menuReview.setVisible(false);
+        menuSettings.setVisible(false);
+        menuExtra.setVisible(false);
+        menuItemCancelAssignment.setVisible(true);
+    }
+
+    private void cancelAssignment(){
+        calendarState = CalendarState.NORMAL;
+        int i;
+        for (i = 0; i < 31; i++){
+            buttonDay[i].setBackground(new Color(204, 230, 255));
+        }
+        menuAssignment.setVisible(true);
+        menuReview.setVisible(true);
+        menuSettings.setVisible(true);
+        menuExtra.setVisible(true);
+        menuItemCancelAssignment.setVisible(false);
     }
 }
