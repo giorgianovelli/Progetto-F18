@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -72,12 +74,23 @@ public class GUICustomer extends JFrame{
         menuBar.add(menuExtra);
         add(menuBar, BorderLayout.NORTH);
 
-        //dispone il resto dell'interfaccia
-        startCalendar();
+        ActionListener cal = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent cae) {
+                if (!(cae.getActionCommand().equals(""))){
+                    JButton pressedButton = (JButton) cae.getSource();
+                    System.out.println(pressedButton.getText());
+                }
+
+            }
+        };
+
+        //prepara il calendario
+        startCalendar(cal);
 
     }
 
-    private void startCalendar() throws ParseException {
+    private void startCalendar(ActionListener cal) throws ParseException {
         calendar.setLayout(new BorderLayout());
         panelDateCalendar.setLayout(new GridLayout(1, 5));
         panelDateCalendar.add(buttonPreviousYear);
@@ -97,10 +110,17 @@ public class GUICustomer extends JFrame{
         }
 
         add(calendar, BorderLayout.CENTER);
-        updateCalendar();
+        updateCalendar(cal);
     }
 
-    private void updateCalendar() throws ParseException {
+    private void updateCalendar(ActionListener cal) throws ParseException {
+        SimpleDateFormat dateMonth = new SimpleDateFormat("MM");
+        Date currentMonth = new Date();
+        int monthNumber = Integer.parseInt(dateMonth.format(currentMonth));
+        //System.out.println(monthNumber);
+        SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
+        Date currentYear = new Date();
+        labelDateMonthYear.setText(dateMonth.format(currentMonth) + "/" + dateYear.format(currentYear));
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
         Date currentDate = date.parse(strDate);
@@ -143,7 +163,23 @@ public class GUICustomer extends JFrame{
         }
 
         i = 0;
-        buttonDay = new JButton[31];
+        int nd;
+        switch (monthNumber){
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                nd = 30;
+                break;
+            case 2:
+                nd = 28;
+                break;
+                //inserire funzione anno bisestile
+            default:
+                nd = 31;
+                break;
+        }
+        buttonDay = new JButton[nd];
         for (JButton bd : buttonDay){
             buttonDay[i] = new JButton(Integer.toString(i + 1));
             panelGridCalendar.add(buttonDay[i]);
@@ -155,6 +191,10 @@ public class GUICustomer extends JFrame{
             labelEmpty[ie] = new JLabel();
             panelGridCalendar.add(labelEmpty[ie]);
             cc++;
+        }
+
+        for (i = 0; i < nd; i++){
+            buttonDay[i].addActionListener(cal);
         }
     }
 }
