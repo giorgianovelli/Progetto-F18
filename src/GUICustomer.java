@@ -355,20 +355,16 @@ public class GUICustomer extends JFrame{
                 nd = 30;
                 break;
             case 2:
-                nd = 28;
+                if (isLeap(currentDate)){
+                    nd = 29;
+                } else {
+                    nd = 28;
+                }
                 break;
-            //inserire funzione anno bisestile
             default:
                 nd = 31;
                 break;
         }
-        //buttonDay = new JButton[nd];
-//        for (JButton bd : buttonDay){
-//            //buttonDay[i] = new JButton(Integer.toString(i + 1));
-//            panelGridCalendar.add(buttonDay[i]);
-//            i++;
-//            cc++;
-//        }
 
         for (i = 0; i < nd; i++){
             panelGridCalendar.add(buttonDay[i]);
@@ -383,6 +379,25 @@ public class GUICustomer extends JFrame{
 
         for (i = 0; i < nd; i++){
             buttonDay[i].addActionListener(cal);
+        }
+    }
+
+    private boolean isLeap(Date yearToCheck){
+        SimpleDateFormat date = new SimpleDateFormat("yyyy");
+        String strYear = date.format(yearToCheck);
+        int year = Integer.parseInt(strYear);
+        if (year % 4 == 0){
+            if (year % 100 == 0){
+                if (year % 400 == 0){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
         }
     }
 }
