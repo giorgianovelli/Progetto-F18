@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.Date;
-import java.util.StringTokenizer;
 
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
@@ -23,14 +21,14 @@ public class GUICustomer extends JFrame{
     private JMenu menuReview = new JMenu("Review");
     private JMenuItem menuItemAddReview = new JMenuItem("Write a review");
     private JMenuItem menuItemRemoveReview = new JMenuItem("Delete review");
-    private JMenuItem menuItemShowReview = new JMenuItem("Show all review");
+    private JMenuItem menuItemShowReviews = new JMenuItem("Show all reviews");
     private JMenu menuSettings = new JMenu("Settings");
     private JMenuItem menuItemAccount = new JMenuItem("Account");
     private JMenuItem menuItemDogs = new JMenuItem("Dogs");
     private JMenu menuExtra = new JMenu("?");
     private JMenuItem menuItemInfo = new JMenuItem("Info");
     private JMenuItem menuItemAwards = new JMenuItem("Awards");
-    private JMenuItem menuItemCancelAssignment = new JMenuItem("Cancel assignment");
+    private JMenuItem menuItemCancel = new JMenuItem("Cancel");
 
     private JPanel calendar = new JPanel();
     private JPanel panelDateCalendar = new JPanel();
@@ -68,25 +66,25 @@ public class GUICustomer extends JFrame{
         menuBar.add(menuAssignment);
         menuReview.add(menuItemAddReview);
         menuReview.add(menuItemRemoveReview);
-        menuReview.add(menuItemShowReview);
+        menuReview.add(menuItemShowReviews);
         menuBar.add(menuReview);
         menuSettings.add(menuItemAccount);
         menuSettings.add(menuItemDogs);
         menuBar.add(menuSettings);
         menuExtra.add(menuItemInfo);
         menuExtra.add(menuItemAwards);
-        menuBar.add(menuItemCancelAssignment);
-        menuItemCancelAssignment.setVisible(false);
+        menuBar.add(menuItemCancel);
+        menuItemCancel.setVisible(false);
         menuBar.add(menuExtra);
         add(menuBar, BorderLayout.NORTH);
 
         ActionListener cal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent cae) {
-                if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.NORMAL))){
+                if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
                     System.out.println(pressedButton.getText());
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments();
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState);
                     guiDailyAssignments.setVisible(true);
                 }
 
@@ -105,7 +103,7 @@ public class GUICustomer extends JFrame{
             public void actionPerformed(ActionEvent ctrlAe) {
                 if (ctrlAe.getActionCommand().equals("<")){
                     try {
-                        goBackMonthCalendar(cal);
+                        goBackMonthCalendar();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -114,7 +112,7 @@ public class GUICustomer extends JFrame{
 
                 if (ctrlAe.getActionCommand().equals(">")){
                     try {
-                        goForwardMonthCalendar(cal);
+                        goForwardMonthCalendar();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -123,7 +121,7 @@ public class GUICustomer extends JFrame{
 
                 if (ctrlAe.getActionCommand().equals("<<")){
                     try {
-                        goBackYearCalendar(cal);
+                        goBackYearCalendar();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -132,7 +130,7 @@ public class GUICustomer extends JFrame{
 
                 if (ctrlAe.getActionCommand().equals(">>")){
                     try {
-                        goForwardYearCalendar(cal);
+                        goForwardYearCalendar();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -154,12 +152,40 @@ public class GUICustomer extends JFrame{
                     setVisible(false);
                 }
 
+                if (menuAe.getActionCommand().equals("Show all assignments")){
+                    openListAssignment();
+                }
+
+                if (menuAe.getActionCommand().equals("Write a review")){
+                    calendarState = CalendarState.REVIEWING;
+                    openListAssignment();
+                }
+
+                if (menuAe.getActionCommand().equals("Delete review")){
+                    calendarState = CalendarState.DELETING_REVIEW;
+                    openListAssignment();
+                }
+
+                if (menuAe.getActionCommand().equals("Show all reviews")){
+                    calendarState = CalendarState.SHOW_REVIEWS;
+                    openListAssignment();
+                }
+
                 if (menuAe.getActionCommand().equals("New assignment")){
                     newAssignment();
                 }
 
-                if (menuAe.getActionCommand().equals("Cancel assignment")){
-                    cancelAssignment();
+                if (menuAe.getActionCommand().equals("Delete assignment")){
+                    removeAssignment();
+                }
+
+                if (menuAe.getActionCommand().equals("Account")){
+                    GUISettings guiSettings = new GUISettings();
+                    guiSettings.setVisible(true);
+                }
+
+                if (menuAe.getActionCommand().equals("Cancel")){
+                    cancel();
                 }
             }
         };
@@ -170,7 +196,13 @@ public class GUICustomer extends JFrame{
         menuItemExit.addActionListener(menuAl);
         menuItemLogout.addActionListener(menuAl);
         menuItemAddAssignment.addActionListener(menuAl);
-        menuItemCancelAssignment.addActionListener(menuAl);
+        menuItemCancel.addActionListener(menuAl);
+        menuItemRemoveAssignment.addActionListener(menuAl);
+        menuItemShowAssignments.addActionListener(menuAl);
+        menuItemAddReview.addActionListener(menuAl);
+        menuItemRemoveReview.addActionListener(menuAl);
+        menuItemShowReviews.addActionListener(menuAl);
+        menuItemAccount.addActionListener(menuAl);
 
     }
 
@@ -201,7 +233,7 @@ public class GUICustomer extends JFrame{
         }
 
         add(calendar, BorderLayout.CENTER);
-        initializeCalendar(cal);
+        initializeCalendar();
 
         buttonPreviousMonth.addActionListener(ctrlCal);
         buttonNextMonth.addActionListener(ctrlCal);
@@ -209,18 +241,17 @@ public class GUICustomer extends JFrame{
         buttonNextYear.addActionListener(ctrlCal);
     }
 
-    private void initializeCalendar(ActionListener cal) throws ParseException {
+    private void initializeCalendar() throws ParseException {
         SimpleDateFormat dateMonth = new SimpleDateFormat("MM");
         Date currentMonth = new Date();
         int monthNumber = Integer.parseInt(dateMonth.format(currentMonth));
-        //System.out.println(monthNumber);
         SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
         Date currentYear = new Date();
         labelDateMonthYear.setText(dateMonth.format(currentMonth) + "/" + dateYear.format(currentYear));
-        updateCalendar(monthNumber, cal);
+        updateCalendar(monthNumber);
     }
 
-    private void goBackMonthCalendar(ActionListener cal) throws ParseException {
+    private void goBackMonthCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -237,7 +268,6 @@ public class GUICustomer extends JFrame{
         Date date = dateMonthYear.parse(labelDateMonthYear.getText());
         String strMonthNumber = dateMonth.format(date);
         String strYear = dateYear.format(date);
-        //System.out.println(strMonthNumber);
         int monthNumber = Integer.parseInt(strMonthNumber) - 1;
         if (monthNumber == 0){
             monthNumber = 12;
@@ -250,10 +280,10 @@ public class GUICustomer extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, cal);
+        updateCalendar(monthNumber);
     }
 
-    private void goBackYearCalendar(ActionListener cal) throws ParseException {
+    private void goBackYearCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -270,7 +300,6 @@ public class GUICustomer extends JFrame{
         Date date = dateMonthYear.parse(labelDateMonthYear.getText());
         String strMonthNumber = dateMonth.format(date);
         String strYear = dateYear.format(date);
-        //System.out.println(strMonthNumber);
         int monthNumber = Integer.parseInt(strMonthNumber);
         Integer newYear = Integer.parseInt(strYear) - 1;
         strYear = newYear.toString();
@@ -280,10 +309,10 @@ public class GUICustomer extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, cal);
+        updateCalendar(monthNumber);
     }
 
-    private void goForwardMonthCalendar(ActionListener cal) throws ParseException {
+    private void goForwardMonthCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -313,10 +342,10 @@ public class GUICustomer extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, cal);
+        updateCalendar(monthNumber);
     }
 
-    private void goForwardYearCalendar(ActionListener cal) throws ParseException {
+    private void goForwardYearCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -333,7 +362,6 @@ public class GUICustomer extends JFrame{
         Date date = dateMonthYear.parse(labelDateMonthYear.getText());
         String strMonthNumber = dateMonth.format(date);
         String strYear = dateYear.format(date);
-        //System.out.println(strMonthNumber);
         int monthNumber = Integer.parseInt(strMonthNumber);
         Integer newYear = Integer.parseInt(strYear) + 1;
         strYear = newYear.toString();
@@ -343,10 +371,10 @@ public class GUICustomer extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, cal);
+        updateCalendar(monthNumber);
     }
 
-    private void updateCalendar(int monthNumber, ActionListener cal) throws ParseException {
+    private void updateCalendar(int monthNumber) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
         Date currentDate = date.parse(strDate);
@@ -450,10 +478,10 @@ public class GUICustomer extends JFrame{
         menuReview.setVisible(false);
         menuSettings.setVisible(false);
         menuExtra.setVisible(false);
-        menuItemCancelAssignment.setVisible(true);
+        menuItemCancel.setVisible(true);
     }
 
-    private void cancelAssignment(){
+    private void cancel(){
         calendarState = CalendarState.NORMAL;
         int i;
         for (i = 0; i < 31; i++){
@@ -463,6 +491,28 @@ public class GUICustomer extends JFrame{
         menuReview.setVisible(true);
         menuSettings.setVisible(true);
         menuExtra.setVisible(true);
-        menuItemCancelAssignment.setVisible(false);
+        menuItemCancel.setVisible(false);
+    }
+
+    private void removeAssignment(){
+        calendarState = CalendarState.REMOVING;
+        int i;
+        for (i = 0; i < 31; i++){
+            buttonDay[i].setBackground(new Color(242, 82, 37));
+        }
+        menuAssignment.setVisible(false);
+        menuReview.setVisible(false);
+        menuSettings.setVisible(false);
+        menuExtra.setVisible(false);
+        menuItemCancel.setVisible(true);
+    }
+
+    private void openListAssignment(){
+        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, this);
+        guiListAssignments.setVisible(true);
+    }
+
+    public void setCalendarState(CalendarState cs){
+        calendarState = cs;
     }
 }
