@@ -13,8 +13,8 @@ public class Customer extends User {
     private HashMap<String, Assignment> assignmentList;
     private HashMap<String, Review> reviewList;
 
-    public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth){
-        super(email, name, surname, password, phoneNumber, dateOfBirth);
+    public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
+        super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
         assignmentList = new HashMap<String, Assignment>();
         reviewList = new HashMap<String, Review>();

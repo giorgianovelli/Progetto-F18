@@ -8,16 +8,18 @@ public abstract class User {
     protected String password;
     protected String phoneNumber;
     protected Date dateOfBirth;
-    //protected Address address                   //Creare la classe relativa al tipo Address
-    //protected PaymentMethod paymentMethod       //Creare la classe relativa al tipo PaymentMethod
+    protected Address address;
+    protected PaymentMethod paymentMethod;
 
-    public User(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth) {
+    public User(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod) {
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.paymentMethod = paymentMethod;
     }
 
 }

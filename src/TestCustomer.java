@@ -22,8 +22,12 @@ public class TestCustomer {
         Date dateStartAssignment = date.parse(strDateStartAssignment);
         String strDateEndAssignment = "30/05/2018 18:00";
         Date dateEndAssignment = date.parse(strDateEndAssignment);
-        Customer c = new Customer("pippo@email.it", "Pippo", "Baudo", "password", "1234567890", birthC);
-        DogSitter ds = new DogSitter("paperino@email.it", "Paperino", "Paperini", "pass", "0987654321", birthDS);
+        Address customerAddress = new Address("Italy", "Pavia", "Via Ferrata", "1", "27100");
+        PaymentMethod customerPaymentMethod = new PaymentMethod("Pippo", "Baudo","1234567890123456", dateEndAssignment, 123, 1000);
+        Customer c = new Customer("pippo@email.it", "Pippo", "Baudo", "password", "1234567890", birthC, customerAddress, customerPaymentMethod);
+        Address dogSitterAddress = new Address("Italy", "Pavia", "Via Mascheroni", "12", "27100");
+        PaymentMethod dogSitterPaymentMethod = new PaymentMethod("Paperino", "Paperini","1234567935123456", dateEndAssignment, 456, 15345);
+        DogSitter ds = new DogSitter("paperino@email.it", "Paperino", "Paperini", "pass", "0987654321", birthDS, dogSitterAddress, dogSitterPaymentMethod);
         c.addAssignment(ds, dateStartAssignment, dateEndAssignment, selectedDogs);
 
         //test removeAssignment(...)
