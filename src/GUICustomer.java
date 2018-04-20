@@ -197,6 +197,7 @@ public class GUICustomer extends JFrame{
         for (i = 0; i < 31; i++){
             buttonDay[i] = new JButton(Integer.toString(i + 1));
             buttonDay[i].setBackground(new Color(204, 230, 255));
+            buttonDay[i].addActionListener(cal);
         }
 
         add(calendar, BorderLayout.CENTER);
@@ -417,10 +418,6 @@ public class GUICustomer extends JFrame{
             labelEmpty[ie] = new JLabel();
             panelGridCalendar.add(labelEmpty[ie]);
             cc++;
-        }
-
-        for (i = 0; i < nd; i++){
-            buttonDay[i].addActionListener(cal);
         }
     }
 
