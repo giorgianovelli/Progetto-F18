@@ -9,6 +9,7 @@ public class Assignment {
     private HashSet<Dog> dogList;    //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
     private Date dateStart;
     private Date dateEnd;
+    private boolean state;
 
     public Assignment(Customer customer, DogSitter dogSitter, HashSet<Dog> dogList, Date dateStart, Date dateEnd) {
         this.customer = customer;
@@ -16,12 +17,13 @@ public class Assignment {
         this.dogList = dogList;      //Sostituire tipo String con tipo Dog quando sarà disponibile la classe
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
+        this.state = true;
     }
 
     @Override
     public String toString() {
         try {
-            return "Customer: " + customer.email + "\nDog sitter: " + dogSitter.email + "\nStart: " + dateStringConverter(dateStart) + " at " + timeStringConverter(dateStart) + "\nEnd: "  + dateStringConverter(dateEnd) + " at " + timeStringConverter(dateEnd) + "\nDogs:\n" + printDogList();
+            return "Customer: " + customer.email + "\nDog sitter: " + dogSitter.email + "\nStart: " + dateStringConverter(dateStart) + " at " + timeStringConverter(dateStart) + "\nEnd: "  + dateStringConverter(dateEnd) + " at " + timeStringConverter(dateEnd) + "\nState: " + state + "\nDogs:\n" + printDogList();
         } catch (ParseException e) {
             return "error!";
         }

@@ -329,7 +329,6 @@ public class GUICustomer extends JFrame{
         Date date = dateMonthYear.parse(labelDateMonthYear.getText());
         String strMonthNumber = dateMonth.format(date);
         String strYear = dateYear.format(date);
-        System.out.println(strMonthNumber);
         int monthNumber = Integer.parseInt(strMonthNumber) + 1;
         if (monthNumber == 13){
             monthNumber = 1;
