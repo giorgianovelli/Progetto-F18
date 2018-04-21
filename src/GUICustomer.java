@@ -110,14 +110,12 @@ public class GUICustomer extends JFrame{
             public void actionPerformed(ActionEvent cae) {
                 if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    System.out.println(pressedButton.getText());
                     GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState);
                     guiDailyAssignments.setVisible(true);
                 }
 
                 if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    System.out.println(pressedButton.getText());
                     GUINewAssignment guiNewAssignment = new GUINewAssignment();
                     guiNewAssignment.setVisible(true);
                 }
