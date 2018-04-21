@@ -9,6 +9,11 @@ import java.util.Date;
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
     final int HEIGHT = 600;
+    final int NDAYMONTH = 31;
+    final int NDAYWEEK = 7;
+    final int NEMPTYLABEL = 11;
+    final int NCALENDARCELLS = 49;
+
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
@@ -29,6 +34,11 @@ public class GUICustomer extends JFrame{
     private JMenuItem menuItemInfo = new JMenuItem("Info");
     private JMenuItem menuItemAwards = new JMenuItem("Awards");
     private JMenuItem menuItemCancel = new JMenuItem("Cancel");
+
+    private JPanel panelToday = new JPanel();
+    private JLabel labelTodayAssignments = new JLabel("Today's assignments");
+    private JButton buttonTodayAssignment[];
+    private JButton buttonShowMoreTodayAssignments = new JButton("Show more");
 
     private JPanel calendar = new JPanel();
     private JPanel panelDateCalendar = new JPanel();
@@ -77,6 +87,23 @@ public class GUICustomer extends JFrame{
         menuItemCancel.setVisible(false);
         menuBar.add(menuExtra);
         add(menuBar, BorderLayout.NORTH);
+
+        panelToday.setLayout(new GridLayout(7, 1, 5, 5));
+        panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        labelTodayAssignments.setForeground(new Color(0,0, 255));
+        labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
+        panelToday.add(labelTodayAssignments);
+        int i;
+        buttonTodayAssignment = new JButton[5];
+        for (i = 0; i < 5; i++){
+            buttonTodayAssignment[i] = new JButton("Test assignment");
+            buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+            buttonTodayAssignment[i].setOpaque(true);
+            buttonTodayAssignment[i].setBorderPainted(false);
+            panelToday.add(buttonTodayAssignment[i]);
+        }
+        panelToday.add(buttonShowMoreTodayAssignments);
+        add(panelToday, BorderLayout.EAST);
 
         ActionListener cal = new ActionListener() {
             @Override
@@ -227,7 +254,7 @@ public class GUICustomer extends JFrame{
         calendar.add(panelDateCalendar, BorderLayout.NORTH);
         panelGridCalendar.setLayout((new GridLayout(7, 7, 5, 5)));
         calendar.add(panelGridCalendar, BorderLayout.CENTER);
-        labelDay = new JLabel[7];
+        labelDay = new JLabel[NDAYWEEK];
         int i = 0;
         for (WeekDays wd: WeekDays.values()) {
             labelDay[i] = new JLabel(wd.toString(), SwingConstants.CENTER);
@@ -238,8 +265,8 @@ public class GUICustomer extends JFrame{
         //ottiene informazioni sul sistema operativo utilizzato
         String os = System.getProperty("os.name");
 
-        buttonDay = new JButton[31];
-        for (i = 0; i < 31; i++){
+        buttonDay = new JButton[NDAYMONTH];
+        for (i = 0; i < NDAYMONTH; i++){
             buttonDay[i] = new JButton(Integer.toString(i + 1));
             buttonDay[i].setBackground(new Color(204, 230, 255));
             buttonDay[i].addActionListener(cal);
@@ -401,8 +428,8 @@ public class GUICustomer extends JFrame{
         int i;
         int ie;
         int ne = 0;
-        int cc = 7;
-        labelEmpty= new JLabel[11];
+        int cc = NDAYWEEK;
+        labelEmpty= new JLabel[NEMPTYLABEL];
         switch (dayNumber){
             case 1:
                 ne = 0;
@@ -458,7 +485,7 @@ public class GUICustomer extends JFrame{
             cc++;
         }
 
-        while (cc < 49){
+        while (cc < NCALENDARCELLS){
             labelEmpty[ie] = new JLabel();
             panelGridCalendar.add(labelEmpty[ie]);
             cc++;
@@ -491,7 +518,7 @@ public class GUICustomer extends JFrame{
     private void newAssignment(){
         calendarState = CalendarState.ADDING;
         int i;
-        for (i = 0; i < 31; i++){
+        for (i = 0; i < NDAYMONTH; i++){
             buttonDay[i].setBackground(new Color(179, 255, 179));
         }
         menuAssignment.setVisible(false);
@@ -504,7 +531,7 @@ public class GUICustomer extends JFrame{
     private void cancel(){
         calendarState = CalendarState.NORMAL;
         int i;
-        for (i = 0; i < 31; i++){
+        for (i = 0; i < NDAYMONTH; i++){
             buttonDay[i].setBackground(new Color(204, 230, 255));
             buttonDay[i].setEnabled(true);
         }
@@ -518,7 +545,7 @@ public class GUICustomer extends JFrame{
     private void removeAssignment(){
         calendarState = CalendarState.REMOVING;
         int i;
-        for (i = 0; i < 31; i++){
+        for (i = 0; i < NDAYMONTH; i++){
             buttonDay[i].setBackground(new Color(242, 82, 37));
         }
         menuAssignment.setVisible(false);
@@ -544,7 +571,7 @@ public class GUICustomer extends JFrame{
         Date selectedDate;
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
-        for (i = 0; i < 31; i++){
+        for (i = 0; i < NDAYMONTH; i++){
             Integer day = Integer.parseInt(buttonDay[i].getText());
             if (day < 10){
                 strDay = "0" + day;
