@@ -215,7 +215,7 @@ public class GUICustomer extends JFrame{
         panelDateCalendar.add(buttonNextMonth);
         panelDateCalendar.add(buttonNextYear);
         calendar.add(panelDateCalendar, BorderLayout.NORTH);
-        panelGridCalendar.setLayout((new GridLayout(7, 7, 10, 10)));
+        panelGridCalendar.setLayout((new GridLayout(7, 7, 5, 5)));
         calendar.add(panelGridCalendar, BorderLayout.CENTER);
         labelDay = new JLabel[7];
         int i = 0;
