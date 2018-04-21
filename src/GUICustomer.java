@@ -172,10 +172,20 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (menuAe.getActionCommand().equals("New assignment")){
+                    try {
+                        enableDisableDateButtonAssignment();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     newAssignment();
                 }
 
                 if (menuAe.getActionCommand().equals("Delete assignment")){
+                    try {
+                        enableDisableDateButtonAssignment();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     removeAssignment();
                 }
 
@@ -225,8 +235,8 @@ public class GUICustomer extends JFrame{
             i++;
         }
 
+        //ottiene informazioni sul sistema operativo utilizzato
         String os = System.getProperty("os.name");
-        System.out.println(os);
 
         buttonDay = new JButton[31];
         for (i = 0; i < 31; i++){
@@ -453,6 +463,10 @@ public class GUICustomer extends JFrame{
             panelGridCalendar.add(labelEmpty[ie]);
             cc++;
         }
+
+        if ((calendarState.equals(CalendarState.ADDING)) || (calendarState.equals(CalendarState.REMOVING))){
+            enableDisableDateButtonAssignment();
+        }
     }
 
     private boolean isLeap(Date yearToCheck){
@@ -492,6 +506,7 @@ public class GUICustomer extends JFrame{
         int i;
         for (i = 0; i < 31; i++){
             buttonDay[i].setBackground(new Color(204, 230, 255));
+            buttonDay[i].setEnabled(true);
         }
         menuAssignment.setVisible(true);
         menuReview.setVisible(true);
@@ -520,5 +535,29 @@ public class GUICustomer extends JFrame{
 
     public void setCalendarState(CalendarState cs){
         calendarState = cs;
+    }
+
+    private void enableDisableDateButtonAssignment() throws ParseException {
+        int i;
+        String strDay;
+        String strSelectedDate;
+        Date selectedDate;
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentDate = new Date();
+        for (i = 0; i < 31; i++){
+            Integer day = Integer.parseInt(buttonDay[i].getText());
+            if (day < 10){
+                strDay = "0" + day;
+            } else {
+                strDay = day.toString();
+            }
+            strSelectedDate = strDay + "/" + labelDateMonthYear.getText();
+            selectedDate = formatDate.parse(strSelectedDate);
+            if (selectedDate.before(currentDate)){
+                buttonDay[i].setEnabled(false);
+            } else {
+                buttonDay[i].setEnabled(true);
+            }
+        }
     }
 }
