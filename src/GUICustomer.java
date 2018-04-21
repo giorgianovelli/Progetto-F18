@@ -215,7 +215,7 @@ public class GUICustomer extends JFrame{
         panelDateCalendar.add(buttonNextMonth);
         panelDateCalendar.add(buttonNextYear);
         calendar.add(panelDateCalendar, BorderLayout.NORTH);
-        panelGridCalendar.setLayout((new GridLayout(7, 7)));
+        panelGridCalendar.setLayout((new GridLayout(7, 7, 10, 10)));
         calendar.add(panelGridCalendar, BorderLayout.CENTER);
         labelDay = new JLabel[7];
         int i = 0;
@@ -225,11 +225,18 @@ public class GUICustomer extends JFrame{
             i++;
         }
 
+        String os = System.getProperty("os.name");
+        System.out.println(os);
+
         buttonDay = new JButton[31];
         for (i = 0; i < 31; i++){
             buttonDay[i] = new JButton(Integer.toString(i + 1));
             buttonDay[i].setBackground(new Color(204, 230, 255));
             buttonDay[i].addActionListener(cal);
+            if (os.equals("Mac OS X")){
+                buttonDay[i].setOpaque(true);
+                buttonDay[i].setBorderPainted(false);
+            }
         }
 
         add(calendar, BorderLayout.CENTER);
