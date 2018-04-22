@@ -17,7 +17,7 @@ public class GUICustomer extends JFrame{
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuItemExit = new JMenuItem("Exit");
+    private JMenuItem menuItemExit = new JMenuItem("Quit");
     private JMenuItem menuItemLogout = new JMenuItem("Logout");
     private JMenu menuAssignment = new JMenu("Assignment");
     private JMenuItem menuItemAddAssignment = new JMenuItem("New assignment");
@@ -167,7 +167,7 @@ public class GUICustomer extends JFrame{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-                if (menuAe.getActionCommand().equals("Exit")){
+                if (menuAe.getActionCommand().equals("Quit")){
                     System.exit(0);
                 }
 
