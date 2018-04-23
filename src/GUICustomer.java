@@ -13,6 +13,7 @@ public class GUICustomer extends JFrame{
     final int NDAYWEEK = 7;
     final int NEMPTYLABEL = 11;
     final int NCALENDARCELLS = 49;
+    final int MAXVISIBLETODAYASSIGNMENT = 5;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     private JMenuBar menuBar = new JMenuBar();
@@ -39,6 +40,8 @@ public class GUICustomer extends JFrame{
     private JLabel labelTodayAssignments = new JLabel("Today's assignments");
     private JButton buttonTodayAssignment[];
     private JButton buttonShowMoreTodayAssignments = new JButton("Show more");
+    private JLabel labelEmptyTodayAssignments[];
+    private int nTodayAssignments = 0;
 
     private JPanel calendar = new JPanel();
     private JPanel panelDateCalendar = new JPanel();
@@ -94,15 +97,45 @@ public class GUICustomer extends JFrame{
         labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
         panelToday.add(labelTodayAssignments);
         int i;
-        buttonTodayAssignment = new JButton[5];
-        for (i = 0; i < 5; i++){
-            buttonTodayAssignment[i] = new JButton("Test assignment");
-            buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-            buttonTodayAssignment[i].setOpaque(true);
-            buttonTodayAssignment[i].setBorderPainted(false);
-            panelToday.add(buttonTodayAssignment[i]);
+
+        //inserire una funzione che restituisce il numero di appuntamenti del giorno
+
+        if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
+            buttonTodayAssignment = new JButton[nTodayAssignments];
+            for (i = 0; i < nTodayAssignments; i++){
+                buttonTodayAssignment[i] = new JButton("Test assignment");
+                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+                buttonTodayAssignment[i].setOpaque(true);
+                buttonTodayAssignment[i].setBorderPainted(false);
+                panelToday.add(buttonTodayAssignment[i]);
+            }
+        } else {
+            buttonTodayAssignment = new JButton[MAXVISIBLETODAYASSIGNMENT];
+            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT; i++){
+                buttonTodayAssignment[i] = new JButton("Test assignment");
+                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+                buttonTodayAssignment[i].setOpaque(true);
+                buttonTodayAssignment[i].setBorderPainted(false);
+                panelToday.add(buttonTodayAssignment[i]);
+            }
         }
-        panelToday.add(buttonShowMoreTodayAssignments);
+
+
+        if ((nTodayAssignments > 0) && (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT)){
+            labelEmptyTodayAssignments = new JLabel[MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1];
+            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1; i++){
+                labelEmptyTodayAssignments[i] = new JLabel();
+                panelToday.add(labelEmptyTodayAssignments[i]);
+            }
+        } else if (nTodayAssignments > MAXVISIBLETODAYASSIGNMENT){
+            panelToday.add(buttonShowMoreTodayAssignments);
+        } else {
+            labelEmptyTodayAssignments = new JLabel[1];
+            labelEmptyTodayAssignments[0] = new JLabel("No assignment to show", SwingConstants.CENTER);
+            panelToday.add(labelEmptyTodayAssignments[0]);
+        }
+
+
         add(panelToday, BorderLayout.EAST);
 
         ActionListener cal = new ActionListener() {
@@ -160,6 +193,11 @@ public class GUICustomer extends JFrame{
                         e.printStackTrace();
                     }
 
+                }
+
+                if (ctrlAe.getActionCommand().equals("Show more")){
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState);
+                    guiDailyAssignments.setVisible(true);
                 }
             }
         };
@@ -238,6 +276,7 @@ public class GUICustomer extends JFrame{
         menuItemRemoveReview.addActionListener(menuAl);
         menuItemShowReviews.addActionListener(menuAl);
         menuItemAccount.addActionListener(menuAl);
+        buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
 
     }
 
