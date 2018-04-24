@@ -20,7 +20,7 @@ public class Customer extends User {
         reviewList = new HashMap<String, Review>();
     }
 
-    public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs){
+    public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
         String emailDogSitter = ds.email;
 
         //chiamata alla classe banca per effettuare la transazione (blocco provvisorio)
@@ -29,7 +29,7 @@ public class Customer extends User {
         if (testTransaction) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
-            Assignment assignment = new Assignment(this, ds, selectedDogs, dateStartAssignment, dateEndAssignment);
+            Assignment assignment = new Assignment(this, ds, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             date.setLenient(false);
             String dateStringStartAssigment = date.format(dateStartAssignment);

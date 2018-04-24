@@ -12,4 +12,8 @@ public class Address {
         this.number = number;
         this.cap = cap;
     }
+
+    public String toString(){
+        return street + ", " + number + "; " + cap + " " + city + ", " + country;
+    }
 }

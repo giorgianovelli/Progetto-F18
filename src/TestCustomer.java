@@ -28,7 +28,7 @@ public class TestCustomer {
         Address dogSitterAddress = new Address("Italy", "Pavia", "Via Mascheroni", "12", "27100");
         PaymentMethod dogSitterPaymentMethod = new PaymentMethod("Paperino", "Paperini","1234567935123456", dateEndAssignment, 456, 15345);
         DogSitter ds = new DogSitter("paperino@email.it", "Paperino", "Paperini", "pass", "0987654321", birthDS, dogSitterAddress, dogSitterPaymentMethod);
-        c.addAssignment(ds, dateStartAssignment, dateEndAssignment, selectedDogs);
+        c.addAssignment(ds, dateStartAssignment, dateEndAssignment, selectedDogs, customerAddress);
 
         //test removeAssignment(...)
         c.removeAssignment("30/04/2018 11:00_paperino@email.it_pippo@email.it");
