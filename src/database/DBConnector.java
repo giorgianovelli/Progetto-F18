@@ -6,7 +6,7 @@ public class DBConnector {
     private static final String USERNAME = "dbuser";
     private static final String PASSWORD = "dbpassword";
     // Ho appeso alla CONNSTRING la stringa "?autoReconnect=true&useSSL=false" disabilitando l'SSL e evitando un errore
-    private static final String CONNSTRING = "jdbc:mysql://localhost/canibau?autoReconnect=true&useSSL=false";
+    private static final String CONNSTRING = "jdbc:mysql://localhost/CANIBAU?autoReconnect=true&useSSL=false";
 
     private Connection conn = null;
     private Statement stmt = null;
