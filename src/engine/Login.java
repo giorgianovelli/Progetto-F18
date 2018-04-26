@@ -36,8 +36,6 @@ public class Login {
         ResultSet rs = dbConnector.askDB("SELECT * FROM CUSTOMERS WHERE EMAIL = '" + inputUser + "' AND PASSWORD = '" + inputPasword + "'");
 
         System.out.println(inputUser);
-        //System.out.println(inputPasword);
-        //System.out.println(rs.getRow());
         rs.last();
         rs.getRow();
         if (rs.getRow() == 1){
@@ -49,14 +47,6 @@ public class Login {
             dbConnector.closeConnection();
             return false;
         }
-
-        /*if ((inputUser.equals(user)) && (inputPasword.equals(password))){
-            System.out.println("Access allowed!");
-            return true;
-        } else{
-            System.out.println("Access denied!");
-            return false;
-        }*/
     }
 
     public TypeUser getTypeUser() {

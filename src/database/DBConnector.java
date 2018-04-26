@@ -3,8 +3,8 @@ import java.sql.*;
 
 public class DBConnector {
 
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "password";
+    private static final String USERNAME = "dbuser";
+    private static final String PASSWORD = "dbpassword";
     // Ho appeso alla CONNSTRING la stringa "?autoReconnect=true&useSSL=false" disabilitando l'SSL e evitando un errore
     private static final String CONNSTRING = "jdbc:mysql://localhost/canibau?autoReconnect=true&useSSL=false";
 
@@ -13,14 +13,6 @@ public class DBConnector {
     private ResultSet rs = null;
 
     public ResultSet askDB(String query) throws SQLException {
-
-        // Commenta la successiva riga di codice se lavori con Java 6 o sup.
-        //Class.forName("com.mysql.jdbc.Driver");
-
-        /*Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;*/
-
         try{
             conn = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -33,16 +25,6 @@ public class DBConnector {
             stmt.close();
             conn.close();
             return null;
-        /*} finally {
-            if(rs != null){
-                rs.close();
-            }
-            if(stmt != null){
-                stmt.close();
-            }
-            if(conn != null){
-                conn.close();
-            }*/
         }
     }
 
@@ -51,8 +33,4 @@ public class DBConnector {
         rs.close();
         stmt.close();
     }
-
-    /*public int getRow() throws SQLException {
-        return rs.getRow();
-    }*/
 }
