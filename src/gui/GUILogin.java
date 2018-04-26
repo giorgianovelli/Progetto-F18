@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import enumeration.WeekDays;
 import engine.Login;
@@ -52,31 +53,35 @@ public class GUILogin extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 if (ae.getActionCommand().equals("Login") && !(textUser.equals("")) && !(textPwd.equals(""))){
                     Login login = new Login();
-                    if(login.accessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
-                        if (login.getTypeUser().equals(TypeUser.CUSTOMER)){
-                            //open gui.GUIDogSitter
-                            GUICustomer guiCustomer = null;
-                            try {
-                                guiCustomer = new GUICustomer();
-                            } catch (ParseException e) {
-                                //e.printStackTrace();
-                                System.out.println("Error in parsing data");
+                    try {
+                        if(login.accessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
+                            if (login.getTypeUser().equals(TypeUser.CUSTOMER)){
+                                //open gui.GUIDogSitter
+                                GUICustomer guiCustomer = null;
+                                try {
+                                    guiCustomer = new GUICustomer();
+                                } catch (ParseException e) {
+                                    //e.printStackTrace();
+                                    System.out.println("Error in parsing data");
+                                }
+                                guiCustomer.setVisible(true);
+                                setVisible(false);
+                            } else{
+                                //open gui.GUIDogSitter
+                                GUIDogSitter guiDogSitter = new GUIDogSitter();
+                                guiDogSitter.setVisible(true);
+                                setVisible(false);
                             }
-                            guiCustomer.setVisible(true);
-                            setVisible(false);
-                        } else{
-                            //open gui.GUIDogSitter
-                            GUIDogSitter guiDogSitter = new GUIDogSitter();
-                            guiDogSitter.setVisible(true);
-                            setVisible(false);
-                        }
 
-                    } else{
-                        //show error message
-                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
-                                JOptionPane.ERROR_MESSAGE);
-                        textUser.setText("");
-                        textPwd.setText("");
+                        } else{
+                            //show error message
+                            JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            textUser.setText("");
+                            textPwd.setText("");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
                 }
 

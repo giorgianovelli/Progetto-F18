@@ -1,6 +1,10 @@
 package engine;
 
+import database.DBConnector;
 import enumeration.TypeUser;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login {
     private String user = new String();
@@ -15,25 +19,44 @@ public class Login {
         //get access data from database
 
         //temporary method
-        user = "user";
-        password = "password";
+        //user = "user";
+        //password = "password";
+
         //typeUser = enumeration.TypeUser.DOGSITTER;
         typeUser = TypeUser.CUSTOMER;
     }
 
-    public boolean accessDataVerifier(String inputUser, String inputPasword){
+    public boolean accessDataVerifier(String inputUser, String inputPasword) throws SQLException {
 
         //login automatico per velocizzare i test sulla GUI
-        inputUser = "user";
-        inputPasword = "password";
+        //inputUser = "user";
+        //inputPasword = "password";
 
-        if ((inputUser.equals(user)) && (inputPasword.equals(password))){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = dbConnector.askDB("SELECT * FROM CUSTOMERS WHERE EMAIL = '" + inputUser + "' AND PASSWORD = '" + inputPasword + "'");
+
+        System.out.println(inputUser);
+        //System.out.println(inputPasword);
+        //System.out.println(rs.getRow());
+        rs.last();
+        rs.getRow();
+        if (rs.getRow() == 1){
+            System.out.println("Access allowed!");
+            dbConnector.closeConnection();
+            return true;
+        } else {
+            System.out.println("Access denied!");
+            dbConnector.closeConnection();
+            return false;
+        }
+
+        /*if ((inputUser.equals(user)) && (inputPasword.equals(password))){
             System.out.println("Access allowed!");
             return true;
         } else{
             System.out.println("Access denied!");
             return false;
-        }
+        }*/
     }
 
     public TypeUser getTypeUser() {

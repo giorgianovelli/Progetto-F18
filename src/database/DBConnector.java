@@ -29,6 +29,9 @@ public class DBConnector {
         }
         catch(SQLException e){
             System.err.println(e);
+            rs.close();
+            stmt.close();
+            conn.close();
             return null;
         /*} finally {
             if(rs != null){
@@ -48,4 +51,8 @@ public class DBConnector {
         rs.close();
         stmt.close();
     }
+
+    /*public int getRow() throws SQLException {
+        return rs.getRow();
+    }*/
 }
