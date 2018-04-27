@@ -18,4 +18,28 @@ public class PaymentMethod {
         this.cvv = cvv;
         this.amount = amount;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public int getCvv() {
+        return cvv;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
 }
