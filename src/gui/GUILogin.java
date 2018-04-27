@@ -70,7 +70,7 @@ public class GUILogin extends JFrame {
                             //open GUICustomer
                             GUICustomer guiCustomer = null;
                             try {
-                                guiCustomer = new GUICustomer();
+                                guiCustomer = new GUICustomer(textUser.getText());
                             } catch (ParseException e) {
                                 //e.printStackTrace();
                                 System.out.println("Error in parsing data");

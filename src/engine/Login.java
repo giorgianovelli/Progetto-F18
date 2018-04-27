@@ -12,6 +12,7 @@ public class Login {
     private TypeUser typeUser;
 
     public boolean customerAccessDataVerifier(String inputUser, String inputPasword) throws SQLException {
+        String user = "";
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = dbConnector.askDB("SELECT * FROM CUSTOMERS WHERE EMAIL = '" + inputUser + "' AND PASSWORD = '" + inputPasword + "'");
 

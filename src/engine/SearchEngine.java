@@ -5,6 +5,7 @@ import engine.DogSitter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashSet;
 
 public class SearchEngine {
@@ -13,20 +14,24 @@ public class SearchEngine {
     public SearchEngine() {
         //inserire la funzione che scarica la lista di dogsitter dal database
         //per costruire l'HashSet con tutti i dog sitter registrati alla piattaforma
+        dogSitterList = new HashSet<DogSitter>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT * FROM DOGSITTERS");
             while (rs.next()){
-                System.out.println(rs.getString("email"));
-                System.out.println(rs.getString("name"));
-                System.out.println(rs.getString("surname"));
-                System.out.println(rs.getString("password"));
-                System.out.println(rs.getString("phone_number"));
-                System.out.println(rs.getDate("birthdate"));
-                System.out.println(rs.getString("payment"));
-                System.out.println(rs.getBoolean("cash_flag"));
-                System.out.println(rs.getString("area"));
-                System.out.println(rs.getString("biography"));
+                String email = rs.getString("EMAIL");
+                String name = rs.getString("NAME");
+                String surname = rs.getString("SURNAME");
+                String password = rs.getString("PASSWORD");
+                String phone = rs.getString("PHONE_NUMB");
+                Date birthdate = rs.getDate("BIRTHDATE");
+                String payment = rs.getString("PAYMENT");
+                boolean cashFlag = rs.getBoolean("CASH_FLAG");
+                String area = rs.getString("AREA");
+                String biography = rs.getString("BIOGRAPHY");
+
+                //da completare all'introduzione della table ADDRESS nel DB
+
             }
             dbConnector.closeConnection();
         } catch (SQLException e) {

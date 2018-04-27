@@ -1,14 +1,23 @@
 package gui;
 
+import database.DBConnector;
+import engine.Address;
+import engine.Customer;
+import engine.PaymentMethod;
 import enumeration.CalendarState;
+import enumeration.TypeUser;
 import enumeration.WeekDays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
+import static engine.ObjectCreator.createCustomerFromDB;
 
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
@@ -60,8 +69,10 @@ public class GUICustomer extends JFrame{
     private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
     private CalendarState calendarState = CalendarState.NORMAL;
 
+    private Customer customer;
 
-    public GUICustomer() throws ParseException {
+
+    public GUICustomer(String customerEmail) throws ParseException {
         setTitle("CaniBau (Customer)");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -69,6 +80,7 @@ public class GUICustomer extends JFrame{
         setResizable(false);
         setLayout(new BorderLayout());
 
+        customer = createCustomerFromDB(customerEmail);
         initComponents();
     }
 
