@@ -12,6 +12,14 @@ public class GUIListAssignments extends JFrame{
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    private JPanel contentPanel = new JPanel();
+    private JPanel buttonPanel = new JPanel();
+    private JScrollPane scrollPanel = new JScrollPane(); //Da Fare
+
+    private JLabel labelState = new JLabel();
+    private JLabel labelDescription = new JLabel();
+    private JButton[] buttonAction = new JButton[4];
+
     public GUIListAssignments(CalendarState cs, GUICustomer guiCustomer){
         setTitle("Your assignments");
         setSize(WIDTH, HEIGHT);
@@ -24,12 +32,20 @@ public class GUIListAssignments extends JFrame{
     }
 
     private void initComponents(CalendarState cs, GUICustomer gc){
+        //Tabella?
+        
+
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
         }
-        if ((cs.equals(CalendarState.DELETING_REVIEW)) || (cs.equals(CalendarState.SHOW_REVIEWS))){
+        if (cs.equals(CalendarState.DELETING_REVIEW)){
             setTitle("Your reviews");
         }
+        if (cs.equals(CalendarState.SHOW_REVIEWS)){
+            setTitle("Your reviews");
+
+        }
+
 
 
         this.addWindowListener (new WindowAdapter() {
