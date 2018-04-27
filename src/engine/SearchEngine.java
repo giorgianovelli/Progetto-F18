@@ -27,8 +27,8 @@ public class SearchEngine {
                 System.out.println(rs.getBoolean("cash_flag"));
                 System.out.println(rs.getString("area"));
                 System.out.println(rs.getString("biography"));
-
             }
+            dbConnector.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
