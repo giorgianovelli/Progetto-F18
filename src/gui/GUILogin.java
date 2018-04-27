@@ -32,6 +32,8 @@ public class GUILogin extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+        //ImageIcon img = new ImageIcon("/Users/nicolas/Desktop/logo.png");
+        //setIconImage(img.getImage());
 
         initComponents();
     }
