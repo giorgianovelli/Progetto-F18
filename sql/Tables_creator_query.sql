@@ -29,29 +29,30 @@ DROP TABLE IF EXISTS CREDIT_CARDS;
 
 
 CREATE TABLE CREDIT_CARDS
-					(NUM BIGINT PRIMARY KEY,
+					(NUM CHAR(17) PRIMARY KEY,
 					OWNER_NAME CHAR(20),
 					OWNER_SURNAME CHAR(20),
 					EXPIRATION_DATE DATE,
-					CVV SMALLINT)
-                    
+					CVV SMALLINT,
+                    AMOUNT DOUBLE)
+
                     ENGINE = INNODB;
-                    
+
 CREATE TABLE PRICE_LIST
 					(SIZE CHAR(15) PRIMARY KEY,
 					PRICE DOUBLE)
-                    
-                    
+
+
                     ENGINE = INNODB;
 
 CREATE TABLE ADDRESS
 						(EMAIL CHAR(254) PRIMARY KEY,
-						COUNTRY CHAR(30), 			
+						COUNTRY CHAR(30),
 						CITY CHAR(50),
 						STREET CHAR(50),
 						CNUMBER CHAR(10),
 						CAP CHAR(10))
-	
+
                         -- FOREIGN KEY(EMAIL) REFERENCES CUSTOMERS(EMAIL),
                         -- FOREIGN KEY(EMAIL) REFERENCES DOGSITTERS(EMAIL))
                         ENGINE = INNODB;
@@ -63,39 +64,39 @@ CREATE TABLE CUSTOMERS
                         PASSWORD CHAR(20),
                         PHONE_NUMB BIGINT,
                         BIRTHDATE DATE,
-                        PAYMENT BIGINT,
-                        
+                        PAYMENT CHAR(17),
+
                         FOREIGN KEY(EMAIL) REFERENCES ADDRESS(EMAIL),
                         FOREIGN KEY(PAYMENT) REFERENCES CREDIT_CARDS(NUM))
                         ENGINE = INNODB;
 
 
-CREATE TABLE DOGSITTERS 
+CREATE TABLE DOGSITTERS
 					(EMAIL CHAR(254) PRIMARY KEY,
 					NAME CHAR(45),
 					SURNAME CHAR(45),
 					PASSWORD CHAR(45) ,
-					PHONE_NUMBER BIGINT,
+					PHONE_NUMB BIGINT,
 					BIRTHDATE DATE,
-					PAYMENT BIGINT,
+					PAYMENT CHAR(17),
 					CASH_FLAG BOOLEAN,
 					AREA CHAR(45),
 					BIOGRAPHY TEXT,
-                    
+
                     FOREIGN KEY(EMAIL) REFERENCES ADDRESS(EMAIL),
 					FOREIGN KEY (PAYMENT) REFERENCES CREDIT_CARDS(NUM))
                     ENGINE = INNODB;
-                        
 
 
 
-                        
 
 
-CREATE TABLE BREEDS	
+
+
+CREATE TABLE BREEDS
 					(NAME CHAR(45) PRIMARY KEY,
 					 SIZE CHAR(15),
-                     
+
                      FOREIGN KEY (SIZE) REFERENCES PRICE_LIST(SIZE))
                      ENGINE = INNODB;
 
@@ -108,11 +109,11 @@ CREATE TABLE DOGS
 					WEIGHT DOUBLE,
 					AGE INT,
 					OWNER_EMAIL CHAR(254),
-                    
+
                     FOREIGN KEY(OWNER_EMAIL) REFERENCES CUSTOMERS(EMAIL),
                     FOREIGN KEY(BREED) REFERENCES BREEDS(NAME))
                     ENGINE = INNODB;
-                    
+
 
 
 
@@ -123,19 +124,19 @@ CREATE TABLE ASSIGNMENT
                     CONFIRMATION BOOLEAN,
                     DATE_START DATETIME,
                     DATE_END DATETIME)
-                    
+
                     ENGINE = INNODB;
-                    
+
 
 CREATE TABLE DOG_ASSIGNMENT
 					(CODE CHAR(254),
                     DOG_ID INT,
-                    
+
                     PRIMARY KEY (CODE, DOG_ID),
                     FOREIGN KEY (CODE) REFERENCES ASSIGNMENT(CODE),
                     FOREIGN KEY (DOG_ID) REFERENCES DOGS(ID))
                     ENGINE = INNODB;
-                    
+
 
 CREATE TABLE REVIEW
 					(CUSTOMER CHAR(254),
@@ -145,21 +146,21 @@ CREATE TABLE REVIEW
 					TITLE CHAR(254),
                     DESCRIPTION TEXT,
                     REPLY TEXT,
-                    
+
                     PRIMARY KEY (CUSTOMER, DOGSITTER, DATE),
                     FOREIGN KEY (CUSTOMER) REFERENCES CUSTOMERS(EMAIL),
                     FOREIGN KEY (DOGSITTER) REFERENCES DOGSITTERS(EMAIL))
                     ENGINE = INNODB;
-                    
+
 
 CREATE TABLE DOGSITTER_AREA
 					(DOGSITTER CHAR (254),
                     CITY CHAR(50),
-                    
+
                     PRIMARY KEY (DOGSITTER, CITY),
                     FOREIGN KEY (DOGSITTER) REFERENCES DOGSITTERS(EMAIL))
                     ENGINE = INNODB;
-                    
+
 
 CREATE TABLE DOGS_ACCEPTED
 					(DOGSITTER CHAR(254) PRIMARY KEY,
@@ -167,22 +168,22 @@ CREATE TABLE DOGS_ACCEPTED
                     MEDIUM BOOLEAN,
                     LARGE BOOLEAN,
                     EXTRA_LARGE BOOLEAN,
-                    
+
                     FOREIGN KEY(DOGSITTER) REFERENCES DOGSITTERS(EMAIL))
                     ENGINE = INNODB;
-                    
-                    
+
+
 CREATE TABLE MEETING_POINT
 					(CODE CHAR(254) PRIMARY KEY,
-					COUNTRY CHAR(30), 			
+					COUNTRY CHAR(30),
 					CITY CHAR(50),
 					STREET CHAR(50),
 					CNUMBER CHAR(10),
 					CAP CHAR(10),
-                    
+
                     FOREIGN KEY(CODE) REFERENCES ASSIGNMENT(CODE))
                     ENGINE = INNODB;
-                        
+
 
 CREATE TABLE AVAILABILITY
 					(DOGSITTER CHAR(254) PRIMARY KEY,
@@ -200,22 +201,22 @@ CREATE TABLE AVAILABILITY
                     SAT_END TIME,
                     SUN_START TIME,
                     SUN_END TIME,
-                    
+
                     FOREIGN KEY (DOGSITTER) REFERENCES DOGSITTERS(EMAIL))
                     ENGINE = INNODB;
-                    
-                    
-                    
-                    
-                    
 
-                    
+
+
+
+
+
+
 INSERT INTO PRICE_LIST (PRICE, SIZE) VALUES (5,'SMALL');
 INSERT INTO PRICE_LIST (PRICE, SIZE) VALUES (10,'MEDIUM');
 INSERT INTO PRICE_LIST (PRICE, SIZE) VALUES (15,'LARGE');
 INSERT INTO PRICE_LIST (PRICE, SIZE) VALUES (20,'EXTRA LARGE');
-                    				
-                    
+
+
 INSERT INTO BREEDS VALUES ('BEAGLE','MEDIUM');
 INSERT INTO BREEDS VALUES ('BOXER','LARGE');
 INSERT INTO BREEDS VALUES ('BULLDOG','LARGE');
