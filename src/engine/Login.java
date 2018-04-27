@@ -11,27 +11,7 @@ public class Login {
     private String password = new String();
     private TypeUser typeUser;
 
-    public Login(){
-        getAccessData();
-    }
-
-    private void getAccessData(){
-        //get access data from database
-
-        //temporary method
-        //user = "user";
-        //password = "password";
-
-        //typeUser = enumeration.TypeUser.DOGSITTER;
-        typeUser = TypeUser.CUSTOMER;
-    }
-
-    public boolean accessDataVerifier(String inputUser, String inputPasword) throws SQLException {
-
-        //login automatico per velocizzare i test sulla GUI
-        //inputUser = "user";
-        //inputPasword = "password";
-
+    public boolean customerAccessDataVerifier(String inputUser, String inputPasword) throws SQLException {
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = dbConnector.askDB("SELECT * FROM CUSTOMERS WHERE EMAIL = '" + inputUser + "' AND PASSWORD = '" + inputPasword + "'");
 
@@ -39,11 +19,29 @@ public class Login {
         rs.last();
         rs.getRow();
         if (rs.getRow() == 1){
-            System.out.println("Access allowed!");
+            System.out.println("Access allowed as customer!");
             dbConnector.closeConnection();
             return true;
         } else {
-            System.out.println("Access denied!");
+            System.out.println("Access denied as customer!");
+            dbConnector.closeConnection();
+            return false;
+        }
+    }
+
+    public boolean dogSitterAccessDataVerifier(String inputUser, String inputPasword) throws SQLException {
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = dbConnector.askDB("SELECT * FROM DOGSITTERS WHERE EMAIL = '" + inputUser + "' AND PASSWORD = '" + inputPasword + "'");
+
+        System.out.println(inputUser);
+        rs.last();
+        rs.getRow();
+        if (rs.getRow() == 1){
+            System.out.println("Access allowed as dog sitter!");
+            dbConnector.closeConnection();
+            return true;
+        } else {
+            System.out.println("Access denied as dog sitter!");
             dbConnector.closeConnection();
             return false;
         }
