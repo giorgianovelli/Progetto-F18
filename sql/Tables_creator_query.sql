@@ -166,8 +166,8 @@ CREATE TABLE DOGS_ACCEPTED
 					(DOGSITTER CHAR(254) PRIMARY KEY,
                     SMALL BOOLEAN,
                     MEDIUM BOOLEAN,
-                    LARGE BOOLEAN,
-                    EXTRA_LARGE BOOLEAN,
+                    BIG BOOLEAN,
+                    GIANT BOOLEAN,
 
                     FOREIGN KEY(DOGSITTER) REFERENCES DOGSITTERS(EMAIL))
                     ENGINE = INNODB;

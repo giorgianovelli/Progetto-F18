@@ -1,13 +1,18 @@
 package engine;
 
+import database.DBConnector;
 import engine.Address;
 import engine.Assignment;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import enumeration.DogSize;
+
+import static engine.ObjectCreator.createCustomerFromDB;
 
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
@@ -19,6 +24,7 @@ public class Customer extends User {
         dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
         assignmentList = new HashMap<String, Assignment>();
         reviewList = new HashMap<String, Review>();
+        getAssignmentsFromDB();
     }
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
@@ -131,5 +137,49 @@ public class Customer extends User {
         } else {
             return null;
         }
+    }
+
+    private void getAssignmentsFromDB(){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CODE, CUSTOMER, DOGSITTER, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + email + "'");
+            while (rs.next()){
+                String code = rs.getString("CODE");
+                String customer = rs.getString("CUSTOMER");
+                String dogSitter = rs.getString("DOGSITTER");
+                boolean state = rs.getBoolean("CONFIRMATION");
+                Date dateStart = rs.getDate("DATE_START");
+                Date dateEnd = rs.getDate("DATE_END");
+                Address meetingPoint = getMeetingPointFromDB(code);
+                Customer c = createCustomerFromDB(customer);
+
+                //Completare il metodo quando sarà disponibile createDogSitterFromDB
+
+                //Assignment assignment = new Assignment();
+                dbConnector.closeConnection();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Address getMeetingPointFromDB(String code){
+        DBConnector dbConnector = new DBConnector();
+        Address address = null;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CODE, COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
+            while (rs.next()){
+                String country = rs.getString("COUNTRY");
+                String city = rs.getString("CITY");
+                String street = rs.getString("STREET");
+                String number = rs.getString("CNUMBER");
+                String cap = rs.getString("CAP");
+                address = new Address(country, city, street, number, cap);
+                dbConnector.closeConnection();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return address;
     }
 }
