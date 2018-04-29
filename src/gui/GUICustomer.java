@@ -2,6 +2,7 @@ package gui;
 
 import database.DBConnector;
 import engine.Address;
+import engine.Assignment;
 import engine.Customer;
 import engine.PaymentMethod;
 import enumeration.CalendarState;
@@ -17,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
+
 import static engine.ObjectCreator.createCustomerFromDB;
 
 public class GUICustomer extends JFrame{
@@ -547,6 +550,8 @@ public class GUICustomer extends JFrame{
         if ((calendarState.equals(CalendarState.ADDING)) || (calendarState.equals(CalendarState.REMOVING))){
             enableDisableDateButtonAssignment();
         }
+
+        //showAssignmentOnCalendar();
     }
 
     private boolean isLeap(Date yearToCheck){
@@ -637,6 +642,35 @@ public class GUICustomer extends JFrame{
                 buttonDay[i].setEnabled(false);
             } else {
                 buttonDay[i].setEnabled(true);
+            }
+        }
+    }
+
+    private void showAssignmentOnCalendar(){
+        //da completare
+        HashMap<String, Assignment> listAssignment = customer.getAssignmentList();
+        for (String key : listAssignment.keySet()) {
+            Assignment a = listAssignment.get(key);
+            Date dateStart = a.getDateStart();
+            Date dateEnd = a.getDateEnd();
+            SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+            String strDateStart = date.format(dateStart);
+            String strDateEnd = date.format(dateEnd);
+//            SimpleDateFormat dateDay = new SimpleDateFormat("d");
+//            String strDayStart = dateDay.format(dateStart);
+//            String strDayEnd = dateDay.format(dateEnd);
+//            SimpleDateFormat dateMonthYear = new SimpleDateFormat("MM/yyyy");
+//            String strMonthYearStart = dateMonthYear.format(dateStart);
+//            String strMonthYearEnd = dateMonthYear.format(dateEnd);
+            int i;
+            for (i = 0; i < NDAYMONTH; i++){
+                String strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear;
+                if (strButtonDate.equals(strDateStart) ){
+                    buttonDay[i].setForeground(Color.ORANGE);
+                }
+                if (strButtonDate.equals(strDateEnd) ){
+                    buttonDay[i].setForeground(Color.ORANGE);
+                }
             }
         }
     }
