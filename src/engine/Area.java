@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Area {
     HashSet<String> places;
 
-    public Area( HashSet<String> places) {
+    public Area() {
         this.places = new HashSet<String>();
     }
 

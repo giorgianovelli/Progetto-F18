@@ -43,8 +43,8 @@ public class GUILogin extends JFrame {
     private void initComponents(){
 
         //login automatico per velocizzare il debug
-        textUser.setText("GIANNINORVEGESE@GMAIL.COM");
-        textPwd.setText("chimiaiuta");
+        textUser.setText("RICCARDOGIURA@GMAIL.COM");
+        textPwd.setText("PROVAPROVA123");
 
         panelLoginData.setLayout(new GridLayout(2,2));
         panelLoginData.add(labelUser);

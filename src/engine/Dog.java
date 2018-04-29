@@ -7,19 +7,15 @@ public class Dog {
     private String breed;
     private DogSize size;
     private int age;
-    private int weight;
-    private String ownerName;
-    private String ownerSurname;
+    private double weight;
     private int ID;
 
-    public Dog(String name, String breed, DogSize size, int age, int weight, String ownerName, String ownerSurname, int ID) {
+    public Dog(String name, String breed, DogSize size, int age, double weight, int ID) {
         this.name = name;
         this.breed = breed;
         this.size = size;
         this.age = age;
         this.weight = weight;
-        this.ownerName = ownerName;
-        this.ownerSurname = ownerSurname;
         this.ID = ID;
     }
 
@@ -71,16 +67,8 @@ public class Dog {
         return age;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public String getOwnerSurname() {
-        return ownerSurname;
     }
 
     public int getID() {

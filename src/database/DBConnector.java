@@ -20,6 +20,7 @@ public class DBConnector {
             return rs;
         }
         catch(SQLException e){
+            System.out.println("ERROR!!");
             System.err.println(e);
             rs.close();
             stmt.close();
