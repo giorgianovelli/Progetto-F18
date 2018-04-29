@@ -13,6 +13,8 @@ import java.util.HashSet;
 import enumeration.DogSize;
 
 import static engine.ObjectCreator.createCustomerFromDB;
+import static engine.ObjectCreator.createDogFromDB;
+import static engine.ObjectCreator.createDogSitterFromDB;
 
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
@@ -35,12 +37,14 @@ public class Customer extends User {
 
         if (testTransaction) {
 
-            //crea un oggetto di tipo engine.Assignment e lo aggiunge all'HashMap assignmentList
-            Assignment assignment = new Assignment(this, ds, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
+            //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
+            //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             date.setLenient(false);
             String dateStringStartAssigment = date.format(dateStartAssignment);
-            assignmentList.put(dateStringStartAssigment  + "_" + ds.email + "_" + this.email, assignment);
+            String code = dateStringStartAssigment  + "_" + ds.email + "_" + this.email;
+            Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
+            assignmentList.put(code, assignment);
 
             //salva la prenotazione nel database
             //sottometodo da implementare
@@ -124,8 +128,8 @@ public class Customer extends User {
         return reviewList;
     }
 
-    public HashSet<Dog> addDog(String name, String breed, DogSize size, int age, int weight, String ownerName, String ownerSurname, int ID){
-        Dog dog = new Dog(name, breed, size, age, weight, ownerName, ownerSurname, ID);
+    public HashSet<Dog> addDog(String name, String breed, DogSize size, int age, double weight, int ID){
+        Dog dog = new Dog(name, breed, size, age, weight, ID);
         dogList.add(dog);
         return dogList;
     }
@@ -151,13 +155,13 @@ public class Customer extends User {
                 Date dateStart = rs.getDate("DATE_START");
                 Date dateEnd = rs.getDate("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
-                Customer c = createCustomerFromDB(customer);
-
-                //Completare il metodo quando sarà disponibile createDogSitterFromDB
-
-                //Assignment assignment = new Assignment();
-                dbConnector.closeConnection();
+                //Customer c = createCustomerFromDB(customer);
+                DogSitter ds = createDogSitterFromDB(dogSitter);
+                HashSet dogList = getDogListFromDB(code);
+                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+                listAssignment().put(code, assignment);
             }
+            dbConnector.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -167,19 +171,39 @@ public class Customer extends User {
         DBConnector dbConnector = new DBConnector();
         Address address = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT CODE, COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
-            while (rs.next()){
-                String country = rs.getString("COUNTRY");
-                String city = rs.getString("CITY");
-                String street = rs.getString("STREET");
-                String number = rs.getString("CNUMBER");
-                String cap = rs.getString("CAP");
-                address = new Address(country, city, street, number, cap);
-                dbConnector.closeConnection();
-            }
+            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
+            rs.next();
+            String country = rs.getString("COUNTRY");
+            String city = rs.getString("CITY");
+            String street = rs.getString("STREET");
+            String number = rs.getString("CNUMBER");
+            String cap = rs.getString("CAP");
+            address = new Address(country, city, street, number, cap);
+            dbConnector.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return address;
+    }
+
+    private HashSet<Dog> getDogListFromDB(String code){
+        HashSet<Dog> dogList= new HashSet<Dog>();
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT DOG_ID FROM DOG_ASSIGNMENT WHERE CODE = '" + code + "'");
+            while (rs.next()){
+                int dogID = rs.getInt("DOG_ID");
+                Dog dog = createDogFromDB(dogID);
+                dogList.add(dog);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dogList;
+    }
+
+    public HashMap<String, Assignment> getAssignmentList() {
+        return assignmentList;
     }
 }
