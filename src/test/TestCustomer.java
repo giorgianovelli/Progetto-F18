@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 public class TestCustomer {
     public static void main(String[] args) throws ParseException {
-        //test addAssignment(...)
+        /*//test addAssignment(...)
         HashSet<Dog> selectedDogs = new HashSet<Dog>(2);
         //creare oggetti engine.Dog
         Dog fuffi = new Dog("Fuffi", "Pug", DogSize.SMALL, 3, 7, "Pippo", "Baudo", 1);
@@ -55,6 +55,6 @@ public class TestCustomer {
         c.listAssignment();
 
         //test listReview(...)
-        c.listReview();
+        c.listReview();*/
     }
 }
