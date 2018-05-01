@@ -656,12 +656,6 @@ public class GUICustomer extends JFrame{
             SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
             String strDateStart = date.format(dateStart);
             String strDateEnd = date.format(dateEnd);
-//            SimpleDateFormat dateDay = new SimpleDateFormat("d");
-//            String strDayStart = dateDay.format(dateStart);
-//            String strDayEnd = dateDay.format(dateEnd);
-//            SimpleDateFormat dateMonthYear = new SimpleDateFormat("MM/yyyy");
-//            String strMonthYearStart = dateMonthYear.format(dateStart);
-//            String strMonthYearEnd = dateMonthYear.format(dateEnd);
             int i;
             for (i = 0; i < NDAYMONTH; i++){
                 String strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear;
