@@ -57,7 +57,7 @@ public class ObjectCreator {
     public static DogSitter createDogSitterFromDB(String dogSitterEmail){
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL, NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT, CASH_FLAG, AREA, NDOGS, BIOGRAPHY FROM DOGSITTERS WHERE EMAIL = '" + dogSitterEmail + "'");
+            ResultSet rs = dbConnector.askDB("SELECT EMAIL, NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT, CASH_FLAG, NDOGS, BIOGRAPHY FROM DOGSITTERS WHERE EMAIL = '" + dogSitterEmail + "'");
             rs.next();
             String email = rs.getString("EMAIL");
             String name = rs.getString("NAME");
@@ -67,7 +67,7 @@ public class ObjectCreator {
             Date birthdate = rs.getDate("BIRTHDATE");
             String payment = rs.getString("PAYMENT");
             boolean cashFlag = rs.getBoolean("CASH_FLAG");
-            String area = rs.getString("AREA");
+            //String area = rs.getString("AREA");
             int nDogs = rs.getInt("NDOGS");
             String biography = rs.getString("BIOGRAPHY");
             dbConnector.closeConnection();
