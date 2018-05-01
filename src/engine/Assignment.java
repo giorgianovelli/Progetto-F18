@@ -49,7 +49,7 @@ public class Assignment {
     private String printDogList() {
         String toReturn = "";
         for (Dog d : dogList) {
-            toReturn = toReturn + "engine.Dog name: " + d.getName() + "\tBreed: " + d.getBreed() + "\tSize: " + d.getSize() + "\tAge: " + d.getAge() + "\n";
+            toReturn = toReturn + "Dog name: " + d.getName() + "\tBreed: " + d.getBreed() + "\tSize: " + d.getSize() + "\tAge: " + d.getAge() + "\n";
         }
         return toReturn;
     }

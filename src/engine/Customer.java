@@ -49,7 +49,7 @@ public class Customer extends User {
             //salva la prenotazione nel database
             //sottometodo da implementare
 
-            System.out.println("engine.Assignment completed successfully!");
+            System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
             return assignment;
         } else {

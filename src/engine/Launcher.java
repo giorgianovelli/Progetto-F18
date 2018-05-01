@@ -8,4 +8,5 @@ public class Launcher {
         GUILogin guiLogin = new GUILogin();
         guiLogin.setVisible(true);
     }
+
 }

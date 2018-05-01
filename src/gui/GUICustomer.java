@@ -551,7 +551,11 @@ public class GUICustomer extends JFrame{
             enableDisableDateButtonAssignment();
         }
 
-        //showAssignmentOnCalendar();
+        for (i = 0; i < NDAYMONTH; i++){
+            buttonDay[i].setBackground(new Color(204, 230, 255));
+        }
+
+        showAssignmentOnCalendar();
     }
 
     private boolean isLeap(Date yearToCheck){
@@ -598,6 +602,7 @@ public class GUICustomer extends JFrame{
         menuSettings.setVisible(true);
         menuExtra.setVisible(true);
         menuItemCancel.setVisible(false);
+        showAssignmentOnCalendar();
     }
 
     private void removeAssignment(){
@@ -649,6 +654,7 @@ public class GUICustomer extends JFrame{
     private void showAssignmentOnCalendar(){
         //da completare
         HashMap<String, Assignment> listAssignment = customer.getAssignmentList();
+        boolean included = false;
         for (String key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             Date dateStart = a.getDateStart();
@@ -658,12 +664,17 @@ public class GUICustomer extends JFrame{
             String strDateEnd = date.format(dateEnd);
             int i;
             for (i = 0; i < NDAYMONTH; i++){
-                String strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear;
+                String strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
                 if (strButtonDate.equals(strDateStart) ){
-                    buttonDay[i].setForeground(Color.ORANGE);
+                    buttonDay[i].setBackground(Color.ORANGE);
+                    included = true;
                 }
                 if (strButtonDate.equals(strDateEnd) ){
-                    buttonDay[i].setForeground(Color.ORANGE);
+                    buttonDay[i].setBackground(Color.ORANGE);
+                    included = false;
+                }
+                if (included){
+                    buttonDay[i].setBackground(Color.ORANGE);
                 }
             }
         }
