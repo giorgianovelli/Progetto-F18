@@ -1,26 +1,19 @@
 package gui;
 
-import database.DBConnector;
-import engine.Address;
 import engine.Assignment;
 import engine.Customer;
-import engine.PaymentMethod;
 import enumeration.CalendarState;
-import enumeration.TypeUser;
 import enumeration.WeekDays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 
-import static engine.ObjectCreator.createCustomerFromDB;
+import static staticClasses.ObjectCreator.createCustomerFromDB;
 
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
@@ -652,7 +645,6 @@ public class GUICustomer extends JFrame{
     }
 
     private void showAssignmentOnCalendar(){
-        //da completare
         HashMap<String, Assignment> listAssignment = customer.getAssignmentList();
         boolean included = false;
         for (String key : listAssignment.keySet()) {

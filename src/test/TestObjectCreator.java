@@ -4,9 +4,9 @@ import engine.Customer;
 import engine.Dog;
 import engine.DogSitter;
 
-import static engine.ObjectCreator.createCustomerFromDB;
-import static engine.ObjectCreator.createDogFromDB;
-import static engine.ObjectCreator.createDogSitterFromDB;
+import static staticClasses.ObjectCreator.createCustomerFromDB;
+import static staticClasses.ObjectCreator.createDogFromDB;
+import static staticClasses.ObjectCreator.createDogSitterFromDB;
 
 public class TestObjectCreator {
     public static void main(String[] args) {

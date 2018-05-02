@@ -1,8 +1,6 @@
 package engine;
 
 import database.DBConnector;
-import engine.Address;
-import engine.Assignment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import enumeration.DogSize;
 
-import static engine.ObjectCreator.createCustomerFromDB;
-import static engine.ObjectCreator.createDogFromDB;
-import static engine.ObjectCreator.createDogSitterFromDB;
+import static staticClasses.ObjectCreator.createDogFromDB;
+import static staticClasses.ObjectCreator.createDogSitterFromDB;
 
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
