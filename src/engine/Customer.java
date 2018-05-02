@@ -141,6 +141,7 @@ public class Customer extends User {
     }
 
     private void getAssignmentsFromDB(){
+        //sostituire con il metodo statico in ObjectCreator
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CUSTOMER, DOGSITTER, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + email + "'");
@@ -152,8 +153,6 @@ public class Customer extends User {
                 Date dateStart = rs.getDate("DATE_START");
                 Date dateEnd = rs.getDate("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
-                //Customer c = createCustomerFromDB(customer);
-                DogSitter ds = createDogSitterFromDB(dogSitter);
                 HashSet dogList = getDogListFromDB(code);
                 Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
                 listAssignment().put(code, assignment);
@@ -165,6 +164,7 @@ public class Customer extends User {
     }
 
     private Address getMeetingPointFromDB(String code){
+        //sostituire con il metodo statico in ObjectCreator
         DBConnector dbConnector = new DBConnector();
         Address address = null;
         try {
@@ -184,6 +184,7 @@ public class Customer extends User {
     }
 
     private HashSet<Dog> getDogListFromDB(String code){
+        //sostituire con il metodo statico in ObjectCreator
         HashSet<Dog> dogList= new HashSet<Dog>();
         DBConnector dbConnector = new DBConnector();
         try {

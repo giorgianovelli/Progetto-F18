@@ -189,4 +189,88 @@ public class ObjectCreator {
         }
         return dog;
     }
+
+    //new methods
+
+    public static HashMap<String, Assignment> getListAssignmentFromDB(DogSitter dogSitter){
+        HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE DOGSITTER = '" + dogSitter + "'");
+            while (rs.next()){
+                String code = rs.getString("CODE");
+                boolean state = rs.getBoolean("CONFIRMATION");
+                Date dateStart = rs.getDate("DATE_START");
+                Date dateEnd = rs.getDate("DATE_END");
+                Address meetingPoint = getMeetingPointFromDB(code);
+                HashSet dogList = getDogListFromDB(code);
+                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+                listAssignment.put(code, assignment);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listAssignment;
+    }
+
+    //metodi da abilitare
+
+    /*public void getAssignmentsFromDB(){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CODE, CUSTOMER, DOGSITTER, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + email + "'");
+            while (rs.next()){
+                String code = rs.getString("CODE");
+                String customer = rs.getString("CUSTOMER");
+                String dogSitter = rs.getString("DOGSITTER");
+                boolean state = rs.getBoolean("CONFIRMATION");
+                Date dateStart = rs.getDate("DATE_START");
+                Date dateEnd = rs.getDate("DATE_END");
+                Address meetingPoint = getMeetingPointFromDB(code);
+                HashSet dogList = getDogListFromDB(code);
+                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+                listAssignment().put(code, assignment);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    public static Address getMeetingPointFromDB(String code){
+        DBConnector dbConnector = new DBConnector();
+        Address address = null;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
+            rs.next();
+            String country = rs.getString("COUNTRY");
+            String city = rs.getString("CITY");
+            String street = rs.getString("STREET");
+            String number = rs.getString("CNUMBER");
+            String cap = rs.getString("CAP");
+            address = new Address(country, city, street, number, cap);
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return address;
+    }
+
+    public static HashSet<Dog> getDogListFromDB(String code){
+        HashSet<Dog> dogList= new HashSet<Dog>();
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT DOG_ID FROM DOG_ASSIGNMENT WHERE CODE = '" + code + "'");
+            while (rs.next()){
+                int dogID = rs.getInt("DOG_ID");
+                Dog dog = createDogFromDB(dogID);
+                dogList.add(dog);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dogList;
+    }
 }
