@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static staticClasses.ObjectCreator.getListAssignmentFromDB;
+import static staticClasses.ObjectCreator.getDogSitterListAssignmentFromDB;
 
 public class DogSitter extends User {
     private Area area;
@@ -28,7 +28,7 @@ public class DogSitter extends User {
         this.biography = biography;
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
-        this.listAssignment = listAssignment = getListAssignmentFromDB(this);
+        this.listAssignment = listAssignment = getDogSitterListAssignmentFromDB(this);
     }
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,

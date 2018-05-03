@@ -192,7 +192,7 @@ public class ObjectCreator {
 
     //new methods
 
-    public static HashMap<String, Assignment> getListAssignmentFromDB(DogSitter dogSitter){
+    public static HashMap<String, Assignment> getDogSitterListAssignmentFromDB(DogSitter dogSitter){
         HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
@@ -216,29 +216,29 @@ public class ObjectCreator {
 
     //metodi da abilitare
 
-    /*public void getAssignmentsFromDB(){
+    public static HashMap<String, Assignment> getCustomerListAssignmentFromDB(String customer){
+        HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT CODE, CUSTOMER, DOGSITTER, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + email + "'");
+            ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + customer + "'");
             while (rs.next()){
                 String code = rs.getString("CODE");
-                String customer = rs.getString("CUSTOMER");
-                String dogSitter = rs.getString("DOGSITTER");
                 boolean state = rs.getBoolean("CONFIRMATION");
                 Date dateStart = rs.getDate("DATE_START");
                 Date dateEnd = rs.getDate("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
                 HashSet dogList = getDogListFromDB(code);
                 Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
-                listAssignment().put(code, assignment);
+                listAssignment.put(code, assignment);
             }
             dbConnector.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+        return listAssignment;
+    }
 
-    public static Address getMeetingPointFromDB(String code){
+    private static Address getMeetingPointFromDB(String code){
         DBConnector dbConnector = new DBConnector();
         Address address = null;
         try {
@@ -257,7 +257,7 @@ public class ObjectCreator {
         return address;
     }
 
-    public static HashSet<Dog> getDogListFromDB(String code){
+    private static HashSet<Dog> getDogListFromDB(String code){
         HashSet<Dog> dogList= new HashSet<Dog>();
         DBConnector dbConnector = new DBConnector();
         try {
