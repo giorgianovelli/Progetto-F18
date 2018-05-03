@@ -204,4 +204,6 @@ public class Customer extends User {
     public HashMap<String, Assignment> getAssignmentList() {
         return assignmentList;
     }
+
+
 }

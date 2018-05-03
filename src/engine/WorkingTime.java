@@ -12,4 +12,11 @@ public class WorkingTime {
         this.end = end;
     }
 
+    public Time getStart() {
+        return start;
+    }
+
+    public Time getEnd() {
+        return end;
+    }
 }

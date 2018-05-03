@@ -37,6 +37,18 @@ public class DogSitter extends User {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
     }
 
+    public HashMap<String, Assignment> getListAssignment() {
+        return listAssignment;
+    }
+
+    public Availability getDateTimeAvailability() {
+        return dateTimeAvailability;
+    }
+
+    public boolean isAcceptingCash() {
+        return acceptCash;
+    }
+
     private void loadAssignments(){
         /*DBConnector dbConnector = new DBConnector();
         try {
