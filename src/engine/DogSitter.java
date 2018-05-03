@@ -49,8 +49,12 @@ public class DogSitter extends User {
         return acceptCash;
     }
 
-    private void loadAssignments(){
-        /*DBConnector dbConnector = new DBConnector();
+    public String getEmail(){
+        return email;
+    }
+
+    /*private void loadAssignments(){
+        *//*DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END DATETIME FROM ASSIGNMENT WHERE DOGSITTER = '" + email + "'");
             while (rs.next()){
@@ -62,6 +66,6 @@ public class DogSitter extends User {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
-    }
+        }*//*
+    }*/
 }

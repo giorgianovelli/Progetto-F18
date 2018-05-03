@@ -1,11 +1,13 @@
 package test;
 
 import engine.Customer;
+import engine.DogSitter;
 import engine.SearchEngine;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 
 import static staticClasses.ObjectCreator.createCustomerFromDB;
 
@@ -17,11 +19,15 @@ public class TestSearchEngine {
         Date startDate = new Date();
         Date endDate = new Date();
         try {
-            startDate = date.parse("05/05/2018 13:00");
-            endDate = date.parse("05/05/2018 15:00");
+            startDate = date.parse("07/05/2018 13:00");
+            endDate = date.parse("07/05/2018 15:00");
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        se.search(startDate,endDate, c.)
+        HashSet<DogSitter> dogSitterList = se.search(startDate,endDate, c.getAddress(), c.getDogList(), true);
+        System.out.println("final");
+        for (DogSitter ds : dogSitterList) {
+            System.out.println(ds.getEmail());
+        }
     }
 }

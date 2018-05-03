@@ -144,5 +144,11 @@ public class Customer extends User {
         return assignmentList;
     }
 
+    public Address getAddress(){
+        return address;
+    }
 
+    public HashSet<Dog> getDogList() {
+        return dogList;
+    }
 }
