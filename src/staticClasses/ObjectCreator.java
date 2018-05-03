@@ -156,8 +156,6 @@ public class ObjectCreator {
         return dog;
     }
 
-    //new methods
-
     public static HashMap<String, Assignment> getDogSitterListAssignmentFromDB(DogSitter dogSitter){
         HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
         DBConnector dbConnector = new DBConnector();
@@ -179,8 +177,6 @@ public class ObjectCreator {
         }
         return listAssignment;
     }
-
-    //metodi da abilitare
 
     public static HashMap<String, Assignment> getCustomerListAssignmentFromDB(String customer){
         HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
