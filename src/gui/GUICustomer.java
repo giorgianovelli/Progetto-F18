@@ -1,19 +1,26 @@
 package gui;
 
+import database.DBConnector;
 import engine.Assignment;
 import engine.Customer;
+import engine.DogSitter;
 import enumeration.CalendarState;
 import enumeration.WeekDays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static staticClasses.ObjectCreator.createCustomerFromDB;
+import static staticClasses.ObjectCreator.createDogSitterFromDB;
+import static staticClasses.StringManipulator.capitalizeFirstLetter;
 
 public class GUICustomer extends JFrame{
     final int WIDTH = 1024;
@@ -111,6 +118,8 @@ public class GUICustomer extends JFrame{
         int i;
 
         //inserire una funzione che restituisce il numero di appuntamenti del giorno
+        nTodayAssignments = getNDailyAssignments();
+        System.out.println(nTodayAssignments);
 
         if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
             buttonTodayAssignment = new JButton[nTodayAssignments];
@@ -146,6 +155,9 @@ public class GUICustomer extends JFrame{
             labelEmptyTodayAssignments[0] = new JLabel("No assignment to show", SwingConstants.CENTER);
             panelToday.add(labelEmptyTodayAssignments[0]);
         }
+
+        //implementare funzione che carica i primi 5 appuntamenti del giorno
+        loadTheFirstFiveAssignments(nTodayAssignments);
 
 
         add(panelToday, BorderLayout.EAST);
@@ -655,8 +667,13 @@ public class GUICustomer extends JFrame{
             String strDateStart = date.format(dateStart);
             String strDateEnd = date.format(dateEnd);
             int i;
+            String strButtonDate;
             for (i = 0; i < NDAYMONTH; i++){
-                String strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+                if (i < 10){
+                    strButtonDate = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+                } else {
+                    strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+                }
                 if (strButtonDate.equals(strDateStart) ){
                     buttonDay[i].setBackground(Color.ORANGE);
                     included = true;
@@ -668,6 +685,60 @@ public class GUICustomer extends JFrame{
                 if (included){
                     buttonDay[i].setBackground(Color.ORANGE);
                 }
+            }
+        }
+    }
+
+    private int getNDailyAssignments(){
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+        System.out.println("today: " + todayDate);
+        int nAssignments = 0;
+        for (String key : customer.getAssignmentList().keySet()) {
+            Assignment a = customer.getAssignmentList().get(key);
+            String strDateAssignment = date.format(a.getDateStart());
+            String strTodayDate = date.format(todayDate);
+            if (strDateAssignment.equals(strTodayDate)){
+                nAssignments++;
+            }
+        }
+        return nAssignments;
+    }
+
+    private void loadTheFirstFiveAssignments(int nAssignments){
+        if (nAssignments > MAXVISIBLETODAYASSIGNMENT){
+            nAssignments = MAXVISIBLETODAYASSIGNMENT;
+        }
+
+        int i = 0;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+        HashSet<String> keyAssignmentsToShow = new HashSet<String>();
+
+        for (String key : customer.getAssignmentList().keySet()) {
+            Assignment a = customer.getAssignmentList().get(key);
+            String strDateAssignment = date.format(a.getDateStart());
+            String strTodayDate = date.format(todayDate);
+            if ((strDateAssignment.equals(strTodayDate) && (i < nAssignments))){
+                keyAssignmentsToShow.add(key);
+                i++;
+            }
+        }
+
+        HashMap<String, Assignment> assignmentList = customer.getAssignmentList();
+        int n = 0;
+        for (String key : keyAssignmentsToShow) {
+            DBConnector dbConnector = new DBConnector();
+            try {
+                Assignment a = assignmentList.get(key);
+                ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + a.getCode() + "'");
+                rs.next();
+                DogSitter ds = createDogSitterFromDB(rs.getString("DOGSITTER"));
+                buttonTodayAssignment[n].setText("Assignment with " + capitalizeFirstLetter(ds.getName()) + " " + capitalizeFirstLetter(ds.getSurname()));
+                dbConnector.closeConnection();
+                n++;
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

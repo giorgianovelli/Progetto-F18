@@ -73,19 +73,11 @@ public class DogSitter extends User {
         area.printPlaces();
     }
 
-    /*private void loadAssignments(){
-        *//*DBConnector dbConnector = new DBConnector();
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END DATETIME FROM ASSIGNMENT WHERE DOGSITTER = '" + email + "'");
-            while (rs.next()){
-                String code = rs.getString("CODE");
-                boolean state = rs.getBoolean("CONFIRMATION");
-                Date dateStart = rs.getDate("DATE_START");
-                Date dateEnd = rs.getDate("DATE_END");
+    public String getName(){
+        return name;
+    }
 
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*//*
-    }*/
+    public String getSurname(){
+        return surname;
+    }
 }
