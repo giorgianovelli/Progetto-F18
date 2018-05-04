@@ -61,6 +61,18 @@ public class DogSitter extends User {
         return listDogSize;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public Address getAddress(){
+        return address;
+    }
+
+    public void printArea(){
+        area.printPlaces();
+    }
+
     /*private void loadAssignments(){
         *//*DBConnector dbConnector = new DBConnector();
         try {

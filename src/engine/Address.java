@@ -15,6 +15,10 @@ public class Address {
         this.cap = cap;
     }
 
+    public String getCity() {
+        return city;
+    }
+
     public String toString(){
         return street + ", " + number + "; " + cap + " " + city + ", " + country;
     }

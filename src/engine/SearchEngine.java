@@ -40,6 +40,7 @@ public class SearchEngine {
         int nStartDay = Integer.parseInt(dateNumDayOfWeek.format(dateStart));
         int nEndDay = Integer.parseInt(dateNumDayOfWeek.format(dateEnd));
 
+        searchStep0(meetingPoint);
         searchStep1(dateStart, dateEnd, nStartDay, nEndDay);
         searchStep2(dateStart, dateEnd, nStartDay, nEndDay);
         searchStep3(dogList);
@@ -47,14 +48,26 @@ public class SearchEngine {
         searchStep5(dateStart, dateEnd, dogList);
         searchStep6(cash);
 
-        //implementare metodo che filtra i dog sitter in base al meeting point
-
         System.out.println("Dog sitters available:");
         for (DogSitter ds : dogSitterList) {
             System.out.println(ds.getEmail());
         }
 
         return dogSitterList;
+    }
+
+    private void searchStep0(Address meetingPoint){
+        //funzione che filtra i dog sitter in base al meeting point
+        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        for (DogSitter ds : dogSitterList) {
+            Area dogSitterArea = ds.getArea();
+            if (!(dogSitterArea.contains(meetingPoint.getCity()))){
+                toRemove.add(ds);
+            }
+        }
+        for (DogSitter ds : toRemove) {
+            dogSitterList.remove(ds);
+        }
     }
 
     private void searchStep1(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
