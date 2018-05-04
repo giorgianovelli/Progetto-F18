@@ -24,6 +24,7 @@ public class Customer extends User {
         assignmentList = new HashMap<String, Assignment>();
         reviewList = new HashMap<String, Review>();
         assignmentList = getCustomerListAssignmentFromDB(email);
+        dogList = getDogListFromDB(email);
     }
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
@@ -149,6 +150,22 @@ public class Customer extends User {
     }
 
     public HashSet<Dog> getDogList() {
+        return dogList;
+    }
+
+    private HashSet<Dog> getDogListFromDB(String email){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT ID FROM DOGS WHERE OWNER_EMAIL = '" + email + "'");
+            while (rs.next()){
+                int dogID = rs.getInt("ID");
+                Dog dog = createDogFromDB(dogID);
+                dogList.add(dog);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return dogList;
     }
 }

@@ -97,6 +97,26 @@ public class SearchEngine {
             System.out.println(ds.getEmail());
         }
 
+        //funzione che escude i dogsitter che non danno disponibilità
+        //per il numero di cani richiesto dall'utente
+        System.out.println("nDogs: " + dogList.size());
+        for (DogSitter ds : dogSitterList) {
+            if (ds.getDogNumber() < dogList.size()){
+                toRemove.add(ds);
+            }
+        }
+        for (DogSitter ds : toRemove) {
+            dogSitterList.remove(ds);
+        }
+
+        toRemove.clear();
+
+        System.out.println("third");
+        for (DogSitter ds : dogSitterList) {
+            System.out.println(ds.getEmail() + ": " + ds.getDogNumber());
+        }
+
+
         //implementare funzione che esclude dogsitter con assignment concorrenti
 
         //nel caso in cui il cliente vuole pagare in contanti,

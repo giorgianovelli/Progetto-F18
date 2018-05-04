@@ -53,6 +53,10 @@ public class DogSitter extends User {
         return email;
     }
 
+    public int getDogNumber() {
+        return dogNumber;
+    }
+
     /*private void loadAssignments(){
         *//*DBConnector dbConnector = new DBConnector();
         try {
