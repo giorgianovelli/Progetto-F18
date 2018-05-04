@@ -39,22 +39,32 @@ public class SearchEngine {
         SimpleDateFormat dateNumDayOfWeek = new SimpleDateFormat("u");
         int nStartDay = Integer.parseInt(dateNumDayOfWeek.format(dateStart));
         int nEndDay = Integer.parseInt(dateNumDayOfWeek.format(dateEnd));
-        System.out.println("start: " + nStartDay);
-        System.out.println("end: " + nEndDay);
-        int i;
 
-        System.out.println("zero");
+        searchStep1(dateStart, dateEnd, nStartDay, nEndDay);
+        searchStep2(dateStart, dateEnd, nStartDay, nEndDay);
+        searchStep3(dogList);
+        searchStep4(dogList);
+        searchStep5(dateStart, dateEnd, dogList);
+        searchStep6(cash);
+
+        //implementare metodo che filtra i dog sitter in base al meeting point
+
+        System.out.println("Dog sitters available:");
         for (DogSitter ds : dogSitterList) {
             System.out.println(ds.getEmail());
         }
 
+        return dogSitterList;
+    }
+
+    private void searchStep1(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
+        //rimuove i dogsitter che non lavorano nei giorni richiesti dal cliente
+        int i;
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterList) {
             WorkingTime availability[] = ds.getDateTimeAvailability().getArrayDays();
             for (i = nStartDay - 1; i < nEndDay; i++){
                 if ((availability[i].getStart() == null) && (availability[i].getEnd() == null)){
-                    System.out.println("to remove: " + ds.getEmail());
-                    //dogSitterList.remove(ds);
                     toRemove.add(ds);
                 }
             }
@@ -62,15 +72,12 @@ public class SearchEngine {
         for (DogSitter ds : toRemove) {
             dogSitterList.remove(ds);
         }
+    }
 
-        toRemove.clear();
-
-        System.out.println("first");
-        for (DogSitter ds : dogSitterList) {
-            System.out.println(ds.getEmail());
-        }
-
+    private void searchStep2(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
+        int i;
+        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         Time timeStart = new Time(dateStart.getTime());
         Time timeEnd = new Time(dateEnd.getTime());
         for (DogSitter ds : dogSitterList) {
@@ -79,9 +86,6 @@ public class SearchEngine {
                 Time ts = availability[i].getStart();
                 Time te = availability[i].getEnd();
                 if (timeStart.after(ts) && timeEnd.before(te)){
-                    System.out.println(timeStart + ">" + ts);
-                    System.out.println(timeEnd + "<" + te);
-                    System.out.println("to remove: " + ds.getEmail());
                     toRemove.add(ds);
                 }
             }
@@ -90,17 +94,12 @@ public class SearchEngine {
         for (DogSitter ds : toRemove) {
             dogSitterList.remove(ds);
         }
+    }
 
-        toRemove.clear();
-
-        System.out.println("second");
-        for (DogSitter ds : dogSitterList) {
-            System.out.println(ds.getEmail());
-        }
-
+    private void searchStep3(HashSet<Dog> dogList){
         //funzione che escude i dogsitter che non danno disponibilità
         //per il numero di cani richiesto dall'utente
-        System.out.println("nDogs: " + dogList.size());
+        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterList) {
             if (ds.getDogNumber() < dogList.size()){
                 toRemove.add(ds);
@@ -109,18 +108,12 @@ public class SearchEngine {
         for (DogSitter ds : toRemove) {
             dogSitterList.remove(ds);
         }
+    }
 
-        toRemove.clear();
-
-        System.out.println("third");
-        for (DogSitter ds : dogSitterList) {
-            System.out.println(ds.getEmail() + ": " + ds.getDogNumber());
-        }
-
-
+    private void searchStep4(HashSet<Dog> dogList){
         //funzione che esclude i dogsitter che non danno dispobilità
         //per le taglie indicate dal cliente
-        System.out.println("nDogs: " + dogList.size());
+        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterList) {
             HashSet<DogSize> listDogSize = ds.getListDogSize();
             for (Dog dog : dogList) {
@@ -132,17 +125,16 @@ public class SearchEngine {
         for (DogSitter ds : toRemove) {
             dogSitterList.remove(ds);
         }
+    }
 
-        toRemove.clear();
-
-        //funzione che esclude dogsitter con assignment concorrenti
-        //esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
+    private void searchStep5(Date dateStart, Date dateEnd, HashSet<Dog> dogList){
+        //funzione che esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
+        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterList) {
             HashMap<String, Assignment> listAssignment = ds.getListAssignment();
             for (String key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
                 if ((dateStart.after(a.getDateStart()) && dateStart.before(a.getDateStart())) || (dateEnd.after(a.getDateEnd()) && dateEnd.before(a.getDateEnd()))){
-                    System.out.println("to remove: " + ds.getEmail());
                     toRemove.add(ds);
                 }
             }
@@ -151,17 +143,12 @@ public class SearchEngine {
         for (DogSitter ds : toRemove) {
             dogSitterList.remove(ds);
         }
+    }
 
-        toRemove.clear();
-
-        System.out.println("before last step");
-        for (DogSitter ds : dogSitterList) {
-            System.out.println(ds.getEmail());
-        }
-
-
+    private void searchStep6(boolean cash){
         //nel caso in cui il cliente vuole pagare in contanti,
         //esclude i dog sitter che accettano il pagamento solo con carta di credito
+        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         if (cash){
             for (DogSitter ds : dogSitterList) {
                 if(ds.isAcceptingCash() == false){
@@ -172,8 +159,6 @@ public class SearchEngine {
                 dogSitterList.remove(ds);
             }
         }
-
-        return dogSitterList;
     }
 
 }
