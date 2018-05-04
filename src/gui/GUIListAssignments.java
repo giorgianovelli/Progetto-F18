@@ -8,17 +8,20 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class GUIListAssignments extends JFrame{
+    final int N = 20;
+
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
-    private JPanel contentPanel = new JPanel();
-    private JPanel buttonPanel = new JPanel();
-    private JScrollPane scrollPanel = new JScrollPane(); //Da Fare
 
-    private JLabel labelState = new JLabel();
-    private JLabel labelDescription = new JLabel();
-    private JButton[] buttonAction = new JButton[4];
+
+    private JPanel infoPanel = new JPanel();
+    private JScrollPane scrollPanel = new JScrollPane(infoPanel); //non funziona
+
+    //private JLabel labelState = new JLabel("stato"); ancora da fare
+    private JLabel[] labelDescription = new JLabel[N];
+    private JButton[] buttonAction = new JButton[N];
 
     public GUIListAssignments(CalendarState cs, GUICustomer guiCustomer){
         setTitle("Your assignments");
@@ -28,23 +31,71 @@ public class GUIListAssignments extends JFrame{
         setResizable(false);
         setLayout(new BorderLayout());
 
+        setFont(new Font("Serif", Font.BOLD, 26));
+
+
+
         initComponents(cs, guiCustomer);
     }
 
     private void initComponents(CalendarState cs, GUICustomer gc){
-        //Tabella?
-        
+
+
+        infoPanel.setLayout(new GridLayout(labelDescription.length,2));
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
-        }
-        if (cs.equals(CalendarState.DELETING_REVIEW)){
-            setTitle("Your reviews");
-        }
-        if (cs.equals(CalendarState.SHOW_REVIEWS)){
-            setTitle("Your reviews");
+            for(int i = 0; i < labelDescription.length; i++){
+                labelDescription[i]= new JLabel("assignment's info");
+                buttonAction[i]= new JButton("Write a review");
+
+                infoPanel.add(labelDescription[i]);
+                infoPanel.add(buttonAction[i]);
+            }
 
         }
+        else if (cs.equals(CalendarState.DELETING_REVIEW)){
+            setTitle("Your reviews");
+
+            for(int i = 0; i < labelDescription.length; i++){
+                labelDescription[i]= new JLabel("your review's info");
+                buttonAction[i]= new JButton("Delete");
+
+                infoPanel.add(labelDescription[i]);
+                infoPanel.add(buttonAction[i]);
+            }
+
+        }
+        else if (cs.equals(CalendarState.SHOW_REVIEWS)){
+            setTitle("Your reviews");
+            for(int i = 0; i < labelDescription.length; i++){
+                labelDescription[i]= new JLabel("your review's info");
+                buttonAction[i]= new JButton("Show more");
+
+                infoPanel.add(labelDescription[i]);
+                infoPanel.add(buttonAction[i]);
+            }
+
+        } else {
+            for(int i = 0; i < N; i++){
+                labelDescription[i]= new JLabel("assignment's info");
+                buttonAction[i]= new JButton("Info");
+
+                infoPanel.add(labelDescription[i]);
+                infoPanel.add(buttonAction[i]);
+
+                //manca il controllo della data dell'appuntamento per specificare la label dello stato
+                //verde:confermato
+                //rosso: già passato
+                //giallo: da confermare
+            }
+        }
+
+        scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        add(scrollPanel);
+
 
 
 
