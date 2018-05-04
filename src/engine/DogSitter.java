@@ -57,6 +57,10 @@ public class DogSitter extends User {
         return dogNumber;
     }
 
+    public HashSet<DogSize> getListDogSize() {
+        return listDogSize;
+    }
+
     /*private void loadAssignments(){
         *//*DBConnector dbConnector = new DBConnector();
         try {

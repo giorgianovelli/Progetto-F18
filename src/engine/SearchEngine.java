@@ -2,6 +2,7 @@ package engine;
 
 import database.DBConnector;
 import engine.DogSitter;
+import enumeration.DogSize;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,6 +117,23 @@ public class SearchEngine {
             System.out.println(ds.getEmail() + ": " + ds.getDogNumber());
         }
 
+
+        //funzione che esclude i dogsitter che non danno dispobilità
+        //per le taglie indicate dal cliente
+        System.out.println("nDogs: " + dogList.size());
+        for (DogSitter ds : dogSitterList) {
+            HashSet<DogSize> listDogSize = ds.getListDogSize();
+            for (Dog dog : dogList) {
+                if (!(listDogSize.contains(dog.getSize()))){
+                    toRemove.add(ds);
+                }
+            }
+        }
+        for (DogSitter ds : toRemove) {
+            dogSitterList.remove(ds);
+        }
+
+        toRemove.clear();
 
         //implementare funzione che esclude dogsitter con assignment concorrenti
 
