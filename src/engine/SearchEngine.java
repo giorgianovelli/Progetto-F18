@@ -135,7 +135,30 @@ public class SearchEngine {
 
         toRemove.clear();
 
-        //implementare funzione che esclude dogsitter con assignment concorrenti
+        //funzione che esclude dogsitter con assignment concorrenti
+        //esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
+        for (DogSitter ds : dogSitterList) {
+            HashMap<String, Assignment> listAssignment = ds.getListAssignment();
+            for (String key : listAssignment.keySet()) {
+                Assignment a = listAssignment.get(key);
+                if ((dateStart.after(a.getDateStart()) && dateStart.before(a.getDateStart())) || (dateEnd.after(a.getDateEnd()) && dateEnd.before(a.getDateEnd()))){
+                    System.out.println("to remove: " + ds.getEmail());
+                    toRemove.add(ds);
+                }
+            }
+        }
+
+        for (DogSitter ds : toRemove) {
+            dogSitterList.remove(ds);
+        }
+
+        toRemove.clear();
+
+        System.out.println("before last step");
+        for (DogSitter ds : dogSitterList) {
+            System.out.println(ds.getEmail());
+        }
+
 
         //nel caso in cui il cliente vuole pagare in contanti,
         //esclude i dog sitter che accettano il pagamento solo con carta di credito
