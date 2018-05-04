@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 public class GUIListAssignments extends JFrame{
     final int N = 20;
@@ -16,12 +17,13 @@ public class GUIListAssignments extends JFrame{
 
 
 
-    private JPanel infoPanel = new JPanel();
-    private JScrollPane scrollPanel = new JScrollPane(infoPanel); //non funziona
+    private JPanel contentPanel = new JPanel(); //pannello esterno
+    private JScrollPane scrollPanel = new JScrollPane(contentPanel);
 
-    //private JLabel labelState = new JLabel("stato"); ancora da fare
+    private JLabel labelState = new JLabel("stato");
     private JLabel[] labelDescription = new JLabel[N];
     private JButton[] buttonAction = new JButton[N];
+    private JPanel[] infoPanel = new JPanel[N]; //infopanel[i] contiene una label e un bottone
 
     public GUIListAssignments(CalendarState cs, GUICustomer guiCustomer){
         setTitle("Your assignments");
@@ -31,26 +33,23 @@ public class GUIListAssignments extends JFrame{
         setResizable(false);
         setLayout(new BorderLayout());
 
-        setFont(new Font("Serif", Font.BOLD, 26));
-
-
-
         initComponents(cs, guiCustomer);
     }
 
     private void initComponents(CalendarState cs, GUICustomer gc){
 
 
-        infoPanel.setLayout(new GridLayout(labelDescription.length,2));
+        contentPanel.setLayout((new GridLayout(infoPanel.length, 1, 5, 5)));
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
             for(int i = 0; i < labelDescription.length; i++){
                 labelDescription[i]= new JLabel("assignment's info");
-                buttonAction[i]= new JButton("Write a review");
+                buttonAction[i] = new JButton("Write a review");
 
-                infoPanel.add(labelDescription[i]);
-                infoPanel.add(buttonAction[i]);
+
+                createPanel(i);
+
             }
 
         }
@@ -61,8 +60,7 @@ public class GUIListAssignments extends JFrame{
                 labelDescription[i]= new JLabel("your review's info");
                 buttonAction[i]= new JButton("Delete");
 
-                infoPanel.add(labelDescription[i]);
-                infoPanel.add(buttonAction[i]);
+                createPanel(i);
             }
 
         }
@@ -72,8 +70,7 @@ public class GUIListAssignments extends JFrame{
                 labelDescription[i]= new JLabel("your review's info");
                 buttonAction[i]= new JButton("Show more");
 
-                infoPanel.add(labelDescription[i]);
-                infoPanel.add(buttonAction[i]);
+                createPanel(i);
             }
 
         } else {
@@ -81,13 +78,13 @@ public class GUIListAssignments extends JFrame{
                 labelDescription[i]= new JLabel("assignment's info");
                 buttonAction[i]= new JButton("Info");
 
-                infoPanel.add(labelDescription[i]);
-                infoPanel.add(buttonAction[i]);
+                createPanel(i);
 
                 //manca il controllo della data dell'appuntamento per specificare la label dello stato
                 //verde:confermato
                 //rosso: già passato
                 //giallo: da confermare
+                //chiamo il metodo createLabelState
             }
         }
 
@@ -104,5 +101,22 @@ public class GUIListAssignments extends JFrame{
                 gc.setCalendarState(CalendarState.NORMAL);
             }
          });
+    }
+
+    //metodo che crea infoPanel[i] e gli assegna bottone e label
+    private void createPanel(int i){
+        infoPanel[i] = new JPanel();
+        infoPanel[i].setLayout(new BorderLayout());
+        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
+        infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
+        contentPanel.add(infoPanel[i]);
+    }
+
+
+    //metodo per settare il colore della labelState
+    private void createLabelState(Date d){
+        //da Fare
+        //da customer vedo la lista degli assignment, controllo dateEnd e state
+        //state è false(annullato), true(confermato) o null(da confermare)
     }
 }
