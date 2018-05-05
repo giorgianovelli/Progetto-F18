@@ -61,4 +61,8 @@ public class Assignment {
     public Date getDateEnd() {
         return dateEnd;
     }
+
+    public String getCode() {
+        return code;
+    }
 }
