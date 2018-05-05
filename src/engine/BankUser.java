@@ -44,4 +44,20 @@ public class BankUser {
     public String toString() {
         return "email: " + email + "\ncard number: " + paymentMethod.getNumber() + "\nowner surname: " + paymentMethod.getSurname() + "\nowner name: " + paymentMethod.getSurname() + "\nCVV: " + paymentMethod.getCvv() + "\nexpiration date: " + paymentMethod.getExpirationDate() + "\nAmount: " + paymentMethod.getAmount();
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 }

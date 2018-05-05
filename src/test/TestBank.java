@@ -6,7 +6,8 @@ public class TestBank {
 
     public static void main(String[] args) {
         Bank bank = new Bank(0);
-        bank.printBankUsers();
+        //bank.printBankUsers();
+        bank.makeBankTransaction("GIANNINORVEGESE@GMAIL.COM", "MARIOBIANCHI@LIBERO.COM", 1000);
 
     }
 }

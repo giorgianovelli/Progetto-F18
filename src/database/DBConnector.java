@@ -11,6 +11,7 @@ public class DBConnector {
     private Connection conn = null;
     private Statement stmt = null;
     private ResultSet rs = null;
+    private int RowsAffected = 0;
 
     public ResultSet askDB(String query) throws SQLException {
         try{
@@ -29,9 +30,41 @@ public class DBConnector {
         }
     }
 
+    public int updateDB(String query) throws SQLException {
+
+        try {
+
+            /*
+            if (!query.endsWith(";")) {
+                query = query.concat(";");
+            }
+            */
+
+            conn = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
+            stmt = conn.createStatement();
+            RowsAffected = stmt.executeUpdate(query);
+            return RowsAffected;
+
+        }
+        catch (SQLException e) {
+            System.out.println("ERROR!!");
+            System.err.println(e);
+            stmt.close();
+            conn.close();
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
     public void closeConnection() throws SQLException {
         conn.close();
         rs.close();
+        stmt.close();
+    }
+
+    public void closeUpdate() throws SQLException { //inutile? rs.close dà problemi con l'update @Riccardo
+        conn.close();
         stmt.close();
     }
 }

@@ -256,7 +256,7 @@ public class ObjectCreator {
         }
     }
 
-    private static PaymentMethod getPaymentMethodFromDB(String payment){
+    public static PaymentMethod getPaymentMethodFromDB(String payment){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
         try {
