@@ -117,9 +117,8 @@ public class GUICustomer extends JFrame{
         panelToday.add(labelTodayAssignments);
         int i;
 
-        //inserire una funzione che restituisce il numero di appuntamenti del giorno
+        //restituisce il numero di appuntamenti del giorno
         nTodayAssignments = getNDailyAssignments();
-        System.out.println(nTodayAssignments);
 
         if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
             buttonTodayAssignment = new JButton[nTodayAssignments];
@@ -692,14 +691,21 @@ public class GUICustomer extends JFrame{
     private int getNDailyAssignments(){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
-        System.out.println("today: " + todayDate);
         int nAssignments = 0;
         for (String key : customer.getAssignmentList().keySet()) {
             Assignment a = customer.getAssignmentList().get(key);
-            String strDateAssignment = date.format(a.getDateStart());
+            String strDateStart = date.format(a.getDateStart());
             String strTodayDate = date.format(todayDate);
-            if (strDateAssignment.equals(strTodayDate)){
-                nAssignments++;
+            String strDateEnd = date.format(a.getDateEnd());
+            try {
+                Date dayStart = date.parse(strDateStart);
+                Date dayEnd = date.parse(strDateEnd);
+                Date today = date.parse(strTodayDate);
+                if ((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)){
+                    nAssignments++;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         return nAssignments;
@@ -717,11 +723,19 @@ public class GUICustomer extends JFrame{
 
         for (String key : customer.getAssignmentList().keySet()) {
             Assignment a = customer.getAssignmentList().get(key);
-            String strDateAssignment = date.format(a.getDateStart());
+            String strDateStart = date.format(a.getDateStart());
+            String strDateEnd = date.format(a.getDateEnd());
             String strTodayDate = date.format(todayDate);
-            if ((strDateAssignment.equals(strTodayDate) && (i < nAssignments))){
-                keyAssignmentsToShow.add(key);
-                i++;
+            try {
+                Date dayStart = date.parse(strDateStart);
+                Date dayEnd = date.parse(strDateEnd);
+                Date today = date.parse(strTodayDate);
+                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nAssignments)){
+                    keyAssignmentsToShow.add(key);
+                    i++;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
 
