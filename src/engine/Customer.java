@@ -30,6 +30,9 @@ public class Customer extends User {
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
         String emailDogSitter = ds.email;
 
+        //chiamata alla classe banca per effettuare la transazione
+        //implementare metodo definitivo
+
         //chiamata alla classe banca per effettuare la transazione (blocco provvisorio)
         boolean testTransaction = true;
 

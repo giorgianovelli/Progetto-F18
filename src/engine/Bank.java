@@ -8,6 +8,8 @@ import staticClasses.ObjectCreator;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -17,9 +19,8 @@ public class Bank {
     private HashMap<String, BankUser> listUser;
     private long nTransaction;
 
-    public Bank(long nTransaction) {
-
-        nTransaction = 0;
+    public Bank() {
+        nTransaction = countTransaction();
         this.listUser = new HashMap<String,BankUser>();
 
         DBConnector dbConnector = new DBConnector();
@@ -68,8 +69,8 @@ public class Bank {
             return false;
         }
         else {
-            System.out.println(customer.getEmail() + ": €" + pmCustomer.getAmount());
-            System.out.println(dogsitter.getEmail() + ": €" + pmDogsitter.getAmount());
+            System.out.println(emailCustomer + ": €" + pmCustomer.getAmount());
+            System.out.println(emailDogsitter + ": €" + pmDogsitter.getAmount());
 
             DBConnector dbConnector = new DBConnector();
 
@@ -80,6 +81,12 @@ public class Bank {
 
                 if (updateCustomer && updateDogsitter) {
                     System.out.println("Importi trasferiti con successo: conti correnti aggiornati");
+
+                    //Date date = new Date(); // java.util.Date; - This date has both the date and time in it already.
+                    Timestamp sqlDate = new Timestamp(new Date().getTime());
+
+                    dbConnector.updateDB("INSERT INTO TRANSACTIONS VALUES ('" + emailCustomer + "', '" + emailDogsitter + "', '" + sqlDate + "', " + amount + ")");
+                    dbConnector.closeUpdate();
                 } else {
                     System.out.println("Errore nel trasferimento");
                 }
@@ -99,8 +106,18 @@ public class Bank {
         }
     }
 
-
-
-
+    private int countTransaction(){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT * FROM TRANSACTIONS");
+            rs.last();
+            int nTransaction = rs.getRow();
+            dbConnector.closeConnection();
+            return nTransaction;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;  //error
+        }
+    }
 }
 
