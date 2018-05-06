@@ -98,7 +98,7 @@ public class SearchEngine {
             for (i = nStartDay - 1; i < nEndDay; i++){
                 Time ts = availability[i].getStart();
                 Time te = availability[i].getEnd();
-                if (timeStart.after(ts) && timeEnd.before(te)){
+                if ((timeStart.after(ts) || timeStart.equals(ts)) && (timeEnd.before(te) || timeEnd.equals(te))){
                     toRemove.add(ds);
                 }
             }

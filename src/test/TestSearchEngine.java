@@ -22,8 +22,8 @@ public class TestSearchEngine {
         Date startDate = new Date();
         Date endDate = new Date();
         try {
-            startDate = date.parse("07/05/2018 13:00");
-            endDate = date.parse("07/05/2018 15:00");
+            startDate = date.parse("14/05/2018 13:00");
+            endDate = date.parse("14/05/2018 15:00");
         } catch (ParseException e) {
             e.printStackTrace();
         }
