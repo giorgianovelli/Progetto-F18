@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.StringTokenizer;
 
 import static staticClasses.ObjectCreator.createCustomerFromDB;
 import static staticClasses.ObjectCreator.createDogSitterFromDB;
@@ -116,17 +117,20 @@ public class GUICustomer extends JFrame{
         labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
         panelToday.add(labelTodayAssignments);
         int i;
+        int nShownTodayAssignments = 0;
 
         //restituisce il numero di appuntamenti del giorno
         nTodayAssignments = getNDailyAssignments();
 
-        if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
+        //redundant code?
+        /*if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
             buttonTodayAssignment = new JButton[nTodayAssignments];
             for (i = 0; i < nTodayAssignments; i++){
                 buttonTodayAssignment[i] = new JButton("Test assignment");
                 buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
                 buttonTodayAssignment[i].setOpaque(true);
                 buttonTodayAssignment[i].setBorderPainted(false);
+                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
                 panelToday.add(buttonTodayAssignment[i]);
             }
         } else {
@@ -136,8 +140,19 @@ public class GUICustomer extends JFrame{
                 buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
                 buttonTodayAssignment[i].setOpaque(true);
                 buttonTodayAssignment[i].setBorderPainted(false);
+                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
                 panelToday.add(buttonTodayAssignment[i]);
             }
+        }*/
+
+        buttonTodayAssignment = new JButton[nTodayAssignments];
+        for (i = 0; i < nTodayAssignments; i++){
+            buttonTodayAssignment[i] = new JButton("Test assignment");
+            buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+            buttonTodayAssignment[i].setOpaque(true);
+            buttonTodayAssignment[i].setBorderPainted(false);
+            buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
+            panelToday.add(buttonTodayAssignment[i]);
         }
 
 
@@ -146,16 +161,19 @@ public class GUICustomer extends JFrame{
             for (i = 0; i < MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1; i++){
                 labelEmptyTodayAssignments[i] = new JLabel();
                 panelToday.add(labelEmptyTodayAssignments[i]);
+                nShownTodayAssignments = nTodayAssignments;
             }
         } else if (nTodayAssignments > MAXVISIBLETODAYASSIGNMENT){
             panelToday.add(buttonShowMoreTodayAssignments);
+            nShownTodayAssignments = MAXVISIBLETODAYASSIGNMENT;
         } else {
             labelEmptyTodayAssignments = new JLabel[1];
             labelEmptyTodayAssignments[0] = new JLabel("No assignment to show", SwingConstants.CENTER);
             panelToday.add(labelEmptyTodayAssignments[0]);
+            nShownTodayAssignments = 0;
         }
 
-        //implementare funzione che carica i primi 5 appuntamenti del giorno
+        //carica i primi 5 appuntamenti del giorno
         loadTheFirstFiveAssignments(nTodayAssignments);
 
 
@@ -286,6 +304,22 @@ public class GUICustomer extends JFrame{
             }
         };
 
+        ActionListener todayAssignmentsAl = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent todayAssignmentAe) {
+                if (!(todayAssignmentAe.getActionCommand().equals(""))){
+                    JButton pressedButton = (JButton) todayAssignmentAe.getSource();
+                    StringTokenizer cmdToken = new StringTokenizer(buttonTodayAssignment[0].getText(), " ");
+                    String cmd = cmdToken.nextToken();
+                    System.out.println(cmd);
+                    if (cmd.equals("Assignment")){
+                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer();
+                        guiAssignment.setVisible(true);
+                    }
+                }
+            }
+        };
+
         //prepara il calendario
         startCalendar(cal, ctrlCal);
 
@@ -300,6 +334,10 @@ public class GUICustomer extends JFrame{
         menuItemShowReviews.addActionListener(menuAl);
         menuItemAccount.addActionListener(menuAl);
         buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
+
+        for (i = 0; i < nShownTodayAssignments; i++){
+            buttonTodayAssignment[i].addActionListener(todayAssignmentsAl);
+        }
 
     }
 
