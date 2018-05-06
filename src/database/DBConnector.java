@@ -30,7 +30,7 @@ public class DBConnector {
         }
     }
 
-    public int updateDB(String query) throws SQLException {
+    public boolean updateDB(String query) throws SQLException {
 
         try {
 
@@ -43,7 +43,7 @@ public class DBConnector {
             conn = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
             stmt = conn.createStatement();
             RowsAffected = stmt.executeUpdate(query);
-            return RowsAffected;
+            return true;
 
         }
         catch (SQLException e) {
@@ -52,7 +52,7 @@ public class DBConnector {
             stmt.close();
             conn.close();
             e.printStackTrace();
-            return 0;
+            return false;
         }
 
     }
@@ -63,7 +63,7 @@ public class DBConnector {
         stmt.close();
     }
 
-    public void closeUpdate() throws SQLException { //inutile? rs.close dà problemi con l'update @Riccardo
+    public void closeUpdate() throws SQLException {
         conn.close();
         stmt.close();
     }

@@ -74,11 +74,11 @@ public class Bank {
             DBConnector dbConnector = new DBConnector();
 
             try {
-                int updateCustomer = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmCustomer.getAmount() + "WHERE NUM = '" + pmCustomer.getNumber() + "';");
-                int updateDogsitter = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmDogsitter.getAmount() + "WHERE NUM = '" + pmDogsitter.getNumber() + "';");
+                boolean updateCustomer = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmCustomer.getAmount() + "WHERE NUM = '" + pmCustomer.getNumber() + "';");
+                boolean updateDogsitter = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmDogsitter.getAmount() + "WHERE NUM = '" + pmDogsitter.getNumber() + "';");
                 dbConnector.closeUpdate();
 
-                if (updateCustomer > 0 && updateDogsitter > 0) {
+                if (updateCustomer && updateDogsitter) {
                     System.out.println("Importi trasferiti con successo: conti correnti aggiornati");
                 } else {
                     System.out.println("Errore nel trasferimento");
