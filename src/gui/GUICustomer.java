@@ -311,7 +311,6 @@ public class GUICustomer extends JFrame{
                     JButton pressedButton = (JButton) todayAssignmentAe.getSource();
                     StringTokenizer cmdToken = new StringTokenizer(buttonTodayAssignment[0].getText(), " ");
                     String cmd = cmdToken.nextToken();
-                    System.out.println(cmd);
                     if (cmd.equals("Assignment")){
                         GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer();
                         guiAssignment.setVisible(true);
