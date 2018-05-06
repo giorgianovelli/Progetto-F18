@@ -82,7 +82,6 @@ public class ObjectCreator {
                 listDogSize.add(DogSize.BIG);
             }
             boolean giant = rs.getBoolean("GIANT");
-            System.out.println(giant);
             if (giant){
                 listDogSize.add(DogSize.GIANT);
             }

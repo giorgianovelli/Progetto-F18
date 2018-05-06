@@ -147,7 +147,7 @@ public class SearchEngine {
             HashMap<String, Assignment> listAssignment = ds.getListAssignment();
             for (String key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
-                if ((dateStart.after(a.getDateStart()) && dateStart.before(a.getDateStart())) || (dateEnd.after(a.getDateEnd()) && dateEnd.before(a.getDateEnd()))){
+                if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart()))) || ((dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
                     toRemove.add(ds);
                 }
             }
