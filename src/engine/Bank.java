@@ -68,8 +68,8 @@ public class Bank {
             return false;
         }
         else {
-            System.out.println(pmCustomer.getAmount());
-            System.out.println(pmDogsitter.getAmount());
+            System.out.println(customer.getEmail() + ": €" + pmCustomer.getAmount());
+            System.out.println(dogsitter.getEmail() + ": €" + pmDogsitter.getAmount());
 
             DBConnector dbConnector = new DBConnector();
 
