@@ -34,9 +34,6 @@ public class Customer extends User {
         String emailDogSitter = ds.email;
 
         //chiamata alla classe banca per effettuare la transazione
-        //implementare metodo definitivo
-
-        //chiamata alla classe banca per effettuare la transazione (blocco provvisorio)
         boolean testTransaction = true;
         DBConnector dbConnector = new DBConnector();
         int code = -1;
@@ -51,7 +48,7 @@ public class Customer extends User {
         Bank bank = new Bank();
 
         //implementare funzione per il calcolo del prezzo della prestazione
-        double amount = 1;
+        double amount = 10;
 
         if (bank.isTransactionPossible(email, amount)) {
 
@@ -71,7 +68,6 @@ public class Customer extends User {
                 e.printStackTrace();
             }
 
-            //String code = dateStringStartAssigment  + "_" + ds.email + "_" + this.email;
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
 
@@ -79,8 +75,6 @@ public class Customer extends User {
 
             Timestamp sqlStart = new Timestamp(startAssignment.getTime());
             Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
-
-            //System.out.println("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email  + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
 
             try {
                 dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email  + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
@@ -105,7 +99,7 @@ public class Customer extends User {
         }
     }
 
-    public boolean removeAssignment(String key){
+    public boolean removeAssignment(Integer key){
         Assignment a = null;
         a = assignmentList.get(key);
         if (a != null){
@@ -113,6 +107,18 @@ public class Customer extends User {
             System.out.println("Selected assignment removed!");
 
             //aggiungere codice per rimuovere la prenotazione dal database
+            DBConnector dbConnector = new DBConnector();
+            Bank bank = new Bank();
+            try {
+                //dbConnector.updateDB("DELETE FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + a.getCode());
+                bank.refundCustomer(a.getCode());
+                dbConnector.updateDB("DELETE FROM MEETING_POINT WHERE CODE = " + a.getCode());
+                dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE CODE = " + a.getCode());
+                dbConnector.updateDB("DELETE FROM ASSIGNMENT WHERE CODE = " + a.getCode());
+                dbConnector.closeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             return true;
         } else {

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class Bank {
 
@@ -66,7 +67,7 @@ public class Bank {
         pmDogsitter.setAmount(pmDogsitter.getAmount() + amount);
 
         if (pmCustomer.getAmount() < 0) {
-            System.out.println("Transazione non riuscita: credito insufficiente");
+            System.out.println("Transaction failed: insufficient credit");
             return false;
         }
         else {
@@ -81,7 +82,8 @@ public class Bank {
                 dbConnector.closeUpdate();
 
                 if (updateCustomer && updateDogsitter) {
-                    System.out.println("Importi trasferiti con successo: conti correnti aggiornati");
+                    System.out.println("Amount: €" + amount);
+                    System.out.println("Amounts transferred successfully: current accounts updated");
 
                     //Date date = new Date(); // java.util.Date; - This date has both the date and time in it already.
                     //Timestamp sqlDate = new Timestamp(new Date().getTime());
@@ -91,7 +93,7 @@ public class Bank {
                     dbConnector.updateDB("INSERT INTO TRANSACTIONS VALUES ('" + emailCustomer + "', '" + emailDogsitter + "', '" + strDate + "', " + code + ", " + amount + ")");
                     dbConnector.closeUpdate();
                 } else {
-                    System.out.println("Errore nel trasferimento");
+                    System.out.println("Error in transaction");
                 }
 
             } catch (SQLException e) {
@@ -127,11 +129,76 @@ public class Bank {
         BankUser customer = listUser.get(emailCustomer);
         PaymentMethod pmCustomer = customer.getPaymentMethod();
         if (pmCustomer.getAmount() - amount < 0){
-            System.out.println("Impossibile effettuare la transazione: credito insufficiente");
+            System.out.println("The transaction can not be made: insufficient credit");
             return false;
         } else {
             return true;
         }
+    }
+
+    public boolean refundCustomer(int code){
+        DBConnector dbConnector = new DBConnector();
+        String emailCustomer = "";
+        String emailDogsitter = "";
+        double amount = 0;
+
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CUSTOMER, DOGSITTER FROM ASSIGNMENT WHERE CODE = " + code);
+            rs.next();
+            emailCustomer = rs.getString("CUSTOMER");
+            emailDogsitter = rs.getString("DOGSITTER");
+            dbConnector.closeConnection();
+            rs = dbConnector.askDB("SELECT AMOUNT FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + code);
+            rs.next();
+            amount = rs.getDouble("AMOUNT");
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        BankUser customer = listUser.get(emailCustomer);
+        BankUser dogsitter = listUser.get(emailDogsitter);
+        PaymentMethod pmCustomer = customer.getPaymentMethod();
+        PaymentMethod pmDogsitter = dogsitter.getPaymentMethod();
+        pmCustomer.setAmount(pmCustomer.getAmount() + amount);
+        pmDogsitter.setAmount(pmDogsitter.getAmount() - amount);
+
+        if (pmDogsitter.getAmount() < 0) {
+            System.out.println("Refund failed: insufficient credit");
+            return false;
+        }
+        else {
+            System.out.println(emailCustomer + ": €" + pmCustomer.getAmount());
+            System.out.println(emailDogsitter + ": €" + pmDogsitter.getAmount());
+
+
+
+            try {
+                boolean updateCustomer = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmCustomer.getAmount() + "WHERE NUM = '" + pmCustomer.getNumber() + "';");
+                boolean updateDogsitter = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmDogsitter.getAmount() + "WHERE NUM = '" + pmDogsitter.getNumber() + "';");
+                dbConnector.closeUpdate();
+
+                if (updateCustomer && updateDogsitter) {
+                    System.out.println("Refund completed successfully: current accounts updated");
+
+                    //Date date = new Date(); // java.util.Date; - This date has both the date and time in it already.
+                    //Timestamp sqlDate = new Timestamp(new Date().getTime());
+                    //SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    //String strDate = date.format(new Date());
+
+                    //dbConnector.updateDB("INSERT INTO TRANSACTIONS VALUES ('" + emailCustomer + "', '" + emailDogsitter + "', '" + strDate + "', " + code + ", " + amount + ")");
+                    dbConnector.updateDB("DELETE FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + code);
+                    dbConnector.closeUpdate();
+                } else {
+                    System.out.println("Error in refunding");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return true;
     }
 }
 

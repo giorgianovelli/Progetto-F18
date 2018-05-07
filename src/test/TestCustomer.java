@@ -26,7 +26,9 @@ public class TestCustomer {
         date.setLenient(false);
         String strEnd = "07/05/2018 14:00";
         Date end = date.parse(strEnd);
-        c.addAssignment(ds, new Date(), end, selectedDogs, ds.getAddress());
+        //c.addAssignment(ds, new Date(), end, selectedDogs, ds.getAddress());
+        c.removeAssignment(3);
+
         /*String strBirthDS = "03/04/1980 00:00";
         Date birthDS = date.parse(strBirthC);
         String strDateStartAssignment = "30/04/2018 11:00";
