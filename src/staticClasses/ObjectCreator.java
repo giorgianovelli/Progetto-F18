@@ -155,13 +155,13 @@ public class ObjectCreator {
         return dog;
     }
 
-    public static HashMap<String, Assignment> getDogSitterListAssignmentFromDB(DogSitter dogSitter){
-        HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
+    public static HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(DogSitter dogSitter){
+        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE DOGSITTER = '" + dogSitter + "'");
             while (rs.next()){
-                String code = rs.getString("CODE");
+                int code = rs.getInt("CODE");
                 boolean state = rs.getBoolean("CONFIRMATION");
                 Date dateStart = rs.getDate("DATE_START");
                 Date dateEnd = rs.getDate("DATE_END");
@@ -171,19 +171,20 @@ public class ObjectCreator {
                 listAssignment.put(code, assignment);
             }
             dbConnector.closeConnection();
+            return listAssignment;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return listAssignment;
     }
 
-    public static HashMap<String, Assignment> getCustomerListAssignmentFromDB(String customer){
-        HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
+    public static HashMap<Integer, Assignment> getCustomerListAssignmentFromDB(String customer){
+        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + customer + "'");
             while (rs.next()){
-                String code = rs.getString("CODE");
+                int code = rs.getInt("CODE");
                 boolean state = rs.getBoolean("CONFIRMATION");
                 Date dateStart = rs.getDate("DATE_START");
                 Date dateEnd = rs.getDate("DATE_END");
@@ -199,7 +200,7 @@ public class ObjectCreator {
         return listAssignment;
     }
 
-    private static Address getMeetingPointFromDB(String code){
+    private static Address getMeetingPointFromDB(int code){
         DBConnector dbConnector = new DBConnector();
         Address address = null;
         try {
@@ -218,7 +219,7 @@ public class ObjectCreator {
         return address;
     }
 
-    private static HashSet<Dog> getDogListFromDB(String code){
+    private static HashSet<Dog> getDogListFromDB(int code){
         HashSet<Dog> dogList= new HashSet<Dog>();
         DBConnector dbConnector = new DBConnector();
         try {

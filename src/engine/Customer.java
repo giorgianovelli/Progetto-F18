@@ -15,13 +15,13 @@ import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
-    private HashMap<String, Assignment> assignmentList;
+    private HashMap<Integer, Assignment> assignmentList;
     private HashMap<String, Review> reviewList;
 
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
-        assignmentList = new HashMap<String, Assignment>();
+        assignmentList = new HashMap<Integer, Assignment>();
         reviewList = new HashMap<String, Review>();
         assignmentList = getCustomerListAssignmentFromDB(email);
         dogList = getDogListFromDB(email);
@@ -35,6 +35,15 @@ public class Customer extends User {
 
         //chiamata alla classe banca per effettuare la transazione (blocco provvisorio)
         boolean testTransaction = true;
+        DBConnector dbConnector = new DBConnector();
+        int code = -1;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT * FROM ASSIGNMENT");
+            rs.last();
+            code = rs.getRow() + 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if (testTransaction) {
 
@@ -43,7 +52,7 @@ public class Customer extends User {
             SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             date.setLenient(false);
             String dateStringStartAssigment = date.format(dateStartAssignment);
-            String code = dateStringStartAssigment  + "_" + ds.email + "_" + this.email;
+            //String code = dateStringStartAssigment  + "_" + ds.email + "_" + this.email;
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
 
@@ -105,9 +114,9 @@ public class Customer extends User {
         }
     }
 
-    public HashMap<String, Assignment> listAssignment(){
+    public HashMap<Integer, Assignment> listAssignment(){
         Assignment a = null;
-        for(String key : assignmentList.keySet()){
+        for(Integer key : assignmentList.keySet()){
             a = assignmentList.get(key);
             System.out.println(a.toString());
         }
@@ -144,7 +153,7 @@ public class Customer extends User {
         }
     }
 
-    public HashMap<String, Assignment> getAssignmentList() {
+    public HashMap<Integer, Assignment> getAssignmentList() {
         return assignmentList;
     }
 

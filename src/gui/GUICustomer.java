@@ -693,9 +693,9 @@ public class GUICustomer extends JFrame{
     }
 
     private void showAssignmentOnCalendar(){
-        HashMap<String, Assignment> listAssignment = customer.getAssignmentList();
+        HashMap<Integer, Assignment> listAssignment = customer.getAssignmentList();
         boolean included = false;
-        for (String key : listAssignment.keySet()) {
+        for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             Date dateStart = a.getDateStart();
             Date dateEnd = a.getDateEnd();
@@ -729,7 +729,7 @@ public class GUICustomer extends JFrame{
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;
-        for (String key : customer.getAssignmentList().keySet()) {
+        for (Integer key : customer.getAssignmentList().keySet()) {
             Assignment a = customer.getAssignmentList().get(key);
             String strDateStart = date.format(a.getDateStart());
             String strTodayDate = date.format(todayDate);
@@ -756,9 +756,9 @@ public class GUICustomer extends JFrame{
         int i = 0;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
-        HashSet<String> keyAssignmentsToShow = new HashSet<String>();
+        HashSet<Integer> keyAssignmentsToShow = new HashSet<Integer>();
 
-        for (String key : customer.getAssignmentList().keySet()) {
+        for (Integer key : customer.getAssignmentList().keySet()) {
             Assignment a = customer.getAssignmentList().get(key);
             String strDateStart = date.format(a.getDateStart());
             String strDateEnd = date.format(a.getDateEnd());
@@ -776,9 +776,9 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        HashMap<String, Assignment> assignmentList = customer.getAssignmentList();
+        HashMap<Integer, Assignment> assignmentList = customer.getAssignmentList();
         int n = 0;
-        for (String key : keyAssignmentsToShow) {
+        for (Integer key : keyAssignmentsToShow) {
             DBConnector dbConnector = new DBConnector();
             try {
                 Assignment a = assignmentList.get(key);

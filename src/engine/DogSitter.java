@@ -15,7 +15,7 @@ public class DogSitter extends User {
     private String biography;
     private Availability dateTimeAvailability;
     private boolean acceptCash;
-    private HashMap<String, Assignment> listAssignment;
+    private HashMap<Integer, Assignment> listAssignment;
     private HashMap<String, Review> listReview;
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
@@ -28,7 +28,7 @@ public class DogSitter extends User {
         this.biography = biography;
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
-        this.listAssignment = listAssignment = getDogSitterListAssignmentFromDB(this);
+        this.listAssignment = getDogSitterListAssignmentFromDB(this);
     }
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
@@ -37,7 +37,7 @@ public class DogSitter extends User {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
     }
 
-    public HashMap<String, Assignment> getListAssignment() {
+    public HashMap<Integer, Assignment> getListAssignment() {
         return listAssignment;
     }
 

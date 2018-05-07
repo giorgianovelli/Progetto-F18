@@ -144,8 +144,8 @@ public class SearchEngine {
         //funzione che esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterList) {
-            HashMap<String, Assignment> listAssignment = ds.getListAssignment();
-            for (String key : listAssignment.keySet()) {
+            HashMap<Integer, Assignment> listAssignment = ds.getListAssignment();
+            for (Integer key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
                 if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart()))) || ((dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
                     toRemove.add(ds);
