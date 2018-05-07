@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class Bank {
         return nTransaction;
     }
 
-    public boolean makeBankTransaction(String emailCustomer, String emailDogsitter, double amount) {
+    public boolean makeBankTransaction(String emailCustomer, String emailDogsitter, int code, double amount) {
         BankUser customer = listUser.get(emailCustomer);
         BankUser dogsitter = listUser.get(emailDogsitter);
         PaymentMethod pmCustomer = customer.getPaymentMethod();
@@ -83,9 +84,11 @@ public class Bank {
                     System.out.println("Importi trasferiti con successo: conti correnti aggiornati");
 
                     //Date date = new Date(); // java.util.Date; - This date has both the date and time in it already.
-                    Timestamp sqlDate = new Timestamp(new Date().getTime());
+                    //Timestamp sqlDate = new Timestamp(new Date().getTime());
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String strDate = date.format(new Date());
 
-                    dbConnector.updateDB("INSERT INTO TRANSACTIONS VALUES ('" + emailCustomer + "', '" + emailDogsitter + "', '" + sqlDate + "', " + amount + ")");
+                    dbConnector.updateDB("INSERT INTO TRANSACTIONS VALUES ('" + emailCustomer + "', '" + emailDogsitter + "', '" + strDate + "', " + code + ", " + amount + ")");
                     dbConnector.closeUpdate();
                 } else {
                     System.out.println("Errore nel trasferimento");
@@ -117,6 +120,17 @@ public class Bank {
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;  //error
+        }
+    }
+
+    public boolean isTransactionPossible(String emailCustomer, double amount){
+        BankUser customer = listUser.get(emailCustomer);
+        PaymentMethod pmCustomer = customer.getPaymentMethod();
+        if (pmCustomer.getAmount() - amount < 0){
+            System.out.println("Impossibile effettuare la transazione: credito insufficiente");
+            return false;
+        } else {
+            return true;
         }
     }
 }

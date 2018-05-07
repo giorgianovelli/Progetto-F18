@@ -16,9 +16,8 @@ public class ObjectCreator {
     public static Customer createCustomerFromDB(String customerEmail){
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL, NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT FROM CUSTOMERS WHERE EMAIL = '" + customerEmail + "'");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT FROM CUSTOMERS WHERE EMAIL = '" + customerEmail + "'");
             rs.next();
-            String email = rs.getString("EMAIL");
             String name = rs.getString("NAME");
             String surname = rs.getString("SURNAME");
             String password = rs.getString("PASSWORD");
@@ -29,9 +28,9 @@ public class ObjectCreator {
 
             PaymentMethod paymentMethod = getPaymentMethodFromDB(payment);
 
-            Address address = getAddressFromDB(email);
+            Address address = getAddressFromDB(customerEmail);
 
-            return new Customer(email, name, surname, password, phone, birthdate, address, paymentMethod);
+            return new Customer(customerEmail, name, surname, password, phone, birthdate, address, paymentMethod);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,9 +41,8 @@ public class ObjectCreator {
     public static DogSitter createDogSitterFromDB(String dogSitterEmail){
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL, NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT, CASH_FLAG, NDOGS, BIOGRAPHY FROM DOGSITTERS WHERE EMAIL = '" + dogSitterEmail + "'");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT, CASH_FLAG, NDOGS, BIOGRAPHY FROM DOGSITTERS WHERE EMAIL = '" + dogSitterEmail + "'");
             rs.next();
-            String email = rs.getString("EMAIL");
             String name = rs.getString("NAME");
             String surname = rs.getString("SURNAME");
             String password = rs.getString("PASSWORD");
@@ -56,9 +54,9 @@ public class ObjectCreator {
             String biography = rs.getString("BIOGRAPHY");
             dbConnector.closeConnection();
 
-            Address address = getAddressFromDB(email);
+            Address address = getAddressFromDB(dogSitterEmail);
 
-            rs = dbConnector.askDB("SELECT CITY FROM DOGSITTER_AREA WHERE DOGSITTER = '" + email + "'");
+            rs = dbConnector.askDB("SELECT CITY FROM DOGSITTER_AREA WHERE DOGSITTER = '" + dogSitterEmail + "'");
             Area listArea = new Area();
             while (rs.next()){
                 String cityOp = rs.getString("CITY");
@@ -66,7 +64,7 @@ public class ObjectCreator {
             }
             dbConnector.closeConnection();
 
-            rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + email + "'");
+            rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + dogSitterEmail + "'");
             HashSet<DogSize> listDogSize = new HashSet<DogSize>();
             rs.next();
             boolean small = rs.getBoolean("SMALL");
@@ -122,7 +120,7 @@ public class ObjectCreator {
             availability.setDayAvailability(sun, WeekDays.SUN);
             dbConnector.closeConnection();
 
-            return new DogSitter(email, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
+            return new DogSitter(dogSitterEmail, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -134,9 +132,9 @@ public class ObjectCreator {
         DBConnector dbConnector = new DBConnector();
         Dog dog = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT ID, NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = '" + dogID + "'");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
             rs.next();
-            int id = rs.getInt("ID");
+            //int id = rs.getInt("ID");
             String name = rs.getString("NAME");
             String breed = rs.getString("BREED");
             double weight = rs.getDouble("WEIGHT");
@@ -148,7 +146,7 @@ public class ObjectCreator {
             DogSize size = DogSize.valueOf(rs.getString("SIZE"));
             dbConnector.closeConnection();
 
-            dog = new Dog(name, breed, size, age, weight, id);
+            dog = new Dog(name, breed, size, age, weight, dogID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -204,7 +202,7 @@ public class ObjectCreator {
         DBConnector dbConnector = new DBConnector();
         Address address = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
+            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = " + code);
             rs.next();
             String country = rs.getString("COUNTRY");
             String city = rs.getString("CITY");

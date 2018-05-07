@@ -4,6 +4,9 @@ import database.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,19 +48,53 @@ public class Customer extends User {
             e.printStackTrace();
         }
 
-        if (testTransaction) {
+        Bank bank = new Bank();
+
+        //implementare funzione per il calcolo del prezzo della prestazione
+        double amount = 1;
+
+        if (bank.isTransactionPossible(email, amount)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
-            SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date.setLenient(false);
+            Date startAssignment = new Date();
+            Date endAssignment = new Date();
+
             String dateStringStartAssigment = date.format(dateStartAssignment);
+            String dateStringEndAssigment = date.format(dateEndAssignment);
+            try {
+                startAssignment = date.parse(dateStringStartAssigment);
+                endAssignment = date.parse(dateStringEndAssigment);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             //String code = dateStringStartAssigment  + "_" + ds.email + "_" + this.email;
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
 
             //salva la prenotazione nel database
-            //sottometodo da implementare
+
+            Timestamp sqlStart = new Timestamp(startAssignment.getTime());
+            Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
+
+            //System.out.println("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email  + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+
+            try {
+                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email  + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+                dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
+                for (Dog d : dogList) {
+                    dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
+                }
+                //bank.makeBankTransaction(email, emailDogSitter, code, amount);
+                dbConnector.closeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            bank.makeBankTransaction(email, emailDogSitter, code, amount);
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());

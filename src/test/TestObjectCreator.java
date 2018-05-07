@@ -10,7 +10,7 @@ import static staticClasses.ObjectCreator.createDogSitterFromDB;
 
 public class TestObjectCreator {
     public static void main(String[] args) {
-        Dog d = createDogFromDB(1);
+        Dog d = createDogFromDB(3);
         Customer c = createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
         DogSitter ds = createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
     }
