@@ -1,5 +1,6 @@
 package gui;
 
+import engine.Customer;
 import enumeration.CalendarState;
 
 import javax.swing.*;
@@ -14,8 +15,10 @@ public class GUIDailyAssignments extends JFrame {
     private JLabel lb = new JLabel();
     private JScrollPane scroll = new JScrollPane(p);
 
+    private Customer customer;
 
-    public GUIDailyAssignments(CalendarState cs) {
+
+    public GUIDailyAssignments(CalendarState cs, Customer customer) {
         setTitle("Daily assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -24,6 +27,7 @@ public class GUIDailyAssignments extends JFrame {
         setLayout(new BorderLayout());
         setVisible(true);
         initComponents (cs);
+        this.customer = customer;
     }
 
     private void initComponents(CalendarState cs){
