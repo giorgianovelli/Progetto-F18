@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class GUINewAssignment extends JFrame {
 
 
-   //
    private JPanel topPanel, fPanel, tPanel, pPanel;
    private List<JPanel> frow = new ArrayList<>();
    private JLabel flabel;
@@ -34,13 +33,13 @@ public class GUINewAssignment extends JFrame {
    private JPanel tyearPanel;
    private JPanel thourPanel;
    private JPanel tminutePanel;
-   private JPanel paymentPanel;
+   private JPanel positionPanel;
    private JComboBox<String> fdayList, tdayList;
    private JComboBox<String> fmonthList, tmonthList;
    private JComboBox<String> fyearList, tyearList;
    private JComboBox<String> fhourList, thourList;
    private JComboBox<String> fminuteList, tminuteList;
-   private TextField notes;
+   private TextField position;
 
    public GUINewAssignment() throws HeadlessException {
 	
@@ -58,22 +57,20 @@ public class GUINewAssignment extends JFrame {
       tyearPanel = new JPanel();
       thourPanel = new JPanel();
       tminutePanel = new JPanel();
-      paymentPanel = new JPanel();
+      positionPanel = new JPanel();
 
       String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
       String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
       String[] year = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
       String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
       String[] minute = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
-      String[] payment = new String[]{"pag1", "pag2", "pag3"};
       
       fdayList = new JComboBox<>(day);
       fmonthList = new JComboBox<>(month);
       fyearList = new JComboBox<>(year);
       fhourList = new JComboBox<>(hour);
       fminuteList = new JComboBox<>(minute);
-      //paymentList = new JComboBox<>(payment);
-      notes = new TextField("", 20);
+      position = new TextField("", 20);
       
 
       fdayPanel.add(fdayList);
@@ -81,10 +78,10 @@ public class GUINewAssignment extends JFrame {
       fyearPanel.add(fyearList);
       fhourPanel.add(fhourList);
       fminutePanel.add(fminuteList);
-      paymentPanel.add(notes);
+      positionPanel.add(position);
 
       flabel = new JLabel("From: ");
-      plabel = new JLabel("Notes: ");
+      plabel = new JLabel("Position: ");
 
 
       frow.add(fdayPanel);
@@ -127,7 +124,7 @@ public class GUINewAssignment extends JFrame {
          tPanel.add(el);
       }
 
-      prow.add(paymentPanel);
+      prow.add(positionPanel);
       pPanel = new JPanel(new GridLayout(0, 1));
       pPanel = new JPanel();
       pPanel.setLayout(new GridLayout(1, 6, 2, 2));
