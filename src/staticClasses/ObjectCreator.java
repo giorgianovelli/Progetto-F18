@@ -16,9 +16,8 @@ public class ObjectCreator {
     public static Customer createCustomerFromDB(String customerEmail){
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL, NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT FROM CUSTOMERS WHERE EMAIL = '" + customerEmail + "'");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT FROM CUSTOMERS WHERE EMAIL = '" + customerEmail + "'");
             rs.next();
-            String email = rs.getString("EMAIL");
             String name = rs.getString("NAME");
             String surname = rs.getString("SURNAME");
             String password = rs.getString("PASSWORD");
@@ -27,27 +26,11 @@ public class ObjectCreator {
             String payment = rs.getString("PAYMENT");
             dbConnector.closeConnection();
 
-            rs = dbConnector.askDB("SELECT OWNER_NAME, OWNER_SURNAME, EXPIRATION_DATE, CVV, AMOUNT FROM CREDIT_CARDS WHERE NUM = '" + payment + "'");
-            rs.next();
-            String ownerName = rs.getString("OWNER_NAME");
-            String ownerSurname = rs.getString("OWNER_SURNAME");
-            Date expirationDate = rs.getDate("EXPIRATION_DATE");
-            int cvv = rs.getInt("CVV");
-            double amount = rs.getDouble("AMOUNT");
-            PaymentMethod paymentMethod = new PaymentMethod(payment, ownerName, ownerSurname, expirationDate, cvv, amount);
-            dbConnector.closeConnection();
+            PaymentMethod paymentMethod = getPaymentMethodFromDB(payment);
 
-            rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM ADDRESS WHERE EMAIL = '" + customerEmail + "'");
-            rs.next();
-            String country = rs.getString("COUNTRY");
-            String city = rs.getString("CITY");
-            String street = rs.getString("STREET");
-            String cnumber = rs.getString("CNUMBER");
-            String cap = rs.getString("CAP");
-            Address address = new Address(country, city, street, cnumber, cap);
-            dbConnector.closeConnection();
+            Address address = getAddressFromDB(customerEmail);
 
-            return new Customer(email, name, surname, password, phone, birthdate, address, paymentMethod);
+            return new Customer(customerEmail, name, surname, password, phone, birthdate, address, paymentMethod);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,9 +41,8 @@ public class ObjectCreator {
     public static DogSitter createDogSitterFromDB(String dogSitterEmail){
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL, NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT, CASH_FLAG, NDOGS, BIOGRAPHY FROM DOGSITTERS WHERE EMAIL = '" + dogSitterEmail + "'");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME, PASSWORD, PHONE_NUMB, BIRTHDATE, PAYMENT, CASH_FLAG, NDOGS, BIOGRAPHY FROM DOGSITTERS WHERE EMAIL = '" + dogSitterEmail + "'");
             rs.next();
-            String email = rs.getString("EMAIL");
             String name = rs.getString("NAME");
             String surname = rs.getString("SURNAME");
             String password = rs.getString("PASSWORD");
@@ -68,30 +50,21 @@ public class ObjectCreator {
             Date birthdate = rs.getDate("BIRTHDATE");
             String payment = rs.getString("PAYMENT");
             boolean cashFlag = rs.getBoolean("CASH_FLAG");
-            //String area = rs.getString("AREA");
             int nDogs = rs.getInt("NDOGS");
             String biography = rs.getString("BIOGRAPHY");
             dbConnector.closeConnection();
 
-            rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM ADDRESS WHERE EMAIL = '" + dogSitterEmail + "'");
-            rs.next();
-            String country = rs.getString("COUNTRY");
-            String city = rs.getString("CITY");
-            String street = rs.getString("STREET");
-            String cnumber = rs.getString("CNUMBER");
-            String cap = rs.getString("CAP");
-            Address address = new Address(country, city, street, cnumber, cap);
-            dbConnector.closeConnection();
+            Address address = getAddressFromDB(dogSitterEmail);
 
-            rs = dbConnector.askDB("SELECT CITY FROM DOGSITTER_AREA WHERE DOGSITTER = '" + email + "'");
+            rs = dbConnector.askDB("SELECT CITY FROM DOGSITTER_AREA WHERE DOGSITTER = '" + dogSitterEmail + "'");
             Area listArea = new Area();
             while (rs.next()){
                 String cityOp = rs.getString("CITY");
-                listArea.addPlaces(city);
+                listArea.addPlaces(cityOp);
             }
             dbConnector.closeConnection();
 
-            rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + email + "'");
+            rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + dogSitterEmail + "'");
             HashSet<DogSize> listDogSize = new HashSet<DogSize>();
             rs.next();
             boolean small = rs.getBoolean("SMALL");
@@ -107,22 +80,12 @@ public class ObjectCreator {
                 listDogSize.add(DogSize.BIG);
             }
             boolean giant = rs.getBoolean("GIANT");
-            System.out.println(giant);
             if (giant){
                 listDogSize.add(DogSize.GIANT);
             }
             dbConnector.closeConnection();
 
-            rs = dbConnector.askDB("SELECT NUM, OWNER_NAME, OWNER_SURNAME, EXPIRATION_DATE, CVV, AMOUNT FROM CREDIT_CARDS WHERE NUM = '" + payment + "'");
-            rs.next();
-            String num = rs.getString("NUM");
-            String ownerName = rs.getString("OWNER_NAME");
-            String ownerSurname = rs.getString("OWNER_SURNAME");
-            Date expirationDate = rs.getDate("EXPIRATION_DATE");
-            int cvv = rs.getInt("CVV");
-            double amount = rs.getDouble("AMOUNT");
-            PaymentMethod paymentMethod = new PaymentMethod(num, ownerName, ownerSurname, expirationDate, cvv, amount);
-            dbConnector.closeConnection();
+            PaymentMethod paymentMethod = getPaymentMethodFromDB(payment);
 
             rs = dbConnector.askDB("SELECT  MON_START, MON_END, TUE_START, TUE_END, WED_START, WED_END, THU_START, THU_END, FRI_START, FRI_END, SAT_START, SAT_END, SUN_START, SUN_END FROM AVAILABILITY WHERE DOGSITTER = '" + dogSitterEmail + "'");
             Availability availability = new Availability();
@@ -157,7 +120,7 @@ public class ObjectCreator {
             availability.setDayAvailability(sun, WeekDays.SUN);
             dbConnector.closeConnection();
 
-            return new DogSitter(email, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
+            return new DogSitter(dogSitterEmail, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -169,9 +132,9 @@ public class ObjectCreator {
         DBConnector dbConnector = new DBConnector();
         Dog dog = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT ID, NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = '" + dogID + "'");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
             rs.next();
-            int id = rs.getInt("ID");
+            //int id = rs.getInt("ID");
             String name = rs.getString("NAME");
             String breed = rs.getString("BREED");
             double weight = rs.getDouble("WEIGHT");
@@ -183,22 +146,43 @@ public class ObjectCreator {
             DogSize size = DogSize.valueOf(rs.getString("SIZE"));
             dbConnector.closeConnection();
 
-            dog = new Dog(name, breed, size, age, weight, id);
+            dog = new Dog(name, breed, size, age, weight, dogID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return dog;
     }
 
-    //new methods
-
-    public static HashMap<String, Assignment> getListAssignmentFromDB(DogSitter dogSitter){
-        HashMap<String, Assignment> listAssignment = new HashMap<String, Assignment>();
+    public static HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(DogSitter dogSitter){
+        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE DOGSITTER = '" + dogSitter + "'");
             while (rs.next()){
-                String code = rs.getString("CODE");
+                int code = rs.getInt("CODE");
+                boolean state = rs.getBoolean("CONFIRMATION");
+                Date dateStart = rs.getDate("DATE_START");
+                Date dateEnd = rs.getDate("DATE_END");
+                Address meetingPoint = getMeetingPointFromDB(code);
+                HashSet dogList = getDogListFromDB(code);
+                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+                listAssignment.put(code, assignment);
+            }
+            dbConnector.closeConnection();
+            return listAssignment;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static HashMap<Integer, Assignment> getCustomerListAssignmentFromDB(String customer){
+        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
+        DBConnector dbConnector = new DBConnector();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + customer + "'");
+            while (rs.next()){
+                int code = rs.getInt("CODE");
                 boolean state = rs.getBoolean("CONFIRMATION");
                 Date dateStart = rs.getDate("DATE_START");
                 Date dateEnd = rs.getDate("DATE_END");
@@ -214,35 +198,11 @@ public class ObjectCreator {
         return listAssignment;
     }
 
-    //metodi da abilitare
-
-    /*public void getAssignmentsFromDB(){
-        DBConnector dbConnector = new DBConnector();
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT CODE, CUSTOMER, DOGSITTER, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + email + "'");
-            while (rs.next()){
-                String code = rs.getString("CODE");
-                String customer = rs.getString("CUSTOMER");
-                String dogSitter = rs.getString("DOGSITTER");
-                boolean state = rs.getBoolean("CONFIRMATION");
-                Date dateStart = rs.getDate("DATE_START");
-                Date dateEnd = rs.getDate("DATE_END");
-                Address meetingPoint = getMeetingPointFromDB(code);
-                HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
-                listAssignment().put(code, assignment);
-            }
-            dbConnector.closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    public static Address getMeetingPointFromDB(String code){
+    private static Address getMeetingPointFromDB(int code){
         DBConnector dbConnector = new DBConnector();
         Address address = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
+            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = " + code);
             rs.next();
             String country = rs.getString("COUNTRY");
             String city = rs.getString("CITY");
@@ -257,7 +217,7 @@ public class ObjectCreator {
         return address;
     }
 
-    public static HashSet<Dog> getDogListFromDB(String code){
+    private static HashSet<Dog> getDogListFromDB(int code){
         HashSet<Dog> dogList= new HashSet<Dog>();
         DBConnector dbConnector = new DBConnector();
         try {
@@ -272,5 +232,46 @@ public class ObjectCreator {
             e.printStackTrace();
         }
         return dogList;
+    }
+
+    private static Address getAddressFromDB(String email){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = null;
+        try {
+            rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM ADDRESS WHERE EMAIL = '" + email + "'");
+            rs.next();
+            String country = rs.getString("COUNTRY");
+            String city = rs.getString("CITY");
+            String street = rs.getString("STREET");
+            String cnumber = rs.getString("CNUMBER");
+            String cap = rs.getString("CAP");
+            Address address = new Address(country, city, street, cnumber, cap);
+            dbConnector.closeConnection();
+            return address;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static PaymentMethod getPaymentMethodFromDB(String payment){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = null;
+        try {
+            rs = dbConnector.askDB("SELECT OWNER_NAME, OWNER_SURNAME, EXPIRATION_DATE, CVV, AMOUNT FROM CREDIT_CARDS WHERE NUM = '" + payment + "'");
+            rs.next();
+            String ownerName = rs.getString("OWNER_NAME");
+            String ownerSurname = rs.getString("OWNER_SURNAME");
+            Date expirationDate = rs.getDate("EXPIRATION_DATE");
+            int cvv = rs.getInt("CVV");
+            double amount = rs.getDouble("AMOUNT");
+            PaymentMethod paymentMethod = new PaymentMethod(payment, ownerName, ownerSurname, expirationDate, cvv, amount);
+            dbConnector.closeConnection();
+            return paymentMethod;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

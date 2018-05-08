@@ -8,20 +8,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
+import static staticClasses.ObjectCreator.createCustomerFromDB;
+import static staticClasses.ObjectCreator.createDogFromDB;
+import static staticClasses.ObjectCreator.createDogSitterFromDB;
+
 public class TestCustomer {
     public static void main(String[] args) throws ParseException {
-        /*//test addAssignment(...)
+        //test addAssignment(...)
         HashSet<Dog> selectedDogs = new HashSet<Dog>(2);
-        //creare oggetti engine.Dog
-        Dog fuffi = new Dog("Fuffi", "Pug", DogSize.SMALL, 3, 7, "Pippo", "Baudo", 1);
-        Dog scooby = new Dog("Scooby", "Danish", DogSize.GIANT, 6, 70, "Pippo", "Baudo", 2);
-        selectedDogs.add(fuffi);
-        selectedDogs.add(scooby);
+        //creare oggetti Dog
+        Dog d = createDogFromDB(3);
+        selectedDogs.add(d);
+        //selectedDogs.add(scooby);
+        DogSitter ds = createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
+        Customer c = createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
-        String strBirthC = "01/01/1970 00:00";
-        Date birthC = date.parse(strBirthC);
-        String strBirthDS = "03/04/1980 00:00";
+        String strEnd = "07/05/2018 14:00";
+        Date end = date.parse(strEnd);
+        c.addAssignment(ds, new Date(), end, selectedDogs, ds.getAddress());
+        c.removeAssignment(3);
+
+        /*String strBirthDS = "03/04/1980 00:00";
         Date birthDS = date.parse(strBirthC);
         String strDateStartAssignment = "30/04/2018 11:00";
         Date dateStartAssignment = date.parse(strDateStartAssignment);

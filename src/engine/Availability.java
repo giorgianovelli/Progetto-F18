@@ -43,5 +43,8 @@ public class Availability {
         }
     }
 
+    public WorkingTime[] getArrayDays() {
+        return arrayDays;
+    }
 }
 

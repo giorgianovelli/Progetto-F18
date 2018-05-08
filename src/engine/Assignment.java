@@ -8,14 +8,14 @@ import java.util.Date;
 import java.util.HashSet;
 
 public class Assignment {
-    private String code;
+    private int code;
     private HashSet<Dog> dogList;    //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
     private Date dateStart;
     private Date dateEnd;
     private boolean state;
     private Address meetingPoint;
 
-    public Assignment(String code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, Address meetingPoint) {
+    public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, Address meetingPoint) {
         this.code = code;
         this.dogList = dogList;      //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
         this.dateStart = dateStart;
@@ -60,5 +60,9 @@ public class Assignment {
 
     public Date getDateEnd() {
         return dateEnd;
+    }
+
+    public int getCode() {
+        return code;
     }
 }

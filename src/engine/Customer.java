@@ -4,6 +4,9 @@ import database.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,40 +14,81 @@ import java.util.HashSet;
 import enumeration.DogSize;
 
 import static staticClasses.ObjectCreator.createDogFromDB;
-import static staticClasses.ObjectCreator.createDogSitterFromDB;
+import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
-    private HashMap<String, Assignment> assignmentList;
+    private HashMap<Integer, Assignment> assignmentList;
     private HashMap<String, Review> reviewList;
 
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
-        assignmentList = new HashMap<String, Assignment>();
+        assignmentList = new HashMap<Integer, Assignment>();
         reviewList = new HashMap<String, Review>();
-        getAssignmentsFromDB();
+        assignmentList = getCustomerListAssignmentFromDB(email);
+        dogList = getDogListFromDB(email);
     }
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
         String emailDogSitter = ds.email;
 
-        //chiamata alla classe banca per effettuare la transazione (blocco provvisorio)
+        //chiamata alla classe banca per effettuare la transazione
         boolean testTransaction = true;
+        DBConnector dbConnector = new DBConnector();
+        int code = -1;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT * FROM ASSIGNMENT");
+            rs.last();
+            code = rs.getRow() + 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        if (testTransaction) {
+        Bank bank = new Bank();
+
+        //implementare funzione per il calcolo del prezzo della prestazione
+        double amount = 10;
+
+        if (bank.isTransactionPossible(email, amount)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
-            SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date.setLenient(false);
+            Date startAssignment = new Date();
+            Date endAssignment = new Date();
+
             String dateStringStartAssigment = date.format(dateStartAssignment);
-            String code = dateStringStartAssigment  + "_" + ds.email + "_" + this.email;
+            String dateStringEndAssigment = date.format(dateEndAssignment);
+            try {
+                startAssignment = date.parse(dateStringStartAssigment);
+                endAssignment = date.parse(dateStringEndAssigment);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
 
             //salva la prenotazione nel database
-            //sottometodo da implementare
+
+            Timestamp sqlStart = new Timestamp(startAssignment.getTime());
+            Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
+
+            try {
+                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email  + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+                dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
+                for (Dog d : dogList) {
+                    dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
+                }
+                //bank.makeBankTransaction(email, emailDogSitter, code, amount);
+                dbConnector.closeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            bank.makeBankTransaction(email, emailDogSitter, code, amount);
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
@@ -55,7 +99,7 @@ public class Customer extends User {
         }
     }
 
-    public boolean removeAssignment(String key){
+    public boolean removeAssignment(Integer key){
         Assignment a = null;
         a = assignmentList.get(key);
         if (a != null){
@@ -63,6 +107,18 @@ public class Customer extends User {
             System.out.println("Selected assignment removed!");
 
             //aggiungere codice per rimuovere la prenotazione dal database
+            DBConnector dbConnector = new DBConnector();
+            Bank bank = new Bank();
+            try {
+                //dbConnector.updateDB("DELETE FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + a.getCode());
+                bank.refundCustomer(a.getCode());
+                dbConnector.updateDB("DELETE FROM MEETING_POINT WHERE CODE = " + a.getCode());
+                dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE CODE = " + a.getCode());
+                dbConnector.updateDB("DELETE FROM ASSIGNMENT WHERE CODE = " + a.getCode());
+                dbConnector.closeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             return true;
         } else {
@@ -101,9 +157,9 @@ public class Customer extends User {
         }
     }
 
-    public HashMap<String, Assignment> listAssignment(){
+    public HashMap<Integer, Assignment> listAssignment(){
         Assignment a = null;
-        for(String key : assignmentList.keySet()){
+        for(Integer key : assignmentList.keySet()){
             a = assignmentList.get(key);
             System.out.println(a.toString());
         }
@@ -140,57 +196,24 @@ public class Customer extends User {
         }
     }
 
-    private void getAssignmentsFromDB(){
-        //sostituire con il metodo statico in ObjectCreator
-        DBConnector dbConnector = new DBConnector();
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT CODE, CUSTOMER, DOGSITTER, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + email + "'");
-            while (rs.next()){
-                String code = rs.getString("CODE");
-                String customer = rs.getString("CUSTOMER");
-                String dogSitter = rs.getString("DOGSITTER");
-                boolean state = rs.getBoolean("CONFIRMATION");
-                Date dateStart = rs.getDate("DATE_START");
-                Date dateEnd = rs.getDate("DATE_END");
-                Address meetingPoint = getMeetingPointFromDB(code);
-                HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
-                listAssignment().put(code, assignment);
-            }
-            dbConnector.closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public HashMap<Integer, Assignment> getAssignmentList() {
+        return assignmentList;
     }
 
-    private Address getMeetingPointFromDB(String code){
-        //sostituire con il metodo statico in ObjectCreator
-        DBConnector dbConnector = new DBConnector();
-        Address address = null;
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT COUNTRY, CITY, STREET, CNUMBER, CAP FROM MEETING_POINT WHERE CODE = '" + code + "'");
-            rs.next();
-            String country = rs.getString("COUNTRY");
-            String city = rs.getString("CITY");
-            String street = rs.getString("STREET");
-            String number = rs.getString("CNUMBER");
-            String cap = rs.getString("CAP");
-            address = new Address(country, city, street, number, cap);
-            dbConnector.closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Address getAddress(){
         return address;
     }
 
-    private HashSet<Dog> getDogListFromDB(String code){
-        //sostituire con il metodo statico in ObjectCreator
-        HashSet<Dog> dogList= new HashSet<Dog>();
+    public HashSet<Dog> getDogList() {
+        return dogList;
+    }
+
+    private HashSet<Dog> getDogListFromDB(String email){
         DBConnector dbConnector = new DBConnector();
         try {
-            ResultSet rs = dbConnector.askDB("SELECT DOG_ID FROM DOG_ASSIGNMENT WHERE CODE = '" + code + "'");
+            ResultSet rs = dbConnector.askDB("SELECT ID FROM DOGS WHERE OWNER_EMAIL = '" + email + "'");
             while (rs.next()){
-                int dogID = rs.getInt("DOG_ID");
+                int dogID = rs.getInt("ID");
                 Dog dog = createDogFromDB(dogID);
                 dogList.add(dog);
             }
@@ -199,9 +222,5 @@ public class Customer extends User {
             e.printStackTrace();
         }
         return dogList;
-    }
-
-    public HashMap<String, Assignment> getAssignmentList() {
-        return assignmentList;
     }
 }

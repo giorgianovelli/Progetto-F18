@@ -15,6 +15,26 @@ public class Address {
         this.cap = cap;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getCap() {
+        return cap;
+    }
+
     public String toString(){
         return street + ", " + number + "; " + cap + " " + city + ", " + country;
     }

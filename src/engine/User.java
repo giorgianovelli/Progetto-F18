@@ -26,4 +26,6 @@ public abstract class User {
         this.paymentMethod = paymentMethod;
     }
 
+
+
 }

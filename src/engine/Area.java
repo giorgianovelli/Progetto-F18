@@ -24,4 +24,17 @@ public class Area {
         }
     }
 
+    public boolean contains(String place){
+        if (places.contains(place)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void printPlaces(){
+        for (String p : places) {
+            System.out.println(p);
+        }
+    }
 }

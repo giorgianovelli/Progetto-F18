@@ -5,10 +5,15 @@ import enumeration.CalendarState;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIDailyAssignments extends JFrame{
+public class GUIDailyAssignments extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
-    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private JPanel p = new JPanel();
+    private JButton button[];
+    private JLabel lb = new JLabel();
+    private JScrollPane scroll = new JScrollPane(p);
+
 
     public GUIDailyAssignments(CalendarState cs) {
         setTitle("Daily assignments");
@@ -17,11 +22,45 @@ public class GUIDailyAssignments extends JFrame{
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-
-        initComponents(cs);
+        setVisible(true);
+        initComponents (cs);
     }
 
     private void initComponents(CalendarState cs){
         //metodo da implementare
+
+        //inserire query per interrogare db
+        int nAssignments = 30;
+
+        button = new JButton[nAssignments];
+
+        if (cs.equals(CalendarState.REMOVING)) {
+            setTitle("Daily assignment");
+            p.setLayout(new GridLayout(button.length, 2));
+            for (int i = 0; i < nAssignments; i++) {
+                int n = i + 1;
+                lb = new JLabel("Daily assignment n° " + n);
+                button[i] = new JButton("Delete");
+                p.add(lb);
+                p.add(button[i]);
+            }
+        } else if (cs.equals(CalendarState.NORMAL)){
+            setTitle("Daily assignment");
+            p.setLayout(new GridLayout(nAssignments, 2));
+            for (int i = 0; i < nAssignments; i++) {
+                int n = i + 1;
+                lb = new JLabel("Daily assignment n° " + n);
+                button[i] = new JButton("Info");
+                p.add(lb);
+                p.add(button[i]);
+            }
+
+
+
+        }
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        getContentPane().add(scroll);
+
+
     }
 }
