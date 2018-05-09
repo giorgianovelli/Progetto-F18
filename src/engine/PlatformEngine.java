@@ -3,6 +3,7 @@ package engine;
 import database.DBConnector;
 import engine.DogSitter;
 import enumeration.DogSize;
+import staticClasses.dateTime.DateTimeDHMS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +14,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static staticClasses.ObjectCreator.createDogSitterFromDB;
+import static staticClasses.dateTime.DateTimeTools.dateTimeDiff;
 
-public class SearchEngine {
+public class PlatformEngine {
     private HashSet<DogSitter> dogSitterList;
     private final int NDAYOFWEEK = 7;
+    private final int NRANGE = 4;
 
-    public SearchEngine() {
+    public PlatformEngine() {
         dogSitterList = new HashSet<DogSitter>();
         DBConnector dbConnector = new DBConnector();
         try {
@@ -172,6 +175,46 @@ public class SearchEngine {
                 dogSitterList.remove(ds);
             }
         }
+    }
+
+    public double estimatePriceAssignment(HashSet<Dog> dogList, Date dateStart, Date dateEnd){
+        //funzione da completare
+        DBConnector dbConnector = new DBConnector();
+        double priceArray[] = new double[4];
+
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT H_RANGE, PERC FROM PERC_PRICE");
+            double hRange[] = new double[NRANGE];
+            while (rs.next()){
+                int n = rs.getInt("H_RANGE") - 1;
+                hRange[n] = rs.getDouble("PERC");
+            }
+            dbConnector.closeConnection();
+            rs = dbConnector.askDB("SELECT SIZE, PRICE FROM PRICE_LIST");
+            while (rs.next()){
+                if (rs.getString("SIZE").equals("SMALL")){
+                    priceArray[0] = rs.getDouble("PRICE");
+                } else if (rs.getString("SIZE").equals("MEDIUM")){
+                    priceArray[1] = rs.getDouble("PRICE");
+                } else if (rs.getString("SIZE").equals("BIG")){
+                    priceArray[2] = rs.getDouble("PRICE");
+                } else if (rs.getString("SIZE").equals("GIANT")){
+                    priceArray[3] = rs.getDouble("PRICE");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        double price = 0;
+        DateTimeDHMS workTime = dateTimeDiff(dateEnd, dateStart);
+
+        for (Dog d : dogList) {
+            if (workTime.getDays() > 0){
+                //metodo da implementare
+            }
+        }
+        return price;
     }
 
 }

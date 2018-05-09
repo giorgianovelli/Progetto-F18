@@ -1,9 +1,8 @@
 package test;
 
 import engine.Customer;
-import engine.Dog;
 import engine.DogSitter;
-import engine.SearchEngine;
+import engine.PlatformEngine;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,7 @@ import static staticClasses.ObjectCreator.createDogSitterFromDB;
 
 public class TestSearchEngine {
     public static void main(String[] args) {
-        SearchEngine se = new SearchEngine();
+        PlatformEngine se = new PlatformEngine();
         Customer c = createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
         DogSitter ds = createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
