@@ -223,4 +223,9 @@ public class Customer extends User {
         }
         return dogList;
     }
+
+    public void updateCustomerSettings(){
+        //implementare il metodo che inserisce nel DB le nuove impostazioni dell'utente
+        //funzione che dovrà chiamare Sam quando svilupperà l'interfaccia GUISettings
+    }
 }

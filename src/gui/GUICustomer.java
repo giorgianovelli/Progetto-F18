@@ -184,7 +184,7 @@ public class GUICustomer extends JFrame{
             public void actionPerformed(ActionEvent cae) {
                 if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState);
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, customer);
                     guiDailyAssignments.setVisible(true);
                 }
 
@@ -237,7 +237,7 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (ctrlAe.getActionCommand().equals("Show more")){
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState);
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, customer);
                     guiDailyAssignments.setVisible(true);
                 }
             }
@@ -294,7 +294,7 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (menuAe.getActionCommand().equals("Account")){
-                    GUISettings guiSettings = new GUISettings();
+                    GUISettings guiSettings = new GUISettings(customer);
                     guiSettings.setVisible(true);
                 }
 

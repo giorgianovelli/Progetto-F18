@@ -1,5 +1,7 @@
 package gui;
 
+import engine.User;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,8 @@ public class GUISettings extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+
+    private User user;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
@@ -32,13 +36,14 @@ public class GUISettings extends JFrame {
     private JTextField textName = new JTextField();
 
 
-    public GUISettings() {
+    public GUISettings(User user) {
         setTitle("Account settings");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+        this.user = user;
 
 
 
