@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import static staticClasses.DoubleTools.round2Decimal;
+
 public class Bank {
 
 
@@ -63,8 +65,8 @@ public class Bank {
         BankUser dogsitter = listUser.get(emailDogsitter);
         PaymentMethod pmCustomer = customer.getPaymentMethod();
         PaymentMethod pmDogsitter = dogsitter.getPaymentMethod();
-        pmCustomer.setAmount(pmCustomer.getAmount() - amount);
-        pmDogsitter.setAmount(pmDogsitter.getAmount() + amount);
+        pmCustomer.setAmount(round2Decimal(pmCustomer.getAmount() - amount));
+        pmDogsitter.setAmount(round2Decimal(pmDogsitter.getAmount() + amount));
 
         if (pmCustomer.getAmount() < 0) {
             System.out.println("Transaction failed: insufficient credit");
@@ -85,8 +87,6 @@ public class Bank {
                     System.out.println("Amount: €" + amount);
                     System.out.println("Amounts transferred successfully: current accounts updated");
 
-                    //Date date = new Date(); // java.util.Date; - This date has both the date and time in it already.
-                    //Timestamp sqlDate = new Timestamp(new Date().getTime());
                     SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String strDate = date.format(new Date());
 
@@ -160,8 +160,8 @@ public class Bank {
         BankUser dogsitter = listUser.get(emailDogsitter);
         PaymentMethod pmCustomer = customer.getPaymentMethod();
         PaymentMethod pmDogsitter = dogsitter.getPaymentMethod();
-        pmCustomer.setAmount(pmCustomer.getAmount() + amount);
-        pmDogsitter.setAmount(pmDogsitter.getAmount() - amount);
+        pmCustomer.setAmount(round2Decimal(pmCustomer.getAmount() + amount));
+        pmDogsitter.setAmount(round2Decimal(pmDogsitter.getAmount() - amount));
 
         if (pmDogsitter.getAmount() < 0) {
             System.out.println("Refund failed: insufficient credit");
@@ -181,12 +181,6 @@ public class Bank {
                 if (updateCustomer && updateDogsitter) {
                     System.out.println("Refund completed successfully: current accounts updated");
 
-                    //Date date = new Date(); // java.util.Date; - This date has both the date and time in it already.
-                    //Timestamp sqlDate = new Timestamp(new Date().getTime());
-                    //SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    //String strDate = date.format(new Date());
-
-                    //dbConnector.updateDB("INSERT INTO TRANSACTIONS VALUES ('" + emailCustomer + "', '" + emailDogsitter + "', '" + strDate + "', " + code + ", " + amount + ")");
                     dbConnector.updateDB("DELETE FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + code);
                     dbConnector.closeUpdate();
                 } else {

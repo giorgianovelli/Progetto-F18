@@ -180,7 +180,6 @@ public class PlatformEngine {
     }
 
     public double estimatePriceAssignment(HashSet<Dog> dogList, Date dateStart, Date dateEnd){
-        //funzione da completare
         DBConnector dbConnector = new DBConnector();
         HashMap<DogSize, Double> priceMap = new HashMap<DogSize, Double>(4);
         HashMap<Integer, Double> hRange = new HashMap<Integer, Double>(4);
@@ -239,8 +238,6 @@ public class PlatformEngine {
             //System.out.println("ratio: " + minutesHourRatio);
             price = price + (priceMap.get(d.getSize()) * hRange.get(3) * minutesHourRatio);
         }
-        //arrotondamento alla seconda cifra decimale
-        //return (double)Math.round(price*100)/100;
         return round2Decimal(price);
     }
 
