@@ -19,13 +19,13 @@ import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
     private HashMap<Integer, Assignment> assignmentList;
-    private HashMap<String, Review> reviewList;
+    private HashMap<Integer, Review> reviewList;
 
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
         assignmentList = new HashMap<Integer, Assignment>();
-        reviewList = new HashMap<String, Review>();
+        reviewList = new HashMap<Integer, Review>();
         assignmentList = getCustomerListAssignmentFromDB(email);
         dogList = getDogListFromDB(email);
     }
@@ -127,7 +127,7 @@ public class Customer extends User {
         }
     }
 
-    public Review addReview(DogSitter ds, Date dateReview, int rating, String title, String comment){
+    public Review addReview(int codeAssignment, DogSitter ds, Date dateReview, int rating, String title, String comment){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
         String dateStringReview = date.format(dateReview);
@@ -136,12 +136,12 @@ public class Customer extends User {
         //salva la recensione nel database
         //sottometodo da implementare
 
-        reviewList.put(dateStringReview  + "_" + ds.email + "_" + this.email, review);
+        reviewList.put(codeAssignment, review);
         System.out.println(review.toString());
         return review;
     }
 
-    public boolean removeReview(String key){
+    public boolean removeReview(Integer key){
         Review r = null;
         r = reviewList.get(key);
         if (r != null){
@@ -169,9 +169,9 @@ public class Customer extends User {
         return assignmentList;
     }
 
-    public HashMap<String, Review> listReview(){
+    public HashMap<Integer, Review> listReview(){
         Review r = null;
-        for(String key : reviewList.keySet()){
+        for(Integer key : reviewList.keySet()){
             r = reviewList.get(key);
             System.out.println(r.toString());
         }
