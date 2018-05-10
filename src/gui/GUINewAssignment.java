@@ -37,13 +37,14 @@ import javax.swing.JPanel;
 public class GUINewAssignment extends JFrame {
 
 
-   private JPanel topPanel, fPanel, tPanel, aPanel, nPanel, cPanel, coPanel;
+   private JPanel topPanel, fPanel, tPanel, aPanel, nPanel, cPanel, coPanel, couPanel;
    private JLabel flabel;
    private JLabel tlabel;
    private JLabel addresslabel;
    private JLabel numberlabel;
    private JLabel citylabel;
    private JLabel codelabel;
+   private JLabel countrylabel;
    //private JLabel headerLabel;
    //private JLabel statusLabel;
    private List<JPanel> frow = new ArrayList<>();
@@ -52,6 +53,7 @@ public class GUINewAssignment extends JFrame {
    private List<JPanel> numberrow = new ArrayList<>();
    private List<JPanel> cityrow = new ArrayList<>();
    private List<JPanel> coderow = new ArrayList<>();
+   private List<JPanel> countryrow = new ArrayList<>();
    private JPanel fdayPanel;
    private JPanel fmonthPanel;
    private JPanel fyearPanel;
@@ -66,6 +68,7 @@ public class GUINewAssignment extends JFrame {
    private JPanel addressPanel;
    private JPanel numberPanel;
    private JPanel codePanel;
+   private JPanel countryPanel;
    //private JPanel controlPanel;
    private JComboBox<String> fdayList, tdayList;
    private JComboBox<String> fmonthList, tmonthList;
@@ -76,6 +79,7 @@ public class GUINewAssignment extends JFrame {
    private TextField address;
    private TextField number;
    private TextField code;
+   private TextField country;
 
    //private static final String options[] = {"", ""}; //numero di righe, come variabile, proveniente dal database
    //JCheckBoxList checkBoxList = new JCheckBoxList(model);  //aggiungo checkbox dinamico
@@ -112,6 +116,7 @@ public class GUINewAssignment extends JFrame {
       addressPanel = new JPanel();
       numberPanel = new JPanel();
       codePanel = new JPanel();
+      countryPanel = new JPanel();
       //controlPanel = new JPanel();
 
       String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
@@ -164,11 +169,13 @@ public class GUINewAssignment extends JFrame {
       number = new TextField("", 5);
       city = new TextField("", 20);
       code = new TextField("", 10);
+      country = new TextField("", 20);
 
       addressPanel.add(address);
       numberPanel.add(number);
       cityPanel.add(city);
       codePanel.add(code);
+      countryPanel.add(country);
 
       addresslabel = new JLabel("Address: ");
       addressrow.add(addressPanel);
@@ -182,8 +189,11 @@ public class GUINewAssignment extends JFrame {
       codelabel = new JLabel("Postal Code:");
       coderow.add(codePanel);
 
+      countrylabel = new JLabel("Country:");
+      countryrow.add(countryPanel);
 
-      topPanel = new JPanel(new GridLayout(6, 1));
+
+      topPanel = new JPanel(new GridLayout(8, 1));
       fPanel = new JPanel();
       fPanel.setLayout(new GridLayout(1, 6, 10, 10));
       fPanel.add(flabel);
@@ -227,6 +237,13 @@ public class GUINewAssignment extends JFrame {
          coPanel.add(el);
       }
 
+      couPanel = new JPanel();
+      couPanel.setLayout(new GridLayout(1,6,2,2));
+      couPanel.add(countrylabel);
+      for (JPanel el: countryrow){
+          couPanel.add(el);
+      }
+
       /*setLayout(new BorderLayout());
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setSize(new java.awt.Dimension(512, 512));
@@ -266,6 +283,7 @@ public class GUINewAssignment extends JFrame {
       topPanel.add(nPanel);
       topPanel.add(cPanel);
       topPanel.add(coPanel);
+      topPanel.add(couPanel);
       //topPanel.add(controlPanel);
       add(topPanel, BorderLayout.NORTH);
 
