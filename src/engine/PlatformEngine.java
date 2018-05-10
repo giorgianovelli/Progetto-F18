@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static java.lang.Math.floor;
+import static staticClasses.DoubleTools.round2Decimal;
 import static staticClasses.ObjectCreator.createDogSitterFromDB;
 import static staticClasses.dateTime.DateTimeTools.dateTimeDiff;
 
@@ -239,7 +240,8 @@ public class PlatformEngine {
             price = price + (priceMap.get(d.getSize()) * hRange.get(3) * minutesHourRatio);
         }
         //arrotondamento alla seconda cifra decimale
-        return (double)Math.round(price*100)/100;
+        //return (double)Math.round(price*100)/100;
+        return round2Decimal(price);
     }
 
 }
