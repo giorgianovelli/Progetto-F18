@@ -32,6 +32,7 @@ public class Customer extends User {
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
         String emailDogSitter = ds.email;
+        PlatformEngine platformEngine = new PlatformEngine();
 
         //chiamata alla classe banca per effettuare la transazione
         boolean testTransaction = true;
@@ -48,9 +49,10 @@ public class Customer extends User {
         Bank bank = new Bank();
 
         //implementare funzione per il calcolo del prezzo della prestazione
-        double amount = 10;
+        //double amount = 10;
+        double price = platformEngine.estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
-        if (bank.isTransactionPossible(email, amount)) {
+        if (bank.isTransactionPossible(email, price)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
@@ -88,7 +90,7 @@ public class Customer extends User {
                 e.printStackTrace();
             }
 
-            bank.makeBankTransaction(email, emailDogSitter, code, amount);
+            bank.makeBankTransaction(email, emailDogSitter, code, price);
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
