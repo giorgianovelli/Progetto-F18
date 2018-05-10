@@ -3,6 +3,8 @@ package gui;
 import database.DBConnector;
 import engine.Assignment;
 import engine.Customer;
+import engine.DogSitter;
+import engine.Review;
 import enumeration.CalendarState;
 
 import javax.swing.*;
@@ -13,7 +15,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import static staticClasses.ObjectCreator.createDogSitterFromDB;
+import static staticClasses.StringManipulator.capitalizeFirstLetter;
+
 public class GUIListAssignments extends JFrame{
+
+    //problema: se voglio vedere di nuovo la finestra di show all assignment dopo aver visto quella delle review, rimane quell delle review
+
     private int assignmentNumber, reviewNumber;
 
     final int WIDTH = 512;
@@ -44,12 +52,16 @@ public class GUIListAssignments extends JFrame{
     }
 
     private void initComponents(CalendarState cs, Customer customer){
+        //DA FARE: dicitura esatta per la labelDescription, stato dell'assignment,
+        // e vedere se funziona la visualizzazione delle recensioni
+        //vedere se funzionano le query con sottoquery
+
 
         assignmentNumber = customer.getAssignmentList().size();
         reviewNumber = customer.listReview().size();
-        //System.out.println("ho letto:" + N); //OK fino a qua!
 
-        if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){
+
+        if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
             infoPanel = new JPanel[reviewNumber];
             labelDescription = new JLabel[reviewNumber];
             buttonAction = new JButton[reviewNumber];
@@ -63,34 +75,61 @@ public class GUIListAssignments extends JFrame{
 
         //contentPanel.setLayout((new GridLayout(infoPanel.length, 1, 5, 5)));
 
-        Assignment a = null;
+
+
+        DBConnector dbConnector = new DBConnector();
+
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
 
-
             for(Integer i = 0; i < infoPanel.length; i++){
-                int j= i+1;
-                a = customer.getAssignmentList().get(j);
-                String s = Integer.toString(a.getCode()) + " " + a.getDateStart() +  " " + a.getDateEnd();
-                labelDescription[i]= new JLabel(s);
-                buttonAction[i]= new JButton("Write a review");
+                Assignment a = null;
+                //non completo!
+                try{
+                    int j = i + 1;
+                    String s = "";
+                    a = customer.getAssignmentList().get(j);
+                    ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '"+ a.getCode()+ "'");
+                    rs.next();
 
-                createPanel(i);
+                    s += "Assignment with " + rs.getString("DOGSITTER") ;
+
+
+                   /*ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME FROM DOGSITTERS WHERE EMAIL = " +
+                            "(SELECT DOGSITTER FROM ASSIGNMENT WHERE DOGSITTER = '"+ a.getCode()+ "'");
+                    rs.next();
+                    s = "Assignment with " + rs.getString("NAME") + " " + rs.getString("SURNAME");
+                    NON FUNZIONA!!
+
+                    */
+
+                    labelDescription[i]= new JLabel(s);
+                    buttonAction[i]= new JButton("Write a review");
+
+                    createPanel(i);
+
+                }catch(SQLException e){
+                    System.out.println(e.getMessage());
+                }
+
             }
 
 
         }
         else if (cs.equals(CalendarState.DELETING_REVIEW)){
             setTitle("Your reviews");
-            /*for(Integer i = 0; i < infoPanel.length; i++){
+            for(Integer i = 0; i < infoPanel.length; i++){
+                Review r = null;
+
                 int j= i+1;
-                a = customer.listReview().get(j);
-                String s = Integer.toString(a.getCode()) + " \n " + a.getDateStart() + a.getDateEnd();
+                r = customer.getReviewList().get(j);
+                String s = "Review for " + r.toString();
+
                 labelDescription[i]= new JLabel(s);
                 buttonAction[i]= new JButton("Delete review");
 
                 createPanel(i);
-            }*/
+            }
 
 
 
@@ -98,27 +137,48 @@ public class GUIListAssignments extends JFrame{
         else if (cs.equals(CalendarState.SHOW_REVIEWS)){
             setTitle("Your reviews");
 
-            /*for(Integer i = 0; i < infoPanel.length; i++){
+            for(Integer i = 0; i < infoPanel.length; i++){
+                Review r = null;
+
                 int j= i+1;
-                a = customer.listReview().get(j);
-                String s = Integer.toString(a.getCode()) + " \n " + a.getDateStart() + a.getDateEnd();
+                r = customer.getReviewList().get(j);
+                String s = "Review for " + r.toString();
                 labelDescription[i]= new JLabel(s);
                 buttonAction[i]= new JButton("Show more");
 
                 createPanel(i);
-            }*/
+            }
 
 
         } else {
+            setTitle("Your assignments");
             for(Integer i = 0; i < infoPanel.length; i++){
-                int j= i+1;
-                a = customer.getAssignmentList().get(j);
-                String s = Integer.toString(a.getCode()) + " \n " + a.getDateStart() + a.getDateEnd();
-                labelDescription[i]= new JLabel(s);
-                buttonAction[i]= new JButton("Info");
+                Assignment a = null;
+                try{
+                    int j = i + 1;
+                    String s = "";
+                    a = customer.getAssignmentList().get(j);
+                    ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '"+ a.getCode()+ "'");
+                    rs.next();
+
+                    s += "Assignment with " + rs.getString("DOGSITTER") ;
 
 
-                createPanel(i);
+                   /* ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME FROM DOGSITTERS WHERE EMAIL = " +
+                            "(SELECT DOGSITTER FROM ASSIGNMENT WHERE DOGSITTER = '"+ a.getCode()+ "'");
+                    s = "Assignment with " + rs.getString("NAME") + " " + rs.getString("SURNAME");
+
+                    */
+
+                    labelDescription[i]= new JLabel(s);
+                    buttonAction[i]= new JButton("Info");
+
+                    createPanel(i);
+
+                }catch(SQLException e){
+                    System.out.println(e.getMessage());
+                }
+
             }
 
 
