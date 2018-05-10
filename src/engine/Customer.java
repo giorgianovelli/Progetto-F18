@@ -202,6 +202,10 @@ public class Customer extends User {
         return assignmentList;
     }
 
+    public HashMap<Integer, Review> getReviewList() {
+        return reviewList;
+    }
+
     public Address getAddress(){
         return address;
     }
