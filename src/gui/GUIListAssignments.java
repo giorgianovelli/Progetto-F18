@@ -14,13 +14,14 @@ import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 
 import static staticClasses.ObjectCreator.createDogSitterFromDB;
 import static staticClasses.StringManipulator.capitalizeFirstLetter;
 
 public class GUIListAssignments extends JFrame{
 
-    //problema: se voglio vedere di nuovo la finestra di show all assignment dopo aver visto quella delle review, rimane quell delle review
+
 
     private int assignmentNumber, reviewNumber;
 
@@ -39,7 +40,7 @@ public class GUIListAssignments extends JFrame{
     private JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
     private Customer customer;
 
-    public GUIListAssignments(CalendarState cs, Customer customer){
+    public GUIListAssignments(CalendarState cs, Customer customer, GUICustomer guiCustomer){
         setTitle("Your assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -48,17 +49,17 @@ public class GUIListAssignments extends JFrame{
         setLayout(new BorderLayout());
         this.customer = customer;
 
-        initComponents(cs, customer);
+        initComponents(cs, customer, guiCustomer);
     }
 
-    private void initComponents(CalendarState cs, Customer customer){
+    private void initComponents(CalendarState cs, Customer customer, GUICustomer guiCustomer){
         //DA FARE: dicitura esatta per la labelDescription, stato dell'assignment,
         // e vedere se funziona la visualizzazione delle recensioni
         //vedere se funzionano le query con sottoquery
 
 
         assignmentNumber = customer.getAssignmentList().size();
-        reviewNumber = customer.listReview().size();
+        reviewNumber = customer.getReviewList().size();
 
 
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
@@ -78,6 +79,7 @@ public class GUIListAssignments extends JFrame{
 
 
         DBConnector dbConnector = new DBConnector();
+
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
@@ -198,12 +200,13 @@ public class GUIListAssignments extends JFrame{
 
 
 
-
-        /*this.addWindowListener (new WindowAdapter() {
+        //problema: se voglio vedere di nuovo la finestra di show all assignment dopo aver visto quella delle review, rimane quell delle review
+        //RISOLTO con questo pezzo di codice
+        this.addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent we) {
-                gc.setCalendarState(CalendarState.NORMAL);
+                guiCustomer.setCalendarState(CalendarState.NORMAL);
             }
-         });*/
+         });
     }
 
     //metodo che crea infoPanel[i] e gli assegna bottone e label
@@ -217,10 +220,11 @@ public class GUIListAssignments extends JFrame{
 
 
     //metodo per settare il colore della labelState
-    private void createLabelState(Date d){
+    private void createLabelState(Assignment a){
         //da Fare
         //da customer vedo la lista degli assignment, controllo dateEnd e state
         //state è false(annullato), true(confermato) o null(da confermare)
+        
     }
 
 
