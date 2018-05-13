@@ -224,7 +224,7 @@ public class GUIListAssignments extends JFrame{
         //da Fare
         //da customer vedo la lista degli assignment, controllo dateEnd e state
         //state è false(annullato), true(confermato) o null(da confermare)
-        
+
     }
 
 
