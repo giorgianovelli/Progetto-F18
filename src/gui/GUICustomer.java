@@ -123,7 +123,7 @@ public class GUICustomer extends JFrame{
         nTodayAssignments = getNDailyAssignments();
 
         //redundant code?
-        /*if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
+        if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
             buttonTodayAssignment = new JButton[nTodayAssignments];
             for (i = 0; i < nTodayAssignments; i++){
                 buttonTodayAssignment[i] = new JButton("Test assignment");
@@ -143,9 +143,9 @@ public class GUICustomer extends JFrame{
                 buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
                 panelToday.add(buttonTodayAssignment[i]);
             }
-        }*/
+        }
 
-        buttonTodayAssignment = new JButton[nTodayAssignments];
+        /*buttonTodayAssignment = new JButton[nTodayAssignments];
         for (i = 0; i < nTodayAssignments; i++){
             buttonTodayAssignment[i] = new JButton("Test assignment");
             buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
@@ -153,7 +153,7 @@ public class GUICustomer extends JFrame{
             buttonTodayAssignment[i].setBorderPainted(false);
             buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
             panelToday.add(buttonTodayAssignment[i]);
-        }
+        }*/
 
 
         if ((nTodayAssignments > 0) && (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT)){
@@ -174,7 +174,7 @@ public class GUICustomer extends JFrame{
         }
 
         //carica i primi 5 appuntamenti del giorno
-        loadTheFirstFiveAssignments(nTodayAssignments);
+        loadTheFirstFiveAssignments(nShownTodayAssignments);
 
 
         add(panelToday, BorderLayout.EAST);
@@ -660,7 +660,7 @@ public class GUICustomer extends JFrame{
     }
 
     private void openListAssignment(){
-        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, this);
+        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, customer, this);
         guiListAssignments.setVisible(true);
     }
 
@@ -748,9 +748,9 @@ public class GUICustomer extends JFrame{
         return nAssignments;
     }
 
-    private void loadTheFirstFiveAssignments(int nAssignments){
-        if (nAssignments > MAXVISIBLETODAYASSIGNMENT){
-            nAssignments = MAXVISIBLETODAYASSIGNMENT;
+    private void loadTheFirstFiveAssignments(int nShownAssignments){
+        if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
+            nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
 
         int i = 0;
@@ -767,7 +767,7 @@ public class GUICustomer extends JFrame{
                 Date dayStart = date.parse(strDateStart);
                 Date dayEnd = date.parse(strDateEnd);
                 Date today = date.parse(strTodayDate);
-                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nAssignments)){
+                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
                     keyAssignmentsToShow.add(key);
                     i++;
                 }

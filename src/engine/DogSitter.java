@@ -16,7 +16,7 @@ public class DogSitter extends User {
     private Availability dateTimeAvailability;
     private boolean acceptCash;
     private HashMap<Integer, Assignment> listAssignment;
-    private HashMap<String, Review> listReview;
+    private HashMap<Integer, Review> listReview;
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogNumber,

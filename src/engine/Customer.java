@@ -19,19 +19,20 @@ import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 public class Customer extends User {
     private HashSet<Dog> dogList;        //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
     private HashMap<Integer, Assignment> assignmentList;
-    private HashMap<String, Review> reviewList;
+    private HashMap<Integer, Review> reviewList;
 
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo engine.Dog quando sarà disponibile la classe
         assignmentList = new HashMap<Integer, Assignment>();
-        reviewList = new HashMap<String, Review>();
+        reviewList = new HashMap<Integer, Review>();
         assignmentList = getCustomerListAssignmentFromDB(email);
         dogList = getDogListFromDB(email);
     }
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog>selectedDogs, Address meetingPoint){
         String emailDogSitter = ds.email;
+        PlatformEngine platformEngine = new PlatformEngine();
 
         //chiamata alla classe banca per effettuare la transazione
         boolean testTransaction = true;
@@ -48,9 +49,10 @@ public class Customer extends User {
         Bank bank = new Bank();
 
         //implementare funzione per il calcolo del prezzo della prestazione
-        double amount = 10;
+        //double amount = 10;
+        double price = platformEngine.estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
-        if (bank.isTransactionPossible(email, amount)) {
+        if (bank.isTransactionPossible(email, price)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
@@ -88,7 +90,7 @@ public class Customer extends User {
                 e.printStackTrace();
             }
 
-            bank.makeBankTransaction(email, emailDogSitter, code, amount);
+            bank.makeBankTransaction(email, emailDogSitter, code, price);
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
@@ -127,7 +129,7 @@ public class Customer extends User {
         }
     }
 
-    public Review addReview(DogSitter ds, Date dateReview, int rating, String title, String comment){
+    public Review addReview(int codeAssignment, DogSitter ds, Date dateReview, int rating, String title, String comment){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
         String dateStringReview = date.format(dateReview);
@@ -136,12 +138,12 @@ public class Customer extends User {
         //salva la recensione nel database
         //sottometodo da implementare
 
-        reviewList.put(dateStringReview  + "_" + ds.email + "_" + this.email, review);
+        reviewList.put(codeAssignment, review);
         System.out.println(review.toString());
         return review;
     }
 
-    public boolean removeReview(String key){
+    public boolean removeReview(Integer key){
         Review r = null;
         r = reviewList.get(key);
         if (r != null){
@@ -169,9 +171,9 @@ public class Customer extends User {
         return assignmentList;
     }
 
-    public HashMap<String, Review> listReview(){
+    public HashMap<Integer, Review> listReview(){
         Review r = null;
-        for(String key : reviewList.keySet()){
+        for(Integer key : reviewList.keySet()){
             r = reviewList.get(key);
             System.out.println(r.toString());
         }
@@ -198,6 +200,10 @@ public class Customer extends User {
 
     public HashMap<Integer, Assignment> getAssignmentList() {
         return assignmentList;
+    }
+
+    public HashMap<Integer, Review> getReviewList() {
+        return reviewList;
     }
 
     public Address getAddress(){

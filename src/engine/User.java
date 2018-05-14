@@ -26,6 +26,7 @@ public abstract class User {
         this.paymentMethod = paymentMethod;
     }
 
-
-
+    public String getEmail() {
+        return email;
+    }
 }

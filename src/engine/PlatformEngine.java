@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static java.lang.Math.floor;
+import static staticClasses.DoubleTools.round2Decimal;
 import static staticClasses.ObjectCreator.createDogSitterFromDB;
 import static staticClasses.dateTime.DateTimeTools.dateTimeDiff;
 
@@ -178,29 +180,21 @@ public class PlatformEngine {
     }
 
     public double estimatePriceAssignment(HashSet<Dog> dogList, Date dateStart, Date dateEnd){
-        //funzione da completare
         DBConnector dbConnector = new DBConnector();
-        double priceArray[] = new double[4];
+        HashMap<DogSize, Double> priceMap = new HashMap<DogSize, Double>(4);
+        HashMap<Integer, Double> hRange = new HashMap<Integer, Double>(4);
 
         try {
             ResultSet rs = dbConnector.askDB("SELECT H_RANGE, PERC FROM PERC_PRICE");
-            double hRange[] = new double[NRANGE];
             while (rs.next()){
-                int n = rs.getInt("H_RANGE") - 1;
-                hRange[n] = rs.getDouble("PERC");
+                int n = rs.getInt("H_RANGE");
+                hRange.put(n, rs.getDouble("PERC"));
             }
             dbConnector.closeConnection();
             rs = dbConnector.askDB("SELECT SIZE, PRICE FROM PRICE_LIST");
             while (rs.next()){
-                if (rs.getString("SIZE").equals("SMALL")){
-                    priceArray[0] = rs.getDouble("PRICE");
-                } else if (rs.getString("SIZE").equals("MEDIUM")){
-                    priceArray[1] = rs.getDouble("PRICE");
-                } else if (rs.getString("SIZE").equals("BIG")){
-                    priceArray[2] = rs.getDouble("PRICE");
-                } else if (rs.getString("SIZE").equals("GIANT")){
-                    priceArray[3] = rs.getDouble("PRICE");
-                }
+                DogSize size = DogSize.valueOf(rs.getString("SIZE"));
+                priceMap.put(size, rs.getDouble("PRICE"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,12 +203,42 @@ public class PlatformEngine {
         double price = 0;
         DateTimeDHMS workTime = dateTimeDiff(dateEnd, dateStart);
 
+        System.out.println("Time: " + workTime.getDays() + ":" + workTime.getHours() + ":" + workTime.getMinutes());
+
         for (Dog d : dogList) {
-            if (workTime.getDays() > 0){
-                //metodo da implementare
+
+            price = price + (priceMap.get(d.getSize()) * hRange.get(24) * workTime.getDays());
+            //System.out.println("pd: " + price);
+
+            int partialHours = workTime.getHours();
+
+            if (partialHours > 12){
+                price = price + (priceMap.get(d.getSize()) * hRange.get(24));
+                //System.out.println("phd: " + price);
+                partialHours = 0;
             }
+
+            if (partialHours > 6 && partialHours <= 12) {
+                price = price + (priceMap.get(d.getSize()) * hRange.get(12) * (partialHours - 6));
+                //System.out.println("ph6: " + price);
+                partialHours = 6;
+            }
+
+            if (partialHours > 3 && partialHours <= 6) {
+                price = price + (priceMap.get(d.getSize()) * hRange.get(6) * (partialHours - 3));
+                //System.out.println("ph3: " + price);
+                partialHours = 3;
+            }
+
+            price = price + (priceMap.get(d.getSize()) * hRange.get(3) * partialHours);
+            //System.out.println("ph1: " + price);
+
+            double minutes = (int)workTime.getMinutes();
+            double minutesHourRatio = minutes / 60;
+            //System.out.println("ratio: " + minutesHourRatio);
+            price = price + (priceMap.get(d.getSize()) * hRange.get(3) * minutesHourRatio);
         }
-        return price;
+        return round2Decimal(price);
     }
 
 }
