@@ -594,6 +594,18 @@ public class GUICustomer extends JFrame{
 
         for (i = 0; i < NDAYMONTH; i++){
             buttonDay[i].setBackground(new Color(204, 230, 255));
+
+            String strCurrentDate = date.format(new Date());
+            String dateButton;
+            int nDay = Integer.parseInt(buttonDay[i].getText());
+            if (nDay < 10){
+                dateButton = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+            } else {
+                dateButton = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+            }
+            if (dateButton.equals(strCurrentDate)){
+                buttonDay[i].setForeground(new Color(255, 0, 0));
+            }
         }
 
         showAssignmentOnCalendar();
