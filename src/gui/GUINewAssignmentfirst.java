@@ -3,7 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUINewAssignment extends JFrame{
+public class GUINewAssignmentfirst extends JFrame{
     NewAssignmentBox newAssignmentBox = new NewAssignmentBox();
     NewAssignmentText address = new NewAssignmentText("Address:");
     NewAssignmentText city = new NewAssignmentText("City:");
@@ -12,7 +12,7 @@ public class GUINewAssignment extends JFrame{
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
-    public GUINewAssignment() {
+    public GUINewAssignmentfirst() {
         setTitle("New Assignment");
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -28,7 +28,7 @@ public class GUINewAssignment extends JFrame{
     }
 }
 
-class NewAssignmentBox extends JPanel{
+class NewAssignmentBoxfirst extends JPanel{
 
     JComboBox<String> fdayList, tdayList;
     JComboBox<String> fmonthList, tmonthList;
@@ -38,11 +38,11 @@ class NewAssignmentBox extends JPanel{
     JLabel fromLabel = new JLabel("From:");
     JLabel toLabel = new JLabel("To:");
     JLabel blanckLabel = new JLabel("");
-    JLabel daysLabel = new JLabel("Day:");
-    JLabel monthsLabel = new JLabel("Month:");
-    JLabel yearsLabel = new JLabel("Year:");
-    JLabel hoursLabel = new JLabel("Hour:");
-    JLabel minutesLabel = new JLabel("Minute:");
+    JLabel daysLabel = new JLabel("Day");
+    JLabel monthsLabel = new JLabel("Moths");
+    JLabel yearsLabel = new JLabel("Years");
+    JLabel hoursLabel = new JLabel("Hour");
+    JLabel minutesLabel = new JLabel("Minute");
 
 
 
@@ -52,7 +52,7 @@ class NewAssignmentBox extends JPanel{
     String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
     String[] minute = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
 
-    public NewAssignmentBox(){
+    public NewAssignmentBoxfirst(){
         fdayList = new JComboBox<>(day);
         fmonthList = new JComboBox(month);
         fyearList = new JComboBox<>(year);
@@ -73,12 +73,12 @@ class NewAssignmentBox extends JPanel{
 
 }
 
-class NewAssignmentText extends JPanel{
+class NewAssignmentTextfirst extends JPanel{
     JLabel label;
     TextField field = new TextField("",30);
     JLabel blanckLabel = new JLabel("");
 
-    public NewAssignmentText(String text){
+    public NewAssignmentTextfirst(String text){
         label = new JLabel(text);
         add(label, BorderLayout.LINE_START);
         add(field, BorderLayout.CENTER);
@@ -95,4 +95,4 @@ class NewAssignmentText extends JPanel{
         checkBox.
 
     }
-};*/
+}*/
