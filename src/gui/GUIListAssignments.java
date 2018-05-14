@@ -58,8 +58,8 @@ public class GUIListAssignments extends JFrame{
         //vedere se funzionano le query con sottoquery
 
 
-        assignmentNumber = customer.getAssignmentList().size();
-        reviewNumber = customer.getReviewList().size();
+        assignmentNumber = customer.getAssignmentList().size()+1;
+        reviewNumber = customer.getReviewList().size()+1;
 
 
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
@@ -74,7 +74,7 @@ public class GUIListAssignments extends JFrame{
             labelState = new JLabel[assignmentNumber];
         }
 
-        //contentPanel.setLayout((new GridLayout(infoPanel.length, 1, 5, 5)));
+        contentPanel.setLayout((new GridLayout(infoPanel.length, 1, 5, 5)));
 
 
 
@@ -84,14 +84,14 @@ public class GUIListAssignments extends JFrame{
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
 
-            for(Integer i = 0; i < infoPanel.length; i++){
+            for(Integer i = 1; i < infoPanel.length; i++){
                 Assignment a = null;
                 //non completo!
                 try{
-                    int j = i + 1;
+
                     String s = "";
-                    a = customer.getAssignmentList().get(j);
-                    ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '"+ a.getCode()+ "'");
+                    a = customer.getAssignmentList().get(i);
+                    ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CUSTOMER = '"+ customer.getEmail()+ "'");
                     rs.next();
 
                     s += "Assignment with " + rs.getString("DOGSITTER") ;
@@ -118,13 +118,12 @@ public class GUIListAssignments extends JFrame{
 
 
         }
-        else if (cs.equals(CalendarState.DELETING_REVIEW)){
+        else if (cs.equals(CalendarState.DELETING_REVIEW)){ //DA controllare!!!!!
             setTitle("Your reviews");
-            for(Integer i = 0; i < infoPanel.length; i++){
+            for(Integer i = 1; i < infoPanel.length; i++){
                 Review r = null;
 
-                int j= i+1;
-                r = customer.getReviewList().get(j);
+                r = customer.getReviewList().get(i);
                 String s = "Review for " + r.toString();
 
                 labelDescription[i]= new JLabel(s);
@@ -136,14 +135,14 @@ public class GUIListAssignments extends JFrame{
 
 
         }
-        else if (cs.equals(CalendarState.SHOW_REVIEWS)){
+        else if (cs.equals(CalendarState.SHOW_REVIEWS)){ //DA controllare!!!!!
             setTitle("Your reviews");
 
-            for(Integer i = 0; i < infoPanel.length; i++){
+            for(Integer i = 1; i < infoPanel.length; i++){
                 Review r = null;
 
-                int j= i+1;
-                r = customer.getReviewList().get(j);
+
+                r = customer.getReviewList().get(i);
                 String s = "Review for " + r.toString();
                 labelDescription[i]= new JLabel(s);
                 buttonAction[i]= new JButton("Show more");
@@ -154,13 +153,14 @@ public class GUIListAssignments extends JFrame{
 
         } else {
             setTitle("Your assignments");
-            for(Integer i = 0; i < infoPanel.length; i++){
+            for(Integer i = 1; i < infoPanel.length; i++){
                 Assignment a = null;
                 try{
-                    int j = i + 1;
+                    //int j = i + 1;
                     String s = "";
-                    a = customer.getAssignmentList().get(j);
-                    ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '"+ a.getCode()+ "'");
+                    a = customer.getAssignmentList().get(i);
+                    //System.out.println(a.toString());
+                    ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CUSTOMER = '"+ customer.getEmail()+ "'");
                     rs.next();
 
                     s += "Assignment with " + rs.getString("DOGSITTER") ;
