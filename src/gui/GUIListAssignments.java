@@ -53,13 +53,10 @@ public class GUIListAssignments extends JFrame{
     }
 
     private void initComponents(CalendarState cs, Customer customer, GUICustomer guiCustomer){
-        //DA FARE: dicitura esatta per la labelDescription, stato dell'assignment,
-        // e vedere se funziona la visualizzazione delle recensioni
-        //vedere se funzionano le query con sottoquery
+        //DA FARE: stato dell'assignment, e vedere se funziona la visualizzazione delle recensioni
 
-
-        assignmentNumber = customer.getAssignmentList().size()+1;
-        reviewNumber = customer.getReviewList().size()+1;
+        assignmentNumber = customer.getAssignmentList().size();
+        reviewNumber = customer.getReviewList().size();
 
 
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
