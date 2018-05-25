@@ -1,27 +1,30 @@
 package test;
 
-import engine.*;
-import enumeration.DogSize;
+import server.Customer;
+import server.Dog;
+import server.DogSitter;
+import server.Singleton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
-import static staticClasses.ObjectCreator.createCustomerFromDB;
-import static staticClasses.ObjectCreator.createDogFromDB;
-import static staticClasses.ObjectCreator.createDogSitterFromDB;
+//import static staticClasses.ObjectCreator.createCustomerFromDB;
+//import static staticClasses.ObjectCreator.createDogFromDB;
+//import static staticClasses.ObjectCreator.createDogSitterFromDB;
 
 public class TestCustomer {
     public static void main(String[] args) throws ParseException {
         //test addAssignment(...)
         HashSet<Dog> selectedDogs = new HashSet<Dog>(2);
         //creare oggetti Dog
-        Dog d = createDogFromDB(3);
+        Singleton singleton = new Singleton();
+        Dog d = singleton.createDogFromDB(3);
         selectedDogs.add(d);
         //selectedDogs.add(scooby);
-        DogSitter ds = createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
-        Customer c = createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
+        DogSitter ds = singleton.createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
+        Customer c = singleton.createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
         String strEnd = "17/05/2018 11:00";

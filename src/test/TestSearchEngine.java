@@ -1,22 +1,24 @@
 package test;
 
-import engine.Customer;
-import engine.DogSitter;
+import server.Customer;
+import server.DogSitter;
 import engine.PlatformEngine;
+import server.Singleton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
-import static staticClasses.ObjectCreator.createCustomerFromDB;
-import static staticClasses.ObjectCreator.createDogSitterFromDB;
+//import static staticClasses.ObjectCreator.createCustomerFromDB;
+//import static staticClasses.ObjectCreator.createDogSitterFromDB;
 
 public class TestSearchEngine {
     public static void main(String[] args) {
         PlatformEngine se = new PlatformEngine();
-        Customer c = createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
-        DogSitter ds = createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
+        Singleton singleton = new Singleton();
+        Customer c = singleton.createCustomerFromDB("RICCARDOGIURA@GMAIL.COM");
+        DogSitter ds = singleton.createDogSitterFromDB("MARCO.CARTA@GMAIL.COM");
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date startDate = new Date();
         Date endDate = new Date();

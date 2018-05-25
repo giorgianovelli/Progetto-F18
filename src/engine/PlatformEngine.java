@@ -1,9 +1,11 @@
 package engine;
 
 import database.DBConnector;
-import engine.DogSitter;
-import enumeration.DogSize;
-import staticClasses.dateTime.DateTimeDHMS;
+import server.*;
+import server.dateTime.WorkingTime;
+import server.places.Address;
+import server.places.Area;
+import server.tools.dateTime.DateTimeDHMS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,10 +15,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static java.lang.Math.floor;
-import static staticClasses.DoubleTools.round2Decimal;
-import static staticClasses.ObjectCreator.createDogSitterFromDB;
-import static staticClasses.dateTime.DateTimeTools.dateTimeDiff;
+import static server.tools.DoubleTools.round2Decimal;
+//import static staticClasses.ObjectCreator.createDogSitterFromDB;
+import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 
 public class PlatformEngine {
     private HashSet<DogSitter> dogSitterList;
@@ -29,7 +30,8 @@ public class PlatformEngine {
         try {
             ResultSet rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS");
             while (rs.next()){
-                DogSitter ds = createDogSitterFromDB(rs.getString("EMAIL"));
+                Singleton singleton = new Singleton();
+                DogSitter ds = singleton.createDogSitterFromDB(rs.getString("EMAIL"));
                 dogSitterList.add(ds);
             }
             dbConnector.closeConnection();

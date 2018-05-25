@@ -1,6 +1,6 @@
 package test;
 
-import static staticClasses.StringManipulator.capitalizeFirstLetter;
+import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class TestStringManipulator {
     public static void main(String[] args) {
