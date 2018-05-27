@@ -76,7 +76,7 @@ public class GUICustomer extends JFrame{
     private CalendarState calendarState = CalendarState.NORMAL;
 
     //TODO questo attributo non sarà più direttamente accessibile da quando l'architettura client-servr sarà ultimata
-    private Customer customer;
+    //private Customer customer;
 
     //TODO attributi per client-server
     private CustomerProxy proxy;
@@ -92,8 +92,8 @@ public class GUICustomer extends JFrame{
         setLayout(new BorderLayout());
 
         //TODO queste metodo non sarà più direttamente accessibile con l'architettura client server
-        Singleton singleton = new Singleton();
-        customer = singleton.createCustomerFromDB(customerEmail);
+        //Singleton singleton = new Singleton();
+        //customer = singleton.createCustomerFromDB(customerEmail);
 
         initComponents();
     }
@@ -194,7 +194,7 @@ public class GUICustomer extends JFrame{
             public void actionPerformed(ActionEvent cae) {
                 if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, customer);
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
                     guiDailyAssignments.setVisible(true);
                 }
 
@@ -247,7 +247,7 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (ctrlAe.getActionCommand().equals("Show more")){
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, customer);
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
                     guiDailyAssignments.setVisible(true);
                 }
             }
@@ -304,7 +304,7 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (menuAe.getActionCommand().equals("Account")){
-                    GUISettings guiSettings = new GUISettings(customer);
+                    GUISettings guiSettings = new GUISettings(null);    //TODO customer
                     guiSettings.setVisible(true);
                 }
 
@@ -682,7 +682,7 @@ public class GUICustomer extends JFrame{
     }
 
     private void openListAssignment(){
-        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, customer, this);
+        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, null, this);  //TODO customer
         guiListAssignments.setVisible(true);
     }
 
@@ -794,7 +794,6 @@ public class GUICustomer extends JFrame{
     private void loadTheFirstFiveAssignments(int nShownAssignments){
         //TODO questo metodo andrà modificato in quanto l'oggetto customer
         //TODO non sarà più direttamente accessibile con l'architettura client-server
-        System.out.println("ns = " + nShownAssignments);
         if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
@@ -825,21 +824,12 @@ public class GUICustomer extends JFrame{
 
         int n = 0;
         for (Integer key : keyAssignmentsToShow) {
-            DBConnector dbConnector = new DBConnector();
-            try {
-                Assignment a = listAssignment.get(key);
-                ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + a.getCode() + "'");
-                rs.next();
-                Singleton singleton = new Singleton();
-                DogSitter ds = singleton.createDogSitterFromDB(rs.getString("DOGSITTER"));
-                buttonTodayAssignment[n].setText("Assignment with " + capitalizeFirstLetter(ds.getName()) + " " + capitalizeFirstLetter(ds.getSurname()));
-                dbConnector.closeConnection();
-                n++;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Assignment a = listAssignment.get(key);
+            String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
+            String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
+            buttonTodayAssignment[n].setText("Assignment with " + capitalizeFirstLetter(nameDogSitter) + " " + capitalizeFirstLetter(surnameDogSitter));
+            n++;
         }
-        System.out.println("n = " + n);
     }
 
 

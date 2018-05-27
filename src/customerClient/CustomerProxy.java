@@ -17,7 +17,7 @@ public class CustomerProxy implements InterfaceCustomer {
     private Socket socket = null;
     private String serverReply;
 
-    public String getReply(String clientMsg){
+    private String getReply(String clientMsg){
         try{
             // open a socket connection
             socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
@@ -53,7 +53,6 @@ public class CustomerProxy implements InterfaceCustomer {
     public HashMap<Integer, Assignment> getCustomerListAssignment(String email){
         String serverMsg = getReply("1#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
-        //msg = msg + a.getCode() + "#" + "a.doglist" + a.getDateStart() + "#" + a.getDateEnd() + "#" + a.getState() + "#" + "a.getMeetingPoint";
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()){
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -75,5 +74,13 @@ public class CustomerProxy implements InterfaceCustomer {
             customerListAssignment.put(code, a);
         }
         return customerListAssignment;
+    }
+
+    public String getDogSitterNameOfAssignment(int code){
+        return getReply("2#" + code);
+    }
+
+    public String getDogSitterSurnameOfAssignment(int code){
+        return getReply("3#" + code);
     }
 }

@@ -1,12 +1,16 @@
 package server;
+import database.DBConnector;
 import interfaces.InterfaceCustomer;
 import server.places.Address;
 
 import java.io.*;
 import java.net.*;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class ServerProxy extends Thread
 {
@@ -78,6 +82,7 @@ class Connect extends Thread {
 
     private String executeClientCmd(){
         String serverMsg = null;
+        int code;
         try {
             StringTokenizer tokenMsg = null;
             try {
@@ -96,6 +101,14 @@ class Connect extends Thread {
                     String email = tokenMsg.nextToken();
                     serverMsg = getCustomerListAssignment(email);
                     break;
+                case 2:
+                    code = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = getDogSitterNameOfAssignment(code);
+                    break;
+                case 3:
+                    code = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = getDogSitterSurnameOfAssignment(code);
+                    break;
                 default:
             }
         } finally {
@@ -103,7 +116,7 @@ class Connect extends Thread {
         }
     }
 
-    public String customerAccessDataVerifier(String inputUser, String inputPasword){
+    private String customerAccessDataVerifier(String inputUser, String inputPasword){
         Login loginCustomer = new Login();
         try {
             if(loginCustomer.customerAccessDataVerifier(inputUser, inputPasword)){
@@ -118,7 +131,7 @@ class Connect extends Thread {
         }
     }
 
-    public String getCustomerListAssignment(String email){
+    private String getCustomerListAssignment(String email){
        //TODO
         Singleton singleton = new Singleton();
         HashMap<Integer, Assignment> customerListAssignment = singleton.getCustomerListAssignmentFromDB(email);
@@ -132,5 +145,39 @@ class Connect extends Thread {
             msg = msg + a.getCode() + "#" + "a.doglist" + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + "a.getMeetingPoint" + "#";
         }
         return msg;
+    }
+
+    private String getDogSitterNameOfAssignment(int code){
+        DBConnector dbConnector = new DBConnector();
+        String emailDogSitter = null;
+        DogSitter dogSitter = null;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
+            rs.next();
+            emailDogSitter = rs.getString("DOGSITTER");
+            Singleton singleton = new Singleton();
+            dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dogSitter.name;
+    }
+
+    private String getDogSitterSurnameOfAssignment(int code){
+        DBConnector dbConnector = new DBConnector();
+        String emailDogSitter = null;
+        DogSitter dogSitter = null;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
+            rs.next();
+            emailDogSitter = rs.getString("DOGSITTER");
+            Singleton singleton = new Singleton();
+            dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dogSitter.surname;
     }
 }
