@@ -1,5 +1,6 @@
 package customerClient.gui;
 
+import customerClient.CustomerProxy;
 import database.DBConnector;
 import server.Assignment;
 import server.Customer;
@@ -74,7 +75,12 @@ public class GUICustomer extends JFrame{
     private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
     private CalendarState calendarState = CalendarState.NORMAL;
 
+    //TODO questo attributo non sarà più direttamente accessibile da quando l'architettura client-servr sarà ultimata
     private Customer customer;
+
+    //TODO attributi per client-server
+    private CustomerProxy proxy;
+    private String email;
 
 
     public GUICustomer(String customerEmail) throws ParseException {
@@ -85,8 +91,10 @@ public class GUICustomer extends JFrame{
         setResizable(false);
         setLayout(new BorderLayout());
 
+        //TODO queste metodo non sarà più direttamente accessibile con l'architettura client server
         Singleton singleton = new Singleton();
         customer = singleton.createCustomerFromDB(customerEmail);
+
         initComponents();
     }
 
@@ -610,7 +618,7 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        showAssignmentOnCalendar();
+        showAssignmentOnCalendar(email);
     }
 
     private boolean isLeap(Date yearToCheck){
@@ -657,7 +665,7 @@ public class GUICustomer extends JFrame{
         menuSettings.setVisible(true);
         menuExtra.setVisible(true);
         menuItemCancel.setVisible(false);
-        showAssignmentOnCalendar();
+        showAssignmentOnCalendar(email);
     }
 
     private void removeAssignment(){
@@ -706,8 +714,25 @@ public class GUICustomer extends JFrame{
         }
     }
 
-    private void showAssignmentOnCalendar(){
-        HashMap<Integer, Assignment> listAssignment = customer.getAssignmentList();
+
+    //TODO metodi sperimentali client-server
+
+    public GUICustomer(CustomerProxy cp, String email) throws ParseException {
+        setTitle("CaniBau (Customer)");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLayout(new BorderLayout());
+
+        this.proxy = cp;
+        this.email = email;
+
+        initComponents();
+    }
+
+    private void showAssignmentOnCalendar(String email){
+        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment(email);
         boolean included = false;
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
@@ -740,11 +765,14 @@ public class GUICustomer extends JFrame{
     }
 
     private int getNDailyAssignments(){
+        //TODO questo metodo andrà modificato in quanto l'oggetto customer
+        //TODO non sarà più direttamente accessibile con l'architettura client-server
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;
-        for (Integer key : customer.getAssignmentList().keySet()) {
-            Assignment a = customer.getAssignmentList().get(key);
+        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment(email);
+        for (Integer key : listAssignment.keySet()) {
+            Assignment a = listAssignment.get(key);
             String strDateStart = date.format(a.getDateStart());
             String strTodayDate = date.format(todayDate);
             String strDateEnd = date.format(a.getDateEnd());
@@ -752,6 +780,7 @@ public class GUICustomer extends JFrame{
                 Date dayStart = date.parse(strDateStart);
                 Date dayEnd = date.parse(strDateEnd);
                 Date today = date.parse(strTodayDate);
+
                 if ((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)){
                     nAssignments++;
                 }
@@ -763,6 +792,9 @@ public class GUICustomer extends JFrame{
     }
 
     private void loadTheFirstFiveAssignments(int nShownAssignments){
+        //TODO questo metodo andrà modificato in quanto l'oggetto customer
+        //TODO non sarà più direttamente accessibile con l'architettura client-server
+        System.out.println("ns = " + nShownAssignments);
         if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
@@ -771,9 +803,10 @@ public class GUICustomer extends JFrame{
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         HashSet<Integer> keyAssignmentsToShow = new HashSet<Integer>();
+        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment(email);
 
-        for (Integer key : customer.getAssignmentList().keySet()) {
-            Assignment a = customer.getAssignmentList().get(key);
+        for (Integer key : listAssignment.keySet()) {
+            Assignment a = listAssignment.get(key);
             String strDateStart = date.format(a.getDateStart());
             String strDateEnd = date.format(a.getDateEnd());
             String strTodayDate = date.format(todayDate);
@@ -790,12 +823,11 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        HashMap<Integer, Assignment> assignmentList = customer.getAssignmentList();
         int n = 0;
         for (Integer key : keyAssignmentsToShow) {
             DBConnector dbConnector = new DBConnector();
             try {
-                Assignment a = assignmentList.get(key);
+                Assignment a = listAssignment.get(key);
                 ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + a.getCode() + "'");
                 rs.next();
                 Singleton singleton = new Singleton();
@@ -807,5 +839,8 @@ public class GUICustomer extends JFrame{
                 e.printStackTrace();
             }
         }
+        System.out.println("n = " + n);
     }
+
+
 }

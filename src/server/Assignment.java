@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class Assignment {
     private int code;
-    private HashSet<Dog> dogList;    //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
+    private HashSet<Dog> dogList;
     private Date dateStart;
     private Date dateEnd;
     private boolean state;
@@ -64,5 +64,17 @@ public class Assignment {
 
     public int getCode() {
         return code;
+    }
+
+    public HashSet<Dog> getDogList() {
+        return dogList;
+    }
+
+    public boolean getState() {
+        return state;
+    }
+
+    public Address getMeetingPoint() {
+        return meetingPoint;
     }
 }

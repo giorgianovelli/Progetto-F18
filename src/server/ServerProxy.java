@@ -1,7 +1,11 @@
 package server;
+import interfaces.InterfaceCustomer;
+import server.places.Address;
+
 import java.io.*;
 import java.net.*;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ServerProxy extends Thread
@@ -40,7 +44,6 @@ class Connect extends Thread {
     private Socket client = null;
     private BufferedReader msgIn = null;
     private PrintStream msgOut = null;
-    //public Connect() {}
 
     public Connect(Socket clientSocket){
         client = clientSocket;
@@ -83,11 +86,15 @@ class Connect extends Thread {
                 e1.printStackTrace();
             }
             int action = Integer.parseInt(tokenMsg.nextToken());
-            String inputUser = tokenMsg.nextToken();
-            String inputPassword = tokenMsg.nextToken();
             switch (action){
                 case 0:
+                    String inputUser = tokenMsg.nextToken();
+                    String inputPassword = tokenMsg.nextToken();
                     serverMsg = customerAccessDataVerifier(inputUser, inputPassword);
+                    break;
+                case 1:
+                    String email = tokenMsg.nextToken();
+                    serverMsg = getCustomerListAssignment(email);
                     break;
                 default:
             }
@@ -109,5 +116,21 @@ class Connect extends Thread {
             e.printStackTrace();
             return "false";
         }
+    }
+
+    public String getCustomerListAssignment(String email){
+       //TODO
+        Singleton singleton = new Singleton();
+        HashMap<Integer, Assignment> customerListAssignment = singleton.getCustomerListAssignmentFromDB(email);
+        String msg = "";
+        for (Integer key : customerListAssignment.keySet()) {
+            Assignment a = customerListAssignment.get(key);
+            //TODO aggiungere chiamata per ottenere la lista dei cani e il meeting point di a
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String strDateStart = dateFormat.format(a.getDateStart());
+            String strDateEnd = dateFormat.format(a.getDateEnd());
+            msg = msg + a.getCode() + "#" + "a.doglist" + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + "a.getMeetingPoint" + "#";
+        }
+        return msg;
     }
 }
