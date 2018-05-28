@@ -142,7 +142,7 @@ class Connect extends Thread {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
-            msg = msg + a.getCode() + "#" + "a.doglist" + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
+            msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
         }
         return msg;
     }
@@ -186,5 +186,16 @@ class Connect extends Thread {
         Address meetingPoint = singleton.getMeetingPointFromDB(code);
         return meetingPoint.getCountry() + "*" + meetingPoint.getCity() + "*" + meetingPoint.getStreet() + "*"
                 + meetingPoint.getNumber() + "*" + meetingPoint.getCap();
+    }
+
+    private String getDogListOfAssignment(int code){
+        String msg = "";
+        Singleton singleton = new Singleton();
+        HashSet<Dog> dogList = singleton.getDogListFromDB(code);
+        for (Dog d : dogList) {
+            msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
+                        + d.getWeight() + "*";
+        }
+        return msg;
     }
 }

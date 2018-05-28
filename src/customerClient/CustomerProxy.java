@@ -3,6 +3,8 @@ package customerClient;
 import interfaces.InterfaceCustomer;
 import server.Assignment;
 import server.Dog;
+import server.DogSitter;
+import server.DogSize;
 import server.places.Address;
 
 import java.io.*;
@@ -56,8 +58,8 @@ public class CustomerProxy implements InterfaceCustomer {
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()){
             int code = Integer.parseInt(tokenMsg.nextToken());
-            HashSet<Dog> dogList = null;    //TODO
-            tokenMsg.nextToken();           //...
+            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());    //TODO
+            //tokenMsg.nextToken();           //...
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm");
             Date dateStart = new Date();
             Date dateEnd = new Date();
@@ -73,8 +75,7 @@ public class CustomerProxy implements InterfaceCustomer {
             } else {
                 state = false;
             }
-            Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());    //TODO
-            //tokenMsg.nextToken();           //...
+            Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
             Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
             customerListAssignment.put(code, a);
         }
@@ -89,6 +90,25 @@ public class CustomerProxy implements InterfaceCustomer {
         String number = tokenMsg.nextToken();
         String cap = tokenMsg.nextToken();
         return new Address(country, city, street, number, cap);
+    }
+
+    private HashSet<Dog> decodeDogList(String msg){
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
+        //System.out.println("TM: " + tokenMsg.nextToken());
+        HashSet<Dog> dogList = new HashSet<Dog>();
+        while (tokenMsg.hasMoreTokens()){
+            StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
+            //System.out.println("TD: " + tokenDog.nextToken());
+            int ID = Integer.parseInt(tokenDog.nextToken());
+            String name = tokenDog.nextToken();
+            String breed = tokenDog.nextToken();
+            DogSize size = DogSize.valueOf(tokenDog.nextToken());
+            int age = Integer.parseInt(tokenDog.nextToken());
+            double weight = Double.parseDouble(tokenDog.nextToken());
+            Dog d = new Dog(name, breed, size, age, weight, ID);
+            dogList.add(d);
+        }
+        return dogList;
     }
 
     public String getDogSitterNameOfAssignment(int code){
