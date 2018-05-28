@@ -73,12 +73,22 @@ public class CustomerProxy implements InterfaceCustomer {
             } else {
                 state = false;
             }
-            Address meetingPoint = null;    //TODO
-            tokenMsg.nextToken();           //...
+            Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());    //TODO
+            //tokenMsg.nextToken();           //...
             Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
             customerListAssignment.put(code, a);
         }
         return customerListAssignment;
+    }
+
+    private Address decodeMeetingPoint(String msg){
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
+        String country = tokenMsg.nextToken();
+        String city = tokenMsg.nextToken();
+        String street = tokenMsg.nextToken();
+        String number = tokenMsg.nextToken();
+        String cap = tokenMsg.nextToken();
+        return new Address(country, city, street, number, cap);
     }
 
     public String getDogSitterNameOfAssignment(int code){

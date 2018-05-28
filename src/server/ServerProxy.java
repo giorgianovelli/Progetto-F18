@@ -142,7 +142,7 @@ class Connect extends Thread {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
-            msg = msg + a.getCode() + "#" + "a.doglist" + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + "a.getMeetingPoint" + "#";
+            msg = msg + a.getCode() + "#" + "a.doglist" + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
         }
         return msg;
     }
@@ -179,5 +179,12 @@ class Connect extends Thread {
             e.printStackTrace();
         }
         return dogSitter.surname;
+    }
+
+    private String getMeetingPoint(int code){
+        Singleton singleton = new Singleton();
+        Address meetingPoint = singleton.getMeetingPointFromDB(code);
+        return meetingPoint.getCountry() + "*" + meetingPoint.getCity() + "*" + meetingPoint.getStreet() + "*"
+                + meetingPoint.getNumber() + "*" + meetingPoint.getCap();
     }
 }
