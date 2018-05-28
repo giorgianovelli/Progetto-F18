@@ -67,10 +67,15 @@ public class CustomerProxy implements InterfaceCustomer {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            tokenMsg.nextToken();   //TODO state
+            boolean state;
+            if (tokenMsg.nextToken().equals("true")){
+                state = true;
+            } else {
+                state = false;
+            }
             Address meetingPoint = null;    //TODO
             tokenMsg.nextToken();           //...
-            Assignment a = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+            Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
             customerListAssignment.put(code, a);
         }
         return customerListAssignment;

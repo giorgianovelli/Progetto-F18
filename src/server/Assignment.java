@@ -24,6 +24,15 @@ public class Assignment {
         this.meetingPoint = meetingPoint;
     }
 
+    public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, boolean state, Address meetingPoint) {
+        this.code = code;
+        this.dogList = dogList;      //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.state = state;
+        this.meetingPoint = meetingPoint;
+    }
+
     @Override
     public String toString() {
         try {
