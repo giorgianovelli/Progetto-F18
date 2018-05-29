@@ -137,7 +137,7 @@ public class Customer extends User {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
         String dateStringReview = date.format(dateReview);
-        Review review = new Review(this, ds, dateReview, rating, title.toUpperCase(), comment);
+        Review review = new Review(codeAssignment, this, ds, dateReview, rating, title.toUpperCase(), comment);
 
         //salva la recensione nel database
         //sottometodo da implementare

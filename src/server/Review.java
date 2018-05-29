@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Review {
+    private int code;
     private Customer customer;
     private DogSitter dogSitter;
     private Date date;
@@ -12,7 +13,8 @@ public class Review {
     private String title;
     private String comment;
 
-    public Review(Customer customer, DogSitter dogSitter, Date date, int rating, String title, String comment) {
+    public Review(int code, Customer customer, DogSitter dogSitter, Date date, int rating, String title, String comment) {
+        this.code = code;
         this.customer = customer;
         this.dogSitter = dogSitter;
         this.date = date;
