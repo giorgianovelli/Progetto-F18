@@ -1,10 +1,7 @@
 package customerClient;
 
 import interfaces.InterfaceCustomer;
-import server.Assignment;
-import server.Dog;
-import server.DogSitter;
-import server.DogSize;
+import server.*;
 import server.places.Address;
 
 import java.io.*;
@@ -118,4 +115,18 @@ public class CustomerProxy implements InterfaceCustomer {
     public String getDogSitterSurnameOfAssignment(int code){
         return getReply("3#" + code);
     }
+
+    //TODO
+    /*public Customer getCustomer(String email){
+        String serverMsg = getReply("4#" + email);
+    }*/
 }
+
+/*
+super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
+        dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
+        assignmentList = new HashMap<Integer, Assignment>();
+        reviewList = new HashMap<Integer, Review>();
+        Singleton singleton = new Singleton();
+        assignmentList = singleton.getCustomerListAssignmentFromDB(email);
+        dogList = getDogListFromDB(email);*/
