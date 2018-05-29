@@ -55,12 +55,24 @@ public class Assignment {
         return reportDate;
     }
 
-    private String printDogList() {
+    public String printDogList() {
         String toReturn = "";
         for (Dog d : dogList) {
             toReturn = toReturn + "Dog name: " + d.getName() + "\tBreed: " + d.getBreed() + "\tSize: " + d.getSize() + "\tAge: " + d.getAge() + "\n";
         }
         return toReturn;
+    }
+
+    public String printDogNames(){
+        String toReturn = "";
+        for (Dog d : dogList) {
+            toReturn = toReturn + "<html><br>" + d.getName() + "<html/>" + "\n";
+        }
+        return toReturn;
+    }
+
+    public String printMeetingPoint() {
+        return meetingPoint.toString();
     }
 
     public Date getDateStart() {
