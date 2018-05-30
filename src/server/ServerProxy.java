@@ -3,6 +3,7 @@ import database.DBConnector;
 import interfaces.InterfaceCustomer;
 import server.places.Address;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.io.*;
 import java.net.*;
 import java.sql.ResultSet;
@@ -109,6 +110,10 @@ class Connect extends Thread {
                     code = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = getDogSitterSurnameOfAssignment(code);
                     break;
+                case 4:
+                    code = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = getReview(code);
+                    break;
                 default:
             }
         } finally {
@@ -197,5 +202,14 @@ class Connect extends Thread {
                         + d.getWeight() + "*";
         }
         return msg;
+    }
+
+    private String getReview(int code){
+        Singleton singleton = new Singleton();
+        Review review = singleton.getReview(code);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String date = dateFormat.format(review.getDate());
+        //TODO
+        return "review.getCustomer()" + "#" + "review.getDogSitter()" + "#" + date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
     }
 }

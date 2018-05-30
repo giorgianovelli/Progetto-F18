@@ -12,6 +12,18 @@ public class Review {
     private int rating;
     private String title;
     private String comment;
+    private String reply;
+
+    public Review(int code, Customer customer, DogSitter dogSitter, Date date, int rating, String title, String comment, String reply) {
+        this.code = code;
+        this.customer = customer;
+        this.dogSitter = dogSitter;
+        this.date = date;
+        this.rating = rating;
+        this.title = title;
+        this.comment = comment;
+        this.reply = reply;
+    }
 
     public Review(int code, Customer customer, DogSitter dogSitter, Date date, int rating, String title, String comment) {
         this.code = code;
@@ -21,6 +33,7 @@ public class Review {
         this.rating = rating;
         this.title = title;
         this.comment = comment;
+        this.reply = null;
     }
 
     public String toString(){
@@ -60,5 +73,35 @@ public class Review {
         return reportDate;
     }
 
+    public int getCode() {
+        return code;
+    }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public DogSitter getDogSitter() {
+        return dogSitter;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public String getReply() {
+        return reply;
+    }
 }

@@ -16,8 +16,8 @@ public class CustomerProxy implements InterfaceCustomer {
     private Socket socket = null;
     private String serverReply;
 
-    private String getReply(String clientMsg){
-        try{
+    private String getReply(String clientMsg) {
+        try {
             // open a socket connection
             socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
             // Apre i canali I/O
@@ -31,29 +31,27 @@ public class CustomerProxy implements InterfaceCustomer {
             System.out.println("Received message from server: " + serverReply);
             msgOut.close();
             msgIn.close();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             return serverReply;
         }
     }
 
-    public boolean customerAccessDataVerifier(String inputUser, String inputPasword){
+    public boolean customerAccessDataVerifier(String inputUser, String inputPasword) {
         String clientMsg = "0#" + inputUser + "#" + inputPasword;
-        if (getReply(clientMsg).equals("true")){
+        if (getReply(clientMsg).equals("true")) {
             return true;
         } else {
             return false;
         }
     }
 
-    public HashMap<Integer, Assignment> getCustomerListAssignment(String email){
+    public HashMap<Integer, Assignment> getCustomerListAssignment(String email) {
         String serverMsg = getReply("1#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
-        while (tokenMsg.hasMoreTokens()){
+        while (tokenMsg.hasMoreTokens()) {
             int code = Integer.parseInt(tokenMsg.nextToken());
             HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());    //TODO
             //tokenMsg.nextToken();           //...
@@ -67,7 +65,7 @@ public class CustomerProxy implements InterfaceCustomer {
                 e.printStackTrace();
             }
             boolean state;
-            if (tokenMsg.nextToken().equals("true")){
+            if (tokenMsg.nextToken().equals("true")) {
                 state = true;
             } else {
                 state = false;
@@ -79,7 +77,7 @@ public class CustomerProxy implements InterfaceCustomer {
         return customerListAssignment;
     }
 
-    private Address decodeMeetingPoint(String msg){
+    private Address decodeMeetingPoint(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
         String country = tokenMsg.nextToken();
         String city = tokenMsg.nextToken();
@@ -89,11 +87,11 @@ public class CustomerProxy implements InterfaceCustomer {
         return new Address(country, city, street, number, cap);
     }
 
-    private HashSet<Dog> decodeDogList(String msg){
+    private HashSet<Dog> decodeDogList(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
         //System.out.println("TM: " + tokenMsg.nextToken());
         HashSet<Dog> dogList = new HashSet<Dog>();
-        while (tokenMsg.hasMoreTokens()){
+        while (tokenMsg.hasMoreTokens()) {
             StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
             //System.out.println("TD: " + tokenDog.nextToken());
             int ID = Integer.parseInt(tokenDog.nextToken());
@@ -108,25 +106,43 @@ public class CustomerProxy implements InterfaceCustomer {
         return dogList;
     }
 
-    public String getDogSitterNameOfAssignment(int code){
+    public String getDogSitterNameOfAssignment(int code) {
         return getReply("2#" + code);
     }
 
-    public String getDogSitterSurnameOfAssignment(int code){
+    public String getDogSitterSurnameOfAssignment(int code) {
         return getReply("3#" + code);
     }
 
-    //TODO
-    /*public Customer getCustomer(String email){
-        String serverMsg = getReply("4#" + email);
-    }*/
-}
+    public Review getReview(int code){
+        String serverMsg = getReply("4#" + code);
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        //non deve ricevere l'attributo codice dal server
+        //TODO Customer
+        Customer customer = null;
+        tokenMsg.nextToken();
+        //TODO DogSitter
+        DogSitter dogSitter = null;
+        tokenMsg.nextToken();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+        try {
+            date = dateFormat.parse(tokenMsg.nextToken());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int rating = Integer.parseInt(tokenMsg.nextToken());
+        String title = tokenMsg.nextToken();
+        String description = tokenMsg.nextToken();
+        String reply = tokenMsg.nextToken();
+        return new Review(code, customer, dogSitter, date, rating, title,description, reply);
+    }
 
-/*
-super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
-        dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
-        assignmentList = new HashMap<Integer, Assignment>();
-        reviewList = new HashMap<Integer, Review>();
-        Singleton singleton = new Singleton();
-        assignmentList = singleton.getCustomerListAssignmentFromDB(email);
-        dogList = getDogListFromDB(email);*/
+    /*private int code;
+    private Customer customer;
+    private DogSitter dogSitter;
+    private Date date;
+    private int rating;
+    private String title;
+    private String comment;*/
+}

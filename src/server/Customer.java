@@ -29,6 +29,7 @@ public class Customer extends User {
         reviewList = new HashMap<Integer, Review>();
         Singleton singleton = new Singleton();
         assignmentList = singleton.getCustomerListAssignmentFromDB(email);
+        reviewList = singleton.getCustomerReviewList(this);
         dogList = getDogListFromDB(email);
     }
 

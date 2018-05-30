@@ -1,6 +1,7 @@
 package server;
 
 import database.DBConnector;
+import javafx.util.converter.CurrencyStringConverter;
 import server.bank.PaymentMethod;
 import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
@@ -274,6 +275,57 @@ public class Singleton {
             e.printStackTrace();
             return null;
         }
+    }
 
+    public HashMap<Integer, Review> getCustomerReviewList(Customer customer){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = null;
+        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        try {
+            rs = dbConnector.askDB("SELECT ASSIGNMENT_CODE, DOGSITTER, DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE CUSTOMER = '" + customer.email + "'");
+            while (rs.next()){
+                int code = rs.getInt("ASSIGNMENT_CODE");
+                String emailDogSitter = rs.getString("DOGSITTER");
+                Date date = rs.getDate("DATE");
+                int rating = rs.getInt("RATING");
+                String title = rs.getString("TITLE");
+                String description = rs.getString("DESCRIPTION");
+                String reply = rs.getString("REPLY");
+                Singleton singleton = new Singleton();
+                Review r = new Review(code, customer, singleton.createDogSitterFromDB(emailDogSitter), date, rating, title, description, reply);
+                reviewList.put(code, r);
+            }
+
+            dbConnector.closeConnection();
+            return reviewList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Review getReview(int code){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = null;
+        Review review = null;
+        try {
+            rs = dbConnector.askDB("SELECT CUSTOMER, DOGSITTER, DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE ASSIGNMENT_CODE = '" + code + "'");
+            while (rs.next()){
+                String emailCustomer = rs.getString("CUSTOMER");
+                String emailDogSitter = rs.getString("DOGSITTER");
+                Date date = rs.getDate("DATE");
+                int rating = rs.getInt("RATING");
+                String title = rs.getString("TITLE");
+                String description = rs.getString("DESCRIPTION");
+                String reply = rs.getString("REPLY");
+                Singleton singleton = new Singleton();
+                review = new Review(code, singleton.createCustomerFromDB(emailCustomer), singleton.createDogSitterFromDB(emailDogSitter), date, rating, title, description, reply);
+            }
+            dbConnector.closeConnection();
+            return review;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
