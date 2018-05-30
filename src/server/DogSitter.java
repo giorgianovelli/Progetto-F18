@@ -17,8 +17,6 @@ public class DogSitter extends User {
     private String biography;
     private Availability dateTimeAvailability;
     private boolean acceptCash;
-    private HashMap<Integer, Assignment> listAssignment;
-    private HashMap<Integer, Review> listReview;
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogNumber,
@@ -31,7 +29,7 @@ public class DogSitter extends User {
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
         Singleton singleton = new Singleton();
-        this.listAssignment = singleton.getDogSitterListAssignmentFromDB(this);
+        this.assignmentList = singleton.getDogSitterListAssignmentFromDB(this);
     }
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
@@ -41,7 +39,7 @@ public class DogSitter extends User {
     }
 
     public HashMap<Integer, Assignment> getListAssignment() {
-        return listAssignment;
+        return assignmentList;
     }
 
     public Availability getDateTimeAvailability() {

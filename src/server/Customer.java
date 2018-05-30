@@ -20,13 +20,11 @@ import server.places.Address;
 //import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 
 public class Customer extends User {
-    private HashSet<Dog> dogList;        //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
-    private HashMap<Integer, Assignment> assignmentList;
-    private HashMap<Integer, Review> reviewList;
+    private HashSet<Dog> dogList;
 
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod) {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
-        dogList = new HashSet<Dog>(3);    //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
+        dogList = new HashSet<Dog>(3);
         assignmentList = new HashMap<Integer, Assignment>();
         reviewList = new HashMap<Integer, Review>();
         Singleton singleton = new Singleton();

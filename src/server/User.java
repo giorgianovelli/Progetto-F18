@@ -4,6 +4,7 @@ import server.bank.PaymentMethod;
 import server.places.Address;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public abstract class User {
     protected String email;
@@ -14,6 +15,8 @@ public abstract class User {
     protected Date dateOfBirth;
     protected Address address;
     protected PaymentMethod paymentMethod;
+    protected HashMap<Integer, Assignment> assignmentList;
+    protected HashMap<Integer, Review> reviewList;
 
     public User(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod) {
         this.email = email;
@@ -24,6 +27,8 @@ public abstract class User {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.paymentMethod = paymentMethod;
+        this.assignmentList = new HashMap<Integer, Assignment>();
+        this.reviewList = new HashMap<Integer, Review>();
     }
 
     public String getEmail() {
