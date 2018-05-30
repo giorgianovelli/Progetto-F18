@@ -615,6 +615,8 @@ public class GUICustomer extends JFrame{
             }
             if (dateButton.equals(strCurrentDate)){
                 buttonDay[i].setForeground(new Color(255, 0, 0));
+            } else {
+                buttonDay[i].setForeground(new Color(0, 0, 0));
             }
         }
 
