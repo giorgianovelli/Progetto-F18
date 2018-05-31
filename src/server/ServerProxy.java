@@ -1,6 +1,7 @@
 package server;
 import database.DBConnector;
 import interfaces.InterfaceCustomer;
+import server.bank.PaymentMethod;
 import server.places.Address;
 
 import java.awt.desktop.SystemSleepEvent;
@@ -211,5 +212,51 @@ class Connect extends Thread {
         String date = dateFormat.format(review.getDate());
         //TODO
         return  date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
+    }
+
+    private String getCustomerName(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        return customer.getName();
+    }
+
+    private String getCustomerSurname(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        return customer.getSurname();
+    }
+
+    private String getCustomerPassword(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        return customer.getPassword();
+    }
+
+    private String getCustomerPhoneNumber(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        return customer.getPhoneNumber();
+    }
+
+    private String getCustomeDateOfBirth(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateOfBirth = dateFormat.format(customer.getDateOfBirth());
+        return dateOfBirth;
+    }
+
+    private String getCustomerAddress(String email){
+        Singleton singleton = new Singleton();
+        Address address = singleton.createCustomerFromDB(email).getAddress();
+        return address.getCountry() + "*" + address.getCity() + "*" + address.getStreet() + "*"
+                + address.getNumber() + "*" + address.getCap();
+    }
+
+    private String getCustomerPaymentMethod(String email){
+        Singleton singleton = new Singleton();
+        PaymentMethod pm = singleton.createCustomerFromDB(email).getPaymentMethod();
+        return pm.getNumber() + "*" + pm.getName() + "*" + pm.getSurname() + "*"
+                + pm.getExpirationDate() + "*" + pm.getCvv() + "#" + pm.getAmount();
     }
 }

@@ -34,4 +34,32 @@ public abstract class User {
     public String getEmail() {
         return email;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
 }

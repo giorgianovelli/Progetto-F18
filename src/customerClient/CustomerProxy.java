@@ -2,6 +2,7 @@ package customerClient;
 
 import interfaces.InterfaceCustomer;
 import server.*;
+import server.bank.PaymentMethod;
 import server.places.Address;
 
 import java.io.*;
@@ -131,4 +132,69 @@ public class CustomerProxy implements InterfaceCustomer {
         String reply = tokenMsg.nextToken();
         return new Review(code, date, rating, title,description, reply);
     }
+
+    public String getCustomerName(String email){
+        return getReply("5#" + email);
+    }
+
+    public String getCustomerSurname(String email){
+        return getReply("6#" + email);
+    }
+
+    public String getCustomerPassword(String email){
+        return getReply("7#" + email);
+    }
+
+    public String getCustomerPhoneNumber(String email){
+        return getReply("8#" + email);
+    }
+
+    public Date getCustomerDateOfBirth(String email){
+        String serverMsg = getReply("9#" + email);
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        try {
+            return dateFormat.parse(serverMsg);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Address getCustomerAddress(String email){
+        String serverMsg = getReply("10#" + email);
+        return decodeAddress(serverMsg);
+    }
+
+    public PaymentMethod getCustomerPaymentMethod(String email){
+        String serverMsg = getReply("11#" + email);
+        return decodePaymentMethod(serverMsg);
+    }
+
+    private Address decodeAddress(String msg) {
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "#");
+        String country = tokenMsg.nextToken();
+        String city = tokenMsg.nextToken();
+        String street = tokenMsg.nextToken();
+        String number = tokenMsg.nextToken();
+        String cap = tokenMsg.nextToken();
+        return new Address(country, city, street, number, cap);
+    }
+
+    private PaymentMethod decodePaymentMethod(String msg) {
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "#");
+        String number = tokenMsg.nextToken();
+        String name = tokenMsg.nextToken();
+        String surname = tokenMsg.nextToken();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date expirationDate = new Date();
+        try {
+            expirationDate = dateFormat.parse(tokenMsg.nextToken());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int cvv = Integer.parseInt(tokenMsg.nextToken());
+        double amount = Double.parseDouble(tokenMsg.nextToken());
+        return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
+    }
+
 }
