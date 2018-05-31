@@ -210,6 +210,6 @@ class Connect extends Thread {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String date = dateFormat.format(review.getDate());
         //TODO
-        return "review.getCustomer()" + "#" + "review.getDogSitter()" + "#" + date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
+        return  date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
     }
 }

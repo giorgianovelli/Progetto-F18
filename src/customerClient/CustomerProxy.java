@@ -118,12 +118,6 @@ public class CustomerProxy implements InterfaceCustomer {
         String serverMsg = getReply("4#" + code);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         //non deve ricevere l'attributo codice dal server
-        //TODO Customer
-        Customer customer = null;
-        tokenMsg.nextToken();
-        //TODO DogSitter
-        DogSitter dogSitter = null;
-        tokenMsg.nextToken();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
         try {
@@ -135,14 +129,6 @@ public class CustomerProxy implements InterfaceCustomer {
         String title = tokenMsg.nextToken();
         String description = tokenMsg.nextToken();
         String reply = tokenMsg.nextToken();
-        return new Review(code, customer, dogSitter, date, rating, title,description, reply);
+        return new Review(code, date, rating, title,description, reply);
     }
-
-    /*private int code;
-    private Customer customer;
-    private DogSitter dogSitter;
-    private Date date;
-    private int rating;
-    private String title;
-    private String comment;*/
 }
