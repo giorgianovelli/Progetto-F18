@@ -282,17 +282,16 @@ public class Singleton {
         ResultSet rs = null;
         HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
         try {
-            rs = dbConnector.askDB("SELECT ASSIGNMENT_CODE, DOGSITTER, DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE CUSTOMER = '" + customer.email + "'");
+            rs = dbConnector.askDB("SELECT ASSIGNMENT_CODE, DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE CUSTOMER = '" + customer.email + "'");
             while (rs.next()){
                 int code = rs.getInt("ASSIGNMENT_CODE");
-                String emailDogSitter = rs.getString("DOGSITTER");
                 Date date = rs.getDate("DATE");
                 int rating = rs.getInt("RATING");
                 String title = rs.getString("TITLE");
                 String description = rs.getString("DESCRIPTION");
                 String reply = rs.getString("REPLY");
                 Singleton singleton = new Singleton();
-                Review r = new Review(code, customer, singleton.createDogSitterFromDB(emailDogSitter), date, rating, title, description, reply);
+                Review r = new Review(code, date, rating, title, description, reply);
                 reviewList.put(code, r);
             }
 
@@ -309,17 +308,15 @@ public class Singleton {
         ResultSet rs = null;
         Review review = null;
         try {
-            rs = dbConnector.askDB("SELECT CUSTOMER, DOGSITTER, DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE ASSIGNMENT_CODE = '" + code + "'");
+            rs = dbConnector.askDB("SELECT DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE ASSIGNMENT_CODE = '" + code + "'");
             while (rs.next()){
-                String emailCustomer = rs.getString("CUSTOMER");
-                String emailDogSitter = rs.getString("DOGSITTER");
                 Date date = rs.getDate("DATE");
                 int rating = rs.getInt("RATING");
                 String title = rs.getString("TITLE");
                 String description = rs.getString("DESCRIPTION");
                 String reply = rs.getString("REPLY");
                 Singleton singleton = new Singleton();
-                review = new Review(code, singleton.createCustomerFromDB(emailCustomer), singleton.createDogSitterFromDB(emailDogSitter), date, rating, title, description, reply);
+                review = new Review(code, date, rating, title, description, reply);
             }
             dbConnector.closeConnection();
             return review;

@@ -6,18 +6,14 @@ import java.util.Date;
 
 public class Review {
     private int code;
-    private Customer customer;
-    private DogSitter dogSitter;
     private Date date;
     private int rating;
     private String title;
     private String comment;
     private String reply;
 
-    public Review(int code, Customer customer, DogSitter dogSitter, Date date, int rating, String title, String comment, String reply) {
+    public Review(int code, Date date, int rating, String title, String comment, String reply) {
         this.code = code;
-        this.customer = customer;
-        this.dogSitter = dogSitter;
         this.date = date;
         this.rating = rating;
         this.title = title;
@@ -25,10 +21,8 @@ public class Review {
         this.reply = reply;
     }
 
-    public Review(int code, Customer customer, DogSitter dogSitter, Date date, int rating, String title, String comment) {
+    public Review(int code, Date date, int rating, String title, String comment) {
         this.code = code;
-        this.customer = customer;
-        this.dogSitter = dogSitter;
         this.date = date;
         this.rating = rating;
         this.title = title;
@@ -38,7 +32,7 @@ public class Review {
 
     public String toString(){
         try {
-            return "Title: " + title + "\nFrom: " + customer.email + "\nTo: " + dogSitter.email + "\nDate: " + dateStringConverter(date) + " at " + timeStringConverter(date) + "\nrating: " + starsRating() + "\n" + comment;
+            return "Title: " + title + "\nDate: " + dateStringConverter(date) + " at " + timeStringConverter(date) + "\nrating: " + starsRating() + "\n" + comment;
         } catch (ParseException e) {
             return "error!";
         }
@@ -75,14 +69,6 @@ public class Review {
 
     public int getCode() {
         return code;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public DogSitter getDogSitter() {
-        return dogSitter;
     }
 
     public Date getDate() {
