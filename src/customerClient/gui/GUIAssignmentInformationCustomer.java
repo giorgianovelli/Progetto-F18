@@ -1,5 +1,6 @@
 package customerClient.gui;
 
+import customerClient.CustomerProxy;
 import database.DBConnector;
 import server.Assignment;
 
@@ -113,10 +114,11 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
+        CustomerProxy customerProxy = new CustomerProxy();
         Integer intCode = a.getCode();
         String strDateStart = dateFormat.format(a.getDateStart());
         String strEndDate = dateFormat.format(a.getDateEnd());
-        String strDogsitter = "";
+        String strDogsitter = customerProxy.getDogSitterNameOfAssignment(intCode) + " " + customerProxy.getDogSitterSurnameOfAssignment(intCode);
         String strDogs = a.printDogNames();
         String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
@@ -128,22 +130,9 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         DBConnector dbConnector = new DBConnector();
 
-        //Nome e cognome del dogsitter
-
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT NAME, SURNAME FROM DOGSITTERS JOIN ASSIGNMENT ON DOGSITTERS.EMAIL = ASSIGNMENT.DOGSITTER WHERE CODE = " + intCode);
-            while (rs.next()) {
-                strDogsitter = strDogsitter + rs.getString("NAME") + " " + rs.getString("SURNAME");
-            }
-
-            dbConnector.closeConnection();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto
 
         // Amount dell'assignment
-
 
         try {
             ResultSet rs = dbConnector.askDB("SELECT AMOUNT FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + intCode);
@@ -156,6 +145,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto + visualizzare .00 se cifra tonda
 
         //Numero della carta per il metodo di pagamento
 
@@ -170,9 +161,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
 
 
         labelCode2.setText(intCode.toString());
