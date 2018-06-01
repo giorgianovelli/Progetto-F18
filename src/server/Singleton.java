@@ -282,7 +282,7 @@ public class Singleton {
         ResultSet rs = null;
         HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
         try {
-            rs = dbConnector.askDB("SELECT ASSIGNMENT_CODE, DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE CUSTOMER = '" + customer.email + "'");
+            rs = dbConnector.askDB("SELECT R.ASSIGNMENT_CODE, R.DATE, R.RATING, R.TITLE, R.DESCRIPTION, R.REPLY FROM REVIEW AS R jOIN ASSIGNMENT AS A ON R.ASSIGNMENT_CODE = A.CODE WHERE A.CUSTOMER = '" + customer.email + "'");
             while (rs.next()){
                 int code = rs.getInt("ASSIGNMENT_CODE");
                 Date date = rs.getDate("DATE");

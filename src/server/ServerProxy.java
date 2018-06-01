@@ -159,6 +159,18 @@ class Connect extends Thread {
                     String password = tokenMsg.nextToken();
                     serverMsg = updateCustomerPassword(email, password);
                     break;
+                case 15:
+                    email = tokenMsg.nextToken();
+                    String phoneNumber = tokenMsg.nextToken();
+                    serverMsg = updateCustomerPhoneNumber(email, phoneNumber);
+                    break;
+                case 16:
+                    email = tokenMsg.nextToken();
+                    String strDateOfBirth = tokenMsg.nextToken();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dateOfBirth = dateFormat.parse(strDateOfBirth);
+                    serverMsg = updateCustomerDateOfBirth(email, dateOfBirth);
+                    break;
                 default:
             }
         } finally {
@@ -328,6 +340,26 @@ class Connect extends Thread {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         if (customer.updatePassword(password)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    private String updateCustomerPhoneNumber(String email, String phoneNumber){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updatePhoneNumber(phoneNumber)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    private String updateCustomerDateOfBirth(String email, Date dateOfBirth){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updateDateOfBirth(dateOfBirth)){
             return "true";
         } else {
             return "false";

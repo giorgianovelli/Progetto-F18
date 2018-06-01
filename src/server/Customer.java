@@ -39,7 +39,9 @@ public class Customer extends User {
         reviewList = singleton.getCustomerReviewList(this);
         dogList = getDogListFromDB(email);
         dogSitterSearchList = new HashSet<DogSitter>();
-        DBConnector dbConnector = new DBConnector();
+
+        //TODO risolvere questa eccezione: "Illegal operation on empty result set"
+        /*DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS");
             while (rs.next()){
@@ -49,7 +51,7 @@ public class Customer extends User {
             dbConnector.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
@@ -517,4 +519,50 @@ public class Customer extends User {
             return false;
         }
     }
+
+    public boolean updatePhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET PHONE_NUMB = '" + phoneNumber + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Phone number for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating phone number for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateDateOfBirth(Date dateOfBirth){
+        this.dateOfBirth = dateOfBirth;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dateFormat.format(dateOfBirth);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET BIRTHDATE = '" + strDate + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Date of birth for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating date of birth for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
