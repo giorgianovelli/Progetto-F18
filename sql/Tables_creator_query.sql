@@ -76,6 +76,7 @@ CREATE TABLE CUSTOMERS
 
                         FOREIGN KEY(EMAIL) REFERENCES ADDRESS(EMAIL),
                         FOREIGN KEY(PAYMENT) REFERENCES CREDIT_CARDS(NUM))
+					
                         ENGINE = INNODB;
 
 

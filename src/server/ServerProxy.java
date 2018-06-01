@@ -86,6 +86,9 @@ class Connect extends Thread {
         String serverMsg = null;
         int code;
         String email;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String name;
+        String surname;
         try {
             StringTokenizer tokenMsg = null;
             try {
@@ -146,12 +149,12 @@ class Connect extends Thread {
                     break;
                 case 12:
                     email = tokenMsg.nextToken();
-                    String name = tokenMsg.nextToken();
+                    name = tokenMsg.nextToken();
                     serverMsg = updateCustomerName(email, name);
                     break;
                 case 13:
                     email = tokenMsg.nextToken();
-                    String surname = tokenMsg.nextToken();
+                    surname = tokenMsg.nextToken();
                     serverMsg = updateCustomerSurname(email, surname);
                     break;
                 case 14:
@@ -167,9 +170,26 @@ class Connect extends Thread {
                 case 16:
                     email = tokenMsg.nextToken();
                     String strDateOfBirth = tokenMsg.nextToken();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     Date dateOfBirth = dateFormat.parse(strDateOfBirth);
                     serverMsg = updateCustomerDateOfBirth(email, dateOfBirth);
+                    break;
+                case 17:
+                    email = tokenMsg.nextToken();
+                    String country = tokenMsg.nextToken();
+                    String city = tokenMsg.nextToken();
+                    String street = tokenMsg.nextToken();
+                    String cnumber = tokenMsg.nextToken();
+                    String cap = tokenMsg.nextToken();
+                    serverMsg = updateCustomerAddress(email, country, city, street, cnumber, cap);
+                    break;
+                case 18:
+                    email = tokenMsg.nextToken();
+                    String number = tokenMsg.nextToken();
+                    name = tokenMsg.nextToken();
+                    surname = tokenMsg.nextToken();
+                    Date expirationDate = dateFormat.parse(tokenMsg.nextToken());
+                    int cvv = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = updateCustomerPaymentMethod(email, number, name, surname, expirationDate, cvv);
                     break;
                 default:
             }
@@ -360,6 +380,26 @@ class Connect extends Thread {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         if (customer.updateDateOfBirth(dateOfBirth)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    private String updateCustomerAddress(String email, String country, String city, String street, String number, String cap){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updateAddress(country, city, street, number, cap)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    private String updateCustomerPaymentMethod(String email, String number, String name, String surname, Date expirationDate, int cvv){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updatePaymentMethod(number, name, surname, expirationDate, cvv)){
             return "true";
         } else {
             return "false";

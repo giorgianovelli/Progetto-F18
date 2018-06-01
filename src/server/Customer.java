@@ -461,7 +461,7 @@ public class Customer extends User {
         this.name = name;
         DBConnector dbConnector = new DBConnector();
         try {
-            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET NAME = '" + name.toUpperCase() + "' WHERE EMAIL = '" + this.email + "';");
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET NAME = '" + name + "' WHERE EMAIL = '" + this.email + "';");
             dbConnector.closeUpdate();
 
             if (isUpdated) {
@@ -482,7 +482,7 @@ public class Customer extends User {
         this.surname = surname;
         DBConnector dbConnector = new DBConnector();
         try {
-            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET SURNAME = '" + surname.toUpperCase() + "' WHERE EMAIL = '" + this.email + "';");
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET SURNAME = '" + surname + "' WHERE EMAIL = '" + this.email + "';");
             dbConnector.closeUpdate();
 
             if (isUpdated) {
@@ -555,6 +555,68 @@ public class Customer extends User {
                 return true;
             } else {
                 System.out.println("Error in updating date of birth for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateAddress(String country, String city, String street, String number, String cap){
+        this.address = new Address(country, city, street, number, cap);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE ADDRESS SET COUNTRY = '" + country + "', CITY = '" + city + "', STREET = '" + street + "', CNUMBER = '" + number + "', CAP = '" + cap + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Address for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating address of birth for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv){
+        double amount = this.paymentMethod.getAmount();
+        String oldNum = this.paymentMethod.getNumber();
+        this.paymentMethod = new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strExpiration = dateFormat.format(expirationDate);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + number + "', '" + name + "', '" + surname + "', '" + strExpiration + "', " + cvv + ", " + amount + ")");
+            dbConnector.closeUpdate();
+
+            if (!(isUpdated)) {
+                System.out.println("Error in updating address of birth for " + this.email + "!");
+                return false;
+            }
+
+            isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET PAYMENT = '" + number + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (!(isUpdated)) {
+                System.out.println("Error in updating address of birth for " + this.email + "!");
+                return false;
+            }
+
+            isUpdated = dbConnector.updateDB("DELETE FROM CREDIT_CARDS WHERE NUM = '" + oldNum + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Payment method for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating payment method of birth for " + this.email + "!");
                 return false;
             }
 
