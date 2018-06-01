@@ -85,6 +85,7 @@ class Connect extends Thread {
     private String executeClientCmd(){
         String serverMsg = null;
         int code;
+        String email;
         try {
             StringTokenizer tokenMsg = null;
             try {
@@ -100,7 +101,7 @@ class Connect extends Thread {
                     serverMsg = customerAccessDataVerifier(inputUser, inputPassword);
                     break;
                 case 1:
-                    String email = tokenMsg.nextToken();
+                    email = tokenMsg.nextToken();
                     serverMsg = getCustomerListAssignment(email);
                     break;
                 case 2:
@@ -114,6 +115,49 @@ class Connect extends Thread {
                 case 4:
                     code = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = getReview(code);
+                    break;
+                case 5:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerName(email);
+                    break;
+                case 6:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerSurname(email);
+                    break;
+                case 7:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerPassword(email);
+                    break;
+                case 8:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerPhoneNumber(email);
+                    break;
+                case 9:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerDateOfBirth(email);
+                    break;
+                case 10:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerAddress(email);
+                    break;
+                case 11:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerPaymentMethod(email);
+                    break;
+                case 12:
+                    email = tokenMsg.nextToken();
+                    String name = tokenMsg.nextToken();
+                    serverMsg = updateCustomerName(email, name);
+                    break;
+                case 13:
+                    email = tokenMsg.nextToken();
+                    String surname = tokenMsg.nextToken();
+                    serverMsg = updateCustomerSurname(email, surname);
+                    break;
+                case 14:
+                    email = tokenMsg.nextToken();
+                    String password = tokenMsg.nextToken();
+                    serverMsg = updateCustomerPassword(email, password);
                     break;
                 default:
             }
@@ -238,7 +282,7 @@ class Connect extends Thread {
         return customer.getPhoneNumber();
     }
 
-    private String getCustomeDateOfBirth(String email){
+    private String getCustomerDateOfBirth(String email){
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -258,5 +302,35 @@ class Connect extends Thread {
         PaymentMethod pm = singleton.createCustomerFromDB(email).getPaymentMethod();
         return pm.getNumber() + "*" + pm.getName() + "*" + pm.getSurname() + "*"
                 + pm.getExpirationDate() + "*" + pm.getCvv() + "#" + pm.getAmount();
+    }
+
+    private String updateCustomerName(String email, String name){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updateName(name)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    private String updateCustomerSurname(String email, String surname){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updateSurname(surname)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    private String updateCustomerPassword(String email, String password){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.updatePassword(password)){
+            return "true";
+        } else {
+            return "false";
+        }
     }
 }

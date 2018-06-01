@@ -454,4 +454,67 @@ public class Customer extends User {
         }
         return round2Decimal(price);
     }
+
+    public boolean updateName(String name){
+        this.name = name;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET NAME = '" + name.toUpperCase() + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Name for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating name for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateSurname(String surname){
+        this.surname = surname;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET SURNAME = '" + surname.toUpperCase() + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Surname for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating surname for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePassword(String password){
+        this.password = password;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE CUSTOMERS SET PASSWORD = '" + password.toUpperCase() + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Password for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating password for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

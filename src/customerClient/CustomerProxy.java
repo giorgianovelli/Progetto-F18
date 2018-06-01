@@ -197,4 +197,69 @@ public class CustomerProxy implements InterfaceCustomer {
         return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
 
+    public boolean updateCustomerName(String email, String name){
+        String serverMsg = getReply("12#" + email + "#" + name);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCustomerSurname(String email, String surname){
+        String serverMsg = getReply("13#" + email + "#" + surname);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCustomerPassword(String email, String password){
+        String serverMsg = getReply("14#" + email + "#" + password);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCustomerPhoneNumber(String email, String phoneNumber){
+        String serverMsg = getReply("15#" + email + "#" + phoneNumber);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCustomerDateOfBirth(String email, String strDateOfBirth){
+        String serverMsg = getReply("16#" + email + "#" + strDateOfBirth);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCustomerAddress(String email, String country, String city, String street, String number, String cap){
+        String serverMsg = getReply("17#" + email + "#" + country + "#" + city + "#" + street + "#" + number + "#" + cap);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCustomerPaymentMethod(String email, String number, String name, String surname, Date expirationDate, int cvv){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strExpiration = dateFormat.format(expirationDate);
+        String serverMsg = getReply("18#" + email + "#" + number + "#" + name + "#" + surname + "#" + strExpiration + "#" + cvv);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
