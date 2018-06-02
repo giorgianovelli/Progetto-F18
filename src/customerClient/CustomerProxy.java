@@ -294,4 +294,18 @@ public class CustomerProxy implements InterfaceCustomer {
         return dogSitterMailList;
     }
 
+    public double estimatePriceAssignment(HashSet<Dog> dogList, Date dateStart, Date dateEnd){
+        String clientMsg = "20#" + email + "#";
+        for (Dog d : dogList) {
+            clientMsg = clientMsg + d.getID() + "*";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        clientMsg = clientMsg + "#" + dateFormat.format(dateStart) + "#" + dateFormat.format(dateEnd);
+        System.out.println("test: " + clientMsg);
+        String serverMsg = getReply(clientMsg);
+        System.out.println("server msg: " + serverMsg);
+        //return Double.parseDouble(serverMsg);
+        return 0.0;
+    }
+
 }

@@ -86,9 +86,13 @@ class Connect extends Thread {
         String serverMsg = null;
         int code;
         String email;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormatDays = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormatMinutes = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String name;
         String surname;
+        Date dateStart;
+        Date dateEnd;
+        String strDogList;
         try {
             StringTokenizer tokenMsg = null;
             try {
@@ -170,7 +174,7 @@ class Connect extends Thread {
                 case 16:
                     email = tokenMsg.nextToken();
                     String strDateOfBirth = tokenMsg.nextToken();
-                    Date dateOfBirth = dateFormat.parse(strDateOfBirth);
+                    Date dateOfBirth = dateFormatDays.parse(strDateOfBirth);
                     serverMsg = updateCustomerDateOfBirth(email, dateOfBirth);
                     break;
                 case 17:
@@ -187,22 +191,30 @@ class Connect extends Thread {
                     String number = tokenMsg.nextToken();
                     name = tokenMsg.nextToken();
                     surname = tokenMsg.nextToken();
-                    Date expirationDate = dateFormat.parse(tokenMsg.nextToken());
+                    Date expirationDate = dateFormatDays.parse(tokenMsg.nextToken());
                     int cvv = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = updateCustomerPaymentMethod(email, number, name, surname, expirationDate, cvv);
                     break;
                 case 19:
                     email = tokenMsg.nextToken();
-                    Date dateStart = dateFormat.parse(tokenMsg.nextToken());
-                    Date dateEnd = dateFormat.parse(tokenMsg.nextToken());
+                    dateStart = dateFormatMinutes.parse(tokenMsg.nextToken());
+                    dateEnd = dateFormatMinutes.parse(tokenMsg.nextToken());
                     country = tokenMsg.nextToken();
                     city = tokenMsg.nextToken();
                     street = tokenMsg.nextToken();
                     number = tokenMsg.nextToken();
                     cap = tokenMsg.nextToken();
-                    String strDogList = tokenMsg.nextToken();
+                    strDogList = tokenMsg.nextToken();
                     String strCash = tokenMsg.nextToken();
                     serverMsg = search(email, dateStart, dateEnd, country, city, street, number, cap, strDogList, strCash);
+                    break;
+                case 20:
+                    email = tokenMsg.nextToken();
+                    strDogList = tokenMsg.nextToken();
+                    dateStart = dateFormatMinutes.parse(tokenMsg.nextToken());
+                    dateEnd = dateFormatMinutes.parse(tokenMsg.nextToken());
+                    serverMsg = estimatePriceAssignment(email, strDogList, dateStart, dateEnd);
+                    break;
                 default:
             }
         } finally {
@@ -444,5 +456,20 @@ class Connect extends Thread {
         }
 
         return serverMsg;
+    }
+
+    private String estimatePriceAssignment(String email, String strDogList, Date dateStart, Date dateEnd){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+
+        StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
+        HashSet<Dog> dogList = new HashSet<Dog>();
+        while (tokenDogList.hasMoreTokens()){
+            Dog d = singleton.createDogFromDB(Integer.parseInt(tokenDogList.nextToken()));
+            dogList.add(d);
+        }
+
+        Double price = customer.estimatePriceAssignment(dogList, dateStart, dateEnd);
+        return price.toString();
     }
 }

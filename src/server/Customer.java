@@ -23,8 +23,6 @@ import server.tools.dateTime.DateTimeDHMS;
 import static server.tools.DoubleTools.round2Decimal;
 import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 
-//import static staticClasses.ObjectCreator.createDogFromDB;
-//import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 
 public class Customer extends User{
     private HashSet<Dog> dogList;
@@ -86,8 +84,9 @@ public class Customer extends User{
 
             //salva la prenotazione nel database
 
-            Timestamp sqlStart = new Timestamp(startAssignment.getTime());
-            Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
+            //TODO inutili?
+            //Timestamp sqlStart = new Timestamp(startAssignment.getTime());
+            //Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
 
             try {
                 dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
@@ -623,7 +622,6 @@ public class Customer extends User{
     }
 
     private void loadDogSitterList(){
-        //TODO risolvere questa eccezione: "Illegal operation on empty result set"
         DBConnector dbConnector = new DBConnector();
         Singleton singleton = new Singleton();
         try {

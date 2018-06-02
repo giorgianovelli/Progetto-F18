@@ -5,12 +5,15 @@ import server.Dog;
 import server.Review;
 import server.Singleton;
 import server.places.Address;
+import server.tools.dateTime.DateTimeDHMS;
 
 import javax.management.DescriptorAccess;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+
+import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 
 public class TestCustomerProxy {
     public static void main(String[] args) {
@@ -50,5 +53,6 @@ public class TestCustomerProxy {
         selectedDogs.add(d);
 
         proxy.search(start, end, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), selectedDogs, false);
+        System.out.println("price = " + proxy.estimatePriceAssignment(selectedDogs, start, end));
     }
 }
