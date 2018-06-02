@@ -74,7 +74,7 @@ public class GUICustomer extends JFrame{
     private JButton buttonNextMonth = new JButton(">");
     private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
     private CalendarState calendarState = CalendarState.NORMAL;
-    
+
     private CustomerProxy proxy;
     private String email;
 

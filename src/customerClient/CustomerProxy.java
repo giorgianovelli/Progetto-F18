@@ -302,11 +302,27 @@ public class CustomerProxy implements InterfaceCustomer {
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         clientMsg = clientMsg + "#" + dateFormat.format(dateStart) + "#" + dateFormat.format(dateEnd);
-        System.out.println("test: " + clientMsg);
         String serverMsg = getReply(clientMsg);
-        System.out.println("server msg: " + serverMsg);
-        //return Double.parseDouble(serverMsg);
-        return 0.0;
+        return Double.parseDouble(serverMsg);
+    }
+
+    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint){
+        String clientMsg = "21#" + email + "#" + emailDogSitter + "#";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String strStart = dateFormat.format(dateStartAssignment);
+        String strEnd = dateFormat.format(dateEndAssignment);
+        clientMsg = clientMsg + strStart + "#" + strEnd + "#";
+        for (Dog d : selectedDogs) {
+            clientMsg = clientMsg + d.getID() + "*";
+        }
+        clientMsg = clientMsg + "#" + meetingPoint.getCountry() + "#" + meetingPoint.getCity() + "#" + meetingPoint.getStreet() + "#" + meetingPoint.getNumber() + "#" + meetingPoint.getCap();
+        System.out.println("client msg: " + clientMsg);
+        if (getReply(clientMsg).equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 }
