@@ -83,13 +83,16 @@ public class GUICustomer extends JFrame{
     private String email;
 
 
-    public GUICustomer(String customerEmail) throws ParseException {
+    public GUICustomer(String email) throws ParseException {
         setTitle("CaniBau (Customer)");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        this.email = email;
+        this.proxy = new CustomerProxy(email);
 
         //TODO queste metodo non sarà più direttamente accessibile con l'architettura client server
         //Singleton singleton = new Singleton();
@@ -684,7 +687,7 @@ public class GUICustomer extends JFrame{
     }
 
     private void openListAssignment(){
-        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getCustomerListAssignment(email), proxy, this);  //TODO customer
+        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getCustomerListAssignment(), proxy, this);  //TODO customer
         guiListAssignments.setVisible(true);
     }
 
@@ -734,7 +737,7 @@ public class GUICustomer extends JFrame{
     }
 
     private void showAssignmentOnCalendar(String email){
-        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment(email);
+        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment();
         boolean included = false;
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
@@ -772,7 +775,7 @@ public class GUICustomer extends JFrame{
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;
-        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment(email);
+        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment();
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             String strDateStart = date.format(a.getDateStart());
@@ -804,7 +807,7 @@ public class GUICustomer extends JFrame{
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         HashSet<Integer> keyAssignmentsToShow = new HashSet<Integer>();
-        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment(email);
+        HashMap<Integer, Assignment> listAssignment = proxy.getCustomerListAssignment();
 
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);

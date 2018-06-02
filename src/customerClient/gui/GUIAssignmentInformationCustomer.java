@@ -37,6 +37,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JLabel labelAmount2 = new JLabel();
     private JLabel labelPaymentMethod2 = new JLabel();
 
+    private String email;
+
 
 //______________________________________________________________________________________________________________________________________________________________________
 
@@ -45,13 +47,15 @@ public class GUIAssignmentInformationCustomer extends JFrame {
      * @param a
      */
 
-    public GUIAssignmentInformationCustomer(Assignment a){
+    public GUIAssignmentInformationCustomer(Assignment a, String email){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        this.email = email;
 
 
         initComponents(a);
@@ -114,7 +118,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-        CustomerProxy customerProxy = new CustomerProxy();
+        CustomerProxy customerProxy = new CustomerProxy(email);
         Integer intCode = a.getCode();
         String strDateStart = dateFormat.format(a.getDateStart());
         String strEndDate = dateFormat.format(a.getDateEnd());

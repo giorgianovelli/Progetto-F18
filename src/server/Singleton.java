@@ -1,7 +1,7 @@
 package server;
 
 import database.DBConnector;
-import javafx.util.converter.CurrencyStringConverter;
+//import javafx.util.converter.CurrencyStringConverter;
 import server.bank.PaymentMethod;
 import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;

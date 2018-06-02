@@ -191,6 +191,18 @@ class Connect extends Thread {
                     int cvv = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = updateCustomerPaymentMethod(email, number, name, surname, expirationDate, cvv);
                     break;
+                case 19:
+                    email = tokenMsg.nextToken();
+                    Date dateStart = dateFormat.parse(tokenMsg.nextToken());
+                    Date dateEnd = dateFormat.parse(tokenMsg.nextToken());
+                    country = tokenMsg.nextToken();
+                    city = tokenMsg.nextToken();
+                    street = tokenMsg.nextToken();
+                    number = tokenMsg.nextToken();
+                    cap = tokenMsg.nextToken();
+                    String strDogList = tokenMsg.nextToken();
+                    String strCash = tokenMsg.nextToken();
+                    serverMsg = search(email, dateStart, dateEnd, country, city, street, number, cap, strDogList, strCash);
                 default:
             }
         } finally {
@@ -404,5 +416,33 @@ class Connect extends Thread {
         } else {
             return "false";
         }
+    }
+
+    private String search(String email, Date dateStart, Date dateEnd, String country, String city, String street, String number, String cap, String strDogList, String strCash){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        Address meetingPoint = new Address(country, city, street, number, cap);
+
+        boolean cash;
+        if (strCash.equals("true")){
+            cash = true;
+        } else {
+            cash = false;
+        }
+
+        StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
+        HashSet<Dog> dogList = new HashSet<Dog>();
+        while (tokenDogList.hasMoreTokens()){
+            Dog d = singleton.createDogFromDB(Integer.parseInt(tokenDogList.nextToken()));
+            dogList.add(d);
+        }
+
+        HashSet<String> resultList = customer.search(dateStart, dateEnd, meetingPoint, dogList, cash);
+        String serverMsg = "";
+        for (String emailDs : resultList) {
+            serverMsg = serverMsg + emailDs + "#";
+        }
+
+        return serverMsg;
     }
 }

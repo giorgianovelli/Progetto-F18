@@ -16,6 +16,15 @@ public class CustomerProxy implements InterfaceCustomer {
     private PrintStream msgOut = null;
     private Socket socket = null;
     private String serverReply;
+    private String email;
+
+    public CustomerProxy(String email) {
+        this.email = email;
+    }
+
+    public CustomerProxy() {
+        this.email = null;
+    }
 
     private String getReply(String clientMsg) {
         try {
@@ -48,7 +57,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public HashMap<Integer, Assignment> getCustomerListAssignment(String email) {
+    public HashMap<Integer, Assignment> getCustomerListAssignment() {
         String serverMsg = getReply("1#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
@@ -133,23 +142,23 @@ public class CustomerProxy implements InterfaceCustomer {
         return new Review(code, date, rating, title,description, reply);
     }
 
-    public String getCustomerName(String email){
+    public String getCustomerName(){
         return getReply("5#" + email);
     }
 
-    public String getCustomerSurname(String email){
+    public String getCustomerSurname(){
         return getReply("6#" + email);
     }
 
-    public String getCustomerPassword(String email){
+    public String getCustomerPassword(){
         return getReply("7#" + email);
     }
 
-    public String getCustomerPhoneNumber(String email){
+    public String getCustomerPhoneNumber(){
         return getReply("8#" + email);
     }
 
-    public Date getCustomerDateOfBirth(String email){
+    public Date getCustomerDateOfBirth(){
         String serverMsg = getReply("9#" + email);
         SimpleDateFormat dateFormat = new SimpleDateFormat();
         try {
@@ -160,12 +169,12 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public Address getCustomerAddress(String email){
+    public Address getCustomerAddress(){
         String serverMsg = getReply("10#" + email);
         return decodeAddress(serverMsg);
     }
 
-    public PaymentMethod getCustomerPaymentMethod(String email){
+    public PaymentMethod getCustomerPaymentMethod(){
         String serverMsg = getReply("11#" + email);
         return decodePaymentMethod(serverMsg);
     }
@@ -197,7 +206,7 @@ public class CustomerProxy implements InterfaceCustomer {
         return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
 
-    public boolean updateCustomerName(String email, String name){
+    public boolean updateCustomerName(String name){
         String serverMsg = getReply("12#" + email + "#" + name);
         if (serverMsg.equals("true")){
             return true;
@@ -206,7 +215,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updateCustomerSurname(String email, String surname){
+    public boolean updateCustomerSurname(String surname){
         String serverMsg = getReply("13#" + email + "#" + surname);
         if (serverMsg.equals("true")){
             return true;
@@ -215,7 +224,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updateCustomerPassword(String email, String password){
+    public boolean updateCustomerPassword(String password){
         String serverMsg = getReply("14#" + email + "#" + password);
         if (serverMsg.equals("true")){
             return true;
@@ -224,7 +233,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updateCustomerPhoneNumber(String email, String phoneNumber){
+    public boolean updateCustomerPhoneNumber(String phoneNumber){
         String serverMsg = getReply("15#" + email + "#" + phoneNumber);
         if (serverMsg.equals("true")){
             return true;
@@ -233,7 +242,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updateCustomerDateOfBirth(String email, String strDateOfBirth){
+    public boolean updateCustomerDateOfBirth(String strDateOfBirth){
         String serverMsg = getReply("16#" + email + "#" + strDateOfBirth);
         if (serverMsg.equals("true")){
             return true;
@@ -242,7 +251,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updateCustomerAddress(String email, String country, String city, String street, String number, String cap){
+    public boolean updateCustomerAddress(String country, String city, String street, String number, String cap){
         String serverMsg = getReply("17#" + email + "#" + country + "#" + city + "#" + street + "#" + number + "#" + cap);
         if (serverMsg.equals("true")){
             return true;
@@ -251,7 +260,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updateCustomerPaymentMethod(String email, String number, String name, String surname, Date expirationDate, int cvv){
+    public boolean updateCustomerPaymentMethod(String number, String name, String surname, Date expirationDate, int cvv){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strExpiration = dateFormat.format(expirationDate);
         String serverMsg = getReply("18#" + email + "#" + number + "#" + name + "#" + surname + "#" + strExpiration + "#" + cvv);
@@ -260,6 +269,29 @@ public class CustomerProxy implements InterfaceCustomer {
         } else {
             return false;
         }
+    }
+
+    public HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String strStart = dateFormat.format(dateStart);
+        String strEnd = dateFormat.format(dateEnd);
+        String clientMsg = "19#" + email + "#" + strStart + "#" + strEnd + "#" + meetingPoint.getCountry() + "#" + meetingPoint.getCity() + "#" +
+                meetingPoint.getStreet() + "#" + meetingPoint.getNumber() + "#" + meetingPoint.getCap() + "#";
+
+        for (Dog d : dogList) {
+            clientMsg = clientMsg + d.getID() + "*";
+        }
+
+        clientMsg = clientMsg + "#" + cash;
+        String serverMsg = getReply(clientMsg);
+
+        StringTokenizer tokenServer = new StringTokenizer(serverMsg, "#");
+        HashSet<String> dogSitterMailList = new HashSet<String>();
+        while (tokenServer.hasMoreTokens()){
+            dogSitterMailList.add(tokenServer.nextToken());
+        }
+
+        return dogSitterMailList;
     }
 
 }

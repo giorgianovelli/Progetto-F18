@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import interfaces.InterfaceCustomer;
 import server.bank.Bank;
 import server.bank.PaymentMethod;
 import server.dateTime.WorkingTime;
@@ -25,7 +26,7 @@ import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 //import static staticClasses.ObjectCreator.createDogFromDB;
 //import static staticClasses.ObjectCreator.getCustomerListAssignmentFromDB;
 
-public class Customer extends User {
+public class Customer extends User{
     private HashSet<Dog> dogList;
     private HashSet<DogSitter> dogSitterSearchList;
 
@@ -39,19 +40,6 @@ public class Customer extends User {
         reviewList = singleton.getCustomerReviewList(this);
         dogList = getDogListFromDB(email);
         dogSitterSearchList = new HashSet<DogSitter>();
-
-        //TODO risolvere questa eccezione: "Illegal operation on empty result set"
-        /*DBConnector dbConnector = new DBConnector();
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS");
-            while (rs.next()){
-                DogSitter ds = singleton.createDogSitterFromDB(rs.getString("EMAIL"));
-                dogSitterSearchList.add(ds);
-            }
-            dbConnector.closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
@@ -254,9 +242,12 @@ public class Customer extends User {
         return dogList;
     }
 
-    public HashSet<DogSitter> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash){
+    public HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash){
         //funzione da completare
         //al termine, rimuovere le System.out utili per il debug
+
+        loadDogSitterList();
+
         SimpleDateFormat dateNumDayOfWeek = new SimpleDateFormat("u");
         int nStartDay = Integer.parseInt(dateNumDayOfWeek.format(dateStart));
         int nEndDay = Integer.parseInt(dateNumDayOfWeek.format(dateEnd));
@@ -274,7 +265,12 @@ public class Customer extends User {
             System.out.println(ds.getEmail());
         }
 
-        return dogSitterSearchList;
+        HashSet<String> dogSitterMailList = new HashSet<String>();
+        for (DogSitter ds : dogSitterSearchList) {
+            dogSitterMailList.add(ds.getEmail());
+        }
+
+        return dogSitterMailList;
     }
 
     private void searchStep0(Address meetingPoint){
@@ -626,5 +622,19 @@ public class Customer extends User {
         }
     }
 
-
+    private void loadDogSitterList(){
+        //TODO risolvere questa eccezione: "Illegal operation on empty result set"
+        DBConnector dbConnector = new DBConnector();
+        Singleton singleton = new Singleton();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS");
+            while (rs.next()){
+                DogSitter ds = singleton.createDogSitterFromDB(rs.getString("EMAIL"));
+                dogSitterSearchList.add(ds);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

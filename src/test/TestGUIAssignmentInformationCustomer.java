@@ -38,7 +38,7 @@ public class TestGUIAssignmentInformationCustomer {
         Assignment assingment = new Assignment(1, dogList, startDate, endDate, address);
 
 
-        GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment); //passaggio assignent
+        GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment, "RICCARDOGIURA@GMAIL.COM"); //passaggio assignent
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
     }
