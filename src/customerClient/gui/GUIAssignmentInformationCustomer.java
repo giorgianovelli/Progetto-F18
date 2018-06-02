@@ -17,16 +17,16 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     private JPanel panelAssignmentData = new JPanel();
-    private GridLayout gridLayout = new GridLayout(8, 2);
+    private GridLayout gridLayout = new GridLayout(8, 2, 0, 10);
     private JScrollPane scrollPane = new JScrollPane(panelAssignmentData);
-    private JLabel labelCode1 = new JLabel("Code: ");
-    private JLabel labelStartDate1 = new JLabel("Start Date: ");
-    private JLabel labelEndDate1 = new JLabel("End Date: ");
-    private JLabel labelDogsitter1 = new JLabel("Dogsitter: ");
-    private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ");
-    private JLabel labelAmount1 = new JLabel("Amount: ");
-    private JLabel labelPaymentMethod1 = new JLabel("Paymenth Method: ");
-    private JLabel labelDogs1 = new JLabel("Dogs: ");
+    private JLabel labelCode1 = new JLabel("Code: ", SwingConstants.CENTER);
+    private JLabel labelStartDate1 = new JLabel("Start Date: ", SwingConstants.CENTER);
+    private JLabel labelEndDate1 = new JLabel("End Date: ", SwingConstants.CENTER);
+    private JLabel labelDogsitter1 = new JLabel("Dogsitter: ", SwingConstants.CENTER);
+    private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ", SwingConstants.CENTER);
+    private JLabel labelAmount1 = new JLabel("Amount: ", SwingConstants.CENTER);
+    private JLabel labelPaymentMethod1 = new JLabel("Paymenth Method: ", SwingConstants.CENTER);
+    private JLabel labelDogs1 = new JLabel("Dogs: ", SwingConstants.CENTER);
     private JLabel labelEmpty = new JLabel("\t");
 
     private JLabel labelCode2 = new JLabel();
@@ -40,7 +40,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private String email;
 
 
-//______________________________________________________________________________________________________________________________________________________________________
+//________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     /**
      *
@@ -61,7 +61,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         initComponents(a);
     }
 
-//______________________________________________________________________________________________________________________
+//_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 
@@ -77,10 +77,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         // initComponents();
     }
 
-
-
-
-//_____________________________________________________________________________________________________________________________________________________
+//______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     /**
      *
@@ -134,7 +131,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         DBConnector dbConnector = new DBConnector();
 
-        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto
+        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto  + visualizzare .00 se cifra tonda
 
         // Amount dell'assignment
 
@@ -150,7 +147,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
             e.printStackTrace();
         }
 
-        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto + visualizzare .00 se cifra tonda
+        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto
 
         //Numero della carta per il metodo di pagamento
 
@@ -179,19 +176,13 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         for (String token: strDogsSplitted) {
             if (!token.isEmpty()) {
-                JLabel tmpLabel1 = new JLabel("[" + i + "]");
+                JLabel tmpLabel1 = new JLabel("[" + i + "]", SwingConstants.CENTER);
                 JLabel tmplabel2 = new JLabel(token);
                 gridLayout.setRows(gridLayout.getRows() + 1);
                 panelAssignmentData.add(tmpLabel1);
                 panelAssignmentData.add(tmplabel2);
                 i++;
             }
-
         }
-
-
-
-
-
     }
 }

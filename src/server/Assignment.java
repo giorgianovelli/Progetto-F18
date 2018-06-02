@@ -72,7 +72,13 @@ public class Assignment {
     }
 
     public String printMeetingPoint() {
-        return meetingPoint.toString();
+        String toReturn = "";
+        for (String token: meetingPoint.toString().split(";")) {
+            if (!token.isEmpty()) {
+                toReturn = toReturn + "<html><br>" +  token +  "<html/>" + "\n";
+            }
+        }
+        return toReturn;
     }
 
     public Date getDateStart() {

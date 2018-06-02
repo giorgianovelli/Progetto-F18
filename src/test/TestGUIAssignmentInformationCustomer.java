@@ -19,26 +19,15 @@ public class TestGUIAssignmentInformationCustomer {
             Dog dog = new Dog("Pluto", "Random", DogSize.MEDIUM, 5, 3.5, 2222);
             dogList.add(dog);
         }
-            /*
-
-            Dog dog1 = new Dog("Paperino", "Stronza", DogSize.MEDIUM, 5, 3.5, 2222);
-            Dog dog2 = new Dog("Pippo", "Stronza", DogSize.MEDIUM, 5, 3.5, 2222);
-            Dog dog3 = new Dog("Topolino", "Stronza", DogSize.MEDIUM, 5, 3.5, 2222);
-            Dog dog4 = new Dog("Cane", "Stronza", DogSize.MEDIUM, 5, 3.5, 2222);
-            dogList.add(dog1);
-            dogList.add(dog2);
-            dogList.add(dog3);
-            dogList.add(dog4);
-            */
 
 
         Date startDate = new Date();
         Date endDate = new Date();
-        Address address = new Address("Italy", "Pavia", "Via Random", "1", "12000Random");
+        Address address = new Address("Italy", "Pavia", "Strada statale per Voghera", "1", "12000");
         Assignment assingment = new Assignment(1, dogList, startDate, endDate, address);
 
 
-        GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment, "RICCARDOGIURA@GMAIL.COM"); //passaggio assignent
+        GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment, "RICCARDOGIURA@GMAIL.COM"); //passaggio assignment
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
     }
