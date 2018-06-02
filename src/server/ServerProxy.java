@@ -215,6 +215,19 @@ class Connect extends Thread {
                     dateEnd = dateFormatMinutes.parse(tokenMsg.nextToken());
                     serverMsg = estimatePriceAssignment(email, strDogList, dateStart, dateEnd);
                     break;
+                case 21:
+                    email = tokenMsg.nextToken();
+                    String emailDogSitter = tokenMsg.nextToken();
+                    dateStart = dateFormatMinutes.parse(tokenMsg.nextToken());
+                    dateEnd = dateFormatMinutes.parse(tokenMsg.nextToken());
+                    strDogList = tokenMsg.nextToken();
+                    country = tokenMsg.nextToken();
+                    city = tokenMsg.nextToken();
+                    street = tokenMsg.nextToken();
+                    number = tokenMsg.nextToken();
+                    cap = tokenMsg.nextToken();
+                    serverMsg = addAssignment(email, emailDogSitter, dateStart, dateEnd, strDogList, country, city, street, number, cap);
+                    break;
                 default:
             }
         } finally {
@@ -471,5 +484,25 @@ class Connect extends Thread {
 
         Double price = customer.estimatePriceAssignment(dogList, dateStart, dateEnd);
         return price.toString();
+    }
+
+    public String addAssignment(String email, String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, String strDogList, String country, String city, String street, String number, String cap){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+
+        StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
+        HashSet<Dog> dogList = new HashSet<Dog>();
+        while (tokenDogList.hasMoreTokens()){
+            Dog d = singleton.createDogFromDB(Integer.parseInt(tokenDogList.nextToken()));
+            dogList.add(d);
+        }
+
+        Address meetingPoint = new Address(country, city, street, number, cap);
+
+        if (customer.addAssignment(emailDogSitter, dateStartAssignment, dateEndAssignment, dogList, meetingPoint)){
+            return "true";
+        } else {
+            return "false";
+        }
     }
 }

@@ -40,9 +40,7 @@ public class Customer extends User{
         dogSitterSearchList = new HashSet<DogSitter>();
     }
 
-    public Assignment addAssignment(DogSitter ds, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
-        String emailDogSitter = ds.email;
-
+    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
         //chiamata alla classe banca per effettuare la transazione
         boolean testTransaction = true;
         DBConnector dbConnector = new DBConnector();
@@ -89,7 +87,7 @@ public class Customer extends User{
             //Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
 
             try {
-                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + ds.getEmail() + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
                 dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
                 for (Dog d : dogList) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
@@ -104,10 +102,10 @@ public class Customer extends User{
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
-            return assignment;
+            return true;
         } else {
-            System.out.println("Error during assignment with " + ds.email);
-            return null;
+            System.out.println("Error during assignment with " + emailDogSitter);
+            return false;
         }
     }
 
