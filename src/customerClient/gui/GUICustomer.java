@@ -74,11 +74,7 @@ public class GUICustomer extends JFrame{
     private JButton buttonNextMonth = new JButton(">");
     private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
     private CalendarState calendarState = CalendarState.NORMAL;
-
-    //TODO questo attributo non sarà più direttamente accessibile da quando l'architettura client-servr sarà ultimata
-    //private Customer customer;
-
-    //TODO attributi per client-server
+    
     private CustomerProxy proxy;
     private String email;
 
@@ -717,23 +713,6 @@ public class GUICustomer extends JFrame{
                 buttonDay[i].setEnabled(true);
             }
         }
-    }
-
-
-    //TODO metodi sperimentali client-server
-
-    public GUICustomer(CustomerProxy cp, String email) throws ParseException {
-        setTitle("CaniBau (Customer)");
-        setSize(WIDTH, HEIGHT);
-        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
-        setLayout(new BorderLayout());
-
-        this.proxy = cp;
-        this.email = email;
-
-        initComponents();
     }
 
     private void showAssignmentOnCalendar(String email){

@@ -53,6 +53,5 @@ public class TestCustomerProxy {
         selectedDogs.add(d);
 
         proxy.search(start, end, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), selectedDogs, false);
-        System.out.println("price = " + proxy.estimatePriceAssignment(selectedDogs, start, end));
     }
 }
