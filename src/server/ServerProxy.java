@@ -1,18 +1,21 @@
 package server;
 import database.DBConnector;
-import interfaces.InterfaceCustomer;
 import server.bank.PaymentMethod;
 import server.places.Address;
 
-import java.awt.desktop.SystemSleepEvent;
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static server.tools.StringManipulator.capitalizeFirstLetter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.StringTokenizer;
 
 public class ServerProxy extends Thread
 {

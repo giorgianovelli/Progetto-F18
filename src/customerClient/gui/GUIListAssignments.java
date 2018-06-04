@@ -9,10 +9,13 @@ import enumeration.CalendarState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 
 public class GUIListAssignments extends JFrame{
@@ -73,7 +76,7 @@ public class GUIListAssignments extends JFrame{
             labelState = new JLabel[assignmentNumber];
         }
 
-        contentPanel.setLayout((new GridLayout(infoPanel.length, 1, 5, 5)));
+        contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
 
 
 
@@ -82,20 +85,35 @@ public class GUIListAssignments extends JFrame{
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
+
+            ActionListener write = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    GUIWriteReview writeReview = new GUIWriteReview();
+                    writeReview.setVisible(true);
+                }
+            };
+
+
             int j = 0;
             for(Integer i : listAssignment.keySet()){
                 Assignment a = null;
-                //int j = i + 1;
-                String s;
+                String labelString = "";
+
                 a = listAssignment.get(i);
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
 
-                labelDescription[j]= new JLabel(nameDogSitter + " " + surnameDogSitter);
+                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+
+                labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Write a review");
-                createPanel(j);
+                buttonAction[j].addActionListener(write);
+                createPanelReview(j);
                 j++;
             }
+
+
 
 
 
@@ -147,38 +165,35 @@ public class GUIListAssignments extends JFrame{
             int j = 0;
             for(Integer i : listAssignment.keySet()){
                 Assignment a = null;
-                //int j = i + 1;
-                String s;
-                a = listAssignment.get(i);
 
-                /* ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '"+ a.getCode()+ "'");
-                   rs.next();
-                   String temp = rs.getString("DOGSITTER");
-                   ResultSet rs2 = dbConnector.askDB("SELECT NAME, SURNAME FROM DOGSITTERS WHERE EMAIL = '"+ temp +"'");
-                   rs2.next();
-                   s = "Assignment with " + rs2.getString("NAME") + " " + rs2.getString("SURNAME");*/
+                a = listAssignment.get(i);
 
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
 
+
+                ActionListener showInfo = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer();
+                        assignmentInfo.setVisible(true);
+
+                    }
+                };
+
                 labelDescription[j]= new JLabel(nameDogSitter + " " + surnameDogSitter);
                 buttonAction[j]= new JButton("Info");
+                buttonAction[j].addActionListener(showInfo);
 
-                createPanel(j);
+
+                createPanelAssignment(a,j);
+
+
                 j++;
 
             }
 
 
-
-
-
-
-                //manca il controllo della data dell'appuntamento per specificare la label dello stato
-                //verde:confermato
-                //rosso: già passato
-                //giallo: da confermare
-                //chiamo il metodo createLabelState
 
         }
 
@@ -199,22 +214,80 @@ public class GUIListAssignments extends JFrame{
     }
 
     //metodo che crea infoPanel[i] e gli assegna bottone e label
-    private void createPanel(int i){
+    private void createPanelAssignment(Assignment a, int i){
         infoPanel[i] = new JPanel();
+
         infoPanel[i].setLayout(new BorderLayout());
+
+        infoPanel[i].setPreferredSize(new Dimension(480,40));
+        infoPanel[i].add(createLabelState(a,i), BorderLayout.WEST);
         infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
         infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
+
+        /*infoPanel[i].setLayout(new FlowLayout());
+
+        infoPanel[i].setPreferredSize(new Dimension(800,40));
+        infoPanel[i].add(createLabelState(a,i), FlowLayout.LEFT);
+        infoPanel[i].add(labelDescription[i], FlowLayout.CENTER);
+        infoPanel[i].add(buttonAction[i], FlowLayout.RIGHT);*/
+
+        contentPanel.add(infoPanel[i]);
+
+    }
+
+    private void createPanelReview (int i){
+        infoPanel[i] = new JPanel();
+
+        infoPanel[i].setLayout(new BorderLayout());
+
+        infoPanel[i].setPreferredSize(new Dimension(480,40));
+        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
+        infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
+
         contentPanel.add(infoPanel[i]);
     }
 
 
     //metodo per settare il colore della labelState
-    private void createLabelState(Assignment a){
-        //da Fare
-        //da customer vedo la lista degli assignment, controllo dateEnd e state
-        //state è false(annullato), true(confermato) o null(da confermare)
+    private JLabel createLabelState(Assignment a, int i){
+        //da controllare il funzionamento
+
+
+        Date todayDate= new Date(System.currentTimeMillis());
+
+        ImageIcon green = new ImageIcon("images/Green_square.svg.png");
+        Image imageTransform = green.getImage(); // transform it
+        Image newImage = imageTransform.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        green = new ImageIcon(newImage);  // transform it back
+
+
+        ImageIcon red = new ImageIcon("images/red-180x180.png");
+        imageTransform = red.getImage(); // transform it
+        newImage = imageTransform.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        red = new ImageIcon(newImage);  // transform it back
+
+        ImageIcon yellow = new ImageIcon("images/yellow.jpg");
+        imageTransform = yellow.getImage(); // transform it
+        newImage = imageTransform.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        yellow = new ImageIcon(newImage);  // transform it back
+
+
+        if(a.getDateEnd().before(todayDate)){
+            labelState[i]= new JLabel(red);
+
+        }
+        else if (a.getState()){
+            labelState[i]= new JLabel(green);
+        }
+        else {
+            labelState[i]= new JLabel(yellow);
+        }
+
+        return labelState[i];
 
     }
+
+
 
 
 
