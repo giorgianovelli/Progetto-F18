@@ -68,7 +68,7 @@ public class GUIDailyAssignments extends JFrame {
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
-            }
+        }
 
           else if(cs.equals(CalendarState.NORMAL)) {
         setTitle("Daily assignment");
@@ -88,16 +88,7 @@ public class GUIDailyAssignments extends JFrame {
 
 
 }
-    public void main(String[] args)
-    {
 
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run()
-            {
-
-            }
-        });
-    }
     }
 
 
