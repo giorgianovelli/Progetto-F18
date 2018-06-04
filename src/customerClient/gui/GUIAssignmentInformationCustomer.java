@@ -124,7 +124,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
         Integer intAmount = 0;              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
-        String strPayment = "";
+        String strPayment = customerProxy.getCustomerPaymentMethod().getNumber(); // ??
 
 
         //Accesso al DB per recupero variabili non presenti nell'oggetto Assignment
@@ -146,23 +146,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto
-
-        //Numero della carta per il metodo di pagamento
-
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT PAYMENT FROM CUSTOMERS JOIN TRANSACTIONS ON CUSTOMERS.EMAIL = TRANSACTIONS.PAYER WHERE CUSTOMERS.EMAIL = TRANSACTIONS.PAYER AND CODE_ASSIGNMENT = " + intCode);
-            while (rs.next()) {
-                strPayment = rs.getString("PAYMENT");
-            }
-
-            dbConnector.closeConnection();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
 
         labelCode2.setText(intCode.toString());
         labelStartDate2.setText(strDateStart);
