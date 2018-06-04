@@ -7,6 +7,7 @@ import server.Assignment;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
+import java.util.HashSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
@@ -123,36 +124,15 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         String strDogs = a.printDogNames();
         String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
-        Integer intAmount = 0;              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
-        String strPayment = customerProxy.getCustomerPaymentMethod().getNumber(); // ??
-
-
-        //Accesso al DB per recupero variabili non presenti nell'oggetto Assignment
-
-        DBConnector dbConnector = new DBConnector();
-
-        //TODO sostituire accesso al DB con metodo da CustomerProxy quando pronto  + visualizzare .00 se cifra tonda
-
-        // Amount dell'assignment
-
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT AMOUNT FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + intCode);
-            while (rs.next()) {
-                intAmount = rs.getInt("AMOUNT");
-            }
-
-            dbConnector.closeConnection();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
+        String strPayment = customerProxy.getCustomerPaymentMethod().getNumber();
 
         labelCode2.setText(intCode.toString());
         labelStartDate2.setText(strDateStart);
         labelEndDate2.setText(strEndDate);
         labelMeetingPoint2.setText(strMeetingPoint);
         labelDogsitter2.setText(strDogsitter);
-        labelAmount2.setText(intAmount.toString());
+        labelAmount2.setText(String.valueOf(doubleAmount));
         labelPaymentMethod2.setText(strPayment);
 
         int i = 1;
