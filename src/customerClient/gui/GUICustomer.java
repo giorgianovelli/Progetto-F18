@@ -310,7 +310,7 @@ public class GUICustomer extends JFrame{
                 }
 
                 if(menuAe.getActionCommand().equals("Change Password")) {
-                    GUIChangePassword guiChangePassword = new GUIChangePassword(null);
+                    GUIChangePassword guiChangePassword = new GUIChangePassword(email);
                     guiChangePassword.setVisible(true);
                 }
 

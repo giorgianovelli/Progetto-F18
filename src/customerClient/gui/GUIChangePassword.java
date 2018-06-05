@@ -28,7 +28,7 @@ public class GUIChangePassword extends JFrame {
     private JLabel labelNewPassword = new JLabel("New Password:", SwingConstants.LEFT);
 
     //todo cambiato in jtextfield per vedere il contenuto errore :null
-    private JTextField textCurrentPassword = new JTextField(SwingConstants.RIGHT);
+    private JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
     private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
     private  JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
 
