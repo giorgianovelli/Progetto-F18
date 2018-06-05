@@ -325,4 +325,13 @@ public class CustomerProxy implements InterfaceCustomer {
 
     }
 
+    public boolean removeAssignment(int code) {
+        String serverMsg = getReply("22#" + email + "#" + code);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

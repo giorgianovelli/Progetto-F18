@@ -115,8 +115,7 @@ public class Customer extends User{
         if (a != null) {
             assignmentList.remove(key);
             System.out.println("Selected assignment removed!");
-
-            //aggiungere codice per rimuovere la prenotazione dal database
+            
             DBConnector dbConnector = new DBConnector();
             Bank bank = new Bank();
             try {

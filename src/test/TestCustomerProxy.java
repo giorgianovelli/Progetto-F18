@@ -56,5 +56,6 @@ public class TestCustomerProxy {
         System.out.println("ext: " + proxy.estimatePriceAssignment(selectedDogs, start, end));
         System.out.println("conf: " + proxy.addAssignment("LUIGIDIMAIO@GMAIL.COM", start, end, selectedDogs, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121")));
         System.out.println(proxy.getCustomerPaymentMethod().getNumber());
+        System.out.println(proxy.removeAssignment(100));
     }
 }

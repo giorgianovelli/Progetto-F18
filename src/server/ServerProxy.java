@@ -231,6 +231,11 @@ class Connect extends Thread {
                     cap = tokenMsg.nextToken();
                     serverMsg = addAssignment(email, emailDogSitter, dateStart, dateEnd, strDogList, country, city, street, number, cap);
                     break;
+                case 22:
+                    email = tokenMsg.nextToken();
+                    code = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = removeAssignment(email, code);
+                    break;
                 default:
             }
         } finally {
@@ -505,6 +510,16 @@ class Connect extends Thread {
         Address meetingPoint = new Address(country, city, street, number, cap);
 
         if (customer.addAssignment(emailDogSitter, dateStartAssignment, dateEndAssignment, dogList, meetingPoint)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    public String removeAssignment(String email, int code) {
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.removeAssignment(code)){
             return "true";
         } else {
             return "false";
