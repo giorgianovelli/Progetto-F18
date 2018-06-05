@@ -397,8 +397,8 @@ class Connect extends Thread {
     private String getCustomerAddress(String email){
         Singleton singleton = new Singleton();
         Address address = singleton.createCustomerFromDB(email).getAddress();
-        return address.getCountry() + "*" + address.getCity() + "*" + address.getStreet() + "*"
-                + address.getNumber() + "*" + address.getCap();
+        return address.getCountry() + "#" + address.getCity() + "#" + address.getStreet() + "#"
+                + address.getNumber() + "#" + address.getCap();
     }
 
     private String getCustomerPaymentMethod(String email){

@@ -159,7 +159,7 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public Date getCustomerDateOfBirth(){
         String serverMsg = getReply("9#" + email);
-        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             return dateFormat.parse(serverMsg);
         } catch (ParseException e) {

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 
 public class GUISettings extends JFrame {
     final int WIDTH = 512;
@@ -24,9 +25,10 @@ public class GUISettings extends JFrame {
 
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
     private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
+    //TODO labelEmail non s'ha da fare!
     private JLabel labelEmail = new JLabel("Email:", SwingConstants.LEFT);
     private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
-    private JLabel labelDate = new JLabel("Date of birth ( yyyy/mm/dd):", SwingConstants.LEFT);
+    private JLabel labelDate = new JLabel("Date of birth (dd/MM/yyyy):", SwingConstants.LEFT);
     private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
     private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
     //Label solo per dogSitter
@@ -223,7 +225,7 @@ public class GUISettings extends JFrame {
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
         //TODO ERRORI
-       /* SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         String strDate =  dateFormat.format(proxy.getCustomerDateOfBirth());
         textDate.setText(strDate);
@@ -231,10 +233,10 @@ public class GUISettings extends JFrame {
         labelDate.setLabelFor(textDate);
 
 
-        //String strEmail = proxy.get();
-       textEmail.setText(user.getEmail());
+        /*//String strEmail = proxy.get();
+        textEmail.setText(user.getEmail());
         textEmail.setEditable(true);
-        labelEmail.setLabelFor(textEmail);
+        labelEmail.setLabelFor(textEmail);*/
 
 
 
@@ -244,7 +246,7 @@ public class GUISettings extends JFrame {
         textAddress.setEditable(true);
         labelAddress.setLabelFor(textAddress);
 
-        // String strPaymentMethod = proxy.getCustomerPaymentMethod();
+        /*// String strPaymentMethod = proxy.getCustomerPaymentMethod();
         textPaymentMethod.setText(String.valueOf(user.getPaymentMethod()));//Da sistemare
         textPaymentMethod.setEditable(true);
         labelPaymentMethod.setLabelFor(textPaymentMethod);*/
