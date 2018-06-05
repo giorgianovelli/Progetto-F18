@@ -8,6 +8,7 @@ import server.places.Address;
 import server.tools.dateTime.DateTimeDHMS;
 
 import javax.management.DescriptorAccess;
+import java.awt.desktop.SystemSleepEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,6 +57,7 @@ public class TestCustomerProxy {
         System.out.println("ext: " + proxy.estimatePriceAssignment(selectedDogs, start, end));
         System.out.println("conf: " + proxy.addAssignment("LUIGIDIMAIO@GMAIL.COM", start, end, selectedDogs, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121")));
         System.out.println(proxy.getCustomerPaymentMethod().getNumber());
-        System.out.println(proxy.removeAssignment(100));
+        System.out.println("remove assignment: " + proxy.removeAssignment(100));
+        System.out.println("add a review: " + proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "bla, bla, bla,", "recensione veramente utile!"));
     }
 }

@@ -115,7 +115,7 @@ public class Customer extends User{
         if (a != null) {
             assignmentList.remove(key);
             System.out.println("Selected assignment removed!");
-            
+
             DBConnector dbConnector = new DBConnector();
             Bank bank = new Bank();
             try {
@@ -136,18 +136,35 @@ public class Customer extends User{
         }
     }
 
-    public Review addReview(int codeAssignment, DogSitter ds, Date dateReview, int rating, String title, String comment) {
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        date.setLenient(false);
-        String dateStringReview = date.format(dateReview);
+    public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment, String reply) {
+        SimpleDateFormat dateFormatSql = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateReview = new Date();
+        String dateStringReview = dateFormatSql.format(dateReview);
         Review review = new Review(codeAssignment, dateReview, rating, title.toUpperCase(), comment);
 
+        if (reviewList.containsKey(codeAssignment)){
+            System.out.println("Error: there is already a review for this assignment!");
+            return false;
+        }
+
+        if (!(assignmentList.containsKey(codeAssignment))){
+            System.out.println("Error: there is not an assignment with code " + codeAssignment + "!");
+            return false;
+        }
+
         //salva la recensione nel database
-        //sottometodo da implementare
+        DBConnector dbConnector = new DBConnector();
+        try {
+            dbConnector.updateDB("INSERT INTO REVIEW VALUES (" + codeAssignment + ", '" + dateStringReview + "', " + rating + ", '" + title + "', '" + comment + "', '" + reply + "')");
+            dbConnector.closeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
 
         reviewList.put(codeAssignment, review);
         System.out.println(review.toString());
-        return review;
+        return true;
     }
 
     public boolean removeReview(Integer key) {
