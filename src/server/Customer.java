@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.zip.CheckedOutputStream;
 
 import interfaces.InterfaceCustomer;
 import server.bank.Bank;
@@ -109,11 +110,11 @@ public class Customer extends User{
         }
     }
 
-    public boolean removeAssignment(Integer key) {
+    public boolean removeAssignment(Integer code) {
         Assignment a = null;
-        a = assignmentList.get(key);
+        a = assignmentList.get(code);
         if (a != null) {
-            assignmentList.remove(key);
+            assignmentList.remove(code);
             System.out.println("Selected assignment removed!");
 
             DBConnector dbConnector = new DBConnector();
@@ -167,18 +168,24 @@ public class Customer extends User{
         return true;
     }
 
-    public boolean removeReview(Integer key) {
+    public boolean removeReview(Integer code) {
         Review r = null;
-        r = reviewList.get(key);
+        r = reviewList.get(code);
         if (r != null) {
-            reviewList.remove(key);
+            reviewList.remove(code);
             System.out.println("Selected review removed!");
 
-            //aggiungere codice per rimuovere la recensione dal database
+            DBConnector dbConnector = new DBConnector();
+            try {
+                dbConnector.updateDB("DELETE FROM REVIEW WHERE ASSIGNMENT_CODE = " + code);
+                dbConnector.closeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             return true;
         } else {
-            System.out.println("Error in removing the selected review!");
+            System.out.println("Error: there is not a review for assignment with code " + code +"!");
             return false;
         }
     }

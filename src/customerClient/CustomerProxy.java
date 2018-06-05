@@ -343,4 +343,13 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
+    public boolean removeReview(Integer code) {
+        String serverMsg = getReply("24#" + email + "#" + code);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

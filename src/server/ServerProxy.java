@@ -236,7 +236,6 @@ class Connect extends Thread {
                     code = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = removeAssignment(email, code);
                     break;
-                //addReview(String email, int codeAssignment, String  emailDogSitter, int rating, String title, String comment, String reply)
                 case 23:
                     email = tokenMsg.nextToken();
                     code = Integer.parseInt(tokenMsg.nextToken());
@@ -246,6 +245,11 @@ class Connect extends Thread {
                     String comment = tokenMsg.nextToken();
                     String reply = tokenMsg.nextToken();
                     serverMsg = addReview(email, code, emailDogSitter, rating, title, comment, reply);
+                case 24:
+                    email = tokenMsg.nextToken();
+                    code = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = removeReview(email, code);
+                    break;
                 default:
             }
         } finally {
@@ -540,6 +544,16 @@ class Connect extends Thread {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         if (customer.addReview(codeAssignment, emailDogSitter, rating, title, comment, reply)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    public String removeReview(String email, Integer code) {
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.removeReview(code)){
             return "true";
         } else {
             return "false";

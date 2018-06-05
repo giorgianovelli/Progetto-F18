@@ -59,5 +59,6 @@ public class TestCustomerProxy {
         System.out.println(proxy.getCustomerPaymentMethod().getNumber());
         System.out.println("remove assignment: " + proxy.removeAssignment(100));
         System.out.println("add a review: " + proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "bla, bla, bla,", "recensione veramente utile!"));
+        System.out.println("remove a review: " + proxy.removeReview(1));
     }
 }
