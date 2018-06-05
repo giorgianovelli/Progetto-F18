@@ -5,17 +5,12 @@ import server.Dog;
 import server.Review;
 import server.Singleton;
 import server.places.Address;
-import server.tools.dateTime.DateTimeDHMS;
 
-import javax.management.DescriptorAccess;
-import java.awt.desktop.SystemSleepEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-
-import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 
 public class TestCustomerProxy {
     public static void main(String[] args) {

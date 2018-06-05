@@ -193,7 +193,13 @@ public class GUICustomer extends JFrame{
             public void actionPerformed(ActionEvent cae) {
                 if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
+                    String strDate;
+                    if (Integer.parseInt(pressedButton.getText()) < 10){
+                        strDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear;
+                    } else {
+                        strDate = pressedButton.getText() + "/" + labelDateMonthYear;
+                    }
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState,proxy.getCustomerListAssignment(),strDate); //TODO customer,inserire la data
                     guiDailyAssignments.setVisible(true);
                 }
 
@@ -246,7 +252,14 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (ctrlAe.getActionCommand().equals("Show more")){
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
+                    JButton pressedButton = (JButton) ctrlAe.getSource();
+                    String strDate;
+                    if (Integer.parseInt(pressedButton.getText()) < 10){
+                        strDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear;
+                    } else {
+                        strDate = pressedButton.getText() + "/" + labelDateMonthYear;
+                    }
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, proxy.getCustomerListAssignment(),strDate); //TODO customer
                     guiDailyAssignments.setVisible(true);
                 }
             }
