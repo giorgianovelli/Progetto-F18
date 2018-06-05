@@ -4,8 +4,6 @@ import interfaces.InterfaceCustomer;
 import server.*;
 import server.bank.PaymentMethod;
 import server.places.Address;
-
-import javax.swing.text.Style;
 import java.io.*;
 import java.net.*;
 import java.text.ParseException;
@@ -60,13 +58,13 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public HashMap<Integer, Assignment> getCustomerListAssignment() {
         String serverMsg = getReply("1#" + email);
+        System.out.println("test time: " + serverMsg);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()) {
             int code = Integer.parseInt(tokenMsg.nextToken());
-            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());    //TODO
-            //tokenMsg.nextToken();           //...
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm");
+            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date dateStart = new Date();
             Date dateEnd = new Date();
             try {
@@ -161,7 +159,7 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public Date getCustomerDateOfBirth(){
         String serverMsg = getReply("9#" + email);
-        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             return dateFormat.parse(serverMsg);
         } catch (ParseException e) {
@@ -355,8 +353,6 @@ public class CustomerProxy implements InterfaceCustomer {
     public HashMap<Integer, Review> getReviewList() {
         String serverMsg = getReply("25#" + email);
         HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
-        // serverMsg = serverMsg + r.getCode() + "*" + getDogSitterNameOfAssignment(r.getCode()) + "*" + getDogSitterSurnameOfAssignment(r.getCode())
-        //                    + "*" + dateFormat.format(r.getDate()) + "*" + r.getRating() + "*" + r.getTitle() + "*" + r.getComment() + "*" + r.getReply() + "#";
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         while (tokenMsg.hasMoreTokens()){
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -364,6 +360,17 @@ public class CustomerProxy implements InterfaceCustomer {
             reviewList.put(code, r);
         }
         return reviewList;
+    }
+
+    public boolean addDog(String customerEmail, String name, String breed, int age, double weight) {
+        String clientMsg = "26#" + "#" + email + "#" + name + "#" + breed + "#" + age + "#" + weight;
+        System.out.println(clientMsg);
+        String serverMsg = getReply(clientMsg);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

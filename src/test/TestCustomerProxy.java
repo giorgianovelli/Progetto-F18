@@ -31,7 +31,8 @@ public class TestCustomerProxy {
             e.printStackTrace();
         }
         proxy.updateCustomerPaymentMethod("7372989101832834", "BENEDETTO", "SEDICESIMO", expiration, 555);*/
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        /*SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date start = new Date();
         Date end = new Date();
         try {
@@ -60,5 +61,9 @@ public class TestCustomerProxy {
         for (Integer key : reviewList.keySet()) {
             System.out.println(reviewList.get(key).getCode());
         }
+        System.out.println("add dog: " + proxy.addDog("RICCARDOGIURA@GMAIL.COM","CANETEST", "AKITA", 1, 20));*/
+
+        System.out.println(proxy.getCustomerAddress().toString());
+        System.out.println(proxy.getCustomerDateOfBirth());
     }
 }

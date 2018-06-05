@@ -49,6 +49,7 @@ public class GUICustomer extends JFrame{
     private JMenuItem menuItemShowReviews = new JMenuItem("Show all reviews");
     private JMenu menuSettings = new JMenu("Settings");
     private JMenuItem menuItemAccount = new JMenuItem("Account");
+    private JMenuItem menuItemChangePassword = new JMenuItem("Change Password");
     private JMenuItem menuItemDogs = new JMenuItem("Dogs");
     private JMenu menuExtra = new JMenu("?");
     private JMenuItem menuItemInfo = new JMenuItem("Info");
@@ -112,6 +113,7 @@ public class GUICustomer extends JFrame{
         menuBar.add(menuReview);
         menuSettings.add(menuItemAccount);
         menuSettings.add(menuItemDogs);
+        menuSettings.add(menuItemChangePassword);
         menuBar.add(menuSettings);
         menuExtra.add(menuItemInfo);
         menuExtra.add(menuItemAwards);
@@ -316,9 +318,16 @@ public class GUICustomer extends JFrame{
                 }
 
                 if (menuAe.getActionCommand().equals("Account")){
-                    GUISettings guiSettings = new GUISettings(null);    //TODO customer
+                    GUISettings guiSettings = new GUISettings(email);    //TODO customer
                     guiSettings.setVisible(true);
                 }
+
+                if(menuAe.getActionCommand().equals("Change Password")) {
+                    GUIChangePassword guiChangePassword = new GUIChangePassword(null);
+                    guiChangePassword.setVisible(true);
+                }
+
+
 
                 if (menuAe.getActionCommand().equals("Cancel")){
                     cancel();
@@ -354,6 +363,7 @@ public class GUICustomer extends JFrame{
         menuItemRemoveReview.addActionListener(menuAl);
         menuItemShowReviews.addActionListener(menuAl);
         menuItemAccount.addActionListener(menuAl);
+        menuItemChangePassword.addActionListener(menuAl);
         buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
 
         for (i = 0; i < nShownTodayAssignments; i++){
@@ -696,7 +706,7 @@ public class GUICustomer extends JFrame{
     }
 
     private void openListAssignment(){
-        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getCustomerListAssignment(), email, this);  //TODO customer
+        GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getCustomerListAssignment(), email, this);
         guiListAssignments.setVisible(true);
     }
 

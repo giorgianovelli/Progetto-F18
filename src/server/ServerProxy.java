@@ -254,6 +254,14 @@ class Connect extends Thread {
                     email = tokenMsg.nextToken();
                     serverMsg = getReviewList(email);
                     break;
+                case 26:
+                    email = tokenMsg.nextToken();
+                    String dogName = tokenMsg.nextToken();
+                    String bread = tokenMsg.nextToken();
+                    int age = Integer.parseInt(tokenMsg.nextToken());
+                    double weight = Double.parseDouble(tokenMsg.nextToken());
+                    serverMsg = addDog(email, dogName, bread, age, weight);
+                    break;
                 default:
             }
         } finally {
@@ -284,6 +292,7 @@ class Connect extends Thread {
         for (Integer key : customerListAssignment.keySet()) {
             Assignment a = customerListAssignment.get(key);
             //TODO aggiungere chiamata per ottenere la lista dei cani e il meeting point di a
+            System.out.println("test time server: " + a.getDateStart());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
@@ -388,8 +397,8 @@ class Connect extends Thread {
     private String getCustomerAddress(String email){
         Singleton singleton = new Singleton();
         Address address = singleton.createCustomerFromDB(email).getAddress();
-        return address.getCountry() + "*" + address.getCity() + "*" + address.getStreet() + "*"
-                + address.getNumber() + "*" + address.getCap();
+        return address.getCountry() + "#" + address.getCity() + "#" + address.getStreet() + "#"
+                + address.getNumber() + "#" + address.getCap();
     }
 
     private String getCustomerPaymentMethod(String email){
@@ -514,7 +523,7 @@ class Connect extends Thread {
         return price.toString();
     }
 
-    public String addAssignment(String email, String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, String strDogList, String country, String city, String street, String number, String cap){
+    private String addAssignment(String email, String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, String strDogList, String country, String city, String street, String number, String cap){
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
 
@@ -534,7 +543,7 @@ class Connect extends Thread {
         }
     }
 
-    public String removeAssignment(String email, int code) {
+    private String removeAssignment(String email, int code) {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         if (customer.removeAssignment(code)){
@@ -544,7 +553,7 @@ class Connect extends Thread {
         }
     }
 
-    public String addReview(String email, int codeAssignment, String  emailDogSitter, int rating, String title, String comment, String reply) {
+    private String addReview(String email, int codeAssignment, String  emailDogSitter, int rating, String title, String comment, String reply) {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         if (customer.addReview(codeAssignment, emailDogSitter, rating, title, comment, reply)){
@@ -554,7 +563,7 @@ class Connect extends Thread {
         }
     }
 
-    public String removeReview(String email, Integer code) {
+    private String removeReview(String email, Integer code) {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         if (customer.removeReview(code)){
@@ -564,7 +573,7 @@ class Connect extends Thread {
         }
     }
 
-    public String getReviewList(String email) {
+    private String getReviewList(String email) {
         String serverMsg = "";
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
@@ -576,4 +585,15 @@ class Connect extends Thread {
         System.out.println(serverMsg);
         return serverMsg;
     }
+
+    private String addDog(String email, String name, String breed, int age, double weight) {
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.addDog(email, name, breed, age, weight)){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
 }
