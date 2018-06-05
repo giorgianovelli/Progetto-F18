@@ -371,9 +371,11 @@ class Connect extends Thread {
 
     private String getCustomerPaymentMethod(String email){
         Singleton singleton = new Singleton();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         PaymentMethod pm = singleton.createCustomerFromDB(email).getPaymentMethod();
+        String strExpiration = dateFormat.format(pm.getExpirationDate());
         return pm.getNumber() + "*" + pm.getName() + "*" + pm.getSurname() + "*"
-                + pm.getExpirationDate() + "*" + pm.getCvv() + "*" + pm.getAmount();
+                + strExpiration + "*" + pm.getCvv() + "*" + pm.getAmount();
     }
 
     private String updateCustomerName(String email, String name){

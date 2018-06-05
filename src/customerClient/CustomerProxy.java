@@ -177,7 +177,7 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public PaymentMethod getCustomerPaymentMethod(){
         String serverMsg = getReply("11#" + email);
-        return decodePaymentMethodStar(serverMsg);
+        return decodePaymentMethod(serverMsg);
     }
 
     private Address decodeAddress(String msg) {
@@ -191,28 +191,11 @@ public class CustomerProxy implements InterfaceCustomer {
     }
 
     private PaymentMethod decodePaymentMethod(String msg) {
-        StringTokenizer tokenMsg = new StringTokenizer(msg, "#");
-        String number = tokenMsg.nextToken();
-        String name = tokenMsg.nextToken();
-        String surname = tokenMsg.nextToken();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date expirationDate = new Date();
-        try {
-            expirationDate = dateFormat.parse(tokenMsg.nextToken());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        int cvv = Integer.parseInt(tokenMsg.nextToken());
-        double amount = Double.parseDouble(tokenMsg.nextToken());
-        return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
-    }
-
-    private PaymentMethod decodePaymentMethodStar(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
         String number = tokenMsg.nextToken();
         String name = tokenMsg.nextToken();
         String surname = tokenMsg.nextToken();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date expirationDate = new Date();
         try {
             expirationDate = dateFormat.parse(tokenMsg.nextToken());
