@@ -216,10 +216,29 @@ public class Customer extends User{
         return reviewList;
     }
 
-    public HashSet<Dog> addDog(String name, String breed, DogSize size, int age, double weight, int ID) {
-        Dog dog = new Dog(name, breed, size, age, weight, ID);
-        dogList.add(dog);
-        return dogList;
+    public boolean addDog(String customerEmail, String name, String breed, int age, double weight) {
+        DBConnector dbConnector = new DBConnector();
+        DogSize size;
+        int ID;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT SIZE FROM BREEDS WHERE NAME = '" + breed + "'");
+            rs.next();
+            String strSize = rs.getString("SIZE");
+            size = DogSize.valueOf(strSize);
+            dbConnector.closeConnection();
+            rs = dbConnector.askDB("SELECT ID FROM DOGS");
+            rs.last();
+            ID = rs.getRow() + 1;
+            dbConnector.closeConnection();
+            Dog dog = new Dog(name, breed, size, age, weight, ID);
+            dogList.add(dog);
+            dbConnector.updateDB("INSERT INTO DOGS VALUES (" + ID + ", '" + name + "', '" + breed + "', " + weight + ", " + age + ", '" + customerEmail + "')");
+            dbConnector.closeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public HashSet<Dog> removeDog(Dog dog) {

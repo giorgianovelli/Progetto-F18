@@ -5,10 +5,7 @@ import server.Dog;
 import server.Review;
 import server.Singleton;
 import server.places.Address;
-import server.tools.dateTime.DateTimeDHMS;
 
-import javax.management.DescriptorAccess;
-import java.awt.desktop.SystemSleepEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,5 +62,6 @@ public class TestCustomerProxy {
         for (Integer key : reviewList.keySet()) {
             System.out.println(reviewList.get(key).getCode());
         }
+        System.out.println("add dog: " + proxy.addDog("RICCARDOGIURA@GMAIL.COM","CANETEST", "AKITA", 1, 20));
     }
 }
