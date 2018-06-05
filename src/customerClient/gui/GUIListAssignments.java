@@ -40,8 +40,9 @@ public class GUIListAssignments extends JFrame{
     //private Customer customer;
     private HashMap<Integer, Assignment> listAssignment;
     private CustomerProxy proxy;
+    private String email;
 
-    public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, CustomerProxy proxy, GUICustomer guiCustomer){
+    public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUICustomer guiCustomer){
         setTitle("Your assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -49,7 +50,8 @@ public class GUIListAssignments extends JFrame{
         setResizable(false);
         setLayout(new BorderLayout());
         this.listAssignment = listAssignment;
-        this.proxy = proxy;
+        this.email = email;
+        this.proxy = new CustomerProxy(email);
 
 
         initComponents(cs, guiCustomer);
