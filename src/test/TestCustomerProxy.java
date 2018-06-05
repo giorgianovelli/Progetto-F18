@@ -60,5 +60,6 @@ public class TestCustomerProxy {
         for (Integer key : reviewList.keySet()) {
             System.out.println(reviewList.get(key).getCode());
         }
+        System.out.println("add dog: " + proxy.addDog("RICCARDOGIURA@GMAIL.COM","CANETEST", "AKITA", 1, 20));
     }
 }
