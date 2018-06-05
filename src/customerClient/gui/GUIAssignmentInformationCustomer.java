@@ -1,9 +1,7 @@
 package customerClient.gui;
 
 import customerClient.CustomerProxy;
-import database.DBConnector;
 import server.Assignment;
-
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -111,18 +109,22 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         // Dichiarazione variabili che andranno nelle JLabel
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         CustomerProxy customerProxy = new CustomerProxy(email);
         Integer intCode = a.getCode();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String strDateStart = dateFormat.format(a.getDateStart());
         String strEndDate = dateFormat.format(a.getDateEnd());
+
         String strDogsitter = customerProxy.getDogSitterNameOfAssignment(intCode) + " " + customerProxy.getDogSitterSurnameOfAssignment(intCode);
         String strDogs = a.printDogNames();
         String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
         String strPayment = customerProxy.getCustomerPaymentMethod().getNumber();
+
+        //Passaggio delle variabili alle Jlabel che contengono i dati
 
         labelCode2.setText(intCode.toString());
         labelStartDate2.setText(strDateStart);
@@ -132,8 +134,9 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         labelAmount2.setText(String.valueOf(doubleAmount));
         labelPaymentMethod2.setText(strPayment);
 
-        int i = 1;
+        // Creazione e passaggio JLabel per i cani
 
+        int i = 1;
         for (String token: strDogsSplitted) {
             if (!token.isEmpty()) {
                 JLabel tmpLabel1 = new JLabel("[" + i + "]", SwingConstants.CENTER);
