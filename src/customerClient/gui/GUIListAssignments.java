@@ -41,6 +41,7 @@ public class GUIListAssignments extends JFrame{
     private HashMap<Integer, Assignment> listAssignment;
     private CustomerProxy proxy;
     private String email;
+    private Assignment assignment;
 
     public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUICustomer guiCustomer){
         setTitle("Your assignments");
@@ -165,6 +166,7 @@ public class GUIListAssignments extends JFrame{
 
         } else {
             int j = 0;
+
             for(Integer i : listAssignment.keySet()){
                 Assignment a = null;
 
@@ -173,15 +175,18 @@ public class GUIListAssignments extends JFrame{
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
 
-
                 ActionListener showInfo = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer();
+
+                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email);
                         assignmentInfo.setVisible(true);
 
                     }
                 };
+
+
+
 
                 labelDescription[j]= new JLabel(nameDogSitter + " " + surnameDogSitter);
                 buttonAction[j]= new JButton("Info");
