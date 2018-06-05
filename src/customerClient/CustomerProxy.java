@@ -58,13 +58,13 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public HashMap<Integer, Assignment> getCustomerListAssignment() {
         String serverMsg = getReply("1#" + email);
+        System.out.println("test time: " + serverMsg);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()) {
             int code = Integer.parseInt(tokenMsg.nextToken());
-            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());    //TODO
-            //tokenMsg.nextToken();           //...
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm");
+            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date dateStart = new Date();
             Date dateEnd = new Date();
             try {

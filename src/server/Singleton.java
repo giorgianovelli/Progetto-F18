@@ -164,8 +164,8 @@ public class Singleton {
             while (rs.next()){
                 int code = rs.getInt("CODE");
                 boolean state = rs.getBoolean("CONFIRMATION");
-                Date dateStart = rs.getDate("DATE_START");
-                Date dateEnd = rs.getDate("DATE_END");
+                Date dateStart = rs.getTimestamp("DATE_START");
+                Date dateEnd = rs.getTimestamp("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
                 HashSet dogList = getDogListFromDB(code);
                 Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
@@ -187,8 +187,8 @@ public class Singleton {
             while (rs.next()){
                 int code = rs.getInt("CODE");
                 boolean state = rs.getBoolean("CONFIRMATION");
-                Date dateStart = rs.getDate("DATE_START");
-                Date dateEnd = rs.getDate("DATE_END");
+                Date dateStart = rs.getTimestamp("DATE_START");
+                Date dateEnd = rs.getTimestamp("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
                 HashSet dogList = getDogListFromDB(code);
                 Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);

@@ -292,6 +292,7 @@ class Connect extends Thread {
         for (Integer key : customerListAssignment.keySet()) {
             Assignment a = customerListAssignment.get(key);
             //TODO aggiungere chiamata per ottenere la lista dei cani e il meeting point di a
+            System.out.println("test time server: " + a.getDateStart());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
