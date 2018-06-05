@@ -250,6 +250,10 @@ class Connect extends Thread {
                     code = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = removeReview(email, code);
                     break;
+                case 25:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getReviewList(email);
+                    break;
                 default:
             }
         } finally {
@@ -558,5 +562,21 @@ class Connect extends Thread {
         } else {
             return "false";
         }
+    }
+
+    public String getReviewList(String email) {
+        String serverMsg = "";
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        HashMap<Integer, Review> reviewList = customer.getReviewList();
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        for (Integer key : reviewList.keySet()) {
+            Review r = reviewList.get(key);
+            //serverMsg = serverMsg + r.getCode() + "*" + getDogSitterNameOfAssignment(r.getCode()) + "*" + getDogSitterSurnameOfAssignment(r.getCode())
+                    //+ "*" + dateFormat.format(r.getDate()) + "*" + r.getRating() + "*" + r.getTitle() + "*" + r.getComment() + "*" + r.getReply() + "#";
+            serverMsg = serverMsg + r.getCode() + "#";
+        }
+        System.out.println(serverMsg);
+        return serverMsg;
     }
 }

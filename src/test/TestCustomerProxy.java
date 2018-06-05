@@ -12,6 +12,7 @@ import java.awt.desktop.SystemSleepEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
@@ -60,5 +61,9 @@ public class TestCustomerProxy {
         System.out.println("remove assignment: " + proxy.removeAssignment(100));
         System.out.println("add a review: " + proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "bla, bla, bla,", "recensione veramente utile!"));
         System.out.println("remove a review: " + proxy.removeReview(1));
+        HashMap<Integer, Review> reviewList = proxy.getReviewList();
+        for (Integer key : reviewList.keySet()) {
+            System.out.println(reviewList.get(key).getCode());
+        }
     }
 }

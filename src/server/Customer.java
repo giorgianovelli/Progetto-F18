@@ -190,6 +190,7 @@ public class Customer extends User{
         }
     }
 
+    //TODO inutile!!
     public HashMap<Integer, Assignment> listAssignment() {
         Assignment a = null;
         for (Integer key : assignmentList.keySet()) {
@@ -202,6 +203,7 @@ public class Customer extends User{
         return assignmentList;
     }
 
+    //TODO inutile!!
     public HashMap<Integer, Review> listReview() {
         Review r = null;
         for (Integer key : reviewList.keySet()) {

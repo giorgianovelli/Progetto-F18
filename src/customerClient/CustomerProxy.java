@@ -352,4 +352,18 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
+    public HashMap<Integer, Review> getReviewList() {
+        String serverMsg = getReply("25#" + email);
+        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        // serverMsg = serverMsg + r.getCode() + "*" + getDogSitterNameOfAssignment(r.getCode()) + "*" + getDogSitterSurnameOfAssignment(r.getCode())
+        //                    + "*" + dateFormat.format(r.getDate()) + "*" + r.getRating() + "*" + r.getTitle() + "*" + r.getComment() + "*" + r.getReply() + "#";
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        while (tokenMsg.hasMoreTokens()){
+            int code = Integer.parseInt(tokenMsg.nextToken());
+            Review r = getReview(code);
+            reviewList.put(code, r);
+        }
+        return reviewList;
+    }
+
 }
