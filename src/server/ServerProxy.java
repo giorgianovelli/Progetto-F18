@@ -569,11 +569,8 @@ class Connect extends Thread {
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
         HashMap<Integer, Review> reviewList = customer.getReviewList();
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         for (Integer key : reviewList.keySet()) {
             Review r = reviewList.get(key);
-            //serverMsg = serverMsg + r.getCode() + "*" + getDogSitterNameOfAssignment(r.getCode()) + "*" + getDogSitterSurnameOfAssignment(r.getCode())
-                    //+ "*" + dateFormat.format(r.getDate()) + "*" + r.getRating() + "*" + r.getTitle() + "*" + r.getComment() + "*" + r.getReply() + "#";
             serverMsg = serverMsg + r.getCode() + "#";
         }
         System.out.println(serverMsg);
