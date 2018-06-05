@@ -135,7 +135,7 @@ public class GUIDailyAssignments extends JFrame {
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         getContentPane().add(scroll);
 
-
+// da modificare 
 }
 
     }
