@@ -245,6 +245,7 @@ class Connect extends Thread {
                     String comment = tokenMsg.nextToken();
                     String reply = tokenMsg.nextToken();
                     serverMsg = addReview(email, code, emailDogSitter, rating, title, comment, reply);
+                    break;
                 case 24:
                     email = tokenMsg.nextToken();
                     code = Integer.parseInt(tokenMsg.nextToken());
@@ -262,6 +263,12 @@ class Connect extends Thread {
                     double weight = Double.parseDouble(tokenMsg.nextToken());
                     serverMsg = addDog(email, dogName, bread, age, weight);
                     break;
+                //TODO da eliminare?
+                /*case 27:
+                    email = tokenMsg.nextToken();
+                    int ID = Integer.parseInt(tokenMsg.nextToken());
+                    serverMsg = removeDog(email, ID);
+                    break;*/
                 default:
             }
         } finally {
@@ -358,7 +365,6 @@ class Connect extends Thread {
         Review review = singleton.getReview(code);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String date = dateFormat.format(review.getDate());
-        //TODO
         return  date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
     }
 
@@ -595,5 +601,17 @@ class Connect extends Thread {
             return "false";
         }
     }
+
+    //TODO da eliminare?
+    /*private String removeDog(String email, int ID) {
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        if (customer.removeDog(ID)){
+            return "true";
+        } else {
+            System.out.println("error");
+            return "false";
+        }
+    }*/
 
 }

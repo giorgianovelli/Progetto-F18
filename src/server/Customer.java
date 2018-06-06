@@ -241,14 +241,28 @@ public class Customer extends User{
         }
     }
 
-    public HashSet<Dog> removeDog(Dog dog) {
-        if (dogList.contains(dog)) {
-            dogList.remove(dog);
-            return dogList;
-        } else {
-            return null;
+    //TODO da eliminare?
+    /*public boolean removeDog(int ID) {
+        Singleton singleton = new Singleton();
+        Dog dog = singleton.createDogFromDB(ID);
+        boolean isRemoved = false;
+
+        for (Dog d : dogList) {
+            if (d.getID() == dog.getID()){
+                dogList.remove(dog);
+                isRemoved = true;
+                DBConnector dbConnector = new DBConnector();
+                try {
+                    dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE DOG_ID = " + ID);
+                    dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE DOG_ID = " + ID);
+                    dbConnector.updateDB("DELETE FROM DOGS WHERE ID = " + ID);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-    }
+        return isRemoved;
+    }*/
 
     public HashMap<Integer, Assignment> getAssignmentList() {
         return assignmentList;

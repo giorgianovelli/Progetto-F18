@@ -100,10 +100,13 @@ public class CustomerProxy implements InterfaceCustomer {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
         //System.out.println("TM: " + tokenMsg.nextToken());
         HashSet<Dog> dogList = new HashSet<Dog>();
+        int ID;
         while (tokenMsg.hasMoreTokens()) {
             StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
             //System.out.println("TD: " + tokenDog.nextToken());
-            int ID = Integer.parseInt(tokenDog.nextToken());
+            String strID = tokenDog.nextToken();
+            //System.out.println(strID);
+            ID = Integer.parseInt(strID);
             String name = tokenDog.nextToken();
             String breed = tokenDog.nextToken();
             DogSize size = DogSize.valueOf(tokenDog.nextToken());
@@ -372,5 +375,15 @@ public class CustomerProxy implements InterfaceCustomer {
             return false;
         }
     }
+
+    //TODO da eliminare?
+    /*public boolean removeDog(int ID) {
+        String serverMsg = getReply("27#" + email + "#" + ID);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }*/
 
 }
