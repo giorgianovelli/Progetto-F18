@@ -30,6 +30,7 @@ public class GUIDailyAssignments extends JFrame {
 
 
     public GUIDailyAssignments(CalendarState cs, Customer customer) {  //HashMap<Integer, Assignment> listAssigment, String todayDate) {
+        //TODO cambiare il costruttore: l'oggetto customer non sarà più accessibile
         setTitle("Daily assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);

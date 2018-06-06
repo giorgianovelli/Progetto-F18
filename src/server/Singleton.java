@@ -137,7 +137,6 @@ public class Singleton {
         try {
             ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
             rs.next();
-            //int id = rs.getInt("ID");
             String name = rs.getString("NAME");
             String breed = rs.getString("BREED");
             double weight = rs.getDouble("WEIGHT");

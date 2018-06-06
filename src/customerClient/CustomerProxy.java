@@ -367,7 +367,6 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public boolean addDog(String customerEmail, String name, String breed, int age, double weight) {
         String clientMsg = "26#" + "#" + email + "#" + name + "#" + breed + "#" + age + "#" + weight;
-        System.out.println(clientMsg);
         String serverMsg = getReply(clientMsg);
         if (serverMsg.equals("true")){
             return true;

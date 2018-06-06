@@ -60,8 +60,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
-
-    public GUIAssignmentInformationCustomer(){
+    //TODO to remove
+    /*public GUIAssignmentInformationCustomer(){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -71,7 +71,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
 
         // initComponents();
-    }
+    }*/
 
 //______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
