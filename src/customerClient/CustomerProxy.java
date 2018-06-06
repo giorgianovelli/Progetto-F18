@@ -366,6 +366,7 @@ public class CustomerProxy implements InterfaceCustomer {
     }
 
     public boolean addDog(String customerEmail, String name, String breed, int age, double weight) {
+        //TODO funzione da aggiornare alla prossima modifica del database relativa ai tipi di dati
         String clientMsg = "26#" + "#" + email + "#" + name + "#" + breed + "#" + age + "#" + weight;
         String serverMsg = getReply(clientMsg);
         if (serverMsg.equals("true")){
