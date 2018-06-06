@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 public class GUIAssignmentInformationCustomer extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
-    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     private JPanel panelAssignmentData = new JPanel();
     private GridLayout gridLayout = new GridLayout(8, 2, 0, 10);
