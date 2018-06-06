@@ -203,8 +203,8 @@ public class GUICustomer extends JFrame{
 
                 if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUINewAssignment guiNewAssignment = new GUINewAssignment();
-                    guiNewAssignment.setVisible(true);
+                    //GUINewAssignment guiNewAssignment = new GUINewAssignment();  DISATTIVATO IN ATTESA DI INTERFACCIA DEFINITIVA @Riky 
+                    //guiNewAssignment.setVisible(true);
                 }
 
             }
