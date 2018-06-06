@@ -91,10 +91,6 @@ public class GUICustomer extends JFrame{
         this.email = email;
         this.proxy = new CustomerProxy(email);
 
-        //TODO queste metodo non sarà più direttamente accessibile con l'architettura client server
-        //Singleton singleton = new Singleton();
-        //customer = singleton.createCustomerFromDB(customerEmail);
-
         initComponents();
     }
 
@@ -203,8 +199,8 @@ public class GUICustomer extends JFrame{
 
                 if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    //GUINewAssignment guiNewAssignment = new GUINewAssignment();  DISATTIVATO IN ATTESA DI INTERFACCIA DEFINITIVA @Riky
-                    //guiNewAssignment.setVisible(true);
+                    GUINewAssignment guiNewAssignment = new GUINewAssignment();
+                    guiNewAssignment.setVisible(true);
                 }
 
             }
@@ -625,7 +621,11 @@ public class GUICustomer extends JFrame{
         }
 
         for (i = 0; i < NDAYMONTH; i++){
-            buttonDay[i].setBackground(new Color(204, 230, 255));
+            //buttonDay[i].setBackground(new Color(204, 230, 255));
+
+            if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
+                buttonDay[i].setBackground(new Color(204, 230, 255));
+            }
 
             String strCurrentDate = date.format(new Date());
             String dateButton;
@@ -689,7 +689,10 @@ public class GUICustomer extends JFrame{
         menuSettings.setVisible(true);
         menuExtra.setVisible(true);
         menuItemCancel.setVisible(false);
-        showAssignmentOnCalendar(email);
+
+        if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
+            showAssignmentOnCalendar(email);
+        }
     }
 
     private void removeAssignment(){
