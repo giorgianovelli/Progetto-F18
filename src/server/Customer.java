@@ -137,7 +137,7 @@ public class Customer extends User{
         }
     }
 
-    public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment, String reply) {
+    public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment) {
         SimpleDateFormat dateFormatSql = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateReview = new Date();
         String dateStringReview = dateFormatSql.format(dateReview);
@@ -156,7 +156,7 @@ public class Customer extends User{
         //salva la recensione nel database
         DBConnector dbConnector = new DBConnector();
         try {
-            dbConnector.updateDB("INSERT INTO REVIEW VALUES (" + codeAssignment + ", '" + dateStringReview + "', " + rating + ", '" + title + "', '" + comment + "', '" + reply + "')");
+            dbConnector.updateDB("INSERT INTO REVIEW VALUES (" + codeAssignment + ", '" + dateStringReview + "', " + rating + ", '" + title + "', '" + comment + "', null)");
             dbConnector.closeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

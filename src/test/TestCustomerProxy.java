@@ -63,6 +63,7 @@ public class TestCustomerProxy {
         }
         System.out.println("add dog: " + proxy.addDog("RICCARDOGIURA@GMAIL.COM","CANETEST", "AKITA", 1, 20));*/
 
+        System.out.println("add a review: " + proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "bla, bla, bla,"));
         System.out.println(proxy.getCustomerAddress().toString());
         System.out.println(proxy.getCustomerDateOfBirth());
         System.out.println(proxy.getCustomerPassword());

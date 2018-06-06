@@ -335,8 +335,8 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment, String reply) {
-        String serverMsg = getReply("23#" + email + "#" + codeAssignment + "#" + emailDogSitter + "#" + rating + "#" + title + "#" + comment + "#" + reply);
+    public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment) {
+        String serverMsg = getReply("23#" + email + "#" + codeAssignment + "#" + emailDogSitter + "#" + rating + "#" + title + "#" + comment);
         if (serverMsg.equals("true")){
             return true;
         } else {
