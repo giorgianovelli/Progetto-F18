@@ -191,17 +191,13 @@ public class GUICustomer extends JFrame{
         add(panelToday, BorderLayout.EAST);
 
         ActionListener cal = new ActionListener() {
+            ;
+
             @Override
             public void actionPerformed(ActionEvent cae) {
                 if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    String strDate;
-                    if (Integer.parseInt(pressedButton.getText()) < 10){
-                        strDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear;
-                    } else {
-                        strDate = pressedButton.getText() + "/" + labelDateMonthYear;
-                    }
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState,proxy.getCustomerListAssignment(),strDate); //TODO customer,inserire la data
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
                     guiDailyAssignments.setVisible(true);
                 }
 
@@ -255,13 +251,17 @@ public class GUICustomer extends JFrame{
 
                 if (ctrlAe.getActionCommand().equals("Show more")){
                     JButton pressedButton = (JButton) ctrlAe.getSource();
-                    String strDate;
+
+                   /* String todayDate;
                     if (Integer.parseInt(pressedButton.getText()) < 10){
-                        strDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear;
+                        todayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear;
                     } else {
-                        strDate = pressedButton.getText() + "/" + labelDateMonthYear;
-                    }
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, proxy.getCustomerListAssignment(),strDate); //TODO customer
+                        todayDate = pressedButton.getText() + "/" + labelDateMonthYear;
+                    } */
+
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
+                    //proxy.getCustomerListAssignment(),todayDate,null); //TODO customer
+
                     guiDailyAssignments.setVisible(true);
                 }
             }
