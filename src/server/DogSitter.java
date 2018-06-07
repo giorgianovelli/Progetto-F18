@@ -1,9 +1,12 @@
 package server;
 
+import database.DBConnector;
 import server.bank.PaymentMethod;
 import server.places.Address;
 import server.places.Area;
 
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,5 +83,214 @@ public class DogSitter extends User {
 
     public String getSurname(){
         return surname;
+    }
+
+    public boolean updateName(String name){
+        this.name = name;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET NAME = '" + name + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Name for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating name for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateSurname(String surname){
+        this.surname = surname;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET SURNAME = '" + surname + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Surname for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating surname for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePassword(String password){
+        this.password = password;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET PASSWORD = '" + password.toUpperCase() + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Password for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating password for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET PHONE_NUMB = '" + phoneNumber + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Phone number for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating phone number for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateDateOfBirth(Date dateOfBirth){
+        this.dateOfBirth = dateOfBirth;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dateFormat.format(dateOfBirth);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET BIRTHDATE = '" + strDate + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Date of birth for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating date of birth for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateAddress(String country, String city, String street, String number, String cap){
+        this.address = new Address(country, city, street, number, cap);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE ADDRESS SET COUNTRY = '" + country + "', CITY = '" + city + "', STREET = '" + street + "', CNUMBER = '" + number + "', CAP = '" + cap + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Address for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating address of birth for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv){
+        double amount = this.paymentMethod.getAmount();
+        String oldNum = this.paymentMethod.getNumber();
+        this.paymentMethod = new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strExpiration = dateFormat.format(expirationDate);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + number + "', '" + name + "', '" + surname + "', '" + strExpiration + "', " + cvv + ", " + amount + ")");
+            dbConnector.closeUpdate();
+
+            if (!(isUpdated)) {
+                System.out.println("Error in updating address of birth for " + this.email + "!");
+                return false;
+            }
+
+            isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET PAYMENT = '" + number + "' WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (!(isUpdated)) {
+                System.out.println("Error in updating address of birth for " + this.email + "!");
+                return false;
+            }
+
+            isUpdated = dbConnector.updateDB("DELETE FROM CREDIT_CARDS WHERE NUM = '" + oldNum + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Payment method for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating payment method of birth for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateCashFlag(boolean acceptCash){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET CASH_FLAG = " + acceptCash + " WHERE EMAIL = '" + this.email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Cash flag for " + this.email + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating cash flag for " + this.email + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateAssignmentState(int code, boolean state){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET CASH_FLAG = " + state + " WHERE CODE = " + code + ";");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("State for assignment with code " + code + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating state for assignment with code " + code + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
