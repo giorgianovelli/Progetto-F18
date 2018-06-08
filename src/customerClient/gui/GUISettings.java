@@ -55,8 +55,11 @@ public class GUISettings extends JFrame {
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
 
-    private JRadioButton cash = new JRadioButton("Cash");
-    private JRadioButton  creditCard = new JRadioButton("Credit Card");
+    /*private JRadioButton cash = new JRadioButton("Cash");
+    private JRadioButton  creditCard = new JRadioButton("Credit Card");*/
+
+    private JCheckBox cash = new JCheckBox("Cash");
+    private JCheckBox  creditCard = new JCheckBox("Credit Card");
 
 
     //TODO attributi per client-server
@@ -295,7 +298,6 @@ public class GUISettings extends JFrame {
         textName.setText(String.valueOf(updName));
         textName.setEditable(true);
         labelName.setLabelFor(textName);
-
     }
 
 

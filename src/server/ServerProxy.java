@@ -96,6 +96,8 @@ class Connect extends Thread {
         Date dateStart;
         Date dateEnd;
         String strDogList;
+        String inputUser;
+        String inputPassword;
         try {
             StringTokenizer tokenMsg = null;
             try {
@@ -106,8 +108,8 @@ class Connect extends Thread {
             int action = Integer.parseInt(tokenMsg.nextToken());
             switch (action){
                 case 0:
-                    String inputUser = tokenMsg.nextToken();
-                    String inputPassword = tokenMsg.nextToken();
+                    inputUser = tokenMsg.nextToken();
+                    inputPassword = tokenMsg.nextToken();
                     serverMsg = customerAccessDataVerifier(inputUser, inputPassword);
                     break;
                 case 1:
@@ -268,6 +270,11 @@ class Connect extends Thread {
                     int ID = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = removeDog(email, ID);
                     break;*/
+                case 100:
+                    inputUser = tokenMsg.nextToken();
+                    inputPassword = tokenMsg.nextToken();
+                    serverMsg = dogSitterAccessDataVerifier(inputUser, inputPassword);
+                    break;
                 default:
             }
         } finally {
@@ -610,5 +617,20 @@ class Connect extends Thread {
             return "false";
         }
     }*/
+
+    private String dogSitterAccessDataVerifier(String inputUser, String inputPasword){
+        Login loginDogSitter = new Login();
+        try {
+            if(loginDogSitter.dogSitterAccessDataVerifier(inputUser, inputPasword)){
+                return "true";
+            } else{
+                return "false";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "false";
+        }
+    }
 
 }
