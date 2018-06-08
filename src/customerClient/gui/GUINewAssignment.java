@@ -12,6 +12,7 @@ public class GUINewAssignment extends JFrame{
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
     private JPanel panelButtons = new JPanel();
+    private JPanel panelTest = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(panelOut);
 
     private JButton buttonCancel = new JButton("Cancel");
@@ -45,16 +46,15 @@ public class GUINewAssignment extends JFrame{
 
     private void initComponents() {
 
+
+        panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(5, 1, 30, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("Complete every field to search a dogsitter: "));
-        panelButtons.setLayout(new GridLayout(1,2,5,0));
-        panelButtons.setBorder(BorderFactory.createEmptyBorder(70, 10, 20, 10)); //?????
-        panelButtons.add(buttonCancel, BorderLayout.SOUTH);
-        panelButtons.add(buttonSearch, BorderLayout.SOUTH);
-
 
         panelOut.add(panelData, BorderLayout.NORTH);
-        panelOut.add(panelButtons, BorderLayout.CENTER);
+        panelOut.add(panelButtons, BorderLayout.SOUTH);
+
+        panelTest.add(buttonSearch);
 
         panelData.add(newAssignmentBox);
         panelData.add(address);
@@ -65,6 +65,10 @@ public class GUINewAssignment extends JFrame{
         //TODO perchè i pulsanti vanno a destra invece che in basso???
 
 
+        panelButtons.setLayout(new GridLayout(1,2,5,0));
+        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150)); //?????
+        panelButtons.add(buttonCancel);
+        panelButtons.add(buttonSearch);
 
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
