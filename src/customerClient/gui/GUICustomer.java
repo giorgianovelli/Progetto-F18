@@ -109,8 +109,8 @@ public class GUICustomer extends JFrame{
         menuReview.add(menuItemShowReviews);
         menuBar.add(menuReview);
         menuSettings.add(menuItemAccount);
-        menuSettings.add(menuItemDogs);
         menuSettings.add(menuItemChangePassword);
+        menuSettings.add(menuItemDogs);
         menuBar.add(menuSettings);
         menuExtra.add(menuItemInfo);
         menuExtra.add(menuItemAwards);
