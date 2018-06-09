@@ -49,7 +49,7 @@ public class GUINewAssignment extends JFrame{
 
         panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(5, 1, 30, 20));
-        panelData.setBorder(BorderFactory.createTitledBorder("Complete every field to search a dogsitter: "));
+        panelData.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButtons, BorderLayout.SOUTH);

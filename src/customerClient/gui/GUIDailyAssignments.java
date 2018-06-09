@@ -4,10 +4,13 @@ import customerClient.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
 import server.Customer;
+
+import javax.print.attribute.DocAttribute;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashMap;
 import java.lang.*;
 
@@ -18,18 +21,18 @@ public class GUIDailyAssignments extends JFrame {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private JPanel p = new JPanel();
     private JButton button[];
-   private JLabel[] labelDescription;
+    private JLabel[] labelDescription;
     private JPanel[] infoPanel;
     private JLabel lb = new JLabel();
     private JLabel createLabel = new JLabel();
     private JScrollPane scroll = new JScrollPane(p);
     private HashMap<Integer, Assignment> listAssigment;
-    private String todayDate;
     private CustomerProxy proxy;
-    private Customer customer;
+    private String email;
+    private Date todayDate = new Date();
 
 
-    public GUIDailyAssignments(CalendarState cs, Customer customer) {  //HashMap<Integer, Assignment> listAssigment, String todayDate) {
+    public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {  //HashMap<Integer, Assignment> listAssigment, String todayDate) {
         //TODO cambiare il costruttore: l'oggetto customer non sarà più accessibile
         setTitle("Daily assignments");
         setSize(WIDTH, HEIGHT);
@@ -39,9 +42,10 @@ public class GUIDailyAssignments extends JFrame {
         setLayout(new BorderLayout());
         setVisible(true);
         initComponents(cs);
-        this.customer = customer;
-        //this.listAssigment = listAssigment;
-        //this.todayDate = todayDate;
+        this.email = email;
+        proxy = new CustomerProxy(email);
+        this.listAssigment = proxy.getCustomerListAssignment();
+        this.todayDate = todayDate;
 
     }
 

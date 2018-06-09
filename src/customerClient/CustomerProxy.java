@@ -58,7 +58,6 @@ public class CustomerProxy implements InterfaceCustomer {
 
     public HashMap<Integer, Assignment> getCustomerListAssignment() {
         String serverMsg = getReply("1#" + email);
-        System.out.println("test time: " + serverMsg);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()) {
@@ -98,14 +97,11 @@ public class CustomerProxy implements InterfaceCustomer {
 
     private HashSet<Dog> decodeDogList(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
-        //System.out.println("TM: " + tokenMsg.nextToken());
         HashSet<Dog> dogList = new HashSet<Dog>();
         int ID;
         while (tokenMsg.hasMoreTokens()) {
             StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
-            //System.out.println("TD: " + tokenDog.nextToken());
             String strID = tokenDog.nextToken();
-            //System.out.println(strID);
             ID = Integer.parseInt(strID);
             String name = tokenDog.nextToken();
             String breed = tokenDog.nextToken();

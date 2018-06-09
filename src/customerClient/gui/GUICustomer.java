@@ -1,28 +1,19 @@
 package customerClient.gui;
 
 import customerClient.CustomerProxy;
-import database.DBConnector;
 import server.Assignment;
-import server.Customer;
-import server.DogSitter;
 import enumeration.CalendarState;
-import server.Singleton;
 import server.dateTime.WeekDays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
-
-//import static staticClasses.ObjectCreator.createCustomerFromDB;
-//import static staticClasses.ObjectCreator.createDogSitterFromDB;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class GUICustomer extends JFrame{
@@ -153,17 +144,6 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        /*buttonTodayAssignment = new JButton[nTodayAssignments];
-        for (i = 0; i < nTodayAssignments; i++){
-            buttonTodayAssignment[i] = new JButton("Test assignment");
-            buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-            buttonTodayAssignment[i].setOpaque(true);
-            buttonTodayAssignment[i].setBorderPainted(false);
-            buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-            panelToday.add(buttonTodayAssignment[i]);
-        }*/
-
-
         if ((nTodayAssignments > 0) && (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT)){
             labelEmptyTodayAssignments = new JLabel[MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1];
             for (i = 0; i < MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1; i++){
@@ -194,7 +174,24 @@ public class GUICustomer extends JFrame{
             public void actionPerformed(ActionEvent cae) {
                 if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
+
+                    String strTodayDate;
+                    if (Integer.parseInt(pressedButton.getText()) < 10){
+                        strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
+                    } else {
+                        strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
+                    }
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date todayDate = new Date();
+                    try {
+                        todayDate = dateFormat.parse(strTodayDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
                     guiDailyAssignments.setVisible(true);
                 }
 
@@ -249,15 +246,22 @@ public class GUICustomer extends JFrame{
                 if (ctrlAe.getActionCommand().equals("Show more")){
                     JButton pressedButton = (JButton) ctrlAe.getSource();
 
-                   /* String todayDate;
+                   String strTodayDate;
                     if (Integer.parseInt(pressedButton.getText()) < 10){
-                        todayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear;
+                        strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
                     } else {
-                        todayDate = pressedButton.getText() + "/" + labelDateMonthYear;
-                    } */
+                        strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
+                    }
 
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, null); //TODO customer
-                    //proxy.getCustomerListAssignment(),todayDate,null); //TODO customer
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date todayDate = null;
+                    try {
+                        todayDate = dateFormat.parse(strTodayDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
 
                     guiDailyAssignments.setVisible(true);
                 }
