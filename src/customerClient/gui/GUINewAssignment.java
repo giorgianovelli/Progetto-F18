@@ -62,11 +62,10 @@ public class GUINewAssignment extends JFrame{
         panelData.add(code);
         panelData.add(country);
 
-        //TODO perchè i pulsanti vanno a destra invece che in basso???
 
 
         panelButtons.setLayout(new GridLayout(1,2,5,0));
-        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150)); //?????
+        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150));
         panelButtons.add(buttonCancel);
         panelButtons.add(buttonSearch);
 
