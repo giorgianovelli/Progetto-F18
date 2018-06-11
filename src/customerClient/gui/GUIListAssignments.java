@@ -193,7 +193,7 @@ public class GUIListAssignments extends JFrame{
 
 
 
-                labelDescription[j]= new JLabel(nameDogSitter + " " + surnameDogSitter);
+                labelDescription[j]= new JLabel("Assignment with " + nameDogSitter + " " + surnameDogSitter);
                 buttonAction[j]= new JButton("Info");
                 buttonAction[j].addActionListener(showInfo);
 
@@ -229,18 +229,18 @@ public class GUIListAssignments extends JFrame{
     private void createPanelAssignment(Assignment a, int i){
         infoPanel[i] = new JPanel();
 
-        infoPanel[i].setLayout(new GridLayout(1,3,10,10));
+        infoPanel[i].setLayout(new BorderLayout());
 
         //infoPanel[i].setPreferredSize(new Dimension(480,40));
         labelState[i] = createLabelState(a,i);
-        labelState[i].setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 20));
-        infoPanel[i].add(labelState[i]);
+        labelState[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        infoPanel[i].add(labelState[i], BorderLayout.WEST);
 
-        labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
-        infoPanel[i].add(labelDescription[i]);
+        //labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
 
-        buttonAction[i].setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 30));
-        infoPanel[i].add(buttonAction[i]);
+        //buttonAction[i].setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 10));
+        infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
 
         /*infoPanel[i].setLayout(new FlowLayout());
 
