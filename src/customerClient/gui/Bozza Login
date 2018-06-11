@@ -1,0 +1,123 @@
+import java.awt.*;
+import javax.swing.*;
+
+
+    class ImageTest {
+
+        public static void main(String[] args) {
+
+            // permette di avere la finestra in Modalità Full Screen
+
+            /* GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice gd = ge.getDefaultScreenDevice();
+            if (gd.isFullScreenSupported()) {
+                JFrame frame = new JFrame();
+                frame.setUndecorated(true);
+                frame.setResizable(false);
+                gd.setFullScreenWindow(frame);
+            */
+
+                ImageFrame frame = new ImageFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permette di chiudere il frame
+                frame.show(); //visualizza il frame
+            }
+        }
+
+        class ImageFrame extends JFrame {
+
+            private JPanel out = new JPanel();
+            private JPanel panelLoginData = new JPanel();
+            private JPanel panelBottom = new JPanel();
+            private JLabel labelUser = new JLabel("Email", SwingConstants.CENTER);
+            private JLabel labelPwd = new JLabel("Password", SwingConstants.CENTER);
+            private JTextField textUser = new JTextField();
+            private JPasswordField textPwd = new JPasswordField();
+            private JButton buttonLogin = new JButton("Login");
+            private JButton buttonNewAccount = new JButton("Create a new account");
+
+
+            public ImageFrame() {
+
+
+                panelBottom.setLayout(new GridLayout(2, 1));
+                panelBottom.add(buttonLogin);
+                panelBottom.add(buttonNewAccount);
+
+                textUser.setText("RICCARDOGIURA@GMAIL.COM");
+                textPwd.setText("PROVAPROVA123");
+                panelLoginData.setLayout(new GridLayout(2, 2));
+                panelLoginData.add(labelUser);
+                panelLoginData.add(textUser);
+                panelLoginData.add(labelPwd);
+                panelLoginData.add(textPwd);
+
+
+                //acquisisce le dimensioni dello schermo
+                // La classe Toolkit iteragisce con il sistema operativo
+                Toolkit kit = Toolkit.getDefaultToolkit();
+                Dimension screenSize = kit.getScreenSize();    //restituisce la dimensione dello schermo come oggetto Dimension
+                int screenHeight = screenSize.height;
+                int screenWidth = screenSize.width;
+
+                //centra il frame nello schermo
+                setSize(screenWidth / 2, screenHeight / 2);    //dimezza la larghezza ed altezza delle dimensioni del video precdentemente acquisite
+                setLocation(screenWidth / 4, screenHeight / 4);    //consente di riposizionare il frame
+
+                //imposta l'icona ed il titolo del frame
+                Image img = kit.getImage("bozza.jpg");
+                setIconImage(img);    //prende un oggetto img e lo usa come icona del frame
+                setTitle("Login");    //imposta il titolo del frame
+
+                //aggiunge un pannello al frame
+                ImagePanel panel = new ImagePanel();
+                panel.setBackground(SystemColor.window);    //imposta il colore di sfondo del frame sul colore predefinto nel sistema operativo
+                Container contentPane = getContentPane();    //restituisce l'oggetto pannello del contenuto del JFrame
+                contentPane.add(panel);    //aggiunge il pannello al frame
+
+                panel.add(panelLoginData, BorderLayout.CENTER);
+                panel.add(panelBottom);
+
+
+            }
+
+        }
+
+
+        class ImagePanel extends JPanel {
+               private Image image;
+
+            public ImagePanel() {
+
+            //acquisisce l'immagine
+                image = Toolkit.getDefaultToolkit().getImage("C:/Users/Camelia/IdeaProjects/altro/out/production/altro/bozza.jpg");
+                MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(image, 0); //aggiunge image all'elenco d'immagini da caricare
+                try {
+                    tracker.waitForID(0);
+                } //attende che siano caricate tutte le immagini con l'id specificato
+                catch (InterruptedException exception) {
+                }
+            }
+
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                //acquisisce le dimensioni dello schermo
+                // La classe Toolkit iteragisce con il sistema operativo
+                Toolkit kit = Toolkit.getDefaultToolkit();
+                Dimension screenSize = kit.getScreenSize(); //restituisce la dimensione dello schermo come oggetto Dimension
+                int screenHeight = screenSize.height / 2; //Ottieni la metà della lunghezza dello schermo
+                int screenWidth = screenSize.width / 2; //Ottieni la metà della larghezza dello schermo
+                //disegna l'immagine
+                int centroAscissaImage = screenWidth - image.getWidth(null) / 2; //Metà larghezza schermo (400) meno metà larghezza immagine, ottenendo l'ascissa del centro dell'immagine
+                int centroOrdinataImage = screenHeight - image.getHeight(null) / 2;//Metà lunghezza schermo (300) meno metà lunghezza immagine, ottenendo l'ordinata del centro dell'immagine
+                g.drawImage(image, centroAscissaImage, centroOrdinataImage, null);
+            }
+
+
+        }
+
+
+
+
+
