@@ -17,8 +17,6 @@ public class GUISettings extends JFrame {
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private User user;
-
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
     private JPanel panelButton = new JPanel();
@@ -32,29 +30,15 @@ public class GUISettings extends JFrame {
     private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
     private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
     private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
-    //Label solo per dogSitter
-    private JLabel labelArea = new JLabel("Area:", SwingConstants.LEFT);
-    private JLabel labelDogBreed = new JLabel("Dog Breed:", SwingConstants.LEFT);
-    private JLabel labelDogsNumber = new JLabel("Number of dogs:", SwingConstants.LEFT);
-    private JLabel labelAvailability = new JLabel("Availability:", SwingConstants.LEFT);
-    private JLabel labelBiography = new JLabel("Biography:", SwingConstants.LEFT);
 
     private JTextField textName = new JTextField(SwingConstants.RIGHT);
     private JTextField textSurname = new JTextField();
-    // private JFormattedTextField textDate = new JFormattedTextField();
-    // private JTextField textAddress = new JTextField();
     private JTextField textStreet = new JTextField();
     private JTextField textNumber = new JTextField();
     private JTextField textCap = new JTextField();
     private JTextField textCity = new JTextField();
     private JTextField textCountry = new JTextField();
     private JTextField textPhoneNumber = new JTextField();
-    //TextField solo per dogSitter
-    private JTextField textArea = new JTextField();
-    private JTextField textDogBreed = new JTextField();
-    private JTextField textDogsNumber = new JTextField();
-    private JTextField textAvailability = new JTextField();
-    private JTextField textBiography = new JTextField("immetti la tua biografia", 5);
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
@@ -74,7 +58,7 @@ public class GUISettings extends JFrame {
     //TODO attributi per client-server
     private CustomerProxy proxy;
     private String email;
-
+    private User user;
 
     public GUISettings(String email) {
         setTitle("Account settings");
@@ -107,8 +91,9 @@ public class GUISettings extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
+        //todo sostituire 2018 con un metodo appropriato?
 
-        for(int years = 1980; years<= 2018; years++) {
+        for(int years = 1930; years<= 2018; years++) {
             years_tmp.add(years+"");
         }
 
@@ -124,8 +109,6 @@ public class GUISettings extends JFrame {
 
         panelData.add(labelAddress);
         panelAddress.setLayout(new BoxLayout(panelAddress,BoxLayout.X_AXIS));
-        // panelAddress.setLayout(new BorderLayout());
-        // panelAddress.setLayout(new GridLayout(2,2));
         panelAddress.add(textStreet);
         panelAddress.add(textNumber);
         panelAddress.add(textCap);
@@ -147,7 +130,7 @@ public class GUISettings extends JFrame {
         panelData.add(panelRadioButton);
 
 
-        //TODO METODO DELLA MODIFICA dei dati da SITEMARE
+        //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
         ActionListener registration = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
@@ -191,8 +174,7 @@ public class GUISettings extends JFrame {
                 }
                 else {
                     creditCard.isSelected();
-                    //todo messaggio di prova da eliminare
-                    //JOptionPane.showMessageDialog(null,"You select : "+creditCard.getText());
+
                 }
 
             }
@@ -202,43 +184,9 @@ public class GUISettings extends JFrame {
 
 
 
-        //TODO values DogSitter creare un metodo che cancelli i campi del DogSitter nel caso in cui si effettui il login come Customer
-        textArea.setText("");
-        textArea.setEditable(true);
-        labelArea.setLabelFor(textArea);
-
-        textDogBreed.setText("");
-        textDogBreed.setEditable(true);
-        labelDogBreed.setLabelFor(textDogBreed);
-
-        textDogsNumber.setText("");
-        textDogsNumber.setEditable(true);
-        labelDogsNumber.setLabelFor(textDogsNumber);
-
-        textAvailability.setText("");
-        textAvailability.setEditable(true);
-        labelAvailability.setLabelFor(textAvailability);
-
-        textBiography.setText("Immettere la propria biografia");
-        textBiography.setEditable(true);
-        labelBiography.setLabelFor(textBiography);
-
-        //todo panelDate solo per dogSitter
-       /* panelData.add(labelArea);
-        panelData.add(textArea);
-        panelData.add(labelDogBreed);
-        panelData.add(textDogBreed);
-        panelData.add(labelDogsNumber);
-        panelData.add(textDogsNumber);
-        panelData.add(labelAvailability);
-        panelData.add(textAvailability);
-        panelData.add(labelBiography);
-        panelData.add(textBiography);*/
-
-
     }
 
-    //TODO Metodo da sistemare
+    //TODO Metodo da sistemare: data di nascita non viene presa dal database da correggere??
     private void setValues() {
 
         String strName = proxy.getCustomerName();
@@ -246,24 +194,13 @@ public class GUISettings extends JFrame {
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-
         String strSurname = proxy.getCustomerSurname();
         textSurname.setText(strSurname);
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        //TODO da eliminare
-        // SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        //  String strDate =  dateFormat.format(proxy.getCustomerDateOfBirth());
-
-       /* labelDate.setLabelFor(dayList);
-        labelDate.setLabelFor(monthList);
-        labelDate.setLabelFor(yearList);*/
-
-
         Address customerAddress = proxy.getCustomerAddress();
-        textStreet.setText(customerAddress.getStreet()); //ERRORE :Siccome Address è di tipo Date prende tutta la stringa
+        textStreet.setText(customerAddress.getStreet());
         textStreet.setEditable(true);
         labelAddress.setLabelFor(textStreet);
 
@@ -283,52 +220,14 @@ public class GUISettings extends JFrame {
         textCountry.setEditable(true);
         labelAddress.setLabelFor(textCountry);
 
-
-
         String strPhoneNumber = proxy.getCustomerPhoneNumber();
         textPhoneNumber.setText(strPhoneNumber);
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
 
-
-
-        //TODO Possibile metodo per mostrare le label in base a chi ha effettuato l'accesso (se customer o dogsitter)
-      /*  ActionListener al = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (ae.getActionCommand().equals("Login as customer")){
-
-                    panelData.add(labelArea).setVisible(false);
-                    panelData.add(textArea).setVisible(false);
-
-                    /*textArea.removeAll();
-                    labelArea.setVisible(false);
-                    setVisible(true);
-                }
-                if (ae.getActionCommand().equals("Login as dogsitter")) {
-                    panelData.add(labelArea);
-                    panelData.add(textArea);
-                    panelData.add(labelDogBreed);
-                    panelData.add(textDogBreed);
-                    panelData.add(labelDogsNumber);
-                    panelData.add(textDogsNumber);
-                    panelData.add(labelAvailability);
-                    panelData.add(textAvailability);
-                    panelData.add(labelBiography);
-                    panelData.add(textBiography);
-
-
-
-                }
-
-            }
-        };
-
-    }*/
-
-
     }
+
 
     //TODO metodo che conterrà i nuovi valori NON FUNZIONA
     private void setNewValues() {

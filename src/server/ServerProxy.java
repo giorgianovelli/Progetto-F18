@@ -303,7 +303,6 @@ class Connect extends Thread {
         String msg = "";
         for (Integer key : customerListAssignment.keySet()) {
             Assignment a = customerListAssignment.get(key);
-            System.out.println("test time server: " + a.getDateStart());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
