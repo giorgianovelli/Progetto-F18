@@ -20,10 +20,10 @@ public class GUINewAssignment extends JFrame{
 
 
     NewAssignmentBox newAssignmentBox = new NewAssignmentBox();
-    NewAssignmentText address = new NewAssignmentText("Address:");
-    NewAssignmentText city = new NewAssignmentText("City:");
-    NewAssignmentText code = new NewAssignmentText("Code:");
-    NewAssignmentText country = new NewAssignmentText("Country:");
+    NewAssignmentText address = new NewAssignmentText("Address: ");
+    NewAssignmentText city = new NewAssignmentText("City: ");
+    NewAssignmentText code = new NewAssignmentText("Code: ");
+    NewAssignmentText country = new NewAssignmentText("Country: ");
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -122,6 +122,15 @@ class NewAssignmentBox extends JPanel{
         thourList = new JComboBox<>(hour);
         tminuteList = new JComboBox<>(minute);
 
+        fhourList.setLightWeightPopupEnabled(false);
+        fminuteList.setLightWeightPopupEnabled(false);
+        tdayList.setLightWeightPopupEnabled(false);
+        tmonthList.setLightWeightPopupEnabled(false);
+        tyearList.setLightWeightPopupEnabled(false);
+        thourList.setLightWeightPopupEnabled(false);
+        tminuteList.setLightWeightPopupEnabled(false);
+
+
         setLayout(new GridLayout(3, 6, 10, 10));
 
         //Label
@@ -155,15 +164,23 @@ class NewAssignmentBox extends JPanel{
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+
 class NewAssignmentText extends JPanel{
     JLabel label;
-    TextField field = new TextField("",30);
+    TextField field = new TextField("",50);
     JLabel blanckLabel = new JLabel("");
 
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+    // Costruttore
+
     public NewAssignmentText(String text){
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
         label = new JLabel(text);
-        add(label, BorderLayout.LINE_START);
-        add(field, BorderLayout.CENTER);
+        add(label, gridBagConstraints);
+        add(field, gridBagConstraints);
     }
 }
 
