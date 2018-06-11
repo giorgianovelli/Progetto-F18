@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -106,8 +107,12 @@ public class GUIListAssignments extends JFrame{
                 a = listAssignment.get(i);
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                date.setLenient(false);
+                Date startAssignment = a.getDateStart();
+                String dateStringStartAssigment = date.format(startAssignment);
 
-                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                labelString = "<html>" + dateStringStartAssigment + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
 
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Write a review");
@@ -224,12 +229,18 @@ public class GUIListAssignments extends JFrame{
     private void createPanelAssignment(Assignment a, int i){
         infoPanel[i] = new JPanel();
 
-        infoPanel[i].setLayout(new BorderLayout());
+        infoPanel[i].setLayout(new GridLayout(1,3,10,10));
 
-        infoPanel[i].setPreferredSize(new Dimension(480,40));
-        infoPanel[i].add(createLabelState(a,i), BorderLayout.WEST);
-        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
-        infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
+        //infoPanel[i].setPreferredSize(new Dimension(480,40));
+        labelState[i] = createLabelState(a,i);
+        labelState[i].setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 20));
+        infoPanel[i].add(labelState[i]);
+
+        labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
+        infoPanel[i].add(labelDescription[i]);
+
+        buttonAction[i].setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 30));
+        infoPanel[i].add(buttonAction[i]);
 
         /*infoPanel[i].setLayout(new FlowLayout());
 
@@ -248,6 +259,7 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].setLayout(new BorderLayout());
 
         infoPanel[i].setPreferredSize(new Dimension(480,40));
+        labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
         infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
         infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
 
@@ -268,10 +280,10 @@ public class GUIListAssignments extends JFrame{
         green = new ImageIcon(newImage);  // transform it back
 
 
-        ImageIcon red = new ImageIcon("images/red-180x180.png");
-        imageTransform = red.getImage(); // transform it
+        ImageIcon gray = new ImageIcon("images/gray_square.png");
+        imageTransform = gray.getImage(); // transform it
         newImage = imageTransform.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        red = new ImageIcon(newImage);  // transform it back
+        gray = new ImageIcon(newImage);  // transform it back
 
         ImageIcon yellow = new ImageIcon("images/yellow.jpg");
         imageTransform = yellow.getImage(); // transform it
@@ -280,7 +292,7 @@ public class GUIListAssignments extends JFrame{
 
 
         if(a.getDateEnd().before(todayDate)){
-            labelState[i]= new JLabel(red);
+            labelState[i]= new JLabel(gray);
 
         }
         else if (a.getState()){
