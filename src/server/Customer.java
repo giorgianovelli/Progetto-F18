@@ -264,6 +264,25 @@ public class Customer extends User{
         return isRemoved;
     }*/
 
+    public boolean disableDog(int ID){
+        Singleton singleton = new Singleton();
+        Dog dog = singleton.createDogFromDB(ID);
+        boolean isDisabled = false;
+
+        for (Dog d : dogList) {
+            if (d.getID() == dog.getID()){
+                isDisabled = true;
+                DBConnector dbConnector = new DBConnector();
+                try {
+                    dbConnector.updateDB("UPDATE DOGS SET IS_ENABLED = FALSE WHERE ID = " + ID + ";");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isDisabled;
+    }
+
     public HashMap<Integer, Assignment> getAssignmentList() {
         return assignmentList;
     }

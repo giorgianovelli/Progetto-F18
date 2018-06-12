@@ -378,14 +378,13 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    //TODO da eliminare?
-    /*public boolean removeDog(int ID) {
+    public boolean disableDog(int ID){
         String serverMsg = getReply("27#" + email + "#" + ID);
         if (serverMsg.equals("true")){
             return true;
         } else {
             return false;
         }
-    }*/
+    }
 
 }
