@@ -72,11 +72,14 @@ public class CustomerProxy implements InterfaceCustomer {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            boolean state;
-            if (tokenMsg.nextToken().equals("true")) {
+            Boolean state;
+            String strState = tokenMsg.nextToken();
+            if (strState.equals("true")) {
                 state = true;
-            } else {
+            } else if (strState.equals("false")) {
                 state = false;
+            } else {
+                state = null;
             }
             Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
             Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);

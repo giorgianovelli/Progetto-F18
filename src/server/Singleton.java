@@ -166,12 +166,20 @@ public class Singleton {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE DOGSITTER = '" + dogSitter + "'");
             while (rs.next()){
                 int code = rs.getInt("CODE");
-                boolean state = rs.getBoolean("CONFIRMATION");
+                Boolean state;
+                String strState = rs.getString("CONFIRMATION");
+                if (strState.equals("TRUE")){
+                    state = true;
+                } else if (strState.equals("FALSE")){
+                    state = false;
+                } else {
+                    state = null;
+                }
                 Date dateStart = rs.getTimestamp("DATE_START");
                 Date dateEnd = rs.getTimestamp("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
                 HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
                 listAssignment.put(code, assignment);
             }
             dbConnector.closeConnection();
@@ -189,12 +197,20 @@ public class Singleton {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + customer + "'");
             while (rs.next()){
                 int code = rs.getInt("CODE");
-                boolean state = rs.getBoolean("CONFIRMATION");
+                Boolean state;
+                String strState = rs.getString("CONFIRMATION");
+                if (strState.equals("TRUE")){
+                   state = true;
+                } else if (strState.equals("FALSE")){
+                    state = false;
+                } else {
+                    state = null;
+                }
                 Date dateStart = rs.getTimestamp("DATE_START");
                 Date dateEnd = rs.getTimestamp("DATE_END");
                 Address meetingPoint = getMeetingPointFromDB(code);
                 HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, meetingPoint);
+                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
                 listAssignment.put(code, assignment);
             }
             dbConnector.closeConnection();

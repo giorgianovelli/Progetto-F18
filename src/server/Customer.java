@@ -78,7 +78,7 @@ public class Customer extends User{
             //salva la prenotazione nel database
 
             try {
-                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', NULL, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
                 dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
                 for (Dog d : dogList) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
