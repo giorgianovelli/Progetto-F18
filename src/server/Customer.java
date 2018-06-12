@@ -22,7 +22,7 @@ import static server.tools.DoubleTools.round2Decimal;
 import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 
 
-public class Customer extends User{
+public class Customer extends User implements InterfaceCustomer{
     private HashSet<Dog> dogList;
     private HashSet<DogSitter> dogSitterSearchList;
 
@@ -99,7 +99,7 @@ public class Customer extends User{
         }
     }
 
-    public boolean removeAssignment(Integer code) {
+    public boolean removeAssignment(int code) {
         Assignment a = null;
         a = assignmentList.get(code);
         if (a != null) {

@@ -176,12 +176,12 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public Address getCustomerAddress(){
+    public Address getAddress(){
         String serverMsg = getReply("10#" + email);
         return decodeAddress(serverMsg);
     }
 
-    public PaymentMethod getCustomerPaymentMethod(){
+    public PaymentMethod getPaymentMethod(){
         String serverMsg = getReply("11#" + email);
         return decodePaymentMethod(serverMsg);
     }
