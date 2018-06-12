@@ -11,9 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GUISettings extends JFrame {
-    final int WIDTH = 512;
+    final int WIDTH = 600;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -31,7 +32,7 @@ public class GUISettings extends JFrame {
     private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
     private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
 
-    private JTextField textName = new JTextField(SwingConstants.RIGHT);
+    private JTextField textName = new JTextField(); //ho cancellato solo contenuto parentesi
     private JTextField textSurname = new JTextField();
     private JTextField textStreet = new JTextField();
     private JTextField textNumber = new JTextField();
@@ -91,9 +92,9 @@ public class GUISettings extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
-        //todo sostituire 2018 con un metodo appropriato?
 
-        for(int years = 1930; years<= 2018; years++) {
+
+        for(int years = 1930; years<= Calendar.getCurrentYear() ; years++) {
             years_tmp.add(years+"");
         }
 
@@ -199,6 +200,10 @@ public class GUISettings extends JFrame {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
+       // SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+       // Date strDate = proxy.getCustomerDateOfBirth();
+
         Address customerAddress = proxy.getCustomerAddress();
         textStreet.setText(customerAddress.getStreet());
         textStreet.setEditable(true);
@@ -231,12 +236,9 @@ public class GUISettings extends JFrame {
 
     //TODO metodo che conterrà i nuovi valori NON FUNZIONA
     private void setNewValues() {
-
-      /*  boolean updName = proxy.updateCustomerName(getName());
-        textName.setText(String.valueOf(updName));
-        System.out.println(updName);
+        proxy.updateCustomerName(textName.getText());
         textName.setEditable(true);
-        labelName.setLabelFor(textName);*/
+        labelName.setLabelFor(textName);
 
 
     }
