@@ -358,7 +358,7 @@ class Connect extends Thread {
         HashSet<Dog> dogList = singleton.getDogListFromDB(code);
         for (Dog d : dogList) {
             msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
-                        + d.getWeight() + "*";
+                        + d.getWeight() + "&" + d.isEnabled() + "*";
         }
         return msg;
     }

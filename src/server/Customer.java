@@ -230,9 +230,9 @@ public class Customer extends User{
             rs.last();
             ID = rs.getRow() + 1;
             dbConnector.closeConnection();
-            Dog dog = new Dog(name, breed, size, age, weight, ID);
+            Dog dog = new Dog(name, breed, size, age, weight, ID, true);
             dogList.add(dog);
-            dbConnector.updateDB("INSERT INTO DOGS VALUES (" + ID + ", '" + name + "', '" + breed + "', " + weight + ", " + age + ", '" + customerEmail + "')");
+            dbConnector.updateDB("INSERT INTO DOGS VALUES (" + ID + ", '" + name + "', '" + breed + "', " + weight + ", " + age + ", '" + customerEmail + "', true)");
             dbConnector.closeUpdate();
             return true;
         } catch (SQLException e) {

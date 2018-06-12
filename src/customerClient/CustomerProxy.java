@@ -108,7 +108,13 @@ public class CustomerProxy implements InterfaceCustomer {
             DogSize size = DogSize.valueOf(tokenDog.nextToken());
             int age = Integer.parseInt(tokenDog.nextToken());
             double weight = Double.parseDouble(tokenDog.nextToken());
-            Dog d = new Dog(name, breed, size, age, weight, ID);
+            boolean isEnabled;
+            if (tokenDog.nextToken().equals("true")){
+                isEnabled = true;
+            } else {
+                isEnabled = false;
+            }
+            Dog d = new Dog(name, breed, size, age, weight, ID, isEnabled);
             dogList.add(d);
         }
         return dogList;
