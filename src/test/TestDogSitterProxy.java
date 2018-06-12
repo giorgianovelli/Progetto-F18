@@ -1,6 +1,5 @@
 package test;
 
-import customerClient.CustomerProxy;
 import dogSitterClient.DogSitterProxy;
 
 public class TestDogSitterProxy {

@@ -5,13 +5,10 @@ import database.DBConnector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.zip.CheckedOutputStream;
 
 import interfaces.InterfaceCustomer;
 import server.bank.Bank;
@@ -55,9 +52,6 @@ public class Customer extends User{
         }
 
         Bank bank = new Bank();
-
-        //implementare funzione per il calcolo del prezzo della prestazione
-        //double amount = 10;
         double price = estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
         if (bank.isTransactionPossible(email, price)) {
@@ -71,21 +65,17 @@ public class Customer extends User{
 
             String dateStringStartAssigment = date.format(dateStartAssignment);
             String dateStringEndAssigment = date.format(dateEndAssignment);
-            try {
+            /*try {
                 startAssignment = date.parse(dateStringStartAssigment);
                 endAssignment = date.parse(dateStringEndAssigment);
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
 
             //salva la prenotazione nel database
-
-            //TODO inutili?
-            //Timestamp sqlStart = new Timestamp(startAssignment.getTime());
-            //Timestamp sqlEnd = new Timestamp(endAssignment.getTime());
 
             try {
                 dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', TRUE, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
@@ -93,7 +83,6 @@ public class Customer extends User{
                 for (Dog d : dogList) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
                 }
-                //bank.makeBankTransaction(email, emailDogSitter, code, amount);
                 dbConnector.closeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -120,7 +109,6 @@ public class Customer extends User{
             DBConnector dbConnector = new DBConnector();
             Bank bank = new Bank();
             try {
-                //dbConnector.updateDB("DELETE FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + a.getCode());
                 bank.refundCustomer(a.getCode());
                 dbConnector.updateDB("DELETE FROM MEETING_POINT WHERE CODE = " + a.getCode());
                 dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE CODE = " + a.getCode());
@@ -241,29 +229,6 @@ public class Customer extends User{
         }
     }
 
-    //TODO da eliminare?
-    /*public boolean removeDog(int ID) {
-        Singleton singleton = new Singleton();
-        Dog dog = singleton.createDogFromDB(ID);
-        boolean isRemoved = false;
-
-        for (Dog d : dogList) {
-            if (d.getID() == dog.getID()){
-                dogList.remove(dog);
-                isRemoved = true;
-                DBConnector dbConnector = new DBConnector();
-                try {
-                    dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE DOG_ID = " + ID);
-                    dbConnector.updateDB("DELETE FROM DOG_ASSIGNMENT WHERE DOG_ID = " + ID);
-                    dbConnector.updateDB("DELETE FROM DOGS WHERE ID = " + ID);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return isRemoved;
-    }*/
-
     public boolean disableDog(int ID){
         Singleton singleton = new Singleton();
         Dog dog = singleton.createDogFromDB(ID);
@@ -317,8 +282,7 @@ public class Customer extends User{
     }
 
     public HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash){
-        //funzione da completare
-        //al termine, rimuovere le System.out utili per il debug
+        //TODO Al termine, rimuovere le System.out utili per il debug
 
         loadDogSitterList();
 
