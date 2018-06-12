@@ -795,8 +795,6 @@ public class GUICustomer extends JFrame{
     }
 
     private int getNDailyAssignments(){
-        //TODO questo metodo andrà modificato in quanto l'oggetto customer
-        //TODO non sarà più direttamente accessibile con l'architettura client-server
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;
