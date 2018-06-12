@@ -197,8 +197,8 @@ public class GUICustomer extends JFrame{
 
                 if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUINewAssignment guiNewAssignment = new GUINewAssignment();
-                    guiNewAssignment.setVisible(true);
+                    //GUINewAssignment guiNewAssignment = new GUINewAssignment();
+                    //guiNewAssignment.setVisible(true);
                 }
 
             }
@@ -328,11 +328,14 @@ public class GUICustomer extends JFrame{
                     guiChangePassword.setVisible(true);
                 }
 
-
-
                 if (menuAe.getActionCommand().equals("Cancel")){
                     cancel();
                 }
+
+                /*if (menuAe.getActionCommand().equals("Info")){
+                    GUIInfo info = new GUIInfo();
+                    info.setVisible(true);
+                }*/
             }
         };
 
