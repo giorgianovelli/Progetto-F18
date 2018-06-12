@@ -305,6 +305,7 @@ class Connect extends Thread {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
+            System.out.println("test null bool: " + key + "\t" + a.getState());
             msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
         }
         return msg;
