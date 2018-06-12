@@ -45,4 +45,11 @@ public class Calendar {
         }
         return nd;
     }
+
+    public static int getCurrentYear(){
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+         Date now = new Date();
+         String strDate = dateFormat.format(now);
+         return Integer.parseInt(strDate);
+    }
 }

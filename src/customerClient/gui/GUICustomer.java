@@ -197,8 +197,8 @@ public class GUICustomer extends JFrame{
 
                 if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
                     JButton pressedButton = (JButton) cae.getSource();
-                    GUINewAssignment guiNewAssignment = new GUINewAssignment();
-                    guiNewAssignment.setVisible(true);
+                    //GUINewAssignment guiNewAssignment = new GUINewAssignment();
+                    //guiNewAssignment.setVisible(true);
                 }
 
             }
@@ -328,11 +328,14 @@ public class GUICustomer extends JFrame{
                     guiChangePassword.setVisible(true);
                 }
 
-
-
                 if (menuAe.getActionCommand().equals("Cancel")){
                     cancel();
                 }
+
+                /*if (menuAe.getActionCommand().equals("Info")){
+                    GUIInfo info = new GUIInfo();
+                    info.setVisible(true);
+                }*/
             }
         };
 
@@ -660,7 +663,9 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        showAssignmentOnCalendar(email);
+        if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
+            showAssignmentOnCalendar(email);
+        }
     }
 
     private boolean isLeap(Date yearToCheck){
@@ -793,8 +798,6 @@ public class GUICustomer extends JFrame{
     }
 
     private int getNDailyAssignments(){
-        //TODO questo metodo andrà modificato in quanto l'oggetto customer
-        //TODO non sarà più direttamente accessibile con l'architettura client-server
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;

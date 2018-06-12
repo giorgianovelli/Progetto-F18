@@ -4,28 +4,32 @@ package customerClient.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Date;
 
 public class GUINewAssignment extends JFrame{
 
-    final int WIDTH = 512;
-    final int HEIGHT = 512;
+    final int WIDTH = 600;
+    final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     //Panels
 
     private JPanel panelOut = new JPanel();
+    private JPanel panelNoButtons = new JPanel();
     private JPanel panelBox = new JPanel();
     private JPanel panelCombo = new JPanel();
     private JPanel panelAddress = new JPanel();
     private JPanel panelLabel = new JPanel();
+    private JPanel panelLabel2 = new JPanel();
     private JPanel panelButtons = new JPanel();
     private JPanel panelDogs = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(panelOut);
 
     //Others
 
-
+    private GridLayout gridLayout = new GridLayout(1,1);
     private JLabel labelMeetingPoint = new JLabel("Choose where you would like to meet the dogsitter: ");
+    private JLabel labelDogs = new JLabel("Select your dogs: ");
     private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonSearch = new JButton("Search");
 
@@ -34,17 +38,14 @@ public class GUINewAssignment extends JFrame{
     NewAssignmentText address = new NewAssignmentText("Address:                ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
     NewAssignmentText city = new NewAssignmentText("City:                         ");
     NewAssignmentText code = new NewAssignmentText("Code:                      ");
-    NewAssignmentText country = new NewAssignmentText("Country:                ");
-
-    NewAssignmentCheckBox dog = new NewAssignmentCheckBox("Fido");
-
+    NewAssignmentText country = new NewAssignmentText("Country:                 ");
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     //Costruttore
 
-    public GUINewAssignment() {
+    public GUINewAssignment(Date date, String email) {
         setTitle("New Assignment");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -60,43 +61,69 @@ public class GUINewAssignment extends JFrame{
 
     private void initComponents() {
 
+        //Setting layout dei panel
+
         panelOut.setLayout(new BorderLayout());
+        panelNoButtons.setLayout(new BorderLayout());
+        panelNoButtons.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
         panelBox.setLayout(new BoxLayout(panelBox, 1));
-        panelBox.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
         panelCombo.setLayout(new GridLayout(1,1));
         panelAddress.setLayout(new GridLayout(4, 1, 30, 20));
         panelLabel.setLayout(new BorderLayout());
+        panelLabel2.setLayout(new BorderLayout());
+        panelDogs.setLayout(gridLayout);
+        panelDogs.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
+        panelButtons.setLayout(new GridLayout(1,2,5,0));
+        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 170, 20, 170));
 
-        panelOut.add(panelBox, BorderLayout.NORTH);
+        // Aggiunta dei pannelli al pannello più esterno
 
+        panelOut.add(panelNoButtons, BorderLayout.NORTH); // Primo
+        panelOut.add(panelButtons, BorderLayout.SOUTH); //Secondo
+
+        //Primo pannello
+
+        panelNoButtons.add(panelBox, BorderLayout.NORTH);
+        panelNoButtons.add(panelDogs, BorderLayout.CENTER);
+
+        //PanelBox (fa parte del primo pannello)
+
+        Dimension dimension = new Dimension(0,20);
         panelBox.add(panelCombo);
-        panelBox.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelBox.add(Box.createRigidArea(dimension));
         panelBox.add(panelLabel);
-        panelBox.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelBox.add(Box.createRigidArea(dimension));
         panelBox.add(panelAddress);
+        panelBox.add(Box.createRigidArea(dimension));
+        panelBox.add(panelLabel2);
 
 
-        panelOut.add(panelDogs, BorderLayout.CENTER);
-        panelOut.add(panelButtons, BorderLayout.SOUTH);
+        for (int i = 0; i < 30; i++) {
+            NewAssignmentCheckBox dog = new NewAssignmentCheckBox("Cane " + i);
+            panelDogs.add(dog);
+            gridLayout.setRows(gridLayout.getRows() + 1);
+        }
 
-        panelCombo.add(newAssignmentBox);
 
-        panelDogs.add(dog);
+        // Secondo pannello
 
+        panelButtons.add(buttonCancel);
+        panelButtons.add(buttonSearch);
+
+        // Pannelli minori
 
         panelAddress.add(address);
         panelAddress.add(city);
         panelAddress.add(code);
         panelAddress.add(country);
 
+
+        panelCombo.add(newAssignmentBox);
+
         panelLabel.add(labelMeetingPoint, BorderLayout.LINE_START);
+        panelLabel2.add(labelDogs, BorderLayout.LINE_START);
 
-        panelButtons.setLayout(new GridLayout(1,2,5,0));
-        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150));
-        panelButtons.add(buttonCancel);
-        panelButtons.add(buttonSearch);
-
-
+        // Scroll panel
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -124,6 +151,10 @@ class NewAssignmentBox extends JPanel{
     JLabel hoursLabel = new JLabel("Hour:");
     JLabel minutesLabel = new JLabel("Minute:");
 
+    JLabel fromDayLabel = new JLabel("");
+    JLabel fromMonthLabel = new JLabel("");
+    JLabel fromYearLabel = new JLabel("");
+
 
 
     String[] day = new String[]{};
@@ -139,9 +170,7 @@ class NewAssignmentBox extends JPanel{
     // Costruttore NewAssignmentBox
 
     public NewAssignmentBox(){
-        fdayList = new JComboBox<>(day);
-        fmonthList = new JComboBox(month);
-        fyearList = new JComboBox<>(year);
+
         fhourList = new JComboBox<>(hour);
         fminuteList = new JComboBox<>(minute);
         tdayList = new JComboBox<>(day);
@@ -173,9 +202,9 @@ class NewAssignmentBox extends JPanel{
         //ComboBox
 
         add(fromLabel);
-        add(fdayList);
-        add(fmonthList);
-        add(fyearList);
+        add(fromDayLabel);
+        add(fromMonthLabel);
+        add(fromYearLabel);
         add(fhourList);
         add(fminuteList);
 
@@ -226,8 +255,10 @@ class NewAssignmentCheckBox extends JPanel {
 
     public NewAssignmentCheckBox(String text) {
 
-        setLayout(new GridBagLayout());
+        setLayout(new GridLayout(1,2));
         labelName = new JLabel(text);
         checkBox = new JCheckBox();
+        add(labelName);
+        add(checkBox);
     }
 }

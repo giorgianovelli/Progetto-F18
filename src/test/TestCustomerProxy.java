@@ -67,5 +67,6 @@ public class TestCustomerProxy {
         System.out.println(proxy.getCustomerAddress().toString());
         System.out.println(proxy.getCustomerDateOfBirth());
         System.out.println(proxy.getCustomerPassword());
+        System.out.println(proxy.disableDog(3));
     }
 }
