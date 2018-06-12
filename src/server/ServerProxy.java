@@ -96,6 +96,8 @@ class Connect extends Thread {
         Date dateStart;
         Date dateEnd;
         String strDogList;
+        String inputUser;
+        String inputPassword;
         try {
             StringTokenizer tokenMsg = null;
             try {
@@ -106,8 +108,8 @@ class Connect extends Thread {
             int action = Integer.parseInt(tokenMsg.nextToken());
             switch (action){
                 case 0:
-                    String inputUser = tokenMsg.nextToken();
-                    String inputPassword = tokenMsg.nextToken();
+                    inputUser = tokenMsg.nextToken();
+                    inputPassword = tokenMsg.nextToken();
                     serverMsg = customerAccessDataVerifier(inputUser, inputPassword);
                     break;
                 case 1:
@@ -262,12 +264,16 @@ class Connect extends Thread {
                     double weight = Double.parseDouble(tokenMsg.nextToken());
                     serverMsg = addDog(email, dogName, bread, age, weight);
                     break;
-                //TODO da eliminare?
-                /*case 27:
+                case 27:
                     email = tokenMsg.nextToken();
                     int ID = Integer.parseInt(tokenMsg.nextToken());
-                    serverMsg = removeDog(email, ID);
-                    break;*/
+                    serverMsg = disableDog(email, ID);
+                    break;
+                case 100:
+                    inputUser = tokenMsg.nextToken();
+                    inputPassword = tokenMsg.nextToken();
+                    serverMsg = dogSitterAccessDataVerifier(inputUser, inputPassword);
+                    break;
                 default:
             }
         } finally {
@@ -296,7 +302,6 @@ class Connect extends Thread {
         String msg = "";
         for (Integer key : customerListAssignment.keySet()) {
             Assignment a = customerListAssignment.get(key);
-            System.out.println("test time server: " + a.getDateStart());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
@@ -352,7 +357,7 @@ class Connect extends Thread {
         HashSet<Dog> dogList = singleton.getDogListFromDB(code);
         for (Dog d : dogList) {
             msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
-                        + d.getWeight() + "*";
+                        + d.getWeight() + "&" + d.isEnabled() + "*";
         }
         return msg;
     }
@@ -599,16 +604,29 @@ class Connect extends Thread {
         }
     }
 
-    //TODO da eliminare?
-    /*private String removeDog(String email, int ID) {
+    private String disableDog(String email, int ID){
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
-        if (customer.removeDog(ID)){
+        if (customer.disableDog(ID)){
             return "true";
         } else {
-            System.out.println("error");
             return "false";
         }
-    }*/
+    }
+
+    private String dogSitterAccessDataVerifier(String inputUser, String inputPasword){
+        Login loginDogSitter = new Login();
+        try {
+            if(loginDogSitter.dogSitterAccessDataVerifier(inputUser, inputPasword)){
+                return "true";
+            } else{
+                return "false";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "false";
+        }
+    }
 
 }

@@ -10,47 +10,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class GUISettings extends JFrame {
-    final int WIDTH = 512;
-    final int HEIGHT = 500;
+    final int WIDTH = 600;
+    final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-    private User user;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
-    private JPanel panelAvailability = new JPanel();
     private JPanel panelButton = new JPanel();
+    private JPanel panelRadioButton = new JPanel();
+    private JPanel panelDate = new JPanel();
+    private JPanel panelAddress = new JPanel();
 
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
     private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
-    //TODO labelEmail non s'ha da fare!
-    private JLabel labelEmail = new JLabel("Email:", SwingConstants.LEFT);
     private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
-    private JLabel labelDate = new JLabel("Date of birth (dd/MM/yyyy):", SwingConstants.LEFT);
+    private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
     private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
     private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
-    //Label solo per dogSitter
-    private JLabel labelArea = new JLabel("Area:", SwingConstants.LEFT);
-    private JLabel labelDogBreed = new JLabel("Dog Breed:", SwingConstants.LEFT);
-    private JLabel labelDogsNumber = new JLabel("Number of dogs:", SwingConstants.LEFT);
-    private JLabel labelAvailability = new JLabel("Availability:", SwingConstants.LEFT);
-    private JLabel labelBiography = new JLabel("Biography:", SwingConstants.LEFT);
 
-    private JTextField textName = new JTextField(SwingConstants.RIGHT);
+    private JTextField textName = new JTextField(); //ho cancellato solo contenuto parentesi
     private JTextField textSurname = new JTextField();
-    private JFormattedTextField textDate = new JFormattedTextField();
-    private JTextField textAddress = new JTextField();
-    private JTextField textEmail = new JTextField();
+    private JTextField textStreet = new JTextField();
+    private JTextField textNumber = new JTextField();
+    private JTextField textCap = new JTextField();
+    private JTextField textCity = new JTextField();
+    private JTextField textCountry = new JTextField();
     private JTextField textPhoneNumber = new JTextField();
-    private JTextField textPaymentMethod = new JTextField();
-    //TextField solo per dogSitter
-    private JTextField textArea = new JTextField();
-    private JTextField textDogBreed = new JTextField();
-    private JTextField textDogsNumber = new JTextField();
-    private JTextField textAvailability = new JTextField();
-    private JTextField textBiography = new JTextField("immetti la tua biografia", 5);
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
@@ -58,14 +47,19 @@ public class GUISettings extends JFrame {
     private JRadioButton cash = new JRadioButton("Cash");
     private JRadioButton  creditCard = new JRadioButton("Credit Card");
 
+    private JComboBox<String> dayList;
+    private JComboBox<String> monthList;
+    private JComboBox<String> yearList;
+
+    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13","14","15","16", "17", "18", "19", "20", "21", "22", "23", "24", "25","26", "27", "28", "29", "30", "31"};
+    private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    private ArrayList<String> years_tmp = new ArrayList<String>();
+
 
     //TODO attributi per client-server
     private CustomerProxy proxy;
     private String email;
-
-
-
-
+    private User user;
 
     public GUISettings(String email) {
         setTitle("Account settings");
@@ -85,42 +79,66 @@ public class GUISettings extends JFrame {
 
     private void initComponents() {
 
-        panelData.setLayout(new GridLayout(8, 1, 30, 20));
+        panelData.setLayout(new GridLayout(10, 1, 20, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
-        panelOut.add(panelAvailability);
         panelOut.add(panelButton, BorderLayout.SOUTH);
+        panelOut.add(panelRadioButton);
 
         panelData.add(labelName);
         panelData.add(textName);
         panelData.add(labelSurname);
         panelData.add(textSurname);
         panelData.add(labelDate);
-        panelData.add(textDate);
+
+
+
+        for(int years = 1930; years<= Calendar.getCurrentYear() ; years++) {
+            years_tmp.add(years+"");
+        }
+
+        dayList = new JComboBox<>(day);
+        monthList = new JComboBox<>(month);
+        yearList = new JComboBox(years_tmp.toArray());
+
+        panelDate.setLayout(new GridLayout(1,3,5,5));
+        panelDate.add(dayList);
+        panelDate.add(monthList);
+        panelDate.add(yearList);
+        panelData.add(panelDate);
+
         panelData.add(labelAddress);
-        panelData.add(textAddress);
-        panelData.add(labelEmail);
-        panelData.add(textEmail);
+        panelAddress.setLayout(new BoxLayout(panelAddress,BoxLayout.X_AXIS));
+        panelAddress.add(textStreet);
+        panelAddress.add(textNumber);
+        panelAddress.add(textCap);
+        panelAddress.add(textCity);
+        panelAddress.add(textCountry);
+        panelData.add(panelAddress);
+
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
         panelData.add(labelPaymentMethod);
         add(panelOut);
 
         panelButton.setLayout(new GridLayout(1, 2));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(70, 10, 20, 10));
+        panelButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
+        panelRadioButton.setLayout(new GridLayout(1,0));
+        panelData.add(panelRadioButton);
 
-        //TODO METODO DELLA MODIFICA dei dati da SITEMARE
+
+        //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
         ActionListener registration = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
                     setNewValues();
-                    //da sistemare
+
                 }
                 if (registrationAe.getActionCommand().equals("Cancel")) {
                     dispose();
@@ -132,14 +150,13 @@ public class GUISettings extends JFrame {
         buttonConfirm.addActionListener(registration);
 
 
-
         //  JRadioButton  per scegliere metodo di pagamento
         cash.setMnemonic(KeyEvent.VK_C);
         cash.setActionCommand("");
-        panelData.add(cash, BorderLayout.EAST);
+        panelRadioButton.add(cash, BorderLayout.EAST);
 
         creditCard.setMnemonic(KeyEvent.VK_D);
-        panelData.add(creditCard, BorderLayout.EAST);
+        panelRadioButton.add(creditCard, BorderLayout.EAST);
 
 
         // buttongroup per far in modo che si possa selezionare SOLO un metodo di pagamento
@@ -158,8 +175,7 @@ public class GUISettings extends JFrame {
                 }
                 else {
                     creditCard.isSelected();
-                    //todo messaggio di prova da eliminare
-                    //JOptionPane.showMessageDialog(null,"You select : "+creditCard.getText());
+
                 }
 
             }
@@ -169,43 +185,9 @@ public class GUISettings extends JFrame {
 
 
 
-        //TODO values DogSitter creare un metodo che cancelli i campi del DogSitter nel caso in cui si effettui il login come Customer
-        textArea.setText("");
-        textArea.setEditable(true);
-        labelArea.setLabelFor(textArea);
-
-        textDogBreed.setText("");
-        textDogBreed.setEditable(true);
-        labelDogBreed.setLabelFor(textDogBreed);
-
-        textDogsNumber.setText("");
-        textDogsNumber.setEditable(true);
-        labelDogsNumber.setLabelFor(textDogsNumber);
-
-        textAvailability.setText("");
-        textAvailability.setEditable(true);
-        labelAvailability.setLabelFor(textAvailability);
-
-        textBiography.setText("Immettere la propria biografia");
-        textBiography.setEditable(true);
-        labelBiography.setLabelFor(textBiography);
-
-        //todo panelDate solo per dogSitter
-       /* panelData.add(labelArea);
-        panelData.add(textArea);
-        panelData.add(labelDogBreed);
-        panelData.add(textDogBreed);
-        panelData.add(labelDogsNumber);
-        panelData.add(textDogsNumber);
-        panelData.add(labelAvailability);
-        panelData.add(textAvailability);
-        panelData.add(labelBiography);
-        panelData.add(textBiography);*/
-
-
     }
 
-    //TODO Metodo da sistemare
+    //TODO Metodo da sistemare: data di nascita non viene presa dal database da correggere??
     private void setValues() {
 
         String strName = proxy.getCustomerName();
@@ -213,88 +195,51 @@ public class GUISettings extends JFrame {
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-
         String strSurname = proxy.getCustomerSurname();
         textSurname.setText(strSurname);
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
+
+       // SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+       // Date strDate = proxy.getCustomerDateOfBirth();
+
+        Address customerAddress = proxy.getCustomerAddress();
+        textStreet.setText(customerAddress.getStreet());
+        textStreet.setEditable(true);
+        labelAddress.setLabelFor(textStreet);
+
+        textNumber.setText(customerAddress.getNumber());
+        textNumber.setEditable(true);
+        labelAddress.setLabelFor(textNumber);
+
+        textCap.setText(customerAddress.getCap());
+        textCap.setEditable(true);
+        labelAddress.setLabelFor(textCap);
+
+        textCity.setText(customerAddress.getCity());
+        textCity.setEditable(true);
+        labelAddress.setLabelFor(textCity);
+
+        textCountry.setText(customerAddress.getCountry());
+        textCountry.setEditable(true);
+        labelAddress.setLabelFor(textCountry);
 
         String strPhoneNumber = proxy.getCustomerPhoneNumber();
         textPhoneNumber.setText(strPhoneNumber);
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
-        //TODO ERRORI
-       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        String strDate =  dateFormat.format(proxy.getCustomerDateOfBirth());
-        textDate.setText(strDate);
-        textDate.setEditable(true);
-        labelDate.setLabelFor(textDate);
-
-
-        /*//String strEmail = proxy.get();
-        textEmail.setText(user.getEmail());
-        textEmail.setEditable(true);
-        labelEmail.setLabelFor(textEmail);*/
-
-
-
-        Address customerAddress = proxy.getCustomerAddress();
-        System.out.println(customerAddress.toString());
-        textAddress.setText(customerAddress.toString()); //ERRORE :Siccome Address è di tipo Date prende tutta la stringa
-        textAddress.setEditable(true);
-        labelAddress.setLabelFor(textAddress);
-
-        /*// String strPaymentMethod = proxy.getCustomerPaymentMethod();
-        textPaymentMethod.setText(String.valueOf(user.getPaymentMethod()));//Da sistemare
-        textPaymentMethod.setEditable(true);
-        labelPaymentMethod.setLabelFor(textPaymentMethod);*/
-
-        //TODO Possibile metodo per mostrare le label in base a chi ha effettuato l'accesso (se customer o dogsitter)
-      /*  ActionListener al = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (ae.getActionCommand().equals("Login as customer")){
-
-                    panelData.add(labelArea).setVisible(false);
-                    panelData.add(textArea).setVisible(false);
-
-                    /*textArea.removeAll();
-                    labelArea.setVisible(false);
-                    setVisible(true);
-                }
-                if (ae.getActionCommand().equals("Login as dogsitter")) {
-                    panelData.add(labelArea);
-                    panelData.add(textArea);
-                    panelData.add(labelDogBreed);
-                    panelData.add(textDogBreed);
-                    panelData.add(labelDogsNumber);
-                    panelData.add(textDogsNumber);
-                    panelData.add(labelAvailability);
-                    panelData.add(textAvailability);
-                    panelData.add(labelBiography);
-                    panelData.add(textBiography);
-
-
-
-                }
-
-            }
-        };
-
-    }*/
-
 
     }
 
-    //TODO metodo che conterrà i nuovi valori
-    private void setNewValues() {
 
-        boolean updName = proxy.updateCustomerName(getName());
-        textName.setText(String.valueOf(updName));
+    //TODO metodo che conterrà i nuovi valori NON FUNZIONA
+    private void setNewValues() {
+        proxy.updateCustomerName(textName.getText());
         textName.setEditable(true);
         labelName.setLabelFor(textName);
+
 
     }
 

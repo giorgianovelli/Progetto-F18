@@ -7,10 +7,13 @@ import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
+import server.tools.dateTime.DateTimeDHMS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -135,12 +138,13 @@ public class Singleton {
         DBConnector dbConnector = new DBConnector();
         Dog dog = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, IS_ENABLED, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
             rs.next();
             String name = rs.getString("NAME");
             String breed = rs.getString("BREED");
             double weight = rs.getDouble("WEIGHT");
-            int age = rs.getInt("AGE");
+            int age = getAge(rs.getDate("AGE"));
+            boolean isEnabled =  rs.getBoolean("IS_ENABLED");
             dbConnector.closeConnection();
 
             rs = dbConnector.askDB("SELECT SIZE FROM BREEDS WHERE NAME = '" + breed + "'");
@@ -148,7 +152,7 @@ public class Singleton {
             DogSize size = DogSize.valueOf(rs.getString("SIZE"));
             dbConnector.closeConnection();
 
-            dog = new Dog(name, breed, size, age, weight, dogID);
+            dog = new Dog(name, breed, size, age, weight, dogID, isEnabled);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -323,5 +327,15 @@ public class Singleton {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public int getAge(Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        String strBirth = dateFormat.format(dateOfBirth);
+        int birth = Integer.parseInt(strBirth);
+        Date nowDate = new Date();
+        String strNow = dateFormat.format(nowDate);
+        int now = Integer.parseInt(strNow);
+        return now - birth;
     }
 }

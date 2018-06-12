@@ -7,14 +7,16 @@ public class Dog {
     private int age;
     private double weight;
     private int ID;
+    private boolean isEnabled;
 
-    public Dog(String name, String breed, DogSize size, int age, double weight, int ID) {
+    public Dog(String name, String breed, DogSize size, int age, double weight, int ID, boolean isEnabled) {
         this.name = name;
         this.breed = breed;
         this.size = size;
         this.age = age;
         this.weight = weight;
         this.ID = ID;
+        this.isEnabled = isEnabled;
     }
 
     public boolean setAge(int age) {
@@ -71,4 +73,9 @@ public class Dog {
 
     public int getID() {
         return ID;
-    }}
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+}
