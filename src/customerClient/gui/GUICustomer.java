@@ -660,7 +660,9 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        showAssignmentOnCalendar(email);
+        if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
+            showAssignmentOnCalendar(email);
+        }
     }
 
     private boolean isLeap(Date yearToCheck){
