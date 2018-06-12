@@ -264,12 +264,11 @@ class Connect extends Thread {
                     double weight = Double.parseDouble(tokenMsg.nextToken());
                     serverMsg = addDog(email, dogName, bread, age, weight);
                     break;
-                //TODO da eliminare?
-                /*case 27:
+                case 27:
                     email = tokenMsg.nextToken();
                     int ID = Integer.parseInt(tokenMsg.nextToken());
-                    serverMsg = removeDog(email, ID);
-                    break;*/
+                    serverMsg = disableDog(email, ID);
+                    break;
                 case 100:
                     inputUser = tokenMsg.nextToken();
                     inputPassword = tokenMsg.nextToken();
@@ -358,7 +357,7 @@ class Connect extends Thread {
         HashSet<Dog> dogList = singleton.getDogListFromDB(code);
         for (Dog d : dogList) {
             msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
-                        + d.getWeight() + "*";
+                        + d.getWeight() + "&" + d.isEnabled() + "*";
         }
         return msg;
     }
@@ -605,17 +604,15 @@ class Connect extends Thread {
         }
     }
 
-    //TODO da eliminare?
-    /*private String removeDog(String email, int ID) {
+    private String disableDog(String email, int ID){
         Singleton singleton = new Singleton();
         Customer customer = singleton.createCustomerFromDB(email);
-        if (customer.removeDog(ID)){
+        if (customer.disableDog(ID)){
             return "true";
         } else {
-            System.out.println("error");
             return "false";
         }
-    }*/
+    }
 
     private String dogSitterAccessDataVerifier(String inputUser, String inputPasword){
         Login loginDogSitter = new Login();

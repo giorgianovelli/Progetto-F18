@@ -138,12 +138,13 @@ public class Singleton {
         DBConnector dbConnector = new DBConnector();
         Dog dog = null;
         try {
-            ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
+            ResultSet rs = dbConnector.askDB("SELECT NAME, BREED, WEIGHT, AGE, IS_ENABLED, OWNER_EMAIL FROM DOGS WHERE ID = " + dogID + "");
             rs.next();
             String name = rs.getString("NAME");
             String breed = rs.getString("BREED");
             double weight = rs.getDouble("WEIGHT");
             int age = getAge(rs.getDate("AGE"));
+            boolean isEnabled =  rs.getBoolean("IS_ENABLED");
             dbConnector.closeConnection();
 
             rs = dbConnector.askDB("SELECT SIZE FROM BREEDS WHERE NAME = '" + breed + "'");
@@ -151,7 +152,7 @@ public class Singleton {
             DogSize size = DogSize.valueOf(rs.getString("SIZE"));
             dbConnector.closeConnection();
 
-            dog = new Dog(name, breed, size, age, weight, dogID);
+            dog = new Dog(name, breed, size, age, weight, dogID, isEnabled);
         } catch (SQLException e) {
             e.printStackTrace();
         }

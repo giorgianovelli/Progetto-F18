@@ -328,11 +328,14 @@ public class GUICustomer extends JFrame{
                     guiChangePassword.setVisible(true);
                 }
 
-
-
                 if (menuAe.getActionCommand().equals("Cancel")){
                     cancel();
                 }
+
+                /*if (menuAe.getActionCommand().equals("Info")){
+                    GUIInfo info = new GUIInfo();
+                    info.setVisible(true);
+                }*/
             }
         };
 
@@ -660,7 +663,9 @@ public class GUICustomer extends JFrame{
             }
         }
 
-        showAssignmentOnCalendar(email);
+        if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
+            showAssignmentOnCalendar(email);
+        }
     }
 
     private boolean isLeap(Date yearToCheck){
