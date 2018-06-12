@@ -1,5 +1,7 @@
 package customerClient.gui;
 
+
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,21 +11,33 @@ public class GUINewAssignment extends JFrame{
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+    //Panels
+
     private JPanel panelOut = new JPanel();
-    private JPanel panelData = new JPanel();
+    private JPanel panelBox = new JPanel();
+    private JPanel panelCombo = new JPanel();
+    private JPanel panelAddress = new JPanel();
+    private JPanel panelLabel = new JPanel();
     private JPanel panelButtons = new JPanel();
-    private JPanel panelTest = new JPanel();
+    private JPanel panelDogs = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(panelOut);
 
+    //Others
+
+
+    private JLabel labelMeetingPoint = new JLabel("Choose where you would like to meet the dogsitter: ");
     private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonSearch = new JButton("Search");
 
 
     NewAssignmentBox newAssignmentBox = new NewAssignmentBox();
-    NewAssignmentText address = new NewAssignmentText("Address:");
-    NewAssignmentText city = new NewAssignmentText("City:");
-    NewAssignmentText code = new NewAssignmentText("Code:");
-    NewAssignmentText country = new NewAssignmentText("Country:");
+    NewAssignmentText address = new NewAssignmentText("Address:                ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
+    NewAssignmentText city = new NewAssignmentText("City:                         ");
+    NewAssignmentText code = new NewAssignmentText("Code:                      ");
+    NewAssignmentText country = new NewAssignmentText("Country:                ");
+
+    NewAssignmentCheckBox dog = new NewAssignmentCheckBox("Fido");
+
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -46,28 +60,42 @@ public class GUINewAssignment extends JFrame{
 
     private void initComponents() {
 
-
         panelOut.setLayout(new BorderLayout());
-        panelData.setLayout(new GridLayout(5, 1, 30, 20));
-        panelData.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
+        panelBox.setLayout(new BoxLayout(panelBox, 1));
+        panelBox.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
+        panelCombo.setLayout(new GridLayout(1,1));
+        panelAddress.setLayout(new GridLayout(4, 1, 30, 20));
+        panelLabel.setLayout(new BorderLayout());
 
-        panelOut.add(panelData, BorderLayout.NORTH);
+        panelOut.add(panelBox, BorderLayout.NORTH);
+
+        panelBox.add(panelCombo);
+        panelBox.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelBox.add(panelLabel);
+        panelBox.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelBox.add(panelAddress);
+
+
+        panelOut.add(panelDogs, BorderLayout.CENTER);
         panelOut.add(panelButtons, BorderLayout.SOUTH);
 
-        panelTest.add(buttonSearch);
+        panelCombo.add(newAssignmentBox);
 
-        panelData.add(newAssignmentBox);
-        panelData.add(address);
-        panelData.add(city);
-        panelData.add(code);
-        panelData.add(country);
+        panelDogs.add(dog);
 
 
+        panelAddress.add(address);
+        panelAddress.add(city);
+        panelAddress.add(code);
+        panelAddress.add(country);
+
+        panelLabel.add(labelMeetingPoint, BorderLayout.LINE_START);
 
         panelButtons.setLayout(new GridLayout(1,2,5,0));
         panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150));
         panelButtons.add(buttonCancel);
         panelButtons.add(buttonSearch);
+
 
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -122,6 +150,15 @@ class NewAssignmentBox extends JPanel{
         thourList = new JComboBox<>(hour);
         tminuteList = new JComboBox<>(minute);
 
+        fhourList.setLightWeightPopupEnabled(false);
+        fminuteList.setLightWeightPopupEnabled(false);
+        tdayList.setLightWeightPopupEnabled(false);
+        tmonthList.setLightWeightPopupEnabled(false);
+        tyearList.setLightWeightPopupEnabled(false);
+        thourList.setLightWeightPopupEnabled(false);
+        tminuteList.setLightWeightPopupEnabled(false);
+
+
         setLayout(new GridLayout(3, 6, 10, 10));
 
         //Label
@@ -155,26 +192,42 @@ class NewAssignmentBox extends JPanel{
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+
 class NewAssignmentText extends JPanel{
     JLabel label;
-    TextField field = new TextField("",30);
-    JLabel blanckLabel = new JLabel("");
+    TextField field = new TextField("",48);
+
+
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+    // Costruttore
 
     public NewAssignmentText(String text){
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
         label = new JLabel(text);
-        add(label, BorderLayout.LINE_START);
-        add(field, BorderLayout.CENTER);
+        add(label, gridBagConstraints);
+        add(field, gridBagConstraints);
     }
 }
 
-/*class NewAssignmentCheckBox extends JPanel{
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+class NewAssignmentCheckBox extends JPanel {
+
+    JLabel labelName;
     JCheckBox checkBox;
 
-    public NewAssignmentCheckBox(){
 
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+    //Costruttore
+
+    public NewAssignmentCheckBox(String text) {
+
+        setLayout(new GridBagLayout());
+        labelName = new JLabel(text);
         checkBox = new JCheckBox();
-        checkBox.
-
     }
-};*/
+}
