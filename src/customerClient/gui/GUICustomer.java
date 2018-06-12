@@ -324,11 +324,14 @@ public class GUICustomer extends JFrame{
                     guiChangePassword.setVisible(true);
                 }
 
-
-
                 if (menuAe.getActionCommand().equals("Cancel")){
                     cancel();
                 }
+
+                /*if (menuAe.getActionCommand().equals("Info")){
+                    GUIInfo info = new GUIInfo();
+                    info.setVisible(true);
+                }*/
             }
         };
 
