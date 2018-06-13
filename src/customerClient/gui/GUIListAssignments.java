@@ -289,13 +289,14 @@ public class GUIListAssignments extends JFrame{
         imageTransform = yellow.getImage(); // transform it
         newImage = imageTransform.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         yellow = new ImageIcon(newImage);  // transform it back
-
+        Boolean state = a.getState();
+        System.out.println(state);
 
         if(a.getDateEnd().before(todayDate)){
             labelState[i]= new JLabel(gray);
 
         }
-        else if (a.getState()){
+        else if (state == Boolean.TRUE){
             labelState[i]= new JLabel(green);
         }
         else {

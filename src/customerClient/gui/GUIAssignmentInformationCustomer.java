@@ -122,7 +122,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
-        String strPayment = customerProxy.getCustomerPaymentMethod().getNumber();
+        String strPayment = customerProxy.getPaymentMethod().getNumber();
 
         //Passaggio delle variabili alle Jlabel che contengono i dati
 

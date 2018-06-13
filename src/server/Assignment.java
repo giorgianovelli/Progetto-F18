@@ -12,7 +12,7 @@ public class Assignment {
     private HashSet<Dog> dogList;
     private Date dateStart;
     private Date dateEnd;
-    private boolean state;
+    private Boolean state;
     private Address meetingPoint;
 
     public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, Address meetingPoint) {
@@ -24,7 +24,7 @@ public class Assignment {
         this.meetingPoint = meetingPoint;
     }
 
-    public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, boolean state, Address meetingPoint) {
+    public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, Boolean state, Address meetingPoint) {
         this.code = code;
         this.dogList = dogList;      //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
         this.dateStart = dateStart;
@@ -97,7 +97,7 @@ public class Assignment {
         return dogList;
     }
 
-    public boolean getState() {
+    public Boolean getState() {
         return state;
     }
 

@@ -72,11 +72,14 @@ public class CustomerProxy implements InterfaceCustomer {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            boolean state;
-            if (tokenMsg.nextToken().equals("true")) {
+            Boolean state;
+            String strState = tokenMsg.nextToken();
+            if (strState.equals("true")) {
                 state = true;
-            } else {
+            } else if (strState.equals("false")) {
                 state = false;
+            } else {
+                state = null;
             }
             Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
             Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
@@ -173,12 +176,12 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public Address getCustomerAddress(){
+    public Address getAddress(){
         String serverMsg = getReply("10#" + email);
         return decodeAddress(serverMsg);
     }
 
-    public PaymentMethod getCustomerPaymentMethod(){
+    public PaymentMethod getPaymentMethod(){
         String serverMsg = getReply("11#" + email);
         return decodePaymentMethod(serverMsg);
     }

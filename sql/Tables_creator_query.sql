@@ -100,7 +100,7 @@ CREATE TABLE ASSIGNMENT
 					(CODE INT PRIMARY KEY,
                     CUSTOMER CHAR(255),
                     DOGSITTER CHAR(255),
-                    CONFIRMATION BOOLEAN,
+                    CONFIRMATION CHAR(6),
                     DATE_START DATETIME,
                     DATE_END DATETIME)
 

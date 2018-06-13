@@ -169,7 +169,7 @@ public class GUISettings extends JFrame {
         ActionListener a = new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                if (proxy.getCustomerPaymentMethod() == null ){
+                if (proxy.getPaymentMethod() == null ){
                     cash.isSelected();
 
                 }
@@ -204,7 +204,7 @@ public class GUISettings extends JFrame {
 
        // Date strDate = proxy.getCustomerDateOfBirth();
 
-        Address customerAddress = proxy.getCustomerAddress();
+        Address customerAddress = proxy.getAddress();
         textStreet.setText(customerAddress.getStreet());
         textStreet.setEditable(true);
         labelAddress.setLabelFor(textStreet);

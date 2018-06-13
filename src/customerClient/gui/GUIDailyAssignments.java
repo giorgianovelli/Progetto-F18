@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.lang.*;
@@ -32,7 +33,7 @@ public class GUIDailyAssignments extends JFrame {
     private Date todayDate = new Date();
 
 
-    public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {  //HashMap<Integer, Assignment> listAssigment, String todayDate) {
+    public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {
         //TODO cambiare il costruttore: l'oggetto customer non sarà più accessibile
         setTitle("Daily assignments");
         setSize(WIDTH, HEIGHT);
@@ -41,24 +42,72 @@ public class GUIDailyAssignments extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
         setVisible(true);
-        initComponents(cs);
         this.email = email;
         proxy = new CustomerProxy(email);
         this.listAssigment = proxy.getCustomerListAssignment();
         this.todayDate = todayDate;
-
+        initComponents(cs);
     }
 
 
     private void initComponents(CalendarState cs) {
         //inserire query per interrogare db
-        int nAssignments = 6;
 
-        button = new JButton[nAssignments];
 
         if (cs.equals(CalendarState.REMOVING)) {
             setTitle("Daily assignment");
-            p.setLayout(new GridLayout(button.length, 2));
+            HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
+
+            int n=0;
+            for (Integer i : listAssigment.keySet()) {
+                Assignment a = null;
+                a = listAssigment.get(i);
+                Date dateStart = a.getDateStart();
+                SimpleDateFormat date1 = new SimpleDateFormat("dd/MM/yyyy");
+                String dateString1 = date1.format(dateStart);
+                System.out.println(dateString1);
+                SimpleDateFormat date2 = new SimpleDateFormat("dd/MM/yyyy");
+                String dateString2 = date1.format(todayDate);
+                System.out.println(dateString1);
+                dateString1.equals(dateString2);
+                if (dateString1.equals(dateString2)) { //|| a.getDateEnd().equals(todayDate))) {
+                    System.out.println("OK");
+                    todayAssigment.put(n, a);
+                    System.out.println("Non funziona");
+                }
+
+                n++;
+            }
+
+            System.out.println(todayAssigment.size());
+            labelDescription= new JLabel[todayAssigment.size()];
+            button = new JButton[todayAssigment.size()];
+            infoPanel = new JPanel[todayAssigment.size()];
+
+            int j = 0;
+            for (Integer i : todayAssigment.keySet()) {
+                Assignment a = null;
+                String labelString = "";
+                a = todayAssigment.get(i);
+                String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
+                String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
+                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                labelDescription[j] = new JLabel(labelString);
+                button[j] = new JButton("Delete");
+                button[j].addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showConfirmDialog(null,"Are you sure to cancel ?","Conferm Actions",JOptionPane.YES_NO_OPTION);}
+                });
+                infoPanel[j] = new JPanel();
+                infoPanel[j].add(labelDescription[j]);
+                infoPanel[j].add(button[j]);
+                add(infoPanel[j]);
+                j++;
+            }
+        }
+
+          /*  p.setLayout(new GridLayout(button.length, 2));
             for (int i = 0; i < nAssignments; i++) {
                 int n = i + 1;
                 lb = new JLabel("Daily assignment n° " + n);
@@ -70,13 +119,12 @@ public class GUIDailyAssignments extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         JOptionPane.showConfirmDialog(null,"Are you sure to cancel ?","Conferm Actions",JOptionPane.YES_NO_OPTION);}
                 });
-            }
+            }*/
 
 
-
-        }  else if(cs.equals(CalendarState.NORMAL)) {
+        else if (cs.equals(CalendarState.NORMAL)) {
             setTitle("Daily assignment");
-            p.setLayout(new GridLayout(nAssignments, 2));
+           /* p.setLayout(new GridLayout(nAssignments, 2));
             for (int i = 0; i < nAssignments; i++) {
                 int n = i + 1;
                 lb = new JLabel("Daily assignment n° " + n);
@@ -86,50 +134,33 @@ public class GUIDailyAssignments extends JFrame {
             }
 
 
+        }*/
+            scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            getContentPane().add(scroll);
+
+
         }
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        getContentPane().add(scroll);
-
-
     }
 
 }
    // Far combaciare la data del calendario con quella di un determinato appuntamento in modo da aver la possibilità di cancellarlo
   // Da sistemare
 
-  /*   HashMap<Integer,Assignment> todayAssigment = new HashMap<>();
-        for(Integer i: listAssigment.keySet()) {
-            Assignment a = null;
-            a = listAssigment.get(i);
-            if ((a.getDateStart().equals(todayDate) || a.getDateEnd().equals(todayDate))) {
-            todayAssigment.put(i,a);
-            }
+
+   /*             int nAssignments = todayAssigment.size();
+                // panelout.add(panelButton);
+                button = new JButton[nAssignments];
+                if (cs.equals(CalendarState.REMOVING)) {
+                infoPanel = new JPanel[nAssignments];
+                labelDescription = new JLabel[nAssignments];
+                setTitle("Daily assignment");
+                p.setLayout(new GridLayout(button.length, 2));
+                ActionListener write = new ActionListener() {
+@Override
+public void actionPerformed(ActionEvent e) {
         }
-        int nAssignments = todayAssigment.size();
-       // panelout.add(panelButton);
-        button = new JButton[nAssignments];
-        if (cs.equals(CalendarState.REMOVING)) {
-            infoPanel = new JPanel[nAssignments];
-            labelDescription = new JLabel[nAssignments];
-            setTitle("Daily assignment");
-            p.setLayout(new GridLayout(button.length, 2));
-            ActionListener write = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                }
-            };
-            int j = 0;
-            for (Integer i : todayAssigment.keySet()) {
-                Assignment a = null;
-                String labelString = "";
-                a = todayAssigment.get(i);
-                String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-                String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                labelDescription[j] = new JLabel(labelString);
-                button[j] = new JButton("Delete");
-                button[j].addActionListener(write);
-                j++;
+        };
+
             }
         }*/
            /* for (int i = 0; i < nAssignments; i++) {
