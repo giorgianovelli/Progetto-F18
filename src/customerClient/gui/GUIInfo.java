@@ -5,11 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUIInfo extends JFrame {
-    final int WIDTH = 512;
-    final int HEIGHT = 512;
+    final int WIDTH = 800;
+    final int HEIGHT = 1000;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     private JPanel panel;
+    ImageIcon splashScreenIcon;
+    private JLabel labelIcon;
     private JLabel version;
     private JLabel date;
 
@@ -27,13 +29,17 @@ public class GUIInfo extends JFrame {
 
         panel = new JPanel();
 
-        version = new JLabel("Version: 0.1.0 ");
-        date = new JLabel("Date of publication: 12/06/2018");
+        splashScreenIcon = new ImageIcon("images/bozza_splashscreen.jpg");
+        Image imageTransformIcon = splashScreenIcon.getImage();
+        Image newImageIcon = imageTransformIcon.getScaledInstance(800, 210,  java.awt.Image.SCALE_SMOOTH);
+        splashScreenIcon = new ImageIcon(newImageIcon);
+        labelIcon = new JLabel(splashScreenIcon);
 
-        panel.setLayout(new GridLayout(2,1,10,10));
-        panel.add(version);
-        panel.add(date);
+        version = new JLabel("Version: 0.1.0 ", SwingConstants.CENTER);
+        date = new JLabel("Publication date: 12/06/2018", SwingConstants.CENTER);
 
+        panel.setLayout(new GridLayout(3,1,10,10));
+        panel.add(labelIcon); panel.add(version); panel.add(date);
         add(panel);
 
     }

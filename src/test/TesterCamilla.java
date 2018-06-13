@@ -1,11 +1,11 @@
 package test;
 
-import customerClient.gui.GUIAwards;
+import customerClient.gui.GUIInfo;
 
 public class TesterCamilla {
 
     public static void main(String[] args) {
-        GUIAwards info = new GUIAwards();
+        GUIInfo info = new GUIInfo();
 
         info.setVisible(true);
     }
