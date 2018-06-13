@@ -56,7 +56,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public HashMap<Integer, Assignment> getCustomerListAssignment() {
+    public HashMap<Integer, Assignment> getAssignmentList() {
         String serverMsg = getReply("1#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();

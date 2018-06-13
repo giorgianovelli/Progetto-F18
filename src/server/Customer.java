@@ -32,10 +32,15 @@ public class Customer extends User implements InterfaceCustomer{
         assignmentList = new HashMap<Integer, Assignment>();
         reviewList = new HashMap<Integer, Review>();
         Singleton singleton = new Singleton();
-        assignmentList = singleton.getCustomerListAssignmentFromDB(email);
+        assignmentList = getAssignmentList();
         reviewList = singleton.getCustomerReviewList(this);
         dogList = getDogListFromDB(email);
         dogSitterSearchList = new HashSet<DogSitter>();
+    }
+
+    public HashMap<Integer, Assignment> getAssignmentList(){
+        Singleton singleton = new Singleton();
+        return singleton.getCustomerListAssignmentFromDB(email);
     }
 
     public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
@@ -248,9 +253,9 @@ public class Customer extends User implements InterfaceCustomer{
         return isDisabled;
     }
 
-    public HashMap<Integer, Assignment> getAssignmentList() {
-        return assignmentList;
-    }
+    //public HashMap<Integer, Assignment> getAssignmentList() {
+    //    return assignmentList;
+    //}
 
     public HashMap<Integer, Review> getReviewList() {
         return reviewList;

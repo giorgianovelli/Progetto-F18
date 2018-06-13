@@ -44,7 +44,7 @@ public class GUIDailyAssignments extends JFrame {
         setVisible(true);
         this.email = email;
         proxy = new CustomerProxy(email);
-        this.listAssigment = proxy.getCustomerListAssignment();
+        this.listAssigment = proxy.getAssignmentList();
         this.todayDate = todayDate;
         initComponents(cs);
     }

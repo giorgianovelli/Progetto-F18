@@ -160,7 +160,7 @@ public class GUISettings extends JFrame {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
                     setNewValues();
-                    JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new JFrame(), "Account updated correctly!", "", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                     //TODO nel caso in cui non viene fatta la modifica??
                 }

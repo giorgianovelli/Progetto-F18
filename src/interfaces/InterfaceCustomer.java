@@ -20,7 +20,7 @@ public interface InterfaceCustomer {
 
     boolean disableDog(int ID);
 
-    //HashMap<Integer, Assignment> getAssignmentList(); //TODO getCustomerListAssignment
+    HashMap<Integer, Assignment> getAssignmentList();
 
     HashMap<Integer, Review> getReviewList();
 
@@ -57,6 +57,4 @@ public interface InterfaceCustomer {
     String getPhoneNumber();
 
     Date getDateOfBirth();
-
-    //TODO controllare la presenza di tutti i metodi
 }
