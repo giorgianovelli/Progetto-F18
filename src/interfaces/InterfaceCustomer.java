@@ -36,21 +36,19 @@ public interface InterfaceCustomer {
 
     PaymentMethod getPaymentMethod();
 
-    //boolean updateName(String name);
+    boolean updateName(String name);
 
-    //boolean updateSurname(String surname);
+    boolean updateSurname(String surname);
 
-    //boolean updatePassword(String password);
+    boolean updatePassword(String password);
 
-    //boolean updatePhoneNumber(String phoneNumber);
+    boolean updatePhoneNumber(String phoneNumber);
 
-    //boolean updateDateOfBirth(Date dateOfBirth);
+    boolean updateDateOfBirth(Date dateOfBirth);
 
-    //boolean updateAddress(String country, String city, String street, String number, String cap);
+    boolean updateAddress(String country, String city, String street, String number, String cap);
 
-    //boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv);
-
-    //void loadDogSitterList();
+    boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv);
 
     //TODO controllare la presenza di tutti i metodi
 }

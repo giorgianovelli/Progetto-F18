@@ -256,17 +256,17 @@ public class GUISettings extends JFrame {
 
     //TODO metodo per cambiare i valori aggiornati dall'utente nel database
     private void setNewValues() {
-        proxy.updateCustomerName(textName.getText());
+        proxy.updateName(textName.getText());
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-        proxy.updateCustomerSurname(textSurname.getText());
+        proxy.updateSurname(textSurname.getText());
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
         //manca come aggiornare la data nelle JCombobox
 
-        proxy.updateCustomerAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
+        proxy.updateAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
         labelCountry.setLabelFor(textCountry);
         textCity.setEditable(true);
@@ -278,7 +278,7 @@ public class GUISettings extends JFrame {
         textCap.setEditable(true);
         labelCap.setLabelFor(textCap);
 
-        proxy.updateCustomerPhoneNumber(textPhoneNumber.getText());
+        proxy.updatePhoneNumber(textPhoneNumber.getText());
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
