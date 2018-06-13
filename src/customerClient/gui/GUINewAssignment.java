@@ -35,11 +35,11 @@ public class GUINewAssignment extends JFrame{
 
 
     NewAssignmentBox newAssignmentBox = new NewAssignmentBox();
-    NewAssignmentText address = new NewAssignmentText("Address:                ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
-    NewAssignmentText city = new NewAssignmentText("City:                         ");
-    NewAssignmentText code = new NewAssignmentText("Code:                      ");
-    NewAssignmentText country = new NewAssignmentText("Country:                 ");
-
+    NewAssignmentText country = new NewAssignmentText("Country:                                               ");
+    NewAssignmentText city = new NewAssignmentText("City:                                                       ");
+    NewAssignmentText cap = new NewAssignmentText("Postal Code:                                        ");
+    NewAssignmentText address = new NewAssignmentText("Address:                                              ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
+    NewAssignmentText number = new NewAssignmentText("Number:                                               ");
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -68,7 +68,7 @@ public class GUINewAssignment extends JFrame{
         panelNoButtons.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
         panelBox.setLayout(new BoxLayout(panelBox, 1));
         panelCombo.setLayout(new GridLayout(1,1));
-        panelAddress.setLayout(new GridLayout(4, 1, 30, 20));
+        panelAddress.setLayout(new GridLayout(5, 1, 30, 20));
         panelLabel.setLayout(new BorderLayout());
         panelLabel2.setLayout(new BorderLayout());
         panelDogs.setLayout(gridLayout);
@@ -98,7 +98,7 @@ public class GUINewAssignment extends JFrame{
         panelBox.add(panelLabel2);
 
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 20; i++) {
             NewAssignmentCheckBox dog = new NewAssignmentCheckBox("Cane " + i);
             panelDogs.add(dog);
             gridLayout.setRows(gridLayout.getRows() + 1);
@@ -112,10 +112,11 @@ public class GUINewAssignment extends JFrame{
 
         // Pannelli minori
 
-        panelAddress.add(address);
-        panelAddress.add(city);
-        panelAddress.add(code);
         panelAddress.add(country);
+        panelAddress.add(city);
+        panelAddress.add(cap);
+        panelAddress.add(address);
+        panelAddress.add(number);
 
 
         panelCombo.add(newAssignmentBox);
@@ -235,7 +236,7 @@ class NewAssignmentText extends JPanel{
 
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        label = new JLabel(text);
+        label = new JLabel(text, SwingConstants.LEFT);
         add(label, gridBagConstraints);
         add(field, gridBagConstraints);
     }
