@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class GUINewAssignment extends JFrame{
 
-    final int WIDTH = 600;
+    final int WIDTH = 800;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -50,7 +50,7 @@ public class GUINewAssignment extends JFrame{
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(true);             //TODO reset false
+        setResizable(false);
         setLayout(new BorderLayout());
 
         initComponents();
