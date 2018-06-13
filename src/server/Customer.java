@@ -256,9 +256,9 @@ public class Customer extends User implements InterfaceCustomer{
         return reviewList;
     }
 
-    public Address getAddress() {
-        return address;
-    }
+    //public Address getAddress() {
+    //    return address;
+    //}
 
     public HashSet<Dog> getDogList() {
         return dogList;

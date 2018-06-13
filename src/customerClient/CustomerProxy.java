@@ -149,23 +149,23 @@ public class CustomerProxy implements InterfaceCustomer {
         return new Review(code, date, rating, title,description, reply);
     }
 
-    public String getCustomerName(){
+    public String getName(){
         return getReply("5#" + email);
     }
 
-    public String getCustomerSurname(){
+    public String getSurname(){
         return getReply("6#" + email);
     }
 
-    public String getCustomerPassword(){
+    public String getPassword(){
         return getReply("7#" + email);
     }
 
-    public String getCustomerPhoneNumber(){
+    public String getPhoneNumber(){
         return getReply("8#" + email);
     }
 
-    public Date getCustomerDateOfBirth(){
+    public Date getDateOfBirth(){
         String serverMsg = getReply("9#" + email);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {

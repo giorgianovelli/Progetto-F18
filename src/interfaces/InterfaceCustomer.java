@@ -26,9 +26,7 @@ public interface InterfaceCustomer {
 
     Address getAddress();
 
-    //HashSet<Dog> getDogList();
-
-    //HashSet<Dog> getDogListFromDB(String email);
+    //HashSet<Dog> getDogList();    //TODO da implementare in CustomerProxy
 
     HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash);
 
@@ -49,6 +47,16 @@ public interface InterfaceCustomer {
     boolean updateAddress(String country, String city, String street, String number, String cap);
 
     boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv);
+
+    String getName();
+
+    String getSurname();
+
+    String getPassword();
+
+    String getPhoneNumber();
+
+    Date getDateOfBirth();
 
     //TODO controllare la presenza di tutti i metodi
 }

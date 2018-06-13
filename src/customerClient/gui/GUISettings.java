@@ -107,7 +107,7 @@ public class GUISettings extends JFrame {
         yearList = new JComboBox(years_tmp.toArray());
 
         //todo  per riempire le jcombobox con le date corrette
-        Date strDate= proxy.getCustomerDateOfBirth();
+        Date strDate= proxy.getDateOfBirth();
         // System.out.println(strDate);
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
@@ -214,12 +214,12 @@ public class GUISettings extends JFrame {
 
     private void setValues() {
 
-        String strName = proxy.getCustomerName();
+        String strName = proxy.getName();
         textName.setText(strName);
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-        String strSurname = proxy.getCustomerSurname();
+        String strSurname = proxy.getSurname();
         textSurname.setText(strSurname);
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
@@ -245,7 +245,7 @@ public class GUISettings extends JFrame {
         textCap.setEditable(true);
         labelCap.setLabelFor(textCap);
 
-        String strPhoneNumber = proxy.getCustomerPhoneNumber();
+        String strPhoneNumber = proxy.getPhoneNumber();
         textPhoneNumber.setText(strPhoneNumber);
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
