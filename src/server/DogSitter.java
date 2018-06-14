@@ -32,7 +32,7 @@ public class DogSitter extends User {
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
         Singleton singleton = new Singleton();
-        this.assignmentList = singleton.getDogSitterListAssignmentFromDB(this);
+        this.assignmentList = singleton.getDogSitterListAssignmentFromDB(email);
     }
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,

@@ -278,6 +278,10 @@ class Connect extends Thread {
                     inputPassword = tokenMsg.nextToken();
                     serverMsg = dogSitterAccessDataVerifier(inputUser, inputPassword);
                     break;
+                case 101:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getDogSitterListAssignment(email);
+                    break;
                 default:
             }
         } finally {
@@ -309,7 +313,6 @@ class Connect extends Thread {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
-            System.out.println("test null bool: " + key + "\t" + a.getState());
             msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
         }
         return msg;
@@ -644,6 +647,20 @@ class Connect extends Thread {
             e.printStackTrace();
             return "false";
         }
+    }
+
+    private String getDogSitterListAssignment(String email){
+        Singleton singleton = new Singleton();
+        HashMap<Integer, Assignment> dogSitterListAssignment = singleton.getDogSitterListAssignmentFromDB(email);
+        String msg = "";
+        for (Integer key : dogSitterListAssignment.keySet()) {
+            Assignment a = dogSitterListAssignment.get(key);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String strDateStart = dateFormat.format(a.getDateStart());
+            String strDateEnd = dateFormat.format(a.getDateEnd());
+            msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
+        }
+        return msg;
     }
 
 }

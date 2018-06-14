@@ -159,7 +159,7 @@ public class Singleton {
         return dog;
     }
 
-    public HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(DogSitter dogSitter){
+    public HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(String dogSitter){
         HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
