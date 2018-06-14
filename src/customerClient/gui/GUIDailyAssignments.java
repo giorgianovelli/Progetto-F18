@@ -63,17 +63,19 @@ public class GUIDailyAssignments extends JFrame {
                 Assignment a = null;
                 a = listAssigment.get(i);
                 Date dateStart = a.getDateStart();
+                Date dateEnd = a.getDateEnd();
                 SimpleDateFormat date1 = new SimpleDateFormat("dd/MM/yyyy");
                 String dateString1 = date1.format(dateStart);
-                System.out.println(dateString1);
+                String dateStringEnd1 = date1.format(dateEnd);
                 SimpleDateFormat date2 = new SimpleDateFormat("dd/MM/yyyy");
                 String dateString2 = date1.format(todayDate);
-                System.out.println(dateString1);
+                String dateStringEnd2 = date1.format(todayDate);
                 dateString1.equals(dateString2);
-                if (dateString1.equals(dateString2)) { //|| a.getDateEnd().equals(todayDate))) {
-                    System.out.println("OK");
+                dateStringEnd1.equals(dateStringEnd2);
+                if (dateString1.equals(dateString2) || (dateStringEnd1.equals(dateStringEnd2))) {
+
                     todayAssigment.put(n, a);
-                    System.out.println("Non funziona");
+
                 }
 
                 n++;
@@ -92,6 +94,7 @@ public class GUIDailyAssignments extends JFrame {
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
                 labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                labelString = "<html>" + a.getDateEnd() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
                 labelDescription[j] = new JLabel(labelString);
                 button[j] = new JButton("Delete");
                 button[j].addActionListener(new ActionListener(){
@@ -106,21 +109,6 @@ public class GUIDailyAssignments extends JFrame {
                 j++;
             }
         }
-
-          /*  p.setLayout(new GridLayout(button.length, 2));
-            for (int i = 0; i < nAssignments; i++) {
-                int n = i + 1;
-                lb = new JLabel("Daily assignment n° " + n);
-                button[i] = new JButton("Delete");
-                p.add(lb);
-                p.add(button[i]);
-                button[i].addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JOptionPane.showConfirmDialog(null,"Are you sure to cancel ?","Conferm Actions",JOptionPane.YES_NO_OPTION);}
-                });
-            }*/
-
 
         else if (cs.equals(CalendarState.NORMAL)) {
             setTitle("Daily assignment");
@@ -143,63 +131,8 @@ public class GUIDailyAssignments extends JFrame {
     }
 
 }
-   // Far combaciare la data del calendario con quella di un determinato appuntamento in modo da aver la possibilità di cancellarlo
-  // Da sistemare
+  // manca l'ultimo pezzo sulle info schiacciando qualsiasi bottone del calendario
 
-
-   /*             int nAssignments = todayAssigment.size();
-                // panelout.add(panelButton);
-                button = new JButton[nAssignments];
-                if (cs.equals(CalendarState.REMOVING)) {
-                infoPanel = new JPanel[nAssignments];
-                labelDescription = new JLabel[nAssignments];
-                setTitle("Daily assignment");
-                p.setLayout(new GridLayout(button.length, 2));
-                ActionListener write = new ActionListener() {
-@Override
-public void actionPerformed(ActionEvent e) {
-        }
-        };
-
-            }
-        }*/
-           /* for (int i = 0; i < nAssignments; i++) {
-                int n = i + 1;
-                lb = new JLabel("Daily assignment n° " + n);
-                button[i] = new JButton("Delete");
-                p.add(lb);
-                p.add(button[i]);
-               // lb.setText("Delete");
-               // panelButton.add(yes);
-               // panelButton.add(no);
-                panelButton.add(button[6]);
-                add(panelout);
-                button[nAssignments].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getActionCommand().equals("Delete")){
-                        }
-                        JOptionPane.showMessageDialog(new JFrame(),"Are you sure ?", "Conferm Action", JOptionPane.YES_NO_OPTION);
-                    }
-                });
-            }*//*
-          else if(cs.equals(CalendarState.NORMAL)) {
-        setTitle("Daily assignment");
-        p.setLayout(new GridLayout(nAssignments, 2));
-        for (int i = 0; i < nAssignments; i++) {
-            int n = i + 1;
-            lb = new JLabel("Daily assignment n° " + n);
-            button[i] = new JButton("Info");
-            p.add(lb);
-            p.add(button[i]);
-        }
-    }
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        getContentPane().add(scroll);
-
-                }
-
-                }  */
 
 
 
