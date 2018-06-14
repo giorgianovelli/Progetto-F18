@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public interface InterfaceCustomer {
+
     boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint);
 
     boolean removeAssignment(int code);
@@ -26,7 +27,7 @@ public interface InterfaceCustomer {
 
     Address getAddress();
 
-    //HashSet<Dog> getDogList();    //TODO da implementare in CustomerProxy
+    HashSet<Dog> getDogList();
 
     HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash);
 

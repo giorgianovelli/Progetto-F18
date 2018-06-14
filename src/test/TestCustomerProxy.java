@@ -63,10 +63,28 @@ public class TestCustomerProxy {
         }
         System.out.println("add dog: " + proxy.addDog("RICCARDOGIURA@GMAIL.COM","CANETEST", "AKITA", 1, 20));*/
 
-        System.out.println("add a review: " + proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "bla, bla, bla,"));
+        /*System.out.println("add a review: " + proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "bla, bla, bla,"));
         System.out.println(proxy.getAddress().toString());
         System.out.println(proxy.getDateOfBirth());
         System.out.println(proxy.getPassword());
-        System.out.println(proxy.disableDog(3));
+        System.out.println(proxy.disableDog(3));*/
+        HashSet<Dog> dogList = proxy.getDogList();
+        Singleton singleton = new Singleton();
+        Dog hermes = singleton.createDogFromDB(3);
+        Dog alfonso = singleton.createDogFromDB(5);
+        Dog tony = singleton.createDogFromDB(11);
+        for (Dog d : dogList) {
+            if (d.getID() == hermes.getID()){
+                System.out.println("Hermes is in dogList!");
+            }
+
+            if (d.getID() == alfonso.getID()){
+                System.out.println("Alfonso is in dogList!");
+            }
+
+            if (d.getID() == tony.getID()){
+                System.out.println("Tony is in dogList!");
+            }
+        }
     }
 }

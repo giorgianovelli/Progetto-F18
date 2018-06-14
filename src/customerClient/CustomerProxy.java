@@ -392,4 +392,8 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
+    public HashSet<Dog> getDogList(){
+        return decodeDogList(getReply("28#" + email));
+    }
+
 }

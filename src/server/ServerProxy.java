@@ -269,6 +269,10 @@ class Connect extends Thread {
                     int ID = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = disableDog(email, ID);
                     break;
+                case 28:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerDogList(email);
+                    break;
                 case 100:
                     inputUser = tokenMsg.nextToken();
                     inputPassword = tokenMsg.nextToken();
@@ -613,6 +617,18 @@ class Connect extends Thread {
         } else {
             return "false";
         }
+    }
+
+    private String getCustomerDogList(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        HashSet<Dog> dogList = customer.getDogList();
+        String msg = "";
+        for (Dog d : dogList) {
+            msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
+                    + d.getWeight() + "&" + d.isEnabled() + "*";
+        }
+        return msg;
     }
 
     private String dogSitterAccessDataVerifier(String inputUser, String inputPasword){
