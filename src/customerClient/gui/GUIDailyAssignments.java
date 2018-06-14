@@ -131,7 +131,7 @@ public class GUIDailyAssignments extends JFrame {
     }
 
 }
-  // manca l'ultimo pezzo sulle info schiacciando qualsiasi bottone del calendario
+  // manca l'ultimo pezzo sulle info degli appuntamenti 
 
 
 
