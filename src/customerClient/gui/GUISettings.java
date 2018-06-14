@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GUISettings extends JFrame {
-    final int WIDTH = 512;
+    final int WIDTH = 600;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
