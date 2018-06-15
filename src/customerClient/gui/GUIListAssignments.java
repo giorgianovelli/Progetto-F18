@@ -40,6 +40,7 @@ public class GUIListAssignments extends JFrame{
     private JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
     //private Customer customer;
     private HashMap<Integer, Assignment> listAssignment;
+    private HashMap<Integer, Review> listReview;
     private CustomerProxy proxy;
     private String email;
     private Assignment assignment;
@@ -54,19 +55,17 @@ public class GUIListAssignments extends JFrame{
         this.listAssignment = listAssignment;
         this.email = email;
         this.proxy = new CustomerProxy(email);
+        listReview = proxy.getReviewList();
 
 
         initComponents(cs, guiCustomer);
     }
 
     private void initComponents(CalendarState cs, GUICustomer guiCustomer){
-        //TODO stato dell'assignment, e vedere se funziona la visualizzazione delle recensioni
+
 
         assignmentNumber = listAssignment.size();
-        //assignmentNumber = customer.getAssignmentList().size();
-        //reviewNumber = customer.getReviewList().size();
-        reviewNumber = 0;   //TODO
-
+        reviewNumber = listReview.size();
 
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
             infoPanel = new JPanel[reviewNumber];
@@ -81,10 +80,6 @@ public class GUIListAssignments extends JFrame{
         }
 
         contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
-
-
-
-        //DBConnector dbConnector = new DBConnector();
 
 
         if (cs.equals(CalendarState.REVIEWING)){
@@ -129,44 +124,65 @@ public class GUIListAssignments extends JFrame{
         }
         else if (cs.equals(CalendarState.DELETING_REVIEW)){ //DA controllare!!!!!
             setTitle("Your reviews");
-            int j = 0;
-            //TODO
-            /*for(Integer i: customer.getReviewList().keySet()){
-                Review r = null;
-                String s;
-                r = customer.getReviewList().get(i);
-                s = "INFO";
-                labelDescription[j]= new JLabel(s);
-                buttonAction[j]= new JButton("Delete review");
 
-                createPanel(j);
+            int j = 0;
+            for(Integer i: listReview.keySet()){
+                Review r = null;
+                String labelString;
+                r = listReview.get(i);
+
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                date.setLenient(false);
+                Date reviewDate = r.getDate();
+                String dateStringReview = date.format(reviewDate);
+
+                labelString = dateStringReview + " " + r.getTitle();
+                labelDescription[j]= new JLabel(labelString);
+                buttonAction[j]= new JButton("Delete review");
+                buttonAction[j].addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Conferm Delete Review",JOptionPane.YES_NO_OPTION);}
+                });
+
+                createPanelReview(j);
                 j++;
 
-            }*/
-
-
-
+            }
 
 
         }
         else if (cs.equals(CalendarState.SHOW_REVIEWS)){ //DA controllare!!!!!
             setTitle("Your reviews");
-            int j = 0;
-            //TODO
-            /*for(Integer i: customer.getReviewList().keySet()){
-                Review r = null;
-                String s;
-                r = customer.getReviewList().get(i);
-                s = "INFO";
-                labelDescription[j]= new JLabel(s);
-                buttonAction[j]= new JButton("Show more");
 
-                createPanel(j);
+
+            int j = 0;
+            for(Integer i: listReview.keySet()){
+                Review r = null;
+                String labelString;
+                r = listReview.get(i);
+
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                date.setLenient(false);
+                Date reviewDate = r.getDate();
+                String dateStringReview = date.format(reviewDate);
+
+                labelString = dateStringReview + " " + r.getTitle();
+                labelDescription[j]= new JLabel(labelString);
+                buttonAction[j]= new JButton("Show more");
+                buttonAction[j].addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GUIShowReview showReview = new GUIShowReview(listReview.get(i));
+                        showReview.setVisible(true);
+                    }
+
+                });
+
+                createPanelReview(j);
                 j++;
 
-            }*/
-
-
+            }
 
 
         } else {
@@ -231,23 +247,13 @@ public class GUIListAssignments extends JFrame{
 
         infoPanel[i].setLayout(new BorderLayout());
 
-        //infoPanel[i].setPreferredSize(new Dimension(480,40));
         labelState[i] = createLabelState(a,i);
         labelState[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         infoPanel[i].add(labelState[i], BorderLayout.WEST);
 
-        //labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
         infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
-
-        //buttonAction[i].setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 10));
         infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
-
-        /*infoPanel[i].setLayout(new FlowLayout());
-
-        infoPanel[i].setPreferredSize(new Dimension(800,40));
-        infoPanel[i].add(createLabelState(a,i), FlowLayout.LEFT);
-        infoPanel[i].add(labelDescription[i], FlowLayout.CENTER);
-        infoPanel[i].add(buttonAction[i], FlowLayout.RIGHT);*/
 
         contentPanel.add(infoPanel[i]);
 

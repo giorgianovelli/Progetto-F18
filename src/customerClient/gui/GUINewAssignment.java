@@ -4,6 +4,8 @@ package customerClient.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -74,13 +76,13 @@ public class GUINewAssignment extends JFrame{
         panelNoButtons.setLayout(new BorderLayout());
         panelNoButtons.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
         panelBox.setLayout(new BoxLayout(panelBox, 1));
-        panelCombo.setLayout(new GridLayout(1,1));
+        panelCombo.setLayout(new GridLayout(1, 1));
         panelAddress.setLayout(new GridLayout(5, 1, 30, 20));
         panelLabel.setLayout(new BorderLayout());
         panelLabel2.setLayout(new BorderLayout());
         panelDogs.setLayout(gridLayout);
-        panelDogs.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
-        panelButtons.setLayout(new GridLayout(1,2,5,0));
+        panelDogs.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        panelButtons.setLayout(new GridLayout(1, 2, 5, 0));
         panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 250, 20, 250));
 
         // Aggiunta dei pannelli al pannello più esterno
@@ -95,7 +97,7 @@ public class GUINewAssignment extends JFrame{
 
         //PanelBox (fa parte del primo pannello)
 
-        Dimension dimension = new Dimension(0,20);
+        Dimension dimension = new Dimension(0, 20);
         panelBox.add(panelCombo);
         panelBox.add(Box.createRigidArea(dimension));
         panelBox.add(panelLabel);
@@ -139,6 +141,8 @@ public class GUINewAssignment extends JFrame{
 
     }
 
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
     public String dateToString(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String string = simpleDateFormat.format(date);
@@ -166,16 +170,12 @@ class NewAssignmentBox extends JPanel{
     JLabel minutesLabel = new JLabel("Minute:");
 
 
-    //TODO etichette devono mostrare oggetto Date ricevuto
+    JLabel fromDayLabel = new JLabel("");
+    JLabel fromMonthLabel = new JLabel("");
+    JLabel fromYearLabel = new JLabel("");
 
 
-    JLabel fromDayLabel = new JLabel("");           //TODO <-------------------------------------
-    JLabel fromMonthLabel = new JLabel("");         //TODO <-------------------------------------
-    JLabel fromYearLabel = new JLabel("");          //TODO <-------------------------------------
-
-
-
-    String[] day = new String[]{};
+    String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25","26","27","28","29","30","31"};
     String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] year = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
     String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
@@ -189,6 +189,9 @@ class NewAssignmentBox extends JPanel{
 
     public NewAssignmentBox(String selectedDay){
 
+
+
+
         fhourList = new JComboBox<>(hour);
         fminuteList = new JComboBox<>(minute);
         tdayList = new JComboBox<>(day);
@@ -196,6 +199,25 @@ class NewAssignmentBox extends JPanel{
         tyearList = new JComboBox<>(year);
         thourList = new JComboBox<>(hour);
         tminuteList = new JComboBox<>(minute);
+
+
+        /*
+        tmonthList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.g().equals("02")) {
+                    day[28] = null;
+                    day[29] = null;
+                    day[30] = null;
+                }
+
+
+
+            }
+        });
+
+        */
+
 
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);
@@ -227,7 +249,7 @@ class NewAssignmentBox extends JPanel{
         add(fromLabel);
         add(fromDayLabel);
         add(fromMonthLabel);
-        add(fromYearLabel);         
+        add(fromYearLabel);
         add(fhourList);
         add(fminuteList);
 

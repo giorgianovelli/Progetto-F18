@@ -84,7 +84,7 @@ public class GUISettings extends JFrame {
 
     private void initComponents() {
 
-        panelData.setLayout(new GridLayout(10, 1, 20, 20));
+        panelData.setLayout(new GridLayout(9, 1, 20, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
@@ -106,9 +106,9 @@ public class GUISettings extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        //todo  per riempire le jcombobox con le date corrette
+        //per riempire le jcombobox con le date corrette
         Date strDate= proxy.getDateOfBirth();
-        // System.out.println(strDate);
+        // System.out.println(strDate);  //todo da eliminare
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
@@ -144,14 +144,13 @@ public class GUISettings extends JFrame {
         panelData.add(labelPaymentMethod);
         add(panelOut);
 
-        panelButton.setLayout(new GridLayout(1, 2));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        panelButton.add(buttonCancel, BorderLayout.SOUTH);
-        panelButton.add(buttonConfirm, BorderLayout.SOUTH);
-
         panelRadioButton.setLayout(new GridLayout(1,0));
         panelData.add(panelRadioButton);
 
+        panelButton.setLayout(new GridLayout(1, 2,5,5));
+        panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
+        panelButton.add(buttonCancel, BorderLayout.SOUTH);
+        panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
         //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
         ActionListener registration = new ActionListener() {
@@ -160,7 +159,7 @@ public class GUISettings extends JFrame {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
                     setNewValues();
-                    JOptionPane.showMessageDialog(new JFrame(), "Account updated correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                     //TODO nel caso in cui non viene fatta la modifica??
                 }
@@ -254,7 +253,7 @@ public class GUISettings extends JFrame {
     }
 
 
-    //TODO metodo per cambiare i valori aggiornati dall'utente nel database
+    //metodo per cambiare i valori aggiornati dall'utente nel database
     private void setNewValues() {
         proxy.updateName(textName.getText());
         textName.setEditable(true);
@@ -264,7 +263,7 @@ public class GUISettings extends JFrame {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        //manca come aggiornare la data nelle JCombobox
+        //todo manca come aggiornare la data nelle JCombobox
 
         proxy.updateAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
