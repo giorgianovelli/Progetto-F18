@@ -90,36 +90,34 @@ class Connect extends Thread {
 
     private String executeClientCmd(){
         String serverMsg = null;
+        StringTokenizer tokenMsg = null;
         try {
-            StringTokenizer tokenMsg = null;
-            try {
-                tokenMsg = new StringTokenizer(msgIn.readLine(), "#");
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
-            String strExec = "";
-
-            TypeUser userType = TypeUser.valueOf(tokenMsg.nextToken());
-            switch (userType){
-                case CUSTOMER:
-                    ExecCustomerEnum exeCustomer = ExecCustomerEnum.valueOf(tokenMsg.nextToken());
-                    while (tokenMsg.hasMoreTokens()){
-                        strExec = strExec + "#" + tokenMsg.nextToken();
-                    }
-                    serverMsg = exeCustomer.execute(strExec);
-                    break;
-                case DOGSITTER:
-                    ExecDogSitterEnum exeDogSitter = ExecDogSitterEnum.valueOf(tokenMsg.nextToken());
-                    while (tokenMsg.hasMoreTokens()){
-                        strExec = strExec + "#" + tokenMsg.nextToken();
-                    }
-                    serverMsg = exeDogSitter.execute(strExec);
-                    break;
-            }
-        } finally {
-            return serverMsg;
+            tokenMsg = new StringTokenizer(msgIn.readLine(), "#");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error in executing client message!";
         }
+
+        String strExec = "";
+
+        TypeUser userType = TypeUser.valueOf(tokenMsg.nextToken());
+        switch (userType){
+            case CUSTOMER:
+                ExecCustomerEnum exeCustomer = ExecCustomerEnum.valueOf(tokenMsg.nextToken());
+                while (tokenMsg.hasMoreTokens()){
+                    strExec = strExec + "#" + tokenMsg.nextToken();
+                }
+                serverMsg = exeCustomer.execute(strExec);
+                break;
+            case DOGSITTER:
+                ExecDogSitterEnum exeDogSitter = ExecDogSitterEnum.valueOf(tokenMsg.nextToken());
+                while (tokenMsg.hasMoreTokens()){
+                    strExec = strExec + "#" + tokenMsg.nextToken();
+                }
+                serverMsg = exeDogSitter.execute(strExec);
+                break;
+        }
+            return serverMsg;
     }
 
     //TODO metodo da analizzare...
