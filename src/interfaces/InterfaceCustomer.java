@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public interface InterfaceCustomer {
+
     boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint);
 
     boolean removeAssignment(int code);
@@ -20,15 +21,13 @@ public interface InterfaceCustomer {
 
     boolean disableDog(int ID);
 
-    //HashMap<Integer, Assignment> getAssignmentList(); //TODO getCustomerListAssignment
+    HashMap<Integer, Assignment> getAssignmentList();
 
     HashMap<Integer, Review> getReviewList();
 
     Address getAddress();
 
-    //HashSet<Dog> getDogList();
-
-    //HashSet<Dog> getDogListFromDB(String email);
+    HashSet<Dog> getDogList();
 
     HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash);
 
@@ -36,21 +35,27 @@ public interface InterfaceCustomer {
 
     PaymentMethod getPaymentMethod();
 
-    //boolean updateName(String name);
+    boolean updateName(String name);
 
-    //boolean updateSurname(String surname);
+    boolean updateSurname(String surname);
 
-    //boolean updatePassword(String password);
+    boolean updatePassword(String password);
 
-    //boolean updatePhoneNumber(String phoneNumber);
+    boolean updatePhoneNumber(String phoneNumber);
 
-    //boolean updateDateOfBirth(Date dateOfBirth);
+    boolean updateDateOfBirth(Date dateOfBirth);
 
-    //boolean updateAddress(String country, String city, String street, String number, String cap);
+    boolean updateAddress(String country, String city, String street, String number, String cap);
 
-    //boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv);
+    boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv);
 
-    //void loadDogSitterList();
+    String getName();
 
-    //TODO controllare la presenza di tutti i metodi
+    String getSurname();
+
+    String getPassword();
+
+    String getPhoneNumber();
+
+    Date getDateOfBirth();
 }

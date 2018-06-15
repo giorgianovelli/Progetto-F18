@@ -269,10 +269,18 @@ class Connect extends Thread {
                     int ID = Integer.parseInt(tokenMsg.nextToken());
                     serverMsg = disableDog(email, ID);
                     break;
+                case 28:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getCustomerDogList(email);
+                    break;
                 case 100:
                     inputUser = tokenMsg.nextToken();
                     inputPassword = tokenMsg.nextToken();
                     serverMsg = dogSitterAccessDataVerifier(inputUser, inputPassword);
+                    break;
+                case 101:
+                    email = tokenMsg.nextToken();
+                    serverMsg = getDogSitterListAssignment(email);
                     break;
                 default:
             }
@@ -305,7 +313,6 @@ class Connect extends Thread {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String strDateStart = dateFormat.format(a.getDateStart());
             String strDateEnd = dateFormat.format(a.getDateEnd());
-            System.out.println("test null bool: " + key + "\t" + a.getState());
             msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
         }
         return msg;
@@ -615,6 +622,18 @@ class Connect extends Thread {
         }
     }
 
+    private String getCustomerDogList(String email){
+        Singleton singleton = new Singleton();
+        Customer customer = singleton.createCustomerFromDB(email);
+        HashSet<Dog> dogList = customer.getDogList();
+        String msg = "";
+        for (Dog d : dogList) {
+            msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
+                    + d.getWeight() + "&" + d.isEnabled() + "*";
+        }
+        return msg;
+    }
+
     private String dogSitterAccessDataVerifier(String inputUser, String inputPasword){
         Login loginDogSitter = new Login();
         try {
@@ -628,6 +647,20 @@ class Connect extends Thread {
             e.printStackTrace();
             return "false";
         }
+    }
+
+    private String getDogSitterListAssignment(String email){
+        Singleton singleton = new Singleton();
+        HashMap<Integer, Assignment> dogSitterListAssignment = singleton.getDogSitterListAssignmentFromDB(email);
+        String msg = "";
+        for (Integer key : dogSitterListAssignment.keySet()) {
+            Assignment a = dogSitterListAssignment.get(key);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String strDateStart = dateFormat.format(a.getDateStart());
+            String strDateEnd = dateFormat.format(a.getDateEnd());
+            msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
+        }
+        return msg;
     }
 
 }

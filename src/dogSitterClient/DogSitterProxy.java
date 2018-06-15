@@ -62,10 +62,10 @@ public class DogSitterProxy {
         }
     }
 
-    /*public HashMap<Integer, Assignment> getDogSitterListAssignment() {
+    public HashMap<Integer, Assignment> getAssignmentList() {
         String serverMsg = getReply("101#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
-        HashMap<Integer, Assignment> dogSitterListAssignment = new HashMap<Integer, Assignment>();
+        HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()) {
             int code = Integer.parseInt(tokenMsg.nextToken());
             HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());
@@ -78,18 +78,21 @@ public class DogSitterProxy {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            boolean state;
-            if (tokenMsg.nextToken().equals("true")) {
+            Boolean state;
+            String strState = tokenMsg.nextToken();
+            if (strState.equals("true")) {
                 state = true;
-            } else if  {
+            } else if (strState.equals("false")) {
                 state = false;
+            } else {
+                state = null;
             }
             Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
             Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
-            dogSitterListAssignment.put(code, a);
+            customerListAssignment.put(code, a);
         }
-        return dogSitterListAssignment;
-    }*/
+        return customerListAssignment;
+    }
 
     private HashSet<Dog> decodeDogList(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");

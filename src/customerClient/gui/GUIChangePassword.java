@@ -75,7 +75,7 @@ public class GUIChangePassword extends JFrame {
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-        String strCurrentPassword = proxy.getCustomerPassword();
+        String strCurrentPassword = proxy.getPassword();
         textCurrentPassword.setText(strCurrentPassword);
         textCurrentPassword.setEditable(true);
         labelCurrentPassword.setLabelFor(textCurrentPassword);

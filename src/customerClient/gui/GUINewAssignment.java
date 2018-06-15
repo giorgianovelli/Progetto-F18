@@ -4,11 +4,12 @@ package customerClient.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GUINewAssignment extends JFrame{
 
-    final int WIDTH = 600;
+    final int WIDTH = 800;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -24,6 +25,8 @@ public class GUINewAssignment extends JFrame{
     private JPanel panelButtons = new JPanel();
     private JPanel panelDogs = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(panelOut);
+    private Date date;
+    private String strDate;
 
     //Others
 
@@ -34,7 +37,7 @@ public class GUINewAssignment extends JFrame{
     private JButton buttonSearch = new JButton("Search");
 
 
-    NewAssignmentBox newAssignmentBox = new NewAssignmentBox();
+
     NewAssignmentText country = new NewAssignmentText("Country:                                               ");
     NewAssignmentText city = new NewAssignmentText("City:                                                       ");
     NewAssignmentText cap = new NewAssignmentText("Postal Code:                                        ");
@@ -50,16 +53,20 @@ public class GUINewAssignment extends JFrame{
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(true);             //TODO reset false
+        setResizable(false);
         setLayout(new BorderLayout());
 
-        initComponents();
+        this.date = date;
+        strDate = dateToString(date);
+        NewAssignmentBox newAssignmentBox = new NewAssignmentBox(strDate);
+
+        initComponents(newAssignmentBox);
 
         }
 
 //________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-    private void initComponents() {
+    private void initComponents(NewAssignmentBox newAssignmentBox) {
 
         //Setting layout dei panel
 
@@ -74,7 +81,7 @@ public class GUINewAssignment extends JFrame{
         panelDogs.setLayout(gridLayout);
         panelDogs.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
         panelButtons.setLayout(new GridLayout(1,2,5,0));
-        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 170, 20, 170));
+        panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 250, 20, 250));
 
         // Aggiunta dei pannelli al pannello più esterno
 
@@ -131,6 +138,12 @@ public class GUINewAssignment extends JFrame{
         add(scrollPane);
 
     }
+
+    public String dateToString(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String string = simpleDateFormat.format(date);
+        return string;
+    }
 }
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -152,9 +165,13 @@ class NewAssignmentBox extends JPanel{
     JLabel hoursLabel = new JLabel("Hour:");
     JLabel minutesLabel = new JLabel("Minute:");
 
-    JLabel fromDayLabel = new JLabel("");
-    JLabel fromMonthLabel = new JLabel("");
-    JLabel fromYearLabel = new JLabel("");
+
+    //TODO etichette devono mostrare oggetto Date ricevuto
+
+
+    JLabel fromDayLabel = new JLabel("");           //TODO <-------------------------------------
+    JLabel fromMonthLabel = new JLabel("");         //TODO <-------------------------------------
+    JLabel fromYearLabel = new JLabel("");          //TODO <-------------------------------------
 
 
 
@@ -170,7 +187,7 @@ class NewAssignmentBox extends JPanel{
 
     // Costruttore NewAssignmentBox
 
-    public NewAssignmentBox(){
+    public NewAssignmentBox(String selectedDay){
 
         fhourList = new JComboBox<>(hour);
         fminuteList = new JComboBox<>(minute);
@@ -189,9 +206,16 @@ class NewAssignmentBox extends JPanel{
         tminuteList.setLightWeightPopupEnabled(false);
 
 
-        setLayout(new GridLayout(3, 6, 10, 10));
+        String[] selectedDaySplitted = selectedDay.split("/");
 
-        //Label
+        fromDayLabel.setText(selectedDaySplitted[0]);
+        fromMonthLabel.setText(selectedDaySplitted[1]);
+        fromYearLabel.setText(selectedDaySplitted[2]);
+
+
+
+
+        setLayout(new GridLayout(3, 6, 10, 10));
 
         add(blanckLabel);
         add(daysLabel);
@@ -200,12 +224,10 @@ class NewAssignmentBox extends JPanel{
         add(hoursLabel);
         add(minutesLabel);
 
-        //ComboBox
-
         add(fromLabel);
         add(fromDayLabel);
         add(fromMonthLabel);
-        add(fromYearLabel);
+        add(fromYearLabel);         
         add(fhourList);
         add(fminuteList);
 
@@ -219,6 +241,8 @@ class NewAssignmentBox extends JPanel{
     }
 
 }
+
+
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GUISettings extends JFrame {
-    final int WIDTH = 600;
+    final int WIDTH = 512;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -84,7 +84,7 @@ public class GUISettings extends JFrame {
 
     private void initComponents() {
 
-        panelData.setLayout(new GridLayout(9, 1, 20, 25));
+        panelData.setLayout(new GridLayout(10, 1, 20, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
@@ -109,6 +109,9 @@ public class GUISettings extends JFrame {
         //per riempire le jcombobox con le date corrette
         Date strDate= proxy.getCustomerDateOfBirth();
         // System.out.println(strDate);  //todo da eliminare
+        //todo  per riempire le jcombobox con le date corrette
+        Date strDate= proxy.getDateOfBirth();
+        // System.out.println(strDate);
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
@@ -144,13 +147,13 @@ public class GUISettings extends JFrame {
         panelData.add(labelPaymentMethod);
         add(panelOut);
 
-        panelRadioButton.setLayout(new GridLayout(1,0));
-        panelData.add(panelRadioButton);
-
-        panelButton.setLayout(new GridLayout(1, 2, 10,10));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 5, 90));
+        panelButton.setLayout(new GridLayout(1, 2));
+        panelButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
+
+        panelRadioButton.setLayout(new GridLayout(1,0));
+        panelData.add(panelRadioButton);
 
 
         //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
@@ -254,7 +257,7 @@ public class GUISettings extends JFrame {
     }
 
 
-    // metodo per cambiare i valori aggiornati dall'utente nel database
+    //TODO metodo per cambiare i valori aggiornati dall'utente nel database
     private void setNewValues() {
         proxy.updateCustomerName(textName.getText());
         textName.setEditable(true);
@@ -264,7 +267,7 @@ public class GUISettings extends JFrame {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        //TODO manca come aggiornare la data nelle JCombobox
+        //manca come aggiornare la data nelle JCombobox
 
         proxy.updateCustomerAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
