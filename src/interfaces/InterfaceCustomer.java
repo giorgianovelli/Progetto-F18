@@ -17,7 +17,7 @@ public interface InterfaceCustomer {
 
     boolean removeReview(Integer code);
 
-    boolean addDog(String customerEmail, String name, String breed, int age, double weight);
+    boolean addDog(String customerEmail, String name, String breed, Date dateOfBirth, double weight);
 
     boolean disableDog(int ID);
 
