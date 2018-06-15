@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GUISettings extends JFrame {
-    final int WIDTH = 512;
+    final int WIDTH = 600;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -84,7 +84,7 @@ public class GUISettings extends JFrame {
 
     private void initComponents() {
 
-        panelData.setLayout(new GridLayout(10, 1, 20, 20));
+        panelData.setLayout(new GridLayout(9, 1, 20, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
@@ -107,11 +107,8 @@ public class GUISettings extends JFrame {
         yearList = new JComboBox(years_tmp.toArray());
 
         //per riempire le jcombobox con le date corrette
-        Date strDate= proxy.getCustomerDateOfBirth();
-        // System.out.println(strDate);  //todo da eliminare
-        //todo  per riempire le jcombobox con le date corrette
         Date strDate= proxy.getDateOfBirth();
-        // System.out.println(strDate);
+        // System.out.println(strDate);  //todo da eliminare
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
@@ -147,14 +144,13 @@ public class GUISettings extends JFrame {
         panelData.add(labelPaymentMethod);
         add(panelOut);
 
-        panelButton.setLayout(new GridLayout(1, 2));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        panelButton.add(buttonCancel, BorderLayout.SOUTH);
-        panelButton.add(buttonConfirm, BorderLayout.SOUTH);
-
         panelRadioButton.setLayout(new GridLayout(1,0));
         panelData.add(panelRadioButton);
 
+        panelButton.setLayout(new GridLayout(1, 2,5,5));
+        panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
+        panelButton.add(buttonCancel, BorderLayout.SOUTH);
+        panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
         //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
         ActionListener registration = new ActionListener() {
@@ -217,12 +213,12 @@ public class GUISettings extends JFrame {
 
     private void setValues() {
 
-        String strName = proxy.getCustomerName();
+        String strName = proxy.getName();
         textName.setText(strName);
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-        String strSurname = proxy.getCustomerSurname();
+        String strSurname = proxy.getSurname();
         textSurname.setText(strSurname);
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
@@ -248,7 +244,7 @@ public class GUISettings extends JFrame {
         textCap.setEditable(true);
         labelCap.setLabelFor(textCap);
 
-        String strPhoneNumber = proxy.getCustomerPhoneNumber();
+        String strPhoneNumber = proxy.getPhoneNumber();
         textPhoneNumber.setText(strPhoneNumber);
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
@@ -257,19 +253,19 @@ public class GUISettings extends JFrame {
     }
 
 
-    //TODO metodo per cambiare i valori aggiornati dall'utente nel database
+    //metodo per cambiare i valori aggiornati dall'utente nel database
     private void setNewValues() {
-        proxy.updateCustomerName(textName.getText());
+        proxy.updateName(textName.getText());
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-        proxy.updateCustomerSurname(textSurname.getText());
+        proxy.updateSurname(textSurname.getText());
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        //manca come aggiornare la data nelle JCombobox
+        //todo manca come aggiornare la data nelle JCombobox
 
-        proxy.updateCustomerAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
+        proxy.updateAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
         labelCountry.setLabelFor(textCountry);
         textCity.setEditable(true);
@@ -281,7 +277,7 @@ public class GUISettings extends JFrame {
         textCap.setEditable(true);
         labelCap.setLabelFor(textCap);
 
-        proxy.updateCustomerPhoneNumber(textPhoneNumber.getText());
+        proxy.updatePhoneNumber(textPhoneNumber.getText());
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
