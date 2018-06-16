@@ -55,7 +55,8 @@ public class GUIListAssignments extends JFrame{
         this.listAssignment = listAssignment;
         this.email = email;
         this.proxy = new CustomerProxy(email);
-        listReview = proxy.getReviewList();
+        //TODO da problemi!
+        //listReview = proxy.getReviewList();
 
 
         initComponents(cs, guiCustomer);
@@ -65,7 +66,7 @@ public class GUIListAssignments extends JFrame{
 
 
         assignmentNumber = listAssignment.size();
-        reviewNumber = listReview.size();
+        //reviewNumber = listReview.size();
 
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
             infoPanel = new JPanel[reviewNumber];
@@ -125,7 +126,7 @@ public class GUIListAssignments extends JFrame{
         else if (cs.equals(CalendarState.DELETING_REVIEW)){ //DA controllare!!!!!
             setTitle("Your reviews");
 
-            int j = 0;
+            /*int j = 0;
             for(Integer i: listReview.keySet()){
                 Review r = null;
                 String labelString;
@@ -148,7 +149,7 @@ public class GUIListAssignments extends JFrame{
                 createPanelReview(j);
                 j++;
 
-            }
+            }*/
 
 
         }
@@ -156,7 +157,7 @@ public class GUIListAssignments extends JFrame{
             setTitle("Your reviews");
 
 
-            int j = 0;
+            /*int j = 0;
             for(Integer i: listReview.keySet()){
                 Review r = null;
                 String labelString;
@@ -182,7 +183,7 @@ public class GUIListAssignments extends JFrame{
                 createPanelReview(j);
                 j++;
 
-            }
+            }*/
 
 
         } else {
