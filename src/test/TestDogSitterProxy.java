@@ -12,10 +12,10 @@ public class TestDogSitterProxy {
         DogSitterProxy proxyLogin = new DogSitterProxy();
         System.out.println("test login true: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGETTO123"));
         System.out.println("test login false: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGGGGETTO123"));
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+        /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             System.out.println(a.getCode());
-        }
+        }*/
     }
 }

@@ -4,6 +4,8 @@ package customerClient.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -74,13 +76,13 @@ public class GUINewAssignment extends JFrame{
         panelNoButtons.setLayout(new BorderLayout());
         panelNoButtons.setBorder(BorderFactory.createTitledBorder("Complete each field to look for a dogsitter: "));
         panelBox.setLayout(new BoxLayout(panelBox, 1));
-        panelCombo.setLayout(new GridLayout(1,1));
+        panelCombo.setLayout(new GridLayout(1, 1));
         panelAddress.setLayout(new GridLayout(5, 1, 30, 20));
         panelLabel.setLayout(new BorderLayout());
         panelLabel2.setLayout(new BorderLayout());
         panelDogs.setLayout(gridLayout);
-        panelDogs.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
-        panelButtons.setLayout(new GridLayout(1,2,5,0));
+        panelDogs.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        panelButtons.setLayout(new GridLayout(1, 2, 5, 0));
         panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 250, 20, 250));
 
         // Aggiunta dei pannelli al pannello più esterno
@@ -95,7 +97,7 @@ public class GUINewAssignment extends JFrame{
 
         //PanelBox (fa parte del primo pannello)
 
-        Dimension dimension = new Dimension(0,20);
+        Dimension dimension = new Dimension(0, 20);
         panelBox.add(panelCombo);
         panelBox.add(Box.createRigidArea(dimension));
         panelBox.add(panelLabel);
@@ -138,6 +140,8 @@ public class GUINewAssignment extends JFrame{
         add(scrollPane);
 
     }
+
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     public String dateToString(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -196,11 +200,24 @@ class NewAssignmentBox extends JPanel{
         thourList = new JComboBox<>(hour);
         tminuteList = new JComboBox<>(minute);
 
-        if (tmonthList.getSelectedItem().equals("02")) {
-            day[28] = null;
-            day[29] = null;
-            day[30] = null;
-        }
+
+        /*
+        tmonthList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.g().equals("02")) {
+                    day[28] = null;
+                    day[29] = null;
+                    day[30] = null;
+                }
+
+
+
+            }
+        });
+
+        */
+
 
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);

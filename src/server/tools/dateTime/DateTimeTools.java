@@ -2,6 +2,7 @@ package server.tools.dateTime;
 
 import server.tools.dateTime.DateTimeDHMS;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateTimeTools {
@@ -17,5 +18,15 @@ public class DateTimeTools {
             System.err.println(e);
             return null;
         }
+    }
+
+    public static int getAge(Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        String strBirth = dateFormat.format(dateOfBirth);
+        int birth = Integer.parseInt(strBirth);
+        Date nowDate = new Date();
+        String strNow = dateFormat.format(nowDate);
+        int now = Integer.parseInt(strNow);
+        return now - birth;
     }
 }

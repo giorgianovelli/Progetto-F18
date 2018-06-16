@@ -54,7 +54,7 @@ public class DogSitterProxy {
     }
 
     public boolean dogSitterAccessDataVerifier(String inputUser, String inputPasword) {
-        String clientMsg = "100#" + inputUser + "#" + inputPasword;
+        String clientMsg = "DOGSITTER#ACCESSVERIFIER#" + inputUser + "#" + inputPasword;
         if (getReply(clientMsg).equals("true")) {
             return true;
         } else {

@@ -20,6 +20,7 @@ import server.tools.dateTime.DateTimeDHMS;
 
 import static server.tools.DoubleTools.round2Decimal;
 import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
+import static server.tools.dateTime.DateTimeTools.getAge;
 
 
 public class Customer extends User implements InterfaceCustomer{
@@ -83,7 +84,7 @@ public class Customer extends User implements InterfaceCustomer{
             //salva la prenotazione nel database
 
             try {
-                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', NULL, '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', 'NULL', '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
                 dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
                 for (Dog d : dogList) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
@@ -209,7 +210,7 @@ public class Customer extends User implements InterfaceCustomer{
         return reviewList;
     }
 
-    public boolean addDog(String customerEmail, String name, String breed, int age, double weight) {
+    public boolean addDog(String customerEmail, String name, String breed, Date dateOfBirth, double weight) {
         DBConnector dbConnector = new DBConnector();
         DogSize size;
         int ID;
@@ -223,9 +224,11 @@ public class Customer extends User implements InterfaceCustomer{
             rs.last();
             ID = rs.getRow() + 1;
             dbConnector.closeConnection();
-            Dog dog = new Dog(name, breed, size, age, weight, ID, true);
+            Dog dog = new Dog(name, breed, size, getAge(dateOfBirth), weight, ID, true);
             dogList.add(dog);
-            dbConnector.updateDB("INSERT INTO DOGS VALUES (" + ID + ", '" + name + "', '" + breed + "', " + weight + ", " + age + ", '" + customerEmail + "', true)");
+            SimpleDateFormat dateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String strDateOfBirth = dateSqlFormat.format(dateOfBirth);
+            dbConnector.updateDB("INSERT INTO DOGS VALUES (" + ID + ", '" + name + "', '" + breed + "', " + weight + ", '" + strDateOfBirth + "', '" + customerEmail + "', true)");
             dbConnector.closeUpdate();
             return true;
         } catch (SQLException e) {
