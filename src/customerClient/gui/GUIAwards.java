@@ -14,7 +14,9 @@ public class GUIAwards extends JFrame {
 
     private JPanel panel;
     //Icon iconRiccardo = new ImageIcon("");
-    //private JLabel riccardo;
+    ImageIcon iconRiccardo;
+    private JLabel labelR;
+    private JLabel riccardo;
     //Icon iconNicolas = new ImageIcon("");
     ImageIcon iconNicolas;
     private JLabel labelN;
@@ -26,10 +28,12 @@ public class GUIAwards extends JFrame {
     private JLabel giorgia;
     //Icon iconCamilla = new ImageIcon("");
     ImageIcon iconCamilla;
-    private JLabel labelCami;
+    private JLabel labelC;
     private JLabel camilla;
     //Icon iconCamelia = new ImageIcon("");
-    //private JLabel camelia;
+    ImageIcon iconCamelia;
+    private JLabel labelCami;
+    private JLabel camelia;
     //Icon iconSam = new ImageIcon("");
     //private JLabel sam;
 
@@ -48,7 +52,12 @@ public class GUIAwards extends JFrame {
         panel = new JPanel();
 
         //Icon iconRiccardo = new ImageIcon("");
-        //riccardo = new JLabel("Riccardo Giura - riky123456 - (Verifica e convalida, Database Administrator)");
+        iconRiccardo = new ImageIcon("images/riccardo.jpeg");
+        Image imageTransformR = iconRiccardo.getImage();
+        Image newImageR = imageTransformR.getScaledInstance(90, 90,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        iconRiccardo = new ImageIcon(newImageR);
+        labelR = new JLabel(iconRiccardo);
+        riccardo = new JLabel("Riccardo Giura (Verifica e convalida, Database Administrator)");
         //Icon iconNicolas = new ImageIcon("");
         iconNicolas = new ImageIcon("images/nicolas.jpeg");
         Image imageTransformN = iconNicolas.getImage();
@@ -69,19 +78,26 @@ public class GUIAwards extends JFrame {
         //Icon iconGiorgia = new ImageIcon("IMG_-v7xplt.jpg");
         //Icon iconCamilla = new ImageIcon("");
         iconCamilla = new ImageIcon("images/camilla.jpeg");
-        Image imageTransformCami = iconCamilla.getImage();
-        Image newImageCami = imageTransformCami.getScaledInstance(90, 90,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        iconCamilla = new ImageIcon(newImageCami);
-        labelCami = new JLabel(iconCamilla);
+        Image imageTransformC = iconCamilla.getImage();
+        Image newImageC = imageTransformC.getScaledInstance(90, 90,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        iconCamilla = new ImageIcon(newImageC);
+        labelC = new JLabel(iconCamilla);
         camilla = new JLabel("Camilla Modica (Documentazione del progetto)");
         //Icon iconCamelia = new ImageIcon("");
-        //camelia = new JLabel("Camelia Maidan - cammi001 - (Documentazione del codice)");
+        iconCamelia = new ImageIcon("images/camelia.jpg");
+        Image imageTransformCami = iconCamelia.getImage();
+        Image newImageCami = imageTransformCami.getScaledInstance(90, 90,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        iconCamelia = new ImageIcon(newImageCami);
+        labelCami = new JLabel(iconCamelia);
+        camelia = new JLabel("Camelia Maidan (Documentazione del codice)");
         //Icon iconSam = new ImageIcon("");
         //sam = new JLabel("Btissame Akrach - btissame-akrach - (Documentazione dei requisiti)");
 
         panel.setLayout(new GridLayout(3,2,10,10));
         //panel.add(riccardo); panel.add(nicolas); panel.add(giorgia); panel.add(camilla); panel.add(camelia); panel.add(sam);
-        panel.add(labelN); panel.add(nicolas); panel.add(labelG); panel.add(giorgia); panel.add(labelCami); panel.add(camilla);
+        panel.add(labelR); panel.add(riccardo); panel.add(labelN); panel.add(nicolas); panel.add(labelG); panel.add(giorgia);
+        panel.add(labelC); panel.add(camilla); panel.add(labelCami); panel.add(camelia);
+
 
         add(panel);
 

@@ -6,10 +6,11 @@ import java.awt.*;
 
 public class GUIInfo extends JFrame {
     final int WIDTH = 800;
-    final int HEIGHT = 1000;
+    final int HEIGHT = 450;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
-    private JPanel panel;
+    private JPanel panelIcon;
+    private JPanel panelLabel;
     ImageIcon splashScreenIcon;
     private JLabel labelIcon;
     private JLabel version;
@@ -27,7 +28,8 @@ public class GUIInfo extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(true); //da mettere 'false'
 
-        panel = new JPanel();
+        panelIcon = new JPanel(new BorderLayout());
+        panelLabel = new JPanel();
 
         splashScreenIcon = new ImageIcon("images/bozza_splashscreen.jpg");
         Image imageTransformIcon = splashScreenIcon.getImage();
@@ -38,9 +40,14 @@ public class GUIInfo extends JFrame {
         version = new JLabel("Version: 0.1.0 ", SwingConstants.CENTER);
         date = new JLabel("Publication date: 12/06/2018", SwingConstants.CENTER);
 
-        panel.setLayout(new GridLayout(3,1,10,10));
-        panel.add(labelIcon); panel.add(version); panel.add(date);
-        add(panel);
+        //panel.setLayout
+        panelIcon.add(labelIcon,BorderLayout.CENTER);
+        panelLabel.setLayout(new GridLayout(2, 1, 10, 10));
+        panelLabel.add(version); panelLabel.add(date);
+        panelIcon.add(panelLabel,BorderLayout.SOUTH);
+        //panel.add(version); panel.add(date);
+        //add(panelLabel);
+        add(panelIcon);
 
     }
 
