@@ -17,5 +17,8 @@ public class TestDogSitterProxy {
             Assignment a = listAssignment.get(key);
             System.out.println(a.getCode());
         }*/
+        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+        Assignment a = listAssignment.get(1);
+        System.out.println(a.getDateStart());
     }
 }

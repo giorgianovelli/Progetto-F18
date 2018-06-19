@@ -55,15 +55,11 @@ public class DogSitterProxy {
 
     public boolean dogSitterAccessDataVerifier(String inputUser, String inputPasword) {
         String clientMsg = "DOGSITTER#ACCESSVERIFIER#" + inputUser + "#" + inputPasword;
-        if (getReply(clientMsg).equals("true")) {
-            return true;
-        } else {
-            return false;
-        }
+        return getReply(clientMsg).equals("true");
     }
 
     public HashMap<Integer, Assignment> getAssignmentList() {
-        String serverMsg = getReply("101#" + email);
+        String serverMsg = getReply("DOGSITTER#GETLISTASSIGNMENT#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
         while (tokenMsg.hasMoreTokens()) {
@@ -108,11 +104,7 @@ public class DogSitterProxy {
             int age = Integer.parseInt(tokenDog.nextToken());
             double weight = Double.parseDouble(tokenDog.nextToken());
             boolean isEnabled;
-            if (tokenDog.nextToken().equals("true")){
-                isEnabled = true;
-            } else {
-                isEnabled = false;
-            }
+            isEnabled = tokenDog.nextToken().equals("true");
             Dog d = new Dog(name, breed, size, age, weight, ID, isEnabled);
             dogList.add(d);
         }

@@ -1,8 +1,17 @@
 package enumeration;
 
+import server.Assignment;
 import server.Login;
+import server.Singleton;
+
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.StringTokenizer;
+
+import static enumeration.enumStaticMethods.getDogListOfAssignment;
+import static enumeration.enumStaticMethods.getListAssignment;
+import static enumeration.enumStaticMethods.getMeetingPoint;
 
 public enum ExecDogSitterEnum {
     ACCESSVERIFIER{
@@ -24,6 +33,19 @@ public enum ExecDogSitterEnum {
                 e.printStackTrace();
                 return "false";
             }
+        }
+
+    },
+
+    GETLISTASSIGNMENT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            HashMap<Integer, Assignment> dogSitterListAssignment = singleton.getDogSitterListAssignmentFromDB(email);
+            return getListAssignment(dogSitterListAssignment);
         }
 
     };

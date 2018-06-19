@@ -120,19 +120,4 @@ class Connect extends Thread {
             return serverMsg;
     }
 
-    //TODO metodo da analizzare...
-    /*private String getDogSitterListAssignment(String email){
-        Singleton singleton = new Singleton();
-        HashMap<Integer, Assignment> dogSitterListAssignment = singleton.getDogSitterListAssignmentFromDB(email);
-        String msg = "";
-        for (Integer key : dogSitterListAssignment.keySet()) {
-            Assignment a = dogSitterListAssignment.get(key);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String strDateStart = dateFormat.format(a.getDateStart());
-            String strDateEnd = dateFormat.format(a.getDateEnd());
-            msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
-        }
-        return msg;
-    }*/
-
 }

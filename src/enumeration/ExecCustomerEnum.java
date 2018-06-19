@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
+import static enumeration.enumStaticMethods.getDogListOfAssignment;
+import static enumeration.enumStaticMethods.getListAssignment;
+import static enumeration.enumStaticMethods.getMeetingPoint;
+
 public enum ExecCustomerEnum {
     ACCESSVERIFIER{
 
@@ -46,15 +50,7 @@ public enum ExecCustomerEnum {
 
             Singleton singleton = new Singleton();
             HashMap<Integer, Assignment> customerListAssignment = singleton.getCustomerListAssignmentFromDB(email);
-            String msg = "";
-            for (Integer key : customerListAssignment.keySet()) {
-                Assignment a = customerListAssignment.get(key);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                String strDateStart = dateFormat.format(a.getDateStart());
-                String strDateEnd = dateFormat.format(a.getDateEnd());
-                msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
-            }
-            return msg;
+            return getListAssignment(customerListAssignment);
         }
 
     },
@@ -396,11 +392,7 @@ public enum ExecCustomerEnum {
             Address meetingPoint = new Address(country, city, street, number, cap);
 
             boolean cash;
-            if (strCash.equals("true")){
-                cash = true;
-            } else {
-                cash = false;
-            }
+            cash = strCash.equals("true");
 
             StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
             HashSet<Dog> dogList = new HashSet<Dog>();
@@ -638,31 +630,5 @@ public enum ExecCustomerEnum {
 
 
     public abstract String execute(String clientMsg);
-
-    private static String getDogListOfAssignment(int code){
-        String msg = "";
-        Singleton singleton = new Singleton();
-        HashSet<Dog> dogList = singleton.getDogListFromDB(code);
-        for (Dog d : dogList) {
-            msg = msg + d.getID() + "&" + d.getName() + "&" + d.getBreed() + "&" + d.getSize() + "&" + d.getAge() + "&"
-                    + d.getWeight() + "&" + d.isEnabled() + "*";
-        }
-        return msg;
-    }
-
-    private static String getMeetingPoint(int code){
-        Singleton singleton = new Singleton();
-        Address meetingPoint = singleton.getMeetingPointFromDB(code);
-        return meetingPoint.getCountry() + "*" + meetingPoint.getCity() + "*" + meetingPoint.getStreet() + "*"
-                + meetingPoint.getNumber() + "*" + meetingPoint.getCap();
-    }
-
-    private static String getReview(int code){
-        Singleton singleton = new Singleton();
-        Review review = singleton.getReview(code);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String date = dateFormat.format(review.getDate());
-        return  date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
-    }
 
 }
