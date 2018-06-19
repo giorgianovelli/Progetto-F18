@@ -19,7 +19,7 @@ public interface InterfaceDogSitter {
 
     //boolean isAcceptingCash();
 
-    //int getDogNumber();
+    int getDogNumber();
 
     //HashSet<DogSize> getListDogSize();
 

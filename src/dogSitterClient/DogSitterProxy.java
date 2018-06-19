@@ -281,4 +281,9 @@ public class DogSitterProxy implements InterfaceDogSitter {
             return false;
         }
     }
+
+    public int getDogNumber() {
+        String serverMsg = getReply("DOGSITTER#GETDOGNUMBER#" + email);
+        return Integer.parseInt(serverMsg);
+    }
 }

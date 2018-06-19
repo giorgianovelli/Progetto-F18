@@ -59,6 +59,7 @@ public class TestDogSitterProxy {
         proxy.updateAssignmentState(1, true);
         Assignment one = listAssignment.get(1);
         System.out.println(one.getState());*/
-        proxy.updateCashFlag(true);
+        //proxy.updateCashFlag(true);
+        System.out.println(proxy.getDogNumber());
     }
 }
