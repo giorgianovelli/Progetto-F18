@@ -271,4 +271,13 @@ public class DogSitterProxy {
             return false;
         }
     }
+
+    public boolean updateCashFlag(boolean acceptCash){
+        String serverMsg = getReply("DOGSITTER#UPDATECASHFLAG#" + email + "#" + acceptCash);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

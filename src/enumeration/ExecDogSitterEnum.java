@@ -403,6 +403,31 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    UPDATECASHFLAG{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String strState = tokenMsg.nextToken();
+            boolean state;
+
+            if (strState.equals("true")){
+                state = true;
+            } else {
+                state = false;
+            }
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateCashFlag(state)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 
