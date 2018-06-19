@@ -24,7 +24,7 @@ public class TestCustomerExecEnum {
 
         CustomerProxy proxy = new CustomerProxy("RICCARDOGIURA@GMAIL.COM");
         HashMap<Integer, Assignment> assignmentList = proxy.getAssignmentList();
-        proxy.getDogSitterNameOfAssignment(2);
+        /*proxy.getDogSitterNameOfAssignment(2);
         proxy.getDogSitterSurnameOfAssignment(2);
         proxy.getName();
         proxy.getSurname();
@@ -33,10 +33,10 @@ public class TestCustomerExecEnum {
         proxy.getDateOfBirth();
         proxy.getAddress();
         proxy.getPaymentMethod();
-        /*proxy.updateName("RICK");
+        *//*proxy.updateName("RICK");
         proxy.updateSurname("GIU");
         proxy.updatePassword("PROVA");
-        proxy.updatePhoneNumber("1111111111");*/
+        proxy.updatePhoneNumber("1111111111");*//*
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date birthdate = new Date();
         try {
@@ -44,8 +44,8 @@ public class TestCustomerExecEnum {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        /*proxy.updateDateOfBirth(birthdate);
-        proxy.updateAddress("ITALY", "PAVIA", "VIA FERRATA", "1", "27100");*/
+        *//*proxy.updateDateOfBirth(birthdate);
+        proxy.updateAddress("ITALY", "PAVIA", "VIA FERRATA", "1", "27100");*//*
         //System.out.println(proxy.updatePaymentMethod("2222221112222222", "RICK", "GIU", new Date(), 555));
         HashSet<Dog> selectedDogs = new HashSet<Dog>(2);
         //creare oggetti Dog
@@ -75,6 +75,7 @@ public class TestCustomerExecEnum {
         System.out.println("__________________");
         //proxy.addDog("RICCARDOGIURA@GMAIL.COM", "TIBERIO", "BULLDOG", start, 16);
         //proxy.disableDog(3);
-        proxy.getDogList();
+        //proxy.getDogList();*/
+        System.out.println(proxy.getReview(1).getComment());
     }
 }

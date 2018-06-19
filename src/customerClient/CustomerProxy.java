@@ -132,7 +132,7 @@ public class CustomerProxy implements InterfaceCustomer {
     }
 
     public Review getReview(int code){
-        String serverMsg = getReply("4#" + code);
+        String serverMsg = getReply("CUSTOMER#GETREVIEW#" + code);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         //non deve ricevere l'attributo codice dal server
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");

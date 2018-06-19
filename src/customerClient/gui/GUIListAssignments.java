@@ -55,8 +55,7 @@ public class GUIListAssignments extends JFrame{
         this.listAssignment = listAssignment;
         this.email = email;
         this.proxy = new CustomerProxy(email);
-        //TODO da problemi!
-        //listReview = proxy.getReviewList();
+        listReview = proxy.getReviewList();
 
 
         initComponents(cs, guiCustomer);

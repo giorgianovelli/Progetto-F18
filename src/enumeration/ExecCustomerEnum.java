@@ -107,6 +107,22 @@ public enum ExecCustomerEnum {
 
     },
 
+    GETREVIEW{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            Review review = singleton.getReview(code);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String date = dateFormat.format(review.getDate());
+            return date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
+        }
+
+    },
+
+
     GETNAME{
 
         public String execute(String clientMsg) {
