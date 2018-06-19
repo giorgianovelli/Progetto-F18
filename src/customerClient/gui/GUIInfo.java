@@ -26,7 +26,7 @@ public class GUIInfo extends JFrame {
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(true); //da mettere 'false'
+        setResizable(true); //TODO da mettere 'false'
 
         panelIcon = new JPanel(new BorderLayout());
         panelLabel = new JPanel();

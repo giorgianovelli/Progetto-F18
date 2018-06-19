@@ -332,10 +332,10 @@ public class GUICustomer extends JFrame{
                     cancel();
                 }
 
-                /*if (menuAe.getActionCommand().equals("Info")){
+                if (menuAe.getActionCommand().equals("Info")){
                     GUIInfo info = new GUIInfo();
                     info.setVisible(true);
-                }*/
+                }
             }
         };
 
@@ -381,6 +381,7 @@ public class GUICustomer extends JFrame{
         menuItemShowReviews.addActionListener(menuAl);
         menuItemAccount.addActionListener(menuAl);
         menuItemChangePassword.addActionListener(menuAl);
+        menuItemInfo.addActionListener(menuAl);
         buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
 
         for (i = 0; i < nShownTodayAssignments; i++){
