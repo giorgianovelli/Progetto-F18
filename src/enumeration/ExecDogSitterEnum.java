@@ -354,6 +354,26 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    GETREVIEWLIST{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            String serverMsg = "";
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            HashMap<Integer, Review> reviewList = dogSitter.getReviewList();
+            for (Integer key : reviewList.keySet()) {
+                Review r = reviewList.get(key);
+                serverMsg = serverMsg + r.getCode() + "#";
+            }
+            System.out.println(serverMsg);
+            return serverMsg;
+        }
+
     };
 
 

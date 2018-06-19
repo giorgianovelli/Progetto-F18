@@ -250,4 +250,16 @@ public class DogSitterProxy {
         String serverMsg = getReply("DOGSITTER#UPDATEPAYMENTMETHOD#" + email + "#" + number + "#" + name + "#" + surname + "#" + strExpiration + "#" + cvv);
         return serverMsg.equals("true");
     }
+
+    public HashMap<Integer, Review> getReviewList() {
+        String serverMsg = getReply("DOGSITTER#GETREVIEWLIST#" + email);
+        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        while (tokenMsg.hasMoreTokens()){
+            int code = Integer.parseInt(tokenMsg.nextToken());
+            Review r = getReview(code);
+            reviewList.put(code, r);
+        }
+        return reviewList;
+    }
 }

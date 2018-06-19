@@ -309,7 +309,31 @@ public class Singleton {
                 String title = rs.getString("TITLE");
                 String description = rs.getString("DESCRIPTION");
                 String reply = rs.getString("REPLY");
-                Singleton singleton = new Singleton();
+                Review r = new Review(code, date, rating, title, description, reply);
+                reviewList.put(code, r);
+            }
+
+            dbConnector.closeConnection();
+            return reviewList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public HashMap<Integer, Review> getDogSitterReviewList(DogSitter dogSitter){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs = null;
+        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        try {
+            rs = dbConnector.askDB("SELECT R.ASSIGNMENT_CODE, R.DATE, R.RATING, R.TITLE, R.DESCRIPTION, R.REPLY FROM REVIEW AS R jOIN ASSIGNMENT AS A ON R.ASSIGNMENT_CODE = A.CODE WHERE A.DOGSITTER = '" + dogSitter.email + "'");
+            while (rs.next()){
+                int code = rs.getInt("ASSIGNMENT_CODE");
+                Date date = rs.getDate("DATE");
+                int rating = rs.getInt("RATING");
+                String title = rs.getString("TITLE");
+                String description = rs.getString("DESCRIPTION");
+                String reply = rs.getString("REPLY");
                 Review r = new Review(code, date, rating, title, description, reply);
                 reviewList.put(code, r);
             }

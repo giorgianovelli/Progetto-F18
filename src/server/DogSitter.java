@@ -33,6 +33,7 @@ public class DogSitter extends User {
         this.acceptCash = acceptCash;
         Singleton singleton = new Singleton();
         this.assignmentList = singleton.getDogSitterListAssignmentFromDB(email);
+        this.reviewList = singleton.getDogSitterReviewList(this);
     }
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
@@ -43,6 +44,10 @@ public class DogSitter extends User {
 
     public HashMap<Integer, Assignment> getListAssignment() {
         return assignmentList;
+    }
+
+    public HashMap<Integer, Review> getReviewList(){
+        return reviewList;
     }
 
     public Availability getDateTimeAvailability() {

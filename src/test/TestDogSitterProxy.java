@@ -2,6 +2,7 @@ package test;
 
 import dogSitterClient.DogSitterProxy;
 import server.Assignment;
+import server.Review;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +35,7 @@ public class TestDogSitterProxy {
         proxy.getAddress();
         proxy.getPaymentMethod();
 
-        proxy.updateName("PIPINO");
+        /*proxy.updateName("PIPINO");
         proxy.updateSurname("IL GRANDE");
         proxy.updatePassword("CAMIBAU");
         proxy.updatePhoneNumber("3345522111");
@@ -51,6 +52,9 @@ public class TestDogSitterProxy {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        proxy.updatePaymentMethod("9999999999999999", "GIULIO", "ADRIATICO", expiration, 333);
+        proxy.updatePaymentMethod("9999999999999999", "GIULIO", "ADRIATICO", expiration, 333);*/
+        HashMap<Integer, Review> reviewList = proxy.getReviewList();
+        Review r = reviewList.get(1);
+        System.out.println(r.getComment());
     }
 }
