@@ -428,6 +428,20 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    GETDOGNUMBER{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            Integer nDogs = dogSitter.getDogNumber();
+            return nDogs.toString();
+        }
+
     };
 
 
