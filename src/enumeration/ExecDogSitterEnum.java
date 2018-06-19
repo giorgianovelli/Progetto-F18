@@ -2,6 +2,8 @@ package enumeration;
 
 import database.DBConnector;
 import server.*;
+import server.bank.PaymentMethod;
+import server.places.Address;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -103,6 +105,104 @@ public enum ExecDogSitterEnum {
             int code = Integer.parseInt(tokenMsg.nextToken());
 
             return getReview(code);
+        }
+
+    },
+
+    GETNAME{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            return dogSitter.getName();
+        }
+
+    },
+
+    GETSURNAME{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            return dogSitter.getSurname();
+        }
+
+    },
+
+    GETPASSWORD{
+
+        public String execute(String clientMsg) {
+            System.out.println(clientMsg);
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            return dogSitter.getPassword();
+        }
+
+    },
+
+    GETPHONENUMBER{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            return dogSitter.getPhoneNumber();
+        }
+
+    },
+
+    GETDATEOFBIRTH{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String dateOfBirth = dateFormat.format(dogSitter.getDateOfBirth());
+            return dateOfBirth;
+        }
+
+    },
+
+    GETADDRESS{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            Address address = singleton.createDogSitterFromDB(email).getAddress();
+            return address.getCountry() + "#" + address.getCity() + "#" + address.getStreet() + "#"
+                    + address.getNumber() + "#" + address.getCap();
+        }
+
+    },
+
+    GETPAYMENTMETHOD{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            PaymentMethod pm = singleton.createDogSitterFromDB(email).getPaymentMethod();
+            String strExpiration = dateFormat.format(pm.getExpirationDate());
+            return pm.getNumber() + "*" + pm.getName() + "*" + pm.getSurname() + "*"
+                    + strExpiration + "*" + pm.getCvv() + "*" + pm.getAmount();
         }
 
     };

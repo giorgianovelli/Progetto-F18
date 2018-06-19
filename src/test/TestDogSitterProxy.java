@@ -23,5 +23,12 @@ public class TestDogSitterProxy {
         System.out.println(proxy.getCustomerNameOfAssignment(1));
         System.out.println(proxy.getCustomerSurnameOfAssignment(1));
         System.out.println(proxy.getReview(1));
+        proxy.getName();
+        proxy.getSurname();
+        proxy.getPassword();
+        proxy.getPhoneNumber();
+        proxy.getDateOfBirth();
+        proxy.getAddress();
+        proxy.getPaymentMethod();
     }
 }

@@ -4,6 +4,7 @@ import server.Assignment;
 import server.Dog;
 import server.DogSize;
 import server.Review;
+import server.bank.PaymentMethod;
 import server.places.Address;
 
 import java.io.BufferedReader;
@@ -145,5 +146,69 @@ public class DogSitterProxy {
         String description = tokenMsg.nextToken();
         String reply = tokenMsg.nextToken();
         return new Review(code, date, rating, title,description, reply);
+    }
+
+    public String getName(){
+        return getReply("DOGSITTER#GETNAME#" + email);
+    }
+
+    public String getSurname(){
+        return getReply("DOGSITTER#GETSURNAME#" + email);
+    }
+
+    public String getPassword(){
+        return getReply("DOGSITTER#GETPASSWORD#" + email);
+    }
+
+    public String getPhoneNumber(){
+        return getReply("DOGSITTER#GETPHONENUMBER#" + email);
+    }
+
+    public Date getDateOfBirth(){
+        String serverMsg = getReply("DOGSITTER#GETDATEOFBIRTH#" + email);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return dateFormat.parse(serverMsg);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Address getAddress(){
+        String serverMsg = getReply("DOGSITTER#GETADDRESS#" + email);
+        return decodeAddress(serverMsg);
+    }
+
+    public PaymentMethod getPaymentMethod(){
+        String serverMsg = getReply("DOGSITTER#GETPAYMENTMETHOD#" + email);
+        return decodePaymentMethod(serverMsg);
+    }
+
+    private Address decodeAddress(String msg) {
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "#");
+        String country = tokenMsg.nextToken();
+        String city = tokenMsg.nextToken();
+        String street = tokenMsg.nextToken();
+        String number = tokenMsg.nextToken();
+        String cap = tokenMsg.nextToken();
+        return new Address(country, city, street, number, cap);
+    }
+
+    private PaymentMethod decodePaymentMethod(String msg) {
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
+        String number = tokenMsg.nextToken();
+        String name = tokenMsg.nextToken();
+        String surname = tokenMsg.nextToken();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date expirationDate = new Date();
+        try {
+            expirationDate = dateFormat.parse(tokenMsg.nextToken());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int cvv = Integer.parseInt(tokenMsg.nextToken());
+        double amount = Double.parseDouble(tokenMsg.nextToken());
+        return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
 }
