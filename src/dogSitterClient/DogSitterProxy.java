@@ -211,4 +211,43 @@ public class DogSitterProxy {
         double amount = Double.parseDouble(tokenMsg.nextToken());
         return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
+
+    public boolean updateName(String name){
+        String serverMsg = getReply("DOGSITTER#UPDATENAME#" + email + "#" + name);
+        return serverMsg.equals("true");
+    }
+
+    public boolean updateSurname(String surname){
+        String serverMsg = getReply("DOGSITTER#UPDATESURNAME#" + email + "#" + surname);
+        return serverMsg.equals("true");
+    }
+
+    public boolean updatePassword(String password){
+        String serverMsg = getReply("DOGSITTER#UPDATEPASSWORD#" + email + "#" + password);
+        return serverMsg.equals("true");
+    }
+
+    public boolean updatePhoneNumber(String phoneNumber){
+        String serverMsg = getReply("DOGSITTER#UPDATEPHONENUMBER#" + email + "#" + phoneNumber);
+        return serverMsg.equals("true");
+    }
+
+    public boolean updateDateOfBirth(Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strDateOfBirth = dateFormat.format(dateOfBirth);
+        String serverMsg = getReply("DOGSITTER#UPDATEDATEOFBIRTH#" + email + "#" + strDateOfBirth);
+        return serverMsg.equals("true");
+    }
+
+    public boolean updateAddress(String country, String city, String street, String number, String cap){
+        String serverMsg = getReply("DOGSITTER#UPDATEADDRESS#" + email + "#" + country + "#" + city + "#" + street + "#" + number + "#" + cap);
+        return serverMsg.equals("true");
+    }
+
+    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strExpiration = dateFormat.format(expirationDate);
+        String serverMsg = getReply("DOGSITTER#UPDATEPAYMENTMETHOD#" + email + "#" + number + "#" + name + "#" + surname + "#" + strExpiration + "#" + cvv);
+        return serverMsg.equals("true");
+    }
 }

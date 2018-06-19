@@ -312,7 +312,6 @@ public enum ExecCustomerEnum {
 
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
-            SimpleDateFormat dateFormatDays = new SimpleDateFormat("dd/MM/yyyy");
             String email = tokenMsg.nextToken();
             String country = tokenMsg.nextToken();
             String city = tokenMsg.nextToken();
