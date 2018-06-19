@@ -407,7 +407,7 @@ public class Customer extends User implements InterfaceCustomer{
         //funzione che esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
-            HashMap<Integer, Assignment> listAssignment = ds.getListAssignment();
+            HashMap<Integer, Assignment> listAssignment = ds.getAssignmentList();
             for (Integer key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
                 if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart()))) || ((dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
