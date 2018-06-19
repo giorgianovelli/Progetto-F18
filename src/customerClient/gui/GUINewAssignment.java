@@ -173,6 +173,8 @@ public class GUINewAssignment extends JFrame{
 
 class NewAssignmentBox extends JPanel{
 
+
+    Date dateEnd;
     JComboBox<String> fdayList, tdayList;
     JComboBox<String> fmonthList, tmonthList;
     JComboBox<String> fyearList, tyearList;
@@ -210,6 +212,7 @@ class NewAssignmentBox extends JPanel{
 
 
 
+
         fhourList = new JComboBox<>(hour);
         fminuteList = new JComboBox<>(minute);
         tdayList = new JComboBox<>(day);
@@ -225,45 +228,16 @@ class NewAssignmentBox extends JPanel{
         fromMonthLabel.setText(selectedDaySplitted[1]);
         fromYearLabel.setText(selectedDaySplitted[2]);
 
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //String fromHour = String.valueOf(fhourList.getSelectedItem());
-                //String fromMinute = String.valueOf(fminuteList.getSelectedItem());
-                String day = String.valueOf(tdayList.getSelectedItem());
-                String month = String.valueOf(tmonthList.getSelectedItem());
-                String year = String.valueOf(tyearList.getSelectedItem());
-                String toHour = String.valueOf(thourList.getSelectedItem());
-                String toMinute = String.valueOf(tminuteList.getSelectedItem());
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-                Date dateEnd = new Date();
-                try {
-                    dateEnd = simpleDateFormat.parse(day + "/" + month + "/" + year + " " + toHour + ":" + toMinute);
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
-                }
-                System.out.println(dateEnd.toString());
-            }
-        };
-
-
-        tdayList.addActionListener(actionListener);
-        tmonthList.addActionListener(actionListener);
-        tyearList.addActionListener(actionListener);
-        thourList.addActionListener(actionListener);
-        tminuteList.addActionListener(actionListener);
-
-
-        //String test = String.valueOf(tdayList.getSelectedItem());
-
 
 
         /*
+
+
         tmonthList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.g().equals("02")) {
+                String monthSeleted = String.valueOf(tmonthList.getSelectedItem());
+                if (monthSeleted.equals("02")) {
                     day[28] = null;
                     day[29] = null;
                     day[30] = null;
@@ -275,6 +249,41 @@ class NewAssignmentBox extends JPanel{
         });
 
         */
+
+        dateEnd = new Date();
+
+
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String day = String.valueOf(tdayList.getSelectedItem());
+                String month = String.valueOf(tmonthList.getSelectedItem());
+                String year = String.valueOf(tyearList.getSelectedItem());
+                String toHour = String.valueOf(thourList.getSelectedItem());
+                String toMinute = String.valueOf(tminuteList.getSelectedItem());
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                dateEnd = new Date();
+                try {
+                    dateEnd = simpleDateFormat.parse(day + "/" + month + "/" + year + " " + toHour + ":" + toMinute);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        };
+
+        tdayList.addActionListener(actionListener);
+        tmonthList.addActionListener(actionListener);
+        tyearList.addActionListener(actionListener);
+        thourList.addActionListener(actionListener);
+        tminuteList.addActionListener(actionListener);
+
+        //System.out.println(dateEnd.toString());
+
+
+
+
 
 
         fhourList.setLightWeightPopupEnabled(false);
