@@ -374,6 +374,35 @@ public enum ExecDogSitterEnum {
             return serverMsg;
         }
 
+    },
+
+    UPDATEASSIGNMENTSTATE{
+
+        public String execute(String clientMsg) {
+            System.out.println("test: " + clientMsg);
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int code = Integer.parseInt(tokenMsg.nextToken());
+            String strState = tokenMsg.nextToken();
+            Boolean state;
+
+            if (strState.equals("true")){
+                state = true;
+            } else if (strState.equals("false")){
+                state = false;
+            } else {
+                state = null;
+            }
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateAssignmentState(code, state)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

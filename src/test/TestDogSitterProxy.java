@@ -56,5 +56,8 @@ public class TestDogSitterProxy {
         HashMap<Integer, Review> reviewList = proxy.getReviewList();
         Review r = reviewList.get(1);
         System.out.println(r.getComment());
+        proxy.updateAssignmentState(1, true);
+        Assignment one = listAssignment.get(1);
+        System.out.println(one.getState());
     }
 }

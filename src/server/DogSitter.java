@@ -267,6 +267,7 @@ public class DogSitter extends User {
 
             if (isUpdated) {
                 System.out.println("Cash flag for " + this.email + " now is up to date!");
+                this.acceptCash = acceptCash;
                 return true;
             } else {
                 System.out.println("Error in updating cash flag for " + this.email + "!");
@@ -279,14 +280,27 @@ public class DogSitter extends User {
         }
     }
 
-    public boolean updateAssignmentState(int code, boolean state){
+    public boolean updateAssignmentState(int code, Boolean state){
         DBConnector dbConnector = new DBConnector();
+
+        String strState;
+        if (state == null){
+            strState = "NULL";
+        } else {
+            strState = state.toString().toUpperCase();
+        }
+
         try {
-            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET CASH_FLAG = " + state + " WHERE CODE = " + code + ";");
+            boolean isUpdated = dbConnector.updateDB("UPDATE ASSIGNMENT SET CONFIRMATION = '" + strState + "' WHERE CODE = " + code + ";");
             dbConnector.closeUpdate();
 
             if (isUpdated) {
                 System.out.println("State for assignment with code " + code + " now is up to date!");
+                if (state == null){
+                    assignmentList.get(code).setState(null);
+                } else {
+                    assignmentList.get(code).setState(state);
+                }
                 return true;
             } else {
                 System.out.println("Error in updating state for assignment with code " + code + "!");

@@ -262,4 +262,13 @@ public class DogSitterProxy {
         }
         return reviewList;
     }
+
+    public boolean updateAssignmentState(int code, Boolean state){
+        String serverMsg = getReply("DOGSITTER#UPDATEASSIGNMENTSTATE#" + email + "#" + code + "#" + state);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -104,4 +104,8 @@ public class Assignment {
     public Address getMeetingPoint() {
         return meetingPoint;
     }
+
+    public void setState(Boolean state) {
+        this.state = state;
+    }
 }
