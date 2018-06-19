@@ -14,9 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-import static enumeration.enumStaticMethods.getDogListOfAssignment;
-import static enumeration.enumStaticMethods.getListAssignment;
-import static enumeration.enumStaticMethods.getMeetingPoint;
+import static enumeration.enumStaticMethods.*;
 
 public enum ExecCustomerEnum {
     ACCESSVERIFIER{
@@ -109,11 +107,7 @@ public enum ExecCustomerEnum {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
 
-            Singleton singleton = new Singleton();
-            Review review = singleton.getReview(code);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String date = dateFormat.format(review.getDate());
-            return date + "#" + review.getRating() + "#" +review.getTitle() + "#" + review.getComment() + "#" + review.getReply();
+            return getReview(code);
         }
 
     },

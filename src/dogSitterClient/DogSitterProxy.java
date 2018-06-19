@@ -3,6 +3,7 @@ package dogSitterClient;
 import server.Assignment;
 import server.Dog;
 import server.DogSize;
+import server.Review;
 import server.places.Address;
 
 import java.io.BufferedReader;
@@ -119,5 +120,30 @@ public class DogSitterProxy {
         String number = tokenMsg.nextToken();
         String cap = tokenMsg.nextToken();
         return new Address(country, city, street, number, cap);
+    }
+
+    public String getCustomerNameOfAssignment(int code) {
+        return getReply("DOGSITTER#GETCUSTOMERNAMEOFASSIGNMENT#" + code);
+    }
+
+    public String getCustomerSurnameOfAssignment(int code) {
+        return getReply("DOGSITTER#GETCUSTOMERSURNAMEOFASSIGNMENT#" + code);
+    }
+
+    public Review getReview(int code){
+        String serverMsg = getReply("DOGSITTER#GETREVIEW#" + code);
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+        try {
+            date = dateFormat.parse(tokenMsg.nextToken());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int rating = Integer.parseInt(tokenMsg.nextToken());
+        String title = tokenMsg.nextToken();
+        String description = tokenMsg.nextToken();
+        String reply = tokenMsg.nextToken();
+        return new Review(code, date, rating, title,description, reply);
     }
 }

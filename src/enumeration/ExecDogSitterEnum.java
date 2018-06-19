@@ -1,17 +1,15 @@
 package enumeration;
 
-import server.Assignment;
-import server.Login;
-import server.Singleton;
+import database.DBConnector;
+import server.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-import static enumeration.enumStaticMethods.getDogListOfAssignment;
-import static enumeration.enumStaticMethods.getListAssignment;
-import static enumeration.enumStaticMethods.getMeetingPoint;
+import static enumeration.enumStaticMethods.*;
 
 public enum ExecDogSitterEnum {
     ACCESSVERIFIER{
@@ -46,6 +44,65 @@ public enum ExecDogSitterEnum {
             Singleton singleton = new Singleton();
             HashMap<Integer, Assignment> dogSitterListAssignment = singleton.getDogSitterListAssignmentFromDB(email);
             return getListAssignment(dogSitterListAssignment);
+        }
+
+    },
+
+    GETCUSTOMERNAMEOFASSIGNMENT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            DBConnector dbConnector = new DBConnector();
+            String emailCustomer = null;
+            Customer customer = null;
+            try {
+                ResultSet rs = dbConnector.askDB("SELECT CUSTOMER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
+                rs.next();
+                emailCustomer = rs.getString("CUSTOMER");
+                Singleton singleton = new Singleton();
+                customer = singleton.createCustomerFromDB(emailCustomer);
+                dbConnector.closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return customer.getName();
+        }
+
+    },
+
+    GETCUSTOMERSURNAMEOFASSIGNMENT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            DBConnector dbConnector = new DBConnector();
+            String emailCustomer = null;
+            Customer customer = null;
+            try {
+                ResultSet rs = dbConnector.askDB("SELECT CUSTOMER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
+                rs.next();
+                emailCustomer = rs.getString("CUSTOMER");
+                Singleton singleton = new Singleton();
+                customer = singleton.createCustomerFromDB(emailCustomer);
+                dbConnector.closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return customer.getSurname();
+        }
+
+    },
+
+    GETREVIEW{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            return getReview(code);
         }
 
     };
