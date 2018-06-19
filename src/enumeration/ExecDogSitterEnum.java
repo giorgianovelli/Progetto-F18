@@ -374,6 +374,74 @@ public enum ExecDogSitterEnum {
             return serverMsg;
         }
 
+    },
+
+    UPDATEASSIGNMENTSTATE{
+
+        public String execute(String clientMsg) {
+            System.out.println("test: " + clientMsg);
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int code = Integer.parseInt(tokenMsg.nextToken());
+            String strState = tokenMsg.nextToken();
+            Boolean state;
+
+            if (strState.equals("true")){
+                state = true;
+            } else if (strState.equals("false")){
+                state = false;
+            } else {
+                state = null;
+            }
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateAssignmentState(code, state)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    UPDATECASHFLAG{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String strState = tokenMsg.nextToken();
+            boolean state;
+
+            if (strState.equals("true")){
+                state = true;
+            } else {
+                state = false;
+            }
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateCashFlag(state)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    GETDOGNUMBER{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            Integer nDogs = dogSitter.getDogNumber();
+            return nDogs.toString();
+        }
+
     };
 
 

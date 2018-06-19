@@ -1,5 +1,6 @@
 package dogSitterClient;
 
+import interfaces.InterfaceDogSitter;
 import server.Assignment;
 import server.Dog;
 import server.DogSize;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class DogSitterProxy {
+public class DogSitterProxy implements InterfaceDogSitter {
     private BufferedReader msgIn = null;
     private PrintStream msgOut = null;
     private Socket socket = null;
@@ -261,5 +262,28 @@ public class DogSitterProxy {
             reviewList.put(code, r);
         }
         return reviewList;
+    }
+
+    public boolean updateAssignmentState(int code, Boolean state){
+        String serverMsg = getReply("DOGSITTER#UPDATEASSIGNMENTSTATE#" + email + "#" + code + "#" + state);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCashFlag(boolean acceptCash){
+        String serverMsg = getReply("DOGSITTER#UPDATECASHFLAG#" + email + "#" + acceptCash);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getDogNumber() {
+        String serverMsg = getReply("DOGSITTER#GETDOGNUMBER#" + email);
+        return Integer.parseInt(serverMsg);
     }
 }

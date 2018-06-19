@@ -1,6 +1,7 @@
 package server;
 
 import database.DBConnector;
+import interfaces.InterfaceDogSitter;
 import server.bank.PaymentMethod;
 import server.places.Address;
 import server.places.Area;
@@ -13,7 +14,7 @@ import java.util.HashSet;
 
 //import static staticClasses.ObjectCreator.getDogSitterListAssignmentFromDB;
 
-public class DogSitter extends User {
+public class DogSitter extends User implements InterfaceDogSitter {
     private Area area;
     private HashSet<DogSize> listDogSize;
     private int dogNumber;
@@ -32,7 +33,7 @@ public class DogSitter extends User {
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
         Singleton singleton = new Singleton();
-        this.assignmentList = singleton.getDogSitterListAssignmentFromDB(email);
+        this.assignmentList = getAssignmentList();
         this.reviewList = singleton.getDogSitterReviewList(this);
     }
 
@@ -42,8 +43,9 @@ public class DogSitter extends User {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
     }
 
-    public HashMap<Integer, Assignment> getListAssignment() {
-        return assignmentList;
+    public HashMap<Integer, Assignment> getAssignmentList(){
+        Singleton singleton = new Singleton();
+        return singleton.getCustomerListAssignmentFromDB(email);
     }
 
     public HashMap<Integer, Review> getReviewList(){
@@ -267,6 +269,7 @@ public class DogSitter extends User {
 
             if (isUpdated) {
                 System.out.println("Cash flag for " + this.email + " now is up to date!");
+                this.acceptCash = acceptCash;
                 return true;
             } else {
                 System.out.println("Error in updating cash flag for " + this.email + "!");
@@ -279,14 +282,27 @@ public class DogSitter extends User {
         }
     }
 
-    public boolean updateAssignmentState(int code, boolean state){
+    public boolean updateAssignmentState(int code, Boolean state){
         DBConnector dbConnector = new DBConnector();
+
+        String strState;
+        if (state == null){
+            strState = "NULL";
+        } else {
+            strState = state.toString().toUpperCase();
+        }
+
         try {
-            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET CASH_FLAG = " + state + " WHERE CODE = " + code + ";");
+            boolean isUpdated = dbConnector.updateDB("UPDATE ASSIGNMENT SET CONFIRMATION = '" + strState + "' WHERE CODE = " + code + ";");
             dbConnector.closeUpdate();
 
             if (isUpdated) {
                 System.out.println("State for assignment with code " + code + " now is up to date!");
+                if (state == null){
+                    assignmentList.get(code).setState(null);
+                } else {
+                    assignmentList.get(code).setState(state);
+                }
                 return true;
             } else {
                 System.out.println("Error in updating state for assignment with code " + code + "!");

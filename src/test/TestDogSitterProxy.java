@@ -53,8 +53,13 @@ public class TestDogSitterProxy {
             e.printStackTrace();
         }
         proxy.updatePaymentMethod("9999999999999999", "GIULIO", "ADRIATICO", expiration, 333);*/
-        HashMap<Integer, Review> reviewList = proxy.getReviewList();
+        /*HashMap<Integer, Review> reviewList = proxy.getReviewList();
         Review r = reviewList.get(1);
         System.out.println(r.getComment());
+        proxy.updateAssignmentState(1, true);
+        Assignment one = listAssignment.get(1);
+        System.out.println(one.getState());*/
+        //proxy.updateCashFlag(true);
+        System.out.println(proxy.getDogNumber());
     }
 }
