@@ -144,7 +144,11 @@ public class Bank {
             emailDogsitter = rs.getString("DOGSITTER");
             dbConnector.closeConnection();
             rs = dbConnector.askDB("SELECT AMOUNT FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + code);
-            rs.next();
+            rs.last();
+            if (rs.getRow() == 0){
+                System.out.println("None transaction associated to code " + code + "!");
+                return false;
+            }
             amount = rs.getDouble("AMOUNT");
             dbConnector.closeConnection();
         } catch (SQLException e) {

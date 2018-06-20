@@ -46,9 +46,6 @@ public class Customer extends User implements InterfaceCustomer{
 
     public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash) {
         //chiamata alla classe banca per effettuare la transazione
-        //TODO aggiungere il campo per il pagamento in contanti
-        System.out.println("test payment: " + paymentInCash);
-
         DBConnector dbConnector = new DBConnector();
         int code = -1;
         try {

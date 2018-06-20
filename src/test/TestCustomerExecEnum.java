@@ -69,9 +69,9 @@ public class TestCustomerExecEnum {
 
         proxy.estimatePriceAssignment(selectedDogs, start, end);
         System.out.println("addAssignment:");
-        proxy.addAssignment("MARCO.CARTA@GMAIL.COM", start, end, selectedDogs, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), false);
-        /*proxy.removeAssignment(5);
-        proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "funziona! Molto utile!");
+        //proxy.addAssignment("MARCO.CARTA@GMAIL.COM", start, end, selectedDogs, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), true);
+        proxy.removeAssignment(5);
+        /*proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "funziona! Molto utile!");
         proxy.removeReview(1);
         proxy.getAssignmentList();
         System.out.println("__________________");*/
