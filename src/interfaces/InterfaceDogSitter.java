@@ -49,9 +49,9 @@ public interface InterfaceDogSitter {
 
     boolean updateAssignmentState(int code, Boolean state);
 
-    //boolean addNewPlaceArea(String city);
+    boolean addNewPlaceArea(String city);
 
-    //boolean removePlaceArea(String city);
+    boolean removePlaceArea(String city);
 
     //boolean updateDogNumber(int nDogs);
 

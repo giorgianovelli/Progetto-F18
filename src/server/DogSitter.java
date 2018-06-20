@@ -324,10 +324,29 @@ public class DogSitter extends User implements InterfaceDogSitter {
             area.addPlace(city);
             try {
                 dbConnector.updateDB("INSERT INTO DOGSITTER_AREA VALUES ('" + email + "', '" + city + "')");
+                dbConnector.closeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return true;
         }
     }
+
+    public boolean removePlaceArea(String city){
+        DBConnector dbConnector = new DBConnector();
+        if (area.contains(city)){
+            area.removePlaces(city);
+            try {
+                dbConnector.updateDB("DELETE FROM DOGSITTER_AREA WHERE DOGSITTER = '" + email + "' AND CITY = '" + city + "'");
+                dbConnector.closeUpdate();
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }
