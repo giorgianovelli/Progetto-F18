@@ -2,12 +2,18 @@ package customerClient.gui;
 
 
 
+import customerClient.CustomerProxy;
+import server.Dog;
+import server.places.Address;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 
 public class GUINewAssignment extends JFrame{
 
@@ -29,6 +35,7 @@ public class GUINewAssignment extends JFrame{
     private JScrollPane scrollPane = new JScrollPane(panelOut);
     private Date date;
     private String strDate;
+    private String email;
 
     //Others
 
@@ -37,6 +44,9 @@ public class GUINewAssignment extends JFrame{
     private JLabel labelDogs = new JLabel("Select your dogs: ");
     private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonSearch = new JButton("Search");
+
+    NewAssignmentBox newAssignmentBox;
+    //NewAssignmentCheckBox[] newAssignmentCheckBoxes;
 
 
 
@@ -59,16 +69,75 @@ public class GUINewAssignment extends JFrame{
         setLayout(new BorderLayout());
 
         this.date = date;
+        this.email = email;
         strDate = dateToString(date);
-        NewAssignmentBox newAssignmentBox = new NewAssignmentBox(strDate);
+
+        newAssignmentBox = new NewAssignmentBox(strDate);
+
+
+
 
         initComponents(newAssignmentBox);
 
-        }
+        // Action Listener del pulsante Search
+
+
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
+                String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
+                String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
+                String fromHour = String.valueOf(newAssignmentBox.getFhourList().getSelectedItem());
+                String fromMinute = String.valueOf(newAssignmentBox.getFminuteList().getSelectedItem());
+                String day = String.valueOf(newAssignmentBox.getTdayList().getSelectedItem());
+                String month = String.valueOf(newAssignmentBox.getTmonthList().getSelectedItem());
+                String year = String.valueOf(newAssignmentBox.getTyearList().getSelectedItem());
+                String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
+                String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
+
+                String countryText = String.valueOf(country.getField().getText());
+                String cityText = String.valueOf(city.getField().getText());
+                String capText = String.valueOf(cap.getField().getText());
+                String addressText = String.valueOf(address.getField().getText());
+                String numberText = String.valueOf(number.getField().getText());
+
+                Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
+                HashSet<Dog> dogsSelected;
+
+
+                /*
+                for (NewAssignmentCheckBox newAssignmentCheckBox: newAssignmentCheckBoxes) {
+                    if(newAssignmentCheckBox.getCheckBox().isSelected()) {
+
+                    }
+
+                }
+
+                */
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                Date dateStart = new Date();
+                Date dateEnd = new Date();
+                try {
+                    dateStart = simpleDateFormat.parse(fromDay + "/" + fromMonth + "/" + fromYear + " " + fromHour + ":" + fromMinute);
+                    dateEnd = simpleDateFormat.parse(day + "/" + month + "/" + year + " " + toHour + ":" + toMinute);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        };
+
+        buttonSearch.addActionListener(actionListener);
+
+
+    }
 
 //________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     private void initComponents(NewAssignmentBox newAssignmentBox) {
+
+        CustomerProxy customerProxy = new CustomerProxy(email);
 
         //Setting layout dei panel
 
@@ -90,12 +159,12 @@ public class GUINewAssignment extends JFrame{
         panelOut.add(panelNoButtons, BorderLayout.NORTH); // Primo
         panelOut.add(panelButtons, BorderLayout.SOUTH); //Secondo
 
-        //Primo pannello
+        //panelNoButtons: primo pannello
 
         panelNoButtons.add(panelBox, BorderLayout.NORTH);
         panelNoButtons.add(panelDogs, BorderLayout.CENTER);
 
-        //PanelBox (fa parte del primo pannello)
+        //PanelBox (fa parte del panelNoButtons)
 
         Dimension dimension = new Dimension(0, 20);
         panelBox.add(panelCombo);
@@ -106,12 +175,19 @@ public class GUINewAssignment extends JFrame{
         panelBox.add(Box.createRigidArea(dimension));
         panelBox.add(panelLabel2);
 
+        // panelDogs (fa parte del panelNoButtons)
 
-        for (int i = 0; i < 20; i++) {
-            NewAssignmentCheckBox dog = new NewAssignmentCheckBox("Cane " + i);
-            panelDogs.add(dog);
+        HashSet<Dog> hashDogs = customerProxy.getDogList();
+
+        for (Dog dog: hashDogs) {
+            int i = 0;
+            NewAssignmentCheckBox dogCheckBox = new NewAssignmentCheckBox(dog.getName());
+//            newAssignmentCheckBoxes[i] = dogCheckBox;
+            panelDogs.add(dogCheckBox);
             gridLayout.setRows(gridLayout.getRows() + 1);
         }
+
+
 
 
         // Secondo pannello
@@ -119,7 +195,16 @@ public class GUINewAssignment extends JFrame{
         panelButtons.add(buttonCancel);
         panelButtons.add(buttonSearch);
 
-        // Pannelli minori
+
+
+
+        // Pannello ComboBox
+
+        panelCombo.add(newAssignmentBox);
+
+
+
+        // Pannello barre testuali
 
         panelAddress.add(country);
         panelAddress.add(city);
@@ -127,8 +212,8 @@ public class GUINewAssignment extends JFrame{
         panelAddress.add(address);
         panelAddress.add(number);
 
+        // Labels
 
-        panelCombo.add(newAssignmentBox);
 
         panelLabel.add(labelMeetingPoint, BorderLayout.LINE_START);
         panelLabel2.add(labelDogs, BorderLayout.LINE_START);
@@ -138,6 +223,10 @@ public class GUINewAssignment extends JFrame{
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
+
+
+
+
 
     }
 
@@ -155,8 +244,10 @@ public class GUINewAssignment extends JFrame{
 
 class NewAssignmentBox extends JPanel{
 
-    JComboBox<String> fdayList, tdayList;
-    JComboBox<String> fmonthList, tmonthList;
+
+    Date dateEnd;
+    JComboBox<String> tdayList;
+    JComboBox<String> tmonthList;
     JComboBox<String> fyearList, tyearList;
     JComboBox<String> fhourList, thourList;
     JComboBox<String> fminuteList, tminuteList;
@@ -192,6 +283,7 @@ class NewAssignmentBox extends JPanel{
 
 
 
+
         fhourList = new JComboBox<>(hour);
         fminuteList = new JComboBox<>(minute);
         tdayList = new JComboBox<>(day);
@@ -201,11 +293,22 @@ class NewAssignmentBox extends JPanel{
         tminuteList = new JComboBox<>(minute);
 
 
+        String[] selectedDaySplitted = selectedDay.split("/");
+
+        fromDayLabel.setText(selectedDaySplitted[0]);
+        fromMonthLabel.setText(selectedDaySplitted[1]);
+        fromYearLabel.setText(selectedDaySplitted[2]);
+
+
+
         /*
+
+
         tmonthList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.g().equals("02")) {
+                String monthSeleted = String.valueOf(tmonthList.getSelectedItem());
+                if (monthSeleted.equals("02")) {
                     day[28] = null;
                     day[29] = null;
                     day[30] = null;
@@ -218,7 +321,6 @@ class NewAssignmentBox extends JPanel{
 
         */
 
-
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);
         tdayList.setLightWeightPopupEnabled(false);
@@ -226,16 +328,6 @@ class NewAssignmentBox extends JPanel{
         tyearList.setLightWeightPopupEnabled(false);
         thourList.setLightWeightPopupEnabled(false);
         tminuteList.setLightWeightPopupEnabled(false);
-
-
-        String[] selectedDaySplitted = selectedDay.split("/");
-
-        fromDayLabel.setText(selectedDaySplitted[0]);
-        fromMonthLabel.setText(selectedDaySplitted[1]);
-        fromYearLabel.setText(selectedDaySplitted[2]);
-
-
-
 
         setLayout(new GridLayout(3, 6, 10, 10));
 
@@ -262,9 +354,49 @@ class NewAssignmentBox extends JPanel{
 
     }
 
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+    public JLabel getFromDayLabel() {
+        return fromDayLabel;
+    }
+
+    public JLabel getFromMonthLabel() {
+        return fromMonthLabel;
+    }
+
+    public JLabel getFromYearLabel() {
+        return fromYearLabel;
+    }
+
+    public JComboBox<String> getTdayList() {
+        return tdayList;
+    }
+
+    public JComboBox<String> getTmonthList() {
+        return tmonthList;
+    }
+
+    public JComboBox<String> getTyearList() {
+        return tyearList;
+    }
+
+    public JComboBox<String> getFhourList() {
+        return fhourList;
+    }
+
+    public JComboBox<String> getThourList() {
+        return thourList;
+    }
+
+    public JComboBox<String> getFminuteList() {
+        return fminuteList;
+    }
+
+    public JComboBox<String> getTminuteList() {
+        return tminuteList;
+    }
 }
-
-
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -285,6 +417,10 @@ class NewAssignmentText extends JPanel{
         label = new JLabel(text, SwingConstants.LEFT);
         add(label, gridBagConstraints);
         add(field, gridBagConstraints);
+    }
+
+    public TextField getField() {
+        return field;
     }
 }
 
@@ -307,5 +443,9 @@ class NewAssignmentCheckBox extends JPanel {
         checkBox = new JCheckBox();
         add(labelName);
         add(checkBox);
+    }
+
+    public JCheckBox getCheckBox() {
+        return checkBox;
     }
 }

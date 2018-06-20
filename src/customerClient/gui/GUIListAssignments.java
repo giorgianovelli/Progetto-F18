@@ -21,8 +21,6 @@ import java.util.HashMap;
 
 public class GUIListAssignments extends JFrame{
 
-
-
     private int assignmentNumber, reviewNumber;
 
     final int WIDTH = 512;
@@ -34,16 +32,15 @@ public class GUIListAssignments extends JFrame{
     private JPanel contentPanel = new JPanel(); //pannello esterno
     private JScrollPane scrollPanel = new JScrollPane(contentPanel);
 
-    private JLabel labelState[]; //TODO
-    private JLabel[] labelDescription; //non va a capo, trovare un alternativa
+    private JLabel labelState[];
+    private JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
     private JButton[] buttonAction;
     private JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
-    //private Customer customer;
     private HashMap<Integer, Assignment> listAssignment;
     private HashMap<Integer, Review> listReview;
     private CustomerProxy proxy;
     private String email;
-    private Assignment assignment;
+
 
     public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUICustomer guiCustomer){
         setTitle("Your assignments");
@@ -63,9 +60,8 @@ public class GUIListAssignments extends JFrame{
 
     private void initComponents(CalendarState cs, GUICustomer guiCustomer){
 
-
         assignmentNumber = listAssignment.size();
-        //reviewNumber = listReview.size();
+        reviewNumber = listReview.size();
 
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
             infoPanel = new JPanel[reviewNumber];
@@ -83,7 +79,7 @@ public class GUIListAssignments extends JFrame{
 
 
         if (cs.equals(CalendarState.REVIEWING)){
-            setTitle("Write a review");
+            setTitle("Write a review"); //TODO posso scrivere le recensioni per appuntamenti che ancora non ce l'hanno
 
             ActionListener write = new ActionListener() {
                 @Override
@@ -125,18 +121,18 @@ public class GUIListAssignments extends JFrame{
         else if (cs.equals(CalendarState.DELETING_REVIEW)){ //DA controllare!!!!!
             setTitle("Your reviews");
 
-            /*int j = 0;
+            int j = 0;
             for(Integer i: listReview.keySet()){
                 Review r = null;
                 String labelString;
                 r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd ");
                 date.setLenient(false);
                 Date reviewDate = r.getDate();
                 String dateStringReview = date.format(reviewDate);
 
-                labelString = dateStringReview + " " + r.getTitle();
+                labelString = "<html>" + dateStringReview + " " + r.getTitle()+"<br/>Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) + "</html>";
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Delete review");
                 buttonAction[j].addActionListener(new ActionListener(){
@@ -148,26 +144,25 @@ public class GUIListAssignments extends JFrame{
                 createPanelReview(j);
                 j++;
 
-            }*/
+            }
 
 
         }
         else if (cs.equals(CalendarState.SHOW_REVIEWS)){ //DA controllare!!!!!
             setTitle("Your reviews");
 
-
-            /*int j = 0;
+            int j = 0;
             for(Integer i: listReview.keySet()){
                 Review r = null;
                 String labelString;
                 r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                 date.setLenient(false);
                 Date reviewDate = r.getDate();
                 String dateStringReview = date.format(reviewDate);
 
-                labelString = dateStringReview + " " + r.getTitle();
+                labelString = "<html>" + dateStringReview + " " + r.getTitle()+"<br/>Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) + "</html>";;
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Show more");
                 buttonAction[j].addActionListener(new ActionListener(){
@@ -182,7 +177,7 @@ public class GUIListAssignments extends JFrame{
                 createPanelReview(j);
                 j++;
 
-            }*/
+            }
 
 
         } else {
@@ -295,8 +290,8 @@ public class GUIListAssignments extends JFrame{
         imageTransform = yellow.getImage(); // transform it
         newImage = imageTransform.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         yellow = new ImageIcon(newImage);  // transform it back
+
         Boolean state = a.getState();
-        System.out.println(state);
 
         if(a.getDateEnd().before(todayDate)){
             labelState[i]= new JLabel(gray);

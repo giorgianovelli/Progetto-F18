@@ -2,7 +2,9 @@ package test;
 
 import dogSitterClient.DogSitterProxy;
 import server.Assignment;
+import server.DogSize;
 import server.Review;
+import server.places.Area;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,6 +61,17 @@ public class TestDogSitterProxy {
         proxy.updateAssignmentState(1, true);
         Assignment one = listAssignment.get(1);
         System.out.println(one.getState());*/
-        proxy.updateCashFlag(true);
+        //proxy.updateCashFlag(true);
+        System.out.println(proxy.getDogNumber());
+        Area area = proxy.getArea();
+        area.printPlaces();
+        System.out.println(proxy.isAcceptingCash());
+        HashSet<DogSize> listDogSize = proxy.getListDogSize();
+        System.out.println("dog size list:");
+        for (DogSize ds : listDogSize) {
+            System.out.println(ds);
+        }
+        //System.out.println(proxy.addNewPlaceArea("MILANO"));
+        System.out.println(proxy.removePlaceArea("MILANO"));
     }
 }

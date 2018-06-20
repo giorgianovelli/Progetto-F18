@@ -10,7 +10,7 @@ public class Area {
         this.places = new HashSet<String>();
     }
 
-    public HashSet<String> addPlaces(String city){
+    public HashSet<String> addPlace(String city){
         places.add(city);
         return places;
     }
@@ -36,5 +36,9 @@ public class Area {
         for (String p : places) {
             System.out.println(p);
         }
+    }
+
+    public HashSet<String> getPlaces() {
+        return places;
     }
 }

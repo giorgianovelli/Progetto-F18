@@ -44,9 +44,8 @@ public class Customer extends User implements InterfaceCustomer{
         return singleton.getCustomerListAssignmentFromDB(email);
     }
 
-    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
+    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash) {
         //chiamata alla classe banca per effettuare la transazione
-        boolean testTransaction = true;
         DBConnector dbConnector = new DBConnector();
         int code = -1;
         try {
@@ -60,23 +59,15 @@ public class Customer extends User implements InterfaceCustomer{
         Bank bank = new Bank();
         double price = estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
-        if (bank.isTransactionPossible(email, price)) {
+        if ((bank.isTransactionPossible(email, price)) || (paymentInCash)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date.setLenient(false);
-            Date startAssignment = new Date();
-            Date endAssignment = new Date();
 
             String dateStringStartAssigment = date.format(dateStartAssignment);
             String dateStringEndAssigment = date.format(dateEndAssignment);
-            /*try {
-                startAssignment = date.parse(dateStringStartAssigment);
-                endAssignment = date.parse(dateStringEndAssigment);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }*/
 
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
@@ -94,7 +85,9 @@ public class Customer extends User implements InterfaceCustomer{
                 e.printStackTrace();
             }
 
-            bank.makeBankTransaction(email, emailDogSitter, code, price);
+            if (!(paymentInCash)){
+                bank.makeBankTransaction(email, emailDogSitter, code, price);
+            }
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
@@ -407,7 +400,7 @@ public class Customer extends User implements InterfaceCustomer{
         //funzione che esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
-            HashMap<Integer, Assignment> listAssignment = ds.getListAssignment();
+            HashMap<Integer, Assignment> listAssignment = ds.getAssignmentList();
             for (Integer key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
                 if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart()))) || ((dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){

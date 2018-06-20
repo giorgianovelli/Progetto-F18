@@ -1,11 +1,13 @@
 package dogSitterClient;
 
+import interfaces.InterfaceDogSitter;
 import server.Assignment;
 import server.Dog;
 import server.DogSize;
 import server.Review;
 import server.bank.PaymentMethod;
 import server.places.Address;
+import server.places.Area;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class DogSitterProxy {
+public class DogSitterProxy implements InterfaceDogSitter {
     private BufferedReader msgIn = null;
     private PrintStream msgOut = null;
     private Socket socket = null;
@@ -280,4 +282,59 @@ public class DogSitterProxy {
             return false;
         }
     }
+
+    public int getDogNumber() {
+        String serverMsg = getReply("DOGSITTER#GETDOGNUMBER#" + email);
+        return Integer.parseInt(serverMsg);
+    }
+
+    public Area getArea() {
+        String serverMsg = getReply("DOGSITTER#GETAREA#" + email);
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        Area area = new Area();
+        while (tokenMsg.hasMoreTokens()){
+            area.addPlace(tokenMsg.nextToken());
+        }
+        return area;
+    }
+
+    public boolean isAcceptingCash() {
+        String serverMsg = getReply("DOGSITTER#ISACCEPTINGCASH#" + email);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public HashSet<DogSize> getListDogSize(){
+        String serverMsg = getReply("DOGSITTER#LISTDOGSIZE#" + email);
+        HashSet<DogSize> listDogSize = new HashSet<DogSize>();
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        while (tokenMsg.hasMoreTokens()){
+            String strSize = tokenMsg.nextToken();
+            DogSize dogSize = DogSize.valueOf(strSize);
+            listDogSize.add(dogSize);
+        }
+        return listDogSize;
+    }
+
+    public boolean addNewPlaceArea(String city){
+        String serverMsg = getReply("DOGSITTER#ADDNEWPLACEAREA#" + email + "#" + city);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean removePlaceArea(String city){
+        String serverMsg = getReply("DOGSITTER#REMOVEPLACEAREA#" + email + "#" + city);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

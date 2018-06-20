@@ -1,6 +1,7 @@
 package server;
 
 import database.DBConnector;
+import interfaces.InterfaceDogSitter;
 import server.bank.PaymentMethod;
 import server.places.Address;
 import server.places.Area;
@@ -13,7 +14,7 @@ import java.util.HashSet;
 
 //import static staticClasses.ObjectCreator.getDogSitterListAssignmentFromDB;
 
-public class DogSitter extends User {
+public class DogSitter extends User implements InterfaceDogSitter {
     private Area area;
     private HashSet<DogSize> listDogSize;
     private int dogNumber;
@@ -32,7 +33,7 @@ public class DogSitter extends User {
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
         Singleton singleton = new Singleton();
-        this.assignmentList = singleton.getDogSitterListAssignmentFromDB(email);
+        this.assignmentList = getAssignmentList();
         this.reviewList = singleton.getDogSitterReviewList(this);
     }
 
@@ -42,8 +43,9 @@ public class DogSitter extends User {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
     }
 
-    public HashMap<Integer, Assignment> getListAssignment() {
-        return assignmentList;
+    public HashMap<Integer, Assignment> getAssignmentList(){
+        Singleton singleton = new Singleton();
+        return singleton.getCustomerListAssignmentFromDB(email);
     }
 
     public HashMap<Integer, Review> getReviewList(){
@@ -312,4 +314,39 @@ public class DogSitter extends User {
             return false;
         }
     }
+
+    public boolean addNewPlaceArea(String city){
+        DBConnector dbConnector = new DBConnector();
+
+        if (area.contains(city)){
+            return false;
+        } else {
+            area.addPlace(city);
+            try {
+                dbConnector.updateDB("INSERT INTO DOGSITTER_AREA VALUES ('" + email + "', '" + city + "')");
+                dbConnector.closeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+    }
+
+    public boolean removePlaceArea(String city){
+        DBConnector dbConnector = new DBConnector();
+        if (area.contains(city)){
+            area.removePlaces(city);
+            try {
+                dbConnector.updateDB("DELETE FROM DOGSITTER_AREA WHERE DOGSITTER = '" + email + "' AND CITY = '" + city + "'");
+                dbConnector.closeUpdate();
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }

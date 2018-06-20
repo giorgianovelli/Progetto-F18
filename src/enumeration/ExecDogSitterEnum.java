@@ -4,6 +4,7 @@ import database.DBConnector;
 import server.*;
 import server.bank.PaymentMethod;
 import server.places.Address;
+import server.places.Area;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -422,6 +423,108 @@ public enum ExecDogSitterEnum {
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);
             if (dogSitter.updateCashFlag(state)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    GETDOGNUMBER{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            Integer nDogs = dogSitter.getDogNumber();
+            return nDogs.toString();
+        }
+
+    },
+
+    GETAREA{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            Area area = dogSitter.getArea();
+            String serverMsg = "";
+            for (String city: area.getPlaces()) {
+                serverMsg = serverMsg + city + "#";
+            }
+            return serverMsg;
+        }
+
+    },
+
+    ISACCEPTINGCASH{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.isAcceptingCash()){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    LISTDOGSIZE{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            String serverMsg = "";
+            for (DogSize size : dogSitter.getListDogSize()) {
+                serverMsg = serverMsg + size + "#";
+            }
+            return serverMsg;
+        }
+
+    },
+
+    ADDNEWPLACEAREA{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String city = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.addNewPlaceArea(city)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    REMOVEPLACEAREA{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String city = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.removePlaceArea(city)){
                 return "true";
             } else {
                 return "false";
