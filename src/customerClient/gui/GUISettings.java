@@ -158,11 +158,17 @@ public class GUISettings extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
-                    setNewValues();
-                    JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                    //TODO nel caso in cui non viene fatta la modifica??
-                }
+                  /*  if (textName == null) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect field", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    } else {*/
+
+                        setNewValues();
+                        JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                        //TODO nel caso in cui non viene fatta la modifica??
+                    }
+               //}
                 if (registrationAe.getActionCommand().equals("Cancel")) {
                     dispose();
                 }
@@ -253,7 +259,7 @@ public class GUISettings extends JFrame {
     }
 
 
-    //metodo per cambiare i valori aggiornati dall'utente nel database
+    //metodo AGGIORNARE IL DATABASE (per cambiare i valori aggiornati dall'utente nel database)
     private void setNewValues() {
         proxy.updateName(textName.getText());
         textName.setEditable(true);

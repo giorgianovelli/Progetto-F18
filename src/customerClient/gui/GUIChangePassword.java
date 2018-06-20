@@ -15,19 +15,18 @@ import java.awt.event.ActionListener;
 
 public class GUIChangePassword extends JFrame {
     final int WIDTH = 400;
-    final int HEIGHT = 400;
+    final int HEIGHT = 300;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     private User user;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
-    private JButton panelButton = new JButton();
+    private JPanel panelButton = new JPanel();
 
     private JLabel labelCurrentPassword = new JLabel("Current Password:", SwingConstants.LEFT);
     private JLabel labelPasswordConf = new JLabel("Confirm New Password:", SwingConstants.LEFT);
     private JLabel labelNewPassword = new JLabel("New Password:", SwingConstants.LEFT);
 
-    //todo cambiato in jtextfield per vedere il contenuto errore :null
     private JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
     private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
     private  JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
@@ -70,8 +69,8 @@ public class GUIChangePassword extends JFrame {
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButton, BorderLayout.SOUTH);
         add(panelOut);
-        panelButton.setLayout(new GridLayout(1, 2));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        panelButton.setLayout(new GridLayout(1, 2,10,5));
+        panelButton.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
