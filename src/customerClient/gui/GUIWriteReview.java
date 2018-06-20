@@ -1,7 +1,5 @@
 package customerClient.gui;
 
-import server.Review;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +25,7 @@ public class GUIWriteReview extends JFrame {
 
     private JTextArea titleField;
     private JTextArea descriptionField;
-    private JButton enterButton, cancelButton;
+    private JButton sendButton, cancelButton;
 
 
     private JComboBox<String> voteBox;
@@ -57,8 +55,8 @@ public class GUIWriteReview extends JFrame {
         labelVote = new JLabel("Vote: ");
         labelDescription = new JLabel("Description: ");
         titleField = new JTextArea(2,1);
-        descriptionField = new JTextArea( 10,1);
-        enterButton = new JButton("Enter");
+        descriptionField = new JTextArea( 7,1);
+        sendButton = new JButton("Send");
         cancelButton = new JButton("Cancel");
 
         descriptionFieldScroll = new JScrollPane(descriptionField);
@@ -96,8 +94,9 @@ public class GUIWriteReview extends JFrame {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
 
-                if (registrationAe.getActionCommand().equals("Enter")) {
-                    //TODO controlli sul testo + aggiungere la recensione nel db
+                if (registrationAe.getActionCommand().equals("Send")) {
+                    //TODO controlli sul testo (tutti i campi devono essere completi) + aggiungere la recensione nel db
+
 
                     int rating = Integer.parseInt((String) voteBox.getSelectedItem());
                     String title = titleField.getText();
@@ -121,11 +120,12 @@ public class GUIWriteReview extends JFrame {
 
             }
         };
-        enterButton.addActionListener(post);
+        sendButton.addActionListener(post);
         cancelButton.addActionListener(post);
 
-        buttonPanel.add(enterButton);
         buttonPanel.add(cancelButton);
+        buttonPanel.add(sendButton);
+
 
         contentPanel.setLayout(new GridLayout(4,1));
         contentPanel.add(topPanel);

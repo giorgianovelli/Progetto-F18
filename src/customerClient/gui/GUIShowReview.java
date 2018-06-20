@@ -12,18 +12,22 @@ public class GUIShowReview extends JFrame {
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     private Review review;
 
-    private JPanel panelReview;
+    private JPanel contentPanel;
+    private JPanel panelReviewTop;
+    private JPanel panelReviewDescription;
     private JPanel panelReply;
 
     private JLabel labelTitle;
     private JLabel labelDescription;
     private JLabel labelVote;
+    private JLabel labelGrade;
     private JLabel labelReply;
 
     private JTextArea textTitle;
-    private JTextArea textDescrption;
+    private JTextArea textDescription;
     private JTextArea textReply;
 
+    //private int numberRow;
 
     public GUIShowReview(Review review){
         setTitle("Show review");
@@ -39,47 +43,75 @@ public class GUIShowReview extends JFrame {
     }
 
     private void initComponent(){
+        //TODO migliorare il layout
+        contentPanel = new JPanel();
+        panelReviewTop = new JPanel();
+        panelReviewDescription = new JPanel();
+        panelReply = new JPanel();
 
-        JPanel panelReview = new JPanel();
-        JPanel panelReply = new JPanel();
+        labelTitle = new JLabel("Title: ", SwingConstants.LEFT);
+        labelVote = new JLabel("Vote: " , SwingConstants.LEFT);
+        labelDescription = new JLabel("Comment: ");
 
-        JLabel labelTitle = new JLabel("Title: ");
-        JLabel labelDescription = new JLabel("Description: ");
-        JLabel labelVote = new JLabel("Vote: " + Integer.toString(review.getRating()));
-        JLabel labelReply = new JLabel("Dogsitter reply: ");
+        labelGrade = new JLabel(Integer.toString(review.getRating()));
+        labelReply = new JLabel("Dogsitter reply: ");
 
-        JTextArea textTitle = new JTextArea(review.getTitle());
+        textTitle = new JTextArea(review.getTitle());
         textTitle.setEditable(false);
         textTitle.setLineWrap(true);
-        JTextArea textDescription = new JTextArea(review.getComment());
+        textDescription = new JTextArea(review.getComment(),7,1);
         textDescription.setEditable(false);
         textDescription.setLineWrap(true);
-        JTextArea textReply = new JTextArea();
+        textReply = new JTextArea();
+
+        panelReviewTop.setLayout(new GridLayout(2,2));
+        panelReviewTop.add(labelTitle);
+        panelReviewTop.add(textTitle);
+        panelReviewTop.add(labelVote);
+        panelReviewTop.add(labelGrade);
+
+        panelReviewDescription.setLayout(new GridLayout(2,1));
+        panelReviewDescription.add(labelDescription);
+        panelReviewDescription.add(textDescription);
 
 
 
 
-        panelReview.add(labelTitle);
-        panelReview.add(textTitle);
+        /*GridBagLayout gridBag = new GridBagLayout();
+        panelReviewTop.setLayout(gridBag);
+        GridBagConstraints c = new GridBagConstraints();
 
-        panelReview.add(labelVote);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        panelReviewTop.add(labelTitle, gridBag, 0);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        panelReviewTop.add(textTitle, gridBag, 1);
+        c.weightx = 1.0;
+        panelReviewTop.add(labelVote, gridBag, 1);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        panelReviewTop.add(labelTitle, gridBag, 2);
 
-        panelReview.add(labelDescription);
-        panelReview.add(textDescription);
+        c.weightx = 0.0;
+        panelReviewTop.add(labelDescription, gridBag, 1);
 
 
-        add(panelReview, BorderLayout.CENTER);
+*/
 
-        if(review.getReply()!= null){
+        contentPanel.setLayout(new GridLayout(3, 1));
+        contentPanel.add(panelReviewTop);
+        contentPanel.add(panelReviewDescription);
+
+        if(!(review.getReply().equals("null"))){
             textReply.setLineWrap(true);
             textReply.setEditable(false);
             textReply.setText(review.getReply());
+            panelReply.setLayout(new GridLayout(2,1));
             panelReply.add(labelReply);
             panelReply.add(textReply);
-            add(panelReply, BorderLayout.SOUTH);
+            contentPanel.add(panelReply);
         }
 
-
+        add(contentPanel);
 
     }
 
