@@ -457,6 +457,7 @@ public enum ExecCustomerEnum {
             String street = tokenMsg.nextToken();
             String number = tokenMsg.nextToken();
             String cap = tokenMsg.nextToken();
+            boolean paymentInCash = Boolean.valueOf(tokenMsg.nextToken());
 
             Singleton singleton = new Singleton();
             Customer customer = singleton.createCustomerFromDB(email);
@@ -470,7 +471,7 @@ public enum ExecCustomerEnum {
 
             Address meetingPoint = new Address(country, city, street, number, cap);
 
-            if (customer.addAssignment(emailDogSitter, dateStartAssignment, dateEndAssignment, dogList, meetingPoint)){
+            if (customer.addAssignment(emailDogSitter, dateStartAssignment, dateEndAssignment, dogList, meetingPoint, paymentInCash)){
                 return "true";
             } else {
                 return "false";

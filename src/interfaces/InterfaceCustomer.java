@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public interface InterfaceCustomer {
 
-    boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint);
+    boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash);
 
     boolean removeAssignment(int code);
 
