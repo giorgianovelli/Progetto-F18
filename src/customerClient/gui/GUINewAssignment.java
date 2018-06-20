@@ -4,6 +4,7 @@ package customerClient.gui;
 
 import customerClient.CustomerProxy;
 import server.Dog;
+import server.places.Address;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +46,7 @@ public class GUINewAssignment extends JFrame{
     private JButton buttonSearch = new JButton("Search");
 
     NewAssignmentBox newAssignmentBox;
+    //NewAssignmentCheckBox[] newAssignmentCheckBoxes;
 
 
 
@@ -94,6 +96,26 @@ public class GUINewAssignment extends JFrame{
                 String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
                 String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
 
+                String countryText = String.valueOf(country.getField().getText());
+                String cityText = String.valueOf(city.getField().getText());
+                String capText = String.valueOf(cap.getField().getText());
+                String addressText = String.valueOf(address.getField().getText());
+                String numberText = String.valueOf(number.getField().getText());
+
+                Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
+                HashSet<Dog> dogsSelected;
+
+
+                /*
+                for (NewAssignmentCheckBox newAssignmentCheckBox: newAssignmentCheckBoxes) {
+                    if(newAssignmentCheckBox.getCheckBox().isSelected()) {
+
+                    }
+
+                }
+
+                */
+
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
                 Date dateStart = new Date();
                 Date dateEnd = new Date();
@@ -103,7 +125,6 @@ public class GUINewAssignment extends JFrame{
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
-                System.out.println(dateStart.toString() + " ----- " + dateEnd.toString());
             }
         };
 
@@ -159,7 +180,9 @@ public class GUINewAssignment extends JFrame{
         HashSet<Dog> hashDogs = customerProxy.getDogList();
 
         for (Dog dog: hashDogs) {
+            int i = 0;
             NewAssignmentCheckBox dogCheckBox = new NewAssignmentCheckBox(dog.getName());
+//            newAssignmentCheckBoxes[i] = dogCheckBox;
             panelDogs.add(dogCheckBox);
             gridLayout.setRows(gridLayout.getRows() + 1);
         }
@@ -395,6 +418,10 @@ class NewAssignmentText extends JPanel{
         add(label, gridBagConstraints);
         add(field, gridBagConstraints);
     }
+
+    public TextField getField() {
+        return field;
+    }
 }
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -416,5 +443,9 @@ class NewAssignmentCheckBox extends JPanel {
         checkBox = new JCheckBox();
         add(labelName);
         add(checkBox);
+    }
+
+    public JCheckBox getCheckBox() {
+        return checkBox;
     }
 }
