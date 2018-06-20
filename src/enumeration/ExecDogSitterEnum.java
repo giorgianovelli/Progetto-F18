@@ -478,6 +478,23 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    LISTDOGSIZE{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            String serverMsg = "";
+            for (DogSize size : dogSitter.getListDogSize()) {
+                serverMsg = serverMsg + size + "#";
+            }
+            return serverMsg;
+        }
+
     };
 
 

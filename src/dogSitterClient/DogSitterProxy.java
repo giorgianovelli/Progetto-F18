@@ -307,5 +307,17 @@ public class DogSitterProxy implements InterfaceDogSitter {
         }
     }
 
+    public HashSet<DogSize> getListDogSize(){
+        String serverMsg = getReply("DOGSITTER#LISTDOGSIZE#" + email);
+        HashSet<DogSize> listDogSize = new HashSet<DogSize>();
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        while (tokenMsg.hasMoreTokens()){
+            String strSize = tokenMsg.nextToken();
+            DogSize dogSize = DogSize.valueOf(strSize);
+            listDogSize.add(dogSize);
+        }
+        return listDogSize;
+    }
+
 
 }
