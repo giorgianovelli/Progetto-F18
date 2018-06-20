@@ -293,7 +293,7 @@ public class DogSitterProxy implements InterfaceDogSitter {
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         Area area = new Area();
         while (tokenMsg.hasMoreTokens()){
-            area.addPlaces(tokenMsg.nextToken());
+            area.addPlace(tokenMsg.nextToken());
         }
         return area;
     }
@@ -307,5 +307,34 @@ public class DogSitterProxy implements InterfaceDogSitter {
         }
     }
 
+    public HashSet<DogSize> getListDogSize(){
+        String serverMsg = getReply("DOGSITTER#LISTDOGSIZE#" + email);
+        HashSet<DogSize> listDogSize = new HashSet<DogSize>();
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        while (tokenMsg.hasMoreTokens()){
+            String strSize = tokenMsg.nextToken();
+            DogSize dogSize = DogSize.valueOf(strSize);
+            listDogSize.add(dogSize);
+        }
+        return listDogSize;
+    }
+
+    public boolean addNewPlaceArea(String city){
+        String serverMsg = getReply("DOGSITTER#ADDNEWPLACEAREA#" + email + "#" + city);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean removePlaceArea(String city){
+        String serverMsg = getReply("DOGSITTER#REMOVEPLACEAREA#" + email + "#" + city);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

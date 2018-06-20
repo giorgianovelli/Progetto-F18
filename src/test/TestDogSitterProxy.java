@@ -2,6 +2,7 @@ package test;
 
 import dogSitterClient.DogSitterProxy;
 import server.Assignment;
+import server.DogSize;
 import server.Review;
 import server.places.Area;
 
@@ -65,5 +66,12 @@ public class TestDogSitterProxy {
         Area area = proxy.getArea();
         area.printPlaces();
         System.out.println(proxy.isAcceptingCash());
+        HashSet<DogSize> listDogSize = proxy.getListDogSize();
+        System.out.println("dog size list:");
+        for (DogSize ds : listDogSize) {
+            System.out.println(ds);
+        }
+        //System.out.println(proxy.addNewPlaceArea("MILANO"));
+        System.out.println(proxy.removePlaceArea("MILANO"));
     }
 }

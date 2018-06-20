@@ -66,7 +66,7 @@ public class Singleton {
             Area listArea = new Area();
             while (rs.next()){
                 String cityOp = rs.getString("CITY");
-                listArea.addPlaces(cityOp);
+                listArea.addPlace(cityOp);
             }
             dbConnector.closeConnection();
 

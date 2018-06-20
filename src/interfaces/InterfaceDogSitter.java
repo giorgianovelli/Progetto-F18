@@ -21,7 +21,7 @@ public interface InterfaceDogSitter {
 
     int getDogNumber();
 
-    //HashSet<DogSize> getListDogSize();
+    HashSet<DogSize> getListDogSize();
 
     Area getArea();
 
@@ -30,8 +30,6 @@ public interface InterfaceDogSitter {
     String getName();
 
     String getSurname();
-
-    //Boolean getAssignmentState(int code); TODO
 
     boolean updateName(String name);
 
@@ -50,4 +48,12 @@ public interface InterfaceDogSitter {
     boolean updateCashFlag(boolean acceptCash);
 
     boolean updateAssignmentState(int code, Boolean state);
+
+    boolean addNewPlaceArea(String city);
+
+    boolean removePlaceArea(String city);
+
+    //boolean updateDogNumber(int nDogs);
+
+    //boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant);
 }

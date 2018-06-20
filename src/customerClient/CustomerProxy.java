@@ -314,7 +314,7 @@ public class CustomerProxy implements InterfaceCustomer {
         return Double.parseDouble(serverMsg);
     }
 
-    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint){
+    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash){
         String clientMsg = "CUSTOMER#ADDASSIGNMENT#" + email + "#" + emailDogSitter + "#";
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String strStart = dateFormat.format(dateStartAssignment);
@@ -323,7 +323,7 @@ public class CustomerProxy implements InterfaceCustomer {
         for (Dog d : selectedDogs) {
             clientMsg = clientMsg + d.getID() + "*";
         }
-        clientMsg = clientMsg + "#" + meetingPoint.getCountry() + "#" + meetingPoint.getCity() + "#" + meetingPoint.getStreet() + "#" + meetingPoint.getNumber() + "#" + meetingPoint.getCap();
+        clientMsg = clientMsg + "#" + meetingPoint.getCountry() + "#" + meetingPoint.getCity() + "#" + meetingPoint.getStreet() + "#" + meetingPoint.getNumber() + "#" + meetingPoint.getCap() + "#" + paymentInCash;
         if (getReply(clientMsg).equals("true")){
             return true;
         } else {
