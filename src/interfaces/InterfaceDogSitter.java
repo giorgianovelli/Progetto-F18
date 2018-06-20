@@ -17,19 +17,21 @@ public interface InterfaceDogSitter {
 
     //Availability getDateTimeAvailability();
 
-    //boolean isAcceptingCash();
+    boolean isAcceptingCash();
 
     int getDogNumber();
 
     //HashSet<DogSize> getListDogSize();
 
-    //Area getArea();
+    Area getArea();
 
     Address getAddress();
 
     String getName();
 
     String getSurname();
+
+    //Boolean getAssignmentState(int code); TODO
 
     boolean updateName(String name);
 

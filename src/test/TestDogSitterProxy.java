@@ -3,6 +3,7 @@ package test;
 import dogSitterClient.DogSitterProxy;
 import server.Assignment;
 import server.Review;
+import server.places.Area;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,5 +62,8 @@ public class TestDogSitterProxy {
         System.out.println(one.getState());*/
         //proxy.updateCashFlag(true);
         System.out.println(proxy.getDogNumber());
+        Area area = proxy.getArea();
+        area.printPlaces();
+        System.out.println(proxy.isAcceptingCash());
     }
 }

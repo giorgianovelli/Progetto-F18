@@ -7,6 +7,7 @@ import server.DogSize;
 import server.Review;
 import server.bank.PaymentMethod;
 import server.places.Address;
+import server.places.Area;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -286,4 +287,25 @@ public class DogSitterProxy implements InterfaceDogSitter {
         String serverMsg = getReply("DOGSITTER#GETDOGNUMBER#" + email);
         return Integer.parseInt(serverMsg);
     }
+
+    public Area getArea() {
+        String serverMsg = getReply("DOGSITTER#GETAREA#" + email);
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        Area area = new Area();
+        while (tokenMsg.hasMoreTokens()){
+            area.addPlaces(tokenMsg.nextToken());
+        }
+        return area;
+    }
+
+    public boolean isAcceptingCash() {
+        String serverMsg = getReply("DOGSITTER#ISACCEPTINGCASH#" + email);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

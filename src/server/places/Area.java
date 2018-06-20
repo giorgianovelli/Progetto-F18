@@ -37,4 +37,8 @@ public class Area {
             System.out.println(p);
         }
     }
+
+    public HashSet<String> getPlaces() {
+        return places;
+    }
 }
