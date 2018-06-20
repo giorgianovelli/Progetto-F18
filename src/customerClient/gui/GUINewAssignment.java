@@ -44,6 +44,8 @@ public class GUINewAssignment extends JFrame{
     private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonSearch = new JButton("Search");
 
+    NewAssignmentBox newAssignmentBox;
+
 
 
     NewAssignmentText country = new NewAssignmentText("Country:                                               ");
@@ -67,11 +69,48 @@ public class GUINewAssignment extends JFrame{
         this.date = date;
         this.email = email;
         strDate = dateToString(date);
-        NewAssignmentBox newAssignmentBox = new NewAssignmentBox(strDate);
+
+        newAssignmentBox = new NewAssignmentBox(strDate);
+
+
+
 
         initComponents(newAssignmentBox);
 
-        }
+        // Action Listener del pulsante Search
+
+
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
+                String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
+                String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
+                String fromHour = String.valueOf(newAssignmentBox.getFhourList().getSelectedItem());
+                String fromMinute = String.valueOf(newAssignmentBox.getFminuteList().getSelectedItem());
+                String day = String.valueOf(newAssignmentBox.getTdayList().getSelectedItem());
+                String month = String.valueOf(newAssignmentBox.getTmonthList().getSelectedItem());
+                String year = String.valueOf(newAssignmentBox.getTyearList().getSelectedItem());
+                String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
+                String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                Date dateStart = new Date();
+                Date dateEnd = new Date();
+                try {
+                    dateStart = simpleDateFormat.parse(fromDay + "/" + fromMonth + "/" + fromYear + " " + fromHour + ":" + fromMinute);
+                    dateEnd = simpleDateFormat.parse(day + "/" + month + "/" + year + " " + toHour + ":" + toMinute);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println(dateStart.toString() + " ----- " + dateEnd.toString());
+            }
+        };
+
+        buttonSearch.addActionListener(actionListener);
+
+
+    }
 
 //________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -126,10 +165,15 @@ public class GUINewAssignment extends JFrame{
         }
 
 
+
+
         // Secondo pannello
 
         panelButtons.add(buttonCancel);
         panelButtons.add(buttonSearch);
+
+
+
 
         // Pannello ComboBox
 
@@ -157,6 +201,10 @@ public class GUINewAssignment extends JFrame{
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
 
+
+
+
+
     }
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -175,8 +223,8 @@ class NewAssignmentBox extends JPanel{
 
 
     Date dateEnd;
-    JComboBox<String> fdayList, tdayList;
-    JComboBox<String> fmonthList, tmonthList;
+    JComboBox<String> tdayList;
+    JComboBox<String> tmonthList;
     JComboBox<String> fyearList, tyearList;
     JComboBox<String> fhourList, thourList;
     JComboBox<String> fminuteList, tminuteList;
@@ -250,42 +298,6 @@ class NewAssignmentBox extends JPanel{
 
         */
 
-        dateEnd = new Date();
-
-
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String day = String.valueOf(tdayList.getSelectedItem());
-                String month = String.valueOf(tmonthList.getSelectedItem());
-                String year = String.valueOf(tyearList.getSelectedItem());
-                String toHour = String.valueOf(thourList.getSelectedItem());
-                String toMinute = String.valueOf(tminuteList.getSelectedItem());
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-                dateEnd = new Date();
-                try {
-                    dateEnd = simpleDateFormat.parse(day + "/" + month + "/" + year + " " + toHour + ":" + toMinute);
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        };
-
-        tdayList.addActionListener(actionListener);
-        tmonthList.addActionListener(actionListener);
-        tyearList.addActionListener(actionListener);
-        thourList.addActionListener(actionListener);
-        tminuteList.addActionListener(actionListener);
-
-        //System.out.println(dateEnd.toString());
-
-
-
-
-
-
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);
         tdayList.setLightWeightPopupEnabled(false);
@@ -293,12 +305,6 @@ class NewAssignmentBox extends JPanel{
         tyearList.setLightWeightPopupEnabled(false);
         thourList.setLightWeightPopupEnabled(false);
         tminuteList.setLightWeightPopupEnabled(false);
-
-
-
-
-
-
 
         setLayout(new GridLayout(3, 6, 10, 10));
 
@@ -325,9 +331,49 @@ class NewAssignmentBox extends JPanel{
 
     }
 
+//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+    public JLabel getFromDayLabel() {
+        return fromDayLabel;
+    }
+
+    public JLabel getFromMonthLabel() {
+        return fromMonthLabel;
+    }
+
+    public JLabel getFromYearLabel() {
+        return fromYearLabel;
+    }
+
+    public JComboBox<String> getTdayList() {
+        return tdayList;
+    }
+
+    public JComboBox<String> getTmonthList() {
+        return tmonthList;
+    }
+
+    public JComboBox<String> getTyearList() {
+        return tyearList;
+    }
+
+    public JComboBox<String> getFhourList() {
+        return fhourList;
+    }
+
+    public JComboBox<String> getThourList() {
+        return thourList;
+    }
+
+    public JComboBox<String> getFminuteList() {
+        return fminuteList;
+    }
+
+    public JComboBox<String> getTminuteList() {
+        return tminuteList;
+    }
 }
-
-
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
