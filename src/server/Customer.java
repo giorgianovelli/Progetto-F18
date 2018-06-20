@@ -46,7 +46,7 @@ public class Customer extends User implements InterfaceCustomer{
 
     public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
         //chiamata alla classe banca per effettuare la transazione
-        boolean testTransaction = true;
+        //TODO aggiungere il campo per il pagamento in contanti
         DBConnector dbConnector = new DBConnector();
         int code = -1;
         try {
@@ -66,17 +66,9 @@ public class Customer extends User implements InterfaceCustomer{
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date.setLenient(false);
-            Date startAssignment = new Date();
-            Date endAssignment = new Date();
 
             String dateStringStartAssigment = date.format(dateStartAssignment);
             String dateStringEndAssigment = date.format(dateEndAssignment);
-            /*try {
-                startAssignment = date.parse(dateStringStartAssigment);
-                endAssignment = date.parse(dateStringEndAssigment);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }*/
 
             Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
             assignmentList.put(code, assignment);
