@@ -44,9 +44,11 @@ public class Customer extends User implements InterfaceCustomer{
         return singleton.getCustomerListAssignmentFromDB(email);
     }
 
-    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint) {
+    public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash) {
         //chiamata alla classe banca per effettuare la transazione
         //TODO aggiungere il campo per il pagamento in contanti
+        System.out.println("test payment: " + paymentInCash);
+
         DBConnector dbConnector = new DBConnector();
         int code = -1;
         try {
@@ -60,7 +62,7 @@ public class Customer extends User implements InterfaceCustomer{
         Bank bank = new Bank();
         double price = estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
-        if (bank.isTransactionPossible(email, price)) {
+        if ((bank.isTransactionPossible(email, price)) || (paymentInCash)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
@@ -86,7 +88,9 @@ public class Customer extends User implements InterfaceCustomer{
                 e.printStackTrace();
             }
 
-            bank.makeBankTransaction(email, emailDogSitter, code, price);
+            if (!(paymentInCash)){
+                bank.makeBankTransaction(email, emailDogSitter, code, price);
+            }
 
             System.out.println("Assignment completed successfully!");
             System.out.println(assignment.toString());
