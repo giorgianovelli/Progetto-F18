@@ -71,6 +71,7 @@ public class TestDogSitterProxy {
         for (DogSize ds : listDogSize) {
             System.out.println(ds);
         }
-        System.out.println(proxy.addNewPlaceArea("MILANO"));
+        //System.out.println(proxy.addNewPlaceArea("MILANO"));
+        System.out.println(proxy.removePlaceArea("MILANO"));
     }
 }

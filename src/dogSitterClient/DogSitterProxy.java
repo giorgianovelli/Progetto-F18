@@ -328,5 +328,13 @@ public class DogSitterProxy implements InterfaceDogSitter {
         }
     }
 
+    public boolean removePlaceArea(String city){
+        String serverMsg = getReply("DOGSITTER#REMOVEPLACEAREA#" + email + "#" + city);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

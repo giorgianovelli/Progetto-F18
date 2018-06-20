@@ -513,6 +513,24 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    REMOVEPLACEAREA{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String city = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.removePlaceArea(city)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 
