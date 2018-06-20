@@ -75,8 +75,9 @@ public class GUIListAssignments extends JFrame{
             labelState = new JLabel[assignmentNumber];
         }
 
-        contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
+        //contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
 
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review"); //TODO posso scrivere le recensioni per appuntamenti che ancora non ce l'hanno
@@ -241,6 +242,9 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i] = new JPanel();
 
         infoPanel[i].setLayout(new BorderLayout());
+        //infoPanel[i].setMinimumSize(new Dimension(450, 100));
+        //infoPanel[i].setPreferredSize(new Dimension(450, 100));
+        infoPanel[i].setMaximumSize(new Dimension(450,100));
 
         labelState[i] = createLabelState(a,i);
         labelState[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -258,8 +262,8 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i] = new JPanel();
 
         infoPanel[i].setLayout(new BorderLayout());
-
-        infoPanel[i].setPreferredSize(new Dimension(480,40));
+        infoPanel[i].setMaximumSize(new Dimension(450,100));
+        
         labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
         infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
         infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
