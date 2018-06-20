@@ -6,10 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUIWriteReview extends JFrame {
-    final int WIDTH = 512;
-    final int HEIGHT = 512;
+    final int WIDTH = 600;
+    final int HEIGHT = 580;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    private JPanel outPanel;
     private JPanel contentPanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
@@ -42,18 +43,20 @@ public class GUIWriteReview extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        outPanel = new JPanel();
         contentPanel = new JPanel(); //contiene toPanel, bottomPanel
 
         topPanel = new JPanel(); //contiene il titolo
         votePanel = new JPanel();
         bottomPanel = new JPanel();
-        buttonPanel = new JPanel(new GridLayout(1,2, 20, 20));
+        buttonPanel = new JPanel(new GridLayout(1,2));
         descriptionPanel = new JPanel(new GridLayout(1,1));
 
 
         labelTitle = new JLabel("Title: ");
         labelVote = new JLabel("Vote: ");
-        labelDescription = new JLabel("Description: ");
+        labelDescription = new JLabel("<html><br/><br/><br/><br/><br/>Comment: </html>");
+        //TODO limitare il numero di righe o caratteri!!
         titleField = new JTextArea(2,1);
         descriptionField = new JTextArea( 7,1);
         sendButton = new JButton("Send");
@@ -63,33 +66,32 @@ public class GUIWriteReview extends JFrame {
 
         voteBox = new JComboBox<>(grade);
 
-        contentPanel.setLayout(new BorderLayout());
 
         topPanel.setLayout(new GridLayout(2,1,5,5));
-        labelTitle.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        labelTitle.setFont(new Font("TimesRoman", Font.BOLD, 16));
         topPanel.add(labelTitle);
-        titleField.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+        titleField.setFont(new Font("TimesRoman", Font.PLAIN, 14));
+        titleField.setLineWrap(true);
+        titleField.setWrapStyleWord(false);
         titleField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         topPanel.add(titleField);
 
         votePanel.setLayout(new GridLayout(2,1));
         votePanel.add(labelVote);
         votePanel.add(voteBox);
-        votePanel.setBorder(BorderFactory.createEmptyBorder(20,10,30,20));
+        votePanel.setBorder(BorderFactory.createEmptyBorder(40,10,20,70));
 
         bottomPanel.setLayout(new GridLayout(1,2));
-
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(2,5,2,10));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         bottomPanel.add(labelDescription);
         bottomPanel.add(votePanel);
 
         descriptionField.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         descriptionField.setLineWrap(true);
-        descriptionPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        descriptionPanel.setBorder(BorderFactory.createEmptyBorder(0,5,5,5));
         descriptionPanel.add(descriptionFieldScroll);
 
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(60, 90, 20, 90));
         ActionListener post = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
@@ -122,19 +124,28 @@ public class GUIWriteReview extends JFrame {
         };
         sendButton.addActionListener(post);
         cancelButton.addActionListener(post);
+        buttonPanel.setLayout(new GridLayout(1, 2,5,5));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 90, 10, 90));
+        buttonPanel.add(cancelButton, BorderLayout.SOUTH);
+        buttonPanel.add(sendButton, BorderLayout.SOUTH);
 
-        buttonPanel.add(cancelButton);
-        buttonPanel.add(sendButton);
 
+        contentPanel.setLayout(new GridLayout(3,1, 5, 5));
+        //contentPanel.setBorder(BorderFactory.createEmptyBorder(5,20,20,20));
+        contentPanel.setBorder(BorderFactory.createTitledBorder("Review field: "));
 
-        contentPanel.setLayout(new GridLayout(4,1));
         contentPanel.add(topPanel);
         contentPanel.add(bottomPanel);
         contentPanel.add(descriptionPanel);
-        contentPanel.add(buttonPanel);
 
 
-        add(contentPanel);
+        outPanel.setLayout(new BorderLayout());
+        outPanel.setBorder(BorderFactory.createEmptyBorder(15,20,5,20));
+        outPanel.add(contentPanel, BorderLayout.NORTH);
+        outPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(outPanel);
+
 
 
     }
