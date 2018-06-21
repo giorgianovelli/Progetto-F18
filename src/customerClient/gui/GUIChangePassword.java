@@ -59,7 +59,8 @@ public class GUIChangePassword extends JFrame {
 
     private void initComponents() {
 
-        panelData.setLayout(new GridLayout(3,1,20, 10));
+        panelData.setLayout(new GridLayout(3,1,20, 30));
+        panelData.setBorder(BorderFactory.createTitledBorder("Password Fields: "));
         panelData.add(labelCurrentPassword);
         panelData.add(textCurrentPassword);
         panelData.add(labelNewPassword);

@@ -27,7 +27,7 @@ public class GUISignUp extends JFrame{
     private JPanel panelAddress = new JPanel();
     private JPanel contentPanel = new JPanel();
 
-    private JScrollPane scrollPanel = new JScrollPane(contentPanel);
+    private JScrollPane scrollPanel = new JScrollPane(panelOut);
 
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
     private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
@@ -177,6 +177,8 @@ public class GUISignUp extends JFrame{
 
                 if (registrationAe.getActionCommand().equals("Confirm Registration as Cutomer")) {
 
+                    //TODO CONTROLLARE CHE I CAMPI PASSWORD E CONFIRM PASSWORD SIANO UGUALI
+
                     JOptionPane.showMessageDialog(new JFrame(), "registration was successfully performed", "", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
 
@@ -249,7 +251,7 @@ public class GUISignUp extends JFrame{
 
 
         //TODO DA SISTEMARE
-        /*scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+     /*  scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         add(scrollPanel);*/
