@@ -37,6 +37,7 @@ public class GUINewAssignment extends JFrame{
     private Date date;
     private String strDate;
     private String email;
+    HashSet<Dog> dogList;
 
     //Others
 
@@ -183,9 +184,9 @@ public class GUINewAssignment extends JFrame{
 
         // panelDogs (fa parte del panelNoButtons)
 
-        HashSet<Dog> hashDogs = customerProxy.getDogList();
+        dogList = customerProxy.getDogList();
 
-        for (Dog dog: hashDogs) {
+        for (Dog dog: dogList) {
             NewAssignmentCheckBox dogCheckBox = new NewAssignmentCheckBox(dog.getName());
             listCheckbox.add(dogCheckBox);
             panelDogs.add(dogCheckBox);
@@ -454,6 +455,18 @@ class NewAssignmentCheckBox extends JPanel {
     public JCheckBox getCheckBox() {
         return checkBox;
     }
+
+    /*
+
+    public Dog returnDogFromJCheckBox(String name, HashSet<Dog> dogList) {
+        for (Dog dog: dogList) {
+            if (dog.getName().equals(name)) {
+                return dog;
+            }
+        }
+    }
+
+    */
 
 
 
