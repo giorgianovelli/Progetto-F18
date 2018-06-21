@@ -17,7 +17,7 @@ public class TestGUINewAssignment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         try {
-            date = simpleDateFormat.parse("14/06/2018");
+            date = simpleDateFormat.parse("18/06/2018");
         } catch (ParseException e) {
             e.printStackTrace();
         }
