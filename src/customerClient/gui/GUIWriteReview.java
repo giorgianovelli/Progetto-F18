@@ -132,7 +132,7 @@ public class GUIWriteReview extends JFrame {
 
         contentPanel.setLayout(new GridLayout(3,1, 5, 5));
         //contentPanel.setBorder(BorderFactory.createEmptyBorder(5,20,20,20));
-        contentPanel.setBorder(BorderFactory.createTitledBorder("Review field: "));
+        contentPanel.setBorder(BorderFactory.createTitledBorder("Review fields: "));
 
         contentPanel.add(topPanel);
         contentPanel.add(bottomPanel);

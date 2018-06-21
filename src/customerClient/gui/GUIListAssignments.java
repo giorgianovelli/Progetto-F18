@@ -99,12 +99,12 @@ public class GUIListAssignments extends JFrame{
                 a = listAssignment.get(i);
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 date.setLenient(false);
                 Date startAssignment = a.getDateStart();
                 String dateStringStartAssigment = date.format(startAssignment);
 
-                labelString = "<html>" + dateStringStartAssigment + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + dateStringStartAssigment +  "</html>";
 
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Write a review");
@@ -128,12 +128,12 @@ public class GUIListAssignments extends JFrame{
                 String labelString;
                 r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd ");
+                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm ");
                 date.setLenient(false);
                 Date reviewDate = r.getDate();
                 String dateStringReview = date.format(reviewDate);
 
-                labelString = "<html>" + dateStringReview + " " + r.getTitle()+"<br/>Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) + "</html>";
+                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.getRating() + "</html>";
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Delete review");
                 buttonAction[j].addActionListener(new ActionListener(){
@@ -158,12 +158,12 @@ public class GUIListAssignments extends JFrame{
                 String labelString;
                 r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 date.setLenient(false);
                 Date reviewDate = r.getDate();
                 String dateStringReview = date.format(reviewDate);
 
-                labelString = "<html>" + dateStringReview + " " + r.getTitle()+"<br/>Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) + "</html>";;
+                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.getRating() + "</html>";
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Show more");
                 buttonAction[j].addActionListener(new ActionListener(){
@@ -254,6 +254,9 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
         infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
 
+
+        infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+
         contentPanel.add(infoPanel[i]);
 
     }
@@ -263,11 +266,11 @@ public class GUIListAssignments extends JFrame{
 
         infoPanel[i].setLayout(new BorderLayout());
         infoPanel[i].setMaximumSize(new Dimension(450,100));
-        
+
         labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
         infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
         infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
-
+        infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         contentPanel.add(infoPanel[i]);
     }
 

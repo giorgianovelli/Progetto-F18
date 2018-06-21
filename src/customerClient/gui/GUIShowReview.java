@@ -12,6 +12,7 @@ public class GUIShowReview extends JFrame {
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     private Review review;
 
+    private JPanel outPanel;
     private JPanel contentPanel;
     private JPanel panelReviewTop;
     private JPanel panelReviewDescription;
@@ -21,7 +22,7 @@ public class GUIShowReview extends JFrame {
     private JLabel labelDescription;
     private JLabel labelVote;
     private JLabel labelGrade;
-    private JLabel labelReply;
+    //private JLabel labelReply;
 
     private JTextArea textTitle;
     private JTextArea textDescription;
@@ -44,17 +45,20 @@ public class GUIShowReview extends JFrame {
 
     private void initComponent(){
         //TODO migliorare il layout
+        outPanel = new JPanel();
         contentPanel = new JPanel();
         panelReviewTop = new JPanel();
         panelReviewDescription = new JPanel();
         panelReply = new JPanel();
+
+        contentPanel.setBorder(BorderFactory.createTitledBorder("Your Review: "));
 
         labelTitle = new JLabel("Title: ", SwingConstants.LEFT);
         labelVote = new JLabel("Vote: " , SwingConstants.LEFT);
         labelDescription = new JLabel("Comment: ");
 
         labelGrade = new JLabel(Integer.toString(review.getRating()));
-        labelReply = new JLabel("Dogsitter reply: ");
+        //labelReply = new JLabel("Dogsitter reply: ");
 
         textTitle = new JTextArea(review.getTitle());
         textTitle.setEditable(false);
@@ -97,21 +101,26 @@ public class GUIShowReview extends JFrame {
 
 */
 
-        contentPanel.setLayout(new GridLayout(3, 1));
+        contentPanel.setLayout(new GridLayout(2, 1));
         contentPanel.add(panelReviewTop);
         contentPanel.add(panelReviewDescription);
 
         if(!(review.getReply().equals("null"))){
+            panelReply.setBorder(BorderFactory.createTitledBorder("Dogsitter Reply: "));
             textReply.setLineWrap(true);
             textReply.setEditable(false);
             textReply.setText(review.getReply());
             panelReply.setLayout(new GridLayout(2,1));
-            panelReply.add(labelReply);
+            //panelReply.add(labelReply);
             panelReply.add(textReply);
-            contentPanel.add(panelReply);
+
         }
 
-        add(contentPanel);
+        outPanel.setLayout(new GridLayout(2,1));
+
+        outPanel.add(contentPanel);
+        outPanel.add(panelReply);
+        add(outPanel);
 
     }
 
