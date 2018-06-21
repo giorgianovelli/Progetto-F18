@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -46,15 +47,17 @@ public class GUINewAssignment extends JFrame{
     private JButton buttonSearch = new JButton("Search");
 
     NewAssignmentBox newAssignmentBox;
-    //NewAssignmentCheckBox[] newAssignmentCheckBoxes;
+    int i = 1;
+    NewAssignmentCheckBox[] newAssignmentCheckBoxes = new NewAssignmentCheckBox[]{};
+    ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<NewAssignmentCheckBox>();
 
 
 
-    NewAssignmentText country = new NewAssignmentText("Country:                                               ");
-    NewAssignmentText city = new NewAssignmentText("City:                                                       ");
-    NewAssignmentText cap = new NewAssignmentText("Postal Code:                                        ");
-    NewAssignmentText address = new NewAssignmentText("Address:                                              ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
-    NewAssignmentText number = new NewAssignmentText("Number:                                               ");
+    NewAssignmentText country = new NewAssignmentText("Country: ");
+    NewAssignmentText city = new NewAssignmentText("City: ");
+    NewAssignmentText address = new NewAssignmentText("Address: ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
+    NewAssignmentText cap = new NewAssignmentText("Postal Code: ");
+    NewAssignmentText number = new NewAssignmentText("Number: ");
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -106,15 +109,18 @@ public class GUINewAssignment extends JFrame{
                 HashSet<Dog> dogsSelected;
 
 
-                /*
-                for (NewAssignmentCheckBox newAssignmentCheckBox: newAssignmentCheckBoxes) {
+
+                for (NewAssignmentCheckBox newAssignmentCheckBox: listCheckbox) {
                     if(newAssignmentCheckBox.getCheckBox().isSelected()) {
+
+
+
 
                     }
 
                 }
 
-                */
+
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
                 Date dateStart = new Date();
@@ -180,9 +186,8 @@ public class GUINewAssignment extends JFrame{
         HashSet<Dog> hashDogs = customerProxy.getDogList();
 
         for (Dog dog: hashDogs) {
-            int i = 0;
             NewAssignmentCheckBox dogCheckBox = new NewAssignmentCheckBox(dog.getName());
-//            newAssignmentCheckBoxes[i] = dogCheckBox;
+            listCheckbox.add(dogCheckBox);
             panelDogs.add(dogCheckBox);
             gridLayout.setRows(gridLayout.getRows() + 1);
         }
@@ -403,7 +408,7 @@ class NewAssignmentBox extends JPanel{
 
 class NewAssignmentText extends JPanel{
     JLabel label;
-    TextField field = new TextField("",48);
+    TextField field;
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -414,7 +419,9 @@ class NewAssignmentText extends JPanel{
 
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        label = new JLabel(text, SwingConstants.LEFT);
+        gridBagConstraints.gridx = 1;
+        label = new JLabel(text);
+        field = new TextField("",48);
         add(label, gridBagConstraints);
         add(field, gridBagConstraints);
     }
@@ -428,7 +435,6 @@ class NewAssignmentText extends JPanel{
 
 class NewAssignmentCheckBox extends JPanel {
 
-    JLabel labelName;
     JCheckBox checkBox;
 
 
@@ -438,14 +444,18 @@ class NewAssignmentCheckBox extends JPanel {
 
     public NewAssignmentCheckBox(String text) {
 
-        setLayout(new GridLayout(1,2));
-        labelName = new JLabel(text);
+        setLayout(new GridLayout(1,1));
         checkBox = new JCheckBox();
-        add(labelName);
+        checkBox.setText(text);
         add(checkBox);
+
     }
 
     public JCheckBox getCheckBox() {
         return checkBox;
     }
+
+
+
+
 }
