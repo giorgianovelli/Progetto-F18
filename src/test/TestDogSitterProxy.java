@@ -2,10 +2,13 @@ package test;
 
 import dogSitterClient.DogSitterProxy;
 import server.Assignment;
+import server.Availability;
 import server.DogSize;
 import server.Review;
+import server.dateTime.WorkingTime;
 import server.places.Area;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,6 +76,14 @@ public class TestDogSitterProxy {
         }
         //System.out.println(proxy.addNewPlaceArea("MILANO"));
         //System.out.println(proxy.removePlaceArea("MILANO"));
-        proxy.updateDogsNumber(7);
+        //proxy.updateDogsNumber(7);
+        int i;
+        Availability availability = proxy.getDateTimeAvailability();
+        WorkingTime[] workingTimeArray = availability.getArrayDays();
+        for (i = 0; i < 7; i++){
+            Time start = workingTimeArray[i].getStart();
+            Time end = workingTimeArray[i].getEnd();
+            System.out.println(start + ", " + end);
+        }
     }
 }
