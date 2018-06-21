@@ -17,18 +17,18 @@ import java.util.HashSet;
 public class DogSitter extends User implements InterfaceDogSitter {
     private Area area;
     private HashSet<DogSize> listDogSize;
-    private int dogNumber;
+    private int dogsNumber;
     private String biography;
     private Availability dateTimeAvailability;
     private boolean acceptCash;
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
-                     Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogNumber,
+                     Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
                      String biography, Availability dateTimeAvailability, boolean acceptCash) {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         this.area = area;
         this.listDogSize = listDogSize;
-        this.dogNumber = dogNumber;
+        this.dogsNumber = dogsNumber;
         this.biography = biography;
         this.dateTimeAvailability = dateTimeAvailability;
         this.acceptCash = acceptCash;
@@ -64,8 +64,8 @@ public class DogSitter extends User implements InterfaceDogSitter {
         return email;
     }
 
-    public int getDogNumber() {
-        return dogNumber;
+    public int getDogsNumber() {
+        return dogsNumber;
     }
 
     public HashSet<DogSize> getListDogSize() {
@@ -100,7 +100,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Name for " + this.email + " now is up to date!");
+                System.out.println("Name for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating name for " + this.email + "!");
@@ -121,7 +121,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Surname for " + this.email + " now is up to date!");
+                System.out.println("Surname for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating surname for " + this.email + "!");
@@ -142,7 +142,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Password for " + this.email + " now is up to date!");
+                System.out.println("Password for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating password for " + this.email + "!");
@@ -163,7 +163,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Phone number for " + this.email + " now is up to date!");
+                System.out.println("Phone number for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating phone number for " + this.email + "!");
@@ -186,7 +186,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Date of birth for " + this.email + " now is up to date!");
+                System.out.println("Date of birth for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating date of birth for " + this.email + "!");
@@ -207,7 +207,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Address for " + this.email + " now is up to date!");
+                System.out.println("Address for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating address of birth for " + this.email + "!");
@@ -248,7 +248,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Payment method for " + this.email + " now is up to date!");
+                System.out.println("Payment method for " + this.email + " is now up to date!");
                 return true;
             } else {
                 System.out.println("Error in updating payment method of birth for " + this.email + "!");
@@ -268,7 +268,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("Cash flag for " + this.email + " now is up to date!");
+                System.out.println("Cash flag for " + this.email + " is now up to date!");
                 this.acceptCash = acceptCash;
                 return true;
             } else {
@@ -297,7 +297,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("State for assignment with code " + code + " now is up to date!");
+                System.out.println("State for assignment with code " + code + " is now up to date!");
                 if (state == null){
                     assignmentList.get(code).setState(null);
                 } else {
@@ -345,6 +345,27 @@ public class DogSitter extends User implements InterfaceDogSitter {
                 return false;
             }
         } else {
+            return false;
+        }
+    }
+
+    public boolean updateDogsNumber(int nDogs){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET NDOGS = " + nDogs + " WHERE EMAIL = '" + email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Number of dogs per assignment is now up to date!");
+                this.dogsNumber = nDogs;
+                return true;
+            } else {
+                System.out.println("Error in updating number of dogs per assignment with!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }

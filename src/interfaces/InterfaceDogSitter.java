@@ -19,7 +19,7 @@ public interface InterfaceDogSitter {
 
     boolean isAcceptingCash();
 
-    int getDogNumber();
+    int getDogsNumber();
 
     HashSet<DogSize> getListDogSize();
 
@@ -53,7 +53,7 @@ public interface InterfaceDogSitter {
 
     boolean removePlaceArea(String city);
 
-    //boolean updateDogNumber(int nDogs);
+    boolean updateDogsNumber(int nDogs);
 
     //boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant);
 }

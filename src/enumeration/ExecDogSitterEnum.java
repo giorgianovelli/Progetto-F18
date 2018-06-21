@@ -431,7 +431,7 @@ public enum ExecDogSitterEnum {
 
     },
 
-    GETDOGNUMBER{
+    GETDOGSNUMBER{
 
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
@@ -439,7 +439,7 @@ public enum ExecDogSitterEnum {
 
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);
-            Integer nDogs = dogSitter.getDogNumber();
+            Integer nDogs = dogSitter.getDogsNumber();
             return nDogs.toString();
         }
 
@@ -531,7 +531,27 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    UPDATEDOGSNUMBER{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int nDogs = Integer.parseInt(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateDogsNumber(nDogs)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
+
+
 
 
     public abstract String execute(String clientMsg);

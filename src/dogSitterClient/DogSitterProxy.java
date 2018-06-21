@@ -283,8 +283,8 @@ public class DogSitterProxy implements InterfaceDogSitter {
         }
     }
 
-    public int getDogNumber() {
-        String serverMsg = getReply("DOGSITTER#GETDOGNUMBER#" + email);
+    public int getDogsNumber() {
+        String serverMsg = getReply("DOGSITTER#GETDOGSNUMBER#" + email);
         return Integer.parseInt(serverMsg);
     }
 
@@ -330,6 +330,15 @@ public class DogSitterProxy implements InterfaceDogSitter {
 
     public boolean removePlaceArea(String city){
         String serverMsg = getReply("DOGSITTER#REMOVEPLACEAREA#" + email + "#" + city);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateDogsNumber(int nDogs){
+        String serverMsg = getReply("DOGSITTER#UPDATEDOGSNUMBER#" + email + "#" + nDogs);
         if (serverMsg.equals("true")) {
             return true;
         } else {
