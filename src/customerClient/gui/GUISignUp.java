@@ -1,7 +1,7 @@
 package customerClient.gui;
 
 import customerClient.CustomerProxy;
-import javafx.scene.layout.BorderRepeat;
+//import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import server.User;
 
 import javax.swing.*;
