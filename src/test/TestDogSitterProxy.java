@@ -62,7 +62,7 @@ public class TestDogSitterProxy {
         Assignment one = listAssignment.get(1);
         System.out.println(one.getState());*/
         //proxy.updateCashFlag(true);
-        System.out.println(proxy.getDogNumber());
+        System.out.println(proxy.getDogsNumber());
         Area area = proxy.getArea();
         area.printPlaces();
         System.out.println(proxy.isAcceptingCash());
@@ -72,6 +72,7 @@ public class TestDogSitterProxy {
             System.out.println(ds);
         }
         //System.out.println(proxy.addNewPlaceArea("MILANO"));
-        System.out.println(proxy.removePlaceArea("MILANO"));
+        //System.out.println(proxy.removePlaceArea("MILANO"));
+        proxy.updateDogsNumber(7);
     }
 }

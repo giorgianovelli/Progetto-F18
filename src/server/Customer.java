@@ -370,7 +370,7 @@ public class Customer extends User implements InterfaceCustomer{
         //per il numero di cani richiesto dall'utente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
-            if (ds.getDogNumber() < dogList.size()){
+            if (ds.getDogsNumber() < dogList.size()){
                 toRemove.add(ds);
             }
         }
