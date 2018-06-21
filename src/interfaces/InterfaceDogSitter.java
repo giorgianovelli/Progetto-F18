@@ -15,7 +15,7 @@ public interface InterfaceDogSitter {
 
     HashMap<Integer, Review> getReviewList();
 
-    //Availability getDateTimeAvailability();
+    Availability getDateTimeAvailability();
 
     boolean isAcceptingCash();
 

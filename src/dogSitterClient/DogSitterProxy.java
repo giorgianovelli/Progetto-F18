@@ -347,7 +347,6 @@ public class DogSitterProxy implements InterfaceDogSitter {
     }
 
     public Availability getDateTimeAvailability(){
-        //TODO risolvere problema con i null
         String serverMsg = getReply("DOGSITTER#GETAVAILABILITY#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         Availability availability = new Availability();
