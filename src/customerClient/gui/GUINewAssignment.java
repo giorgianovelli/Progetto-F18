@@ -33,32 +33,40 @@ public class GUINewAssignment extends JFrame{
     private JPanel panelLabel2 = new JPanel();
     private JPanel panelButtons = new JPanel();
     private JPanel panelDogs = new JPanel();
+    private JPanel panelPayment = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(panelOut);
     private Date date;
     private String strDate;
     private String email;
     HashSet<Dog> dogList;
+    HashSet<String> dogsittersMailList;
+    private boolean paymentMethod;
+    CustomerProxy customerProxy;
 
     //Others
 
     private GridLayout gridLayout = new GridLayout(1,1);
+
     private JLabel labelMeetingPoint = new JLabel("Choose where you would like to meet the dogsitter: ");
     private JLabel labelDogs = new JLabel("Select your dogs: ");
+    private JLabel labelPayment = new JLabel("Select your payment method: ");
+
+    private JRadioButton radioButtonCreditCard = new JRadioButton("Credit Card");
+    private JRadioButton radioButtonCash = new JRadioButton("Cash");
+
     private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonSearch = new JButton("Search");
 
     NewAssignmentBox newAssignmentBox;
-    int i = 1;
-    NewAssignmentCheckBox[] newAssignmentCheckBoxes = new NewAssignmentCheckBox[]{};
     ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<NewAssignmentCheckBox>();
-
-
 
     NewAssignmentText country = new NewAssignmentText("Country: ");
     NewAssignmentText city = new NewAssignmentText("City: ");
-    NewAssignmentText address = new NewAssignmentText("Address: ");           // Perchè non mi va lo SwingCostants? Dà errore "illecit position" qualsiasi posizione io inserisca dentro panelData
+    NewAssignmentText address = new NewAssignmentText("Address: ");
     NewAssignmentText cap = new NewAssignmentText("Postal Code: ");
     NewAssignmentText number = new NewAssignmentText("Number: ");
+
+
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -79,6 +87,7 @@ public class GUINewAssignment extends JFrame{
         newAssignmentBox = new NewAssignmentBox(strDate);
 
 
+        customerProxy = new CustomerProxy(email);
 
 
         initComponents(newAssignmentBox);
@@ -89,6 +98,9 @@ public class GUINewAssignment extends JFrame{
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //TODO controllo sulla validità della data scelta
+
                 String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
                 String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
                 String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
@@ -100,29 +112,6 @@ public class GUINewAssignment extends JFrame{
                 String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
                 String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
 
-                String countryText = String.valueOf(country.getField().getText());
-                String cityText = String.valueOf(city.getField().getText());
-                String capText = String.valueOf(cap.getField().getText());
-                String addressText = String.valueOf(address.getField().getText());
-                String numberText = String.valueOf(number.getField().getText());
-
-                Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
-                HashSet<Dog> dogsSelected;
-
-
-
-                for (NewAssignmentCheckBox newAssignmentCheckBox: listCheckbox) {
-                    if(newAssignmentCheckBox.getCheckBox().isSelected()) {
-
-
-
-
-                    }
-
-                }
-
-
-
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
                 Date dateStart = new Date();
                 Date dateEnd = new Date();
@@ -132,8 +121,39 @@ public class GUINewAssignment extends JFrame{
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
+
+                //TODO controllo sulla correttezza dell'indirizzo inserito
+
+                String countryText = String.valueOf(country.getField().getText());
+                String cityText = String.valueOf(city.getField().getText());
+                String capText = String.valueOf(cap.getField().getText());
+                String addressText = String.valueOf(address.getField().getText());
+                String numberText = String.valueOf(number.getField().getText());
+
+                Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
+                HashSet<Dog> dogsSelected = new HashSet<>();
+
+                for (NewAssignmentCheckBox newAssignmentCheckBox: listCheckbox) {
+                    if(newAssignmentCheckBox.getCheckBox().isSelected()) {
+                        dogsSelected.add(newAssignmentCheckBox.getDogFromJCheckBox(newAssignmentCheckBox.getCheckBox().getText(), dogList));
+                    }
+                }
+
+
+                // TODO fare in modo che si possa scegliere un solo metodo di pagamento
+
+                if (radioButtonCash.isSelected()) {
+                    paymentMethod = true;
+                } else if (radioButtonCreditCard.isSelected()) {
+                    paymentMethod = false;
+                }
+
+                dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
+                System.out.println(dogsittersMailList);
             }
+
         };
+
 
         buttonSearch.addActionListener(actionListener);
 
@@ -143,8 +163,6 @@ public class GUINewAssignment extends JFrame{
 //________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     private void initComponents(NewAssignmentBox newAssignmentBox) {
-
-        CustomerProxy customerProxy = new CustomerProxy(email);
 
         //Setting layout dei panel
 
@@ -158,6 +176,7 @@ public class GUINewAssignment extends JFrame{
         panelLabel2.setLayout(new BorderLayout());
         panelDogs.setLayout(gridLayout);
         panelDogs.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        panelPayment.setLayout(new GridLayout(1,2));
         panelButtons.setLayout(new GridLayout(1, 2, 5, 0));
         panelButtons.setBorder(BorderFactory.createEmptyBorder(20, 250, 20, 250));
 
@@ -170,6 +189,7 @@ public class GUINewAssignment extends JFrame{
 
         panelNoButtons.add(panelBox, BorderLayout.NORTH);
         panelNoButtons.add(panelDogs, BorderLayout.CENTER);
+        panelNoButtons.add(panelPayment, BorderLayout.SOUTH);
 
         //PanelBox (fa parte del panelNoButtons)
 
@@ -198,6 +218,7 @@ public class GUINewAssignment extends JFrame{
 
         // Secondo pannello
 
+        panelPayment.add(labelPayment);
         panelButtons.add(buttonCancel);
         panelButtons.add(buttonSearch);
 
@@ -217,6 +238,11 @@ public class GUINewAssignment extends JFrame{
         panelAddress.add(cap);
         panelAddress.add(address);
         panelAddress.add(number);
+
+        // Pannello Metodo di pagamento
+
+        panelPayment.add(radioButtonCreditCard);
+        panelPayment.add(radioButtonCash);
 
         // Labels
 
@@ -456,19 +482,15 @@ class NewAssignmentCheckBox extends JPanel {
         return checkBox;
     }
 
-    /*
 
-    public Dog returnDogFromJCheckBox(String name, HashSet<Dog> dogList) {
+
+    public Dog getDogFromJCheckBox(String name, HashSet<Dog> dogList) {
         for (Dog dog: dogList) {
             if (dog.getName().equals(name)) {
                 return dog;
             }
         }
+        return null;
     }
-
-    */
-
-
-
-
 }
+
