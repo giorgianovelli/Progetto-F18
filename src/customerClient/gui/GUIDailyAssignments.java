@@ -78,59 +78,39 @@ public class GUIDailyAssignments extends JFrame {
 
                 n++;
             }
-                System.out.println(todayAssigment.size());
-                labelDescription = new JLabel[todayAssigment.size()];
-                button = new JButton[todayAssigment.size()];
-                infoPanel = new JPanel[todayAssigment.size()];
+            System.out.println(todayAssigment.size());
+            labelDescription = new JLabel[todayAssigment.size()];
+            button = new JButton[todayAssigment.size()];
+            infoPanel = new JPanel[todayAssigment.size()];
 
-                int j = 0;
-                for (Integer i : todayAssigment.keySet()) {
-                    Assignment a = null;
-                    String labelString = "";
-                    a = todayAssigment.get(i);
-                    String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-                    String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                    labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                    labelString = "<html>" + a.getDateEnd() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                    labelDescription[j] = new JLabel(labelString);
-                    button[j] = new JButton("Delete");
-                    button[j].addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
-                        }
-                    });
-                    infoPanel[j] = new JPanel();
-                    infoPanel[j].add(labelDescription[j]);
-                    infoPanel[j].add(button[j]);
-                    add(infoPanel[j]);
-                    j++;
-                }
-            }
-
-           else if (cs.equals(CalendarState.NORMAL)) {
-            setTitle("Daily assignment");
-
-
-          /*  labelDescription = new JLabel[listAssigment.size()];
-            button = new JButton[listAssigment.size()];
-            infoPanel = new JPanel[listAssigment.size()];
             int j = 0;
-            for(Integer i : listAssigment.keySet()){
+            for (Integer i : todayAssigment.keySet()) {
                 Assignment a = null;
-                String label = "";
-
-                a = listAssigment.get(i);
+                String labelString = "";
+                a = todayAssigment.get(i);
                 String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                 String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                Date startAssignment = a.getDateStart();
-                String dateStringStartAssigment = date.format(startAssignment);
+                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                labelString = "<html>" + a.getDateEnd() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                labelDescription[j] = new JLabel(labelString);
+                button[j] = new JButton("Delete");
+                button[j].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
+                        dispose();
+                    }
+                });
+                infoPanel[j] = new JPanel();
+                infoPanel[j].add(labelDescription[j]);
+                infoPanel[j].add(button[j]);
+                add(infoPanel[j]);
+                j++;
+            }
+        }
 
-                label = "<html>" + dateStringStartAssigment + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                labelDescription[j]= new JLabel(label);
-                button[j]= new JButton("Info");
-*/
+        else if (cs.equals(CalendarState.NORMAL)) {
+            setTitle("Daily assignment");
             HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
 
             int n = 0;
@@ -160,41 +140,57 @@ public class GUIDailyAssignments extends JFrame {
             button = new JButton[todayAssigment.size()];
             infoPanel = new JPanel[todayAssigment.size()];
 
-            int j = 0;
-            for (Integer i : todayAssigment.keySet()) {
-                Assignment a = null;
-                String labelString = "";
-                a = todayAssigment.get(i);
-                String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-                String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                labelString = "<html>" + a.getDateEnd() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                labelDescription[j] = new JLabel(labelString);
-                button[j] = new JButton("info");
-                infoPanel[j] = new JPanel();
-                infoPanel[j].add(labelDescription[j]);
-                infoPanel[j].add(button[j]);
-                add(infoPanel[j]);
-                p.add(infoPanel[j]);
-                j++;
+            if  (todayAssigment.isEmpty()){
+                lb = new JLabel(" There aren't assignments today ");
+                p.add(lb);
+                }
+            else {
+                int j = 0;
+                for (Integer i : todayAssigment.keySet()) {
+                    Assignment a = null;
+                    String labelString = "";
+                    a = todayAssigment.get(i);
+                    String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
+                    String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
+                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                    //labelString = "<html>" + a.getDateEnd() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                    labelDescription[j] = new JLabel(labelString);
+                    button[j] = new JButton("More info");
+
+                    ActionListener showInfo = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                            GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(todayAssigment.get(i), email);
+                            assignmentInfo.setVisible(true);
+
+                        }
+                    };
+
+                    button[j].addActionListener(showInfo);
+                    infoPanel[j] = new JPanel();
+                    infoPanel[j].add(labelDescription[j]);
+                    infoPanel[j].add(button[j]);
+                    add(infoPanel[j]);
+                    p.add(infoPanel[j]);
+                    j++;
 
 
+                }
             }
-
             scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                getContentPane().add(scroll);
+            getContentPane().add(scroll);
 
 
-            }
         }
+    }
 
 
 
 
 }
 
-// da migliorare ancora
-
+// da migliorare la parte del delete
 
 
 
