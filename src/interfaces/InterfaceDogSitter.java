@@ -56,4 +56,6 @@ public interface InterfaceDogSitter {
     boolean updateDogsNumber(int nDogs);
 
     //boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant);
+
+    //boolean updateDateTimeAvailability()
 }

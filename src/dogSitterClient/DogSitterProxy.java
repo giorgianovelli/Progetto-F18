@@ -1,11 +1,10 @@
 package dogSitterClient;
 
 import interfaces.InterfaceDogSitter;
-import server.Assignment;
-import server.Dog;
-import server.DogSize;
-import server.Review;
+import server.*;
 import server.bank.PaymentMethod;
+import server.dateTime.WeekDays;
+import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 
@@ -13,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -344,6 +344,32 @@ public class DogSitterProxy implements InterfaceDogSitter {
         } else {
             return false;
         }
+    }
+
+    public Availability getDateTimeAvailability(){
+        //TODO risolvere problema con i null
+        String serverMsg = getReply("DOGSITTER#GETAVAILABILITY#" + email);
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        Availability availability = new Availability();
+        Time start;
+        Time end;
+        for (WeekDays wd : WeekDays.values()) {
+            String strStart = tokenMsg.nextToken();
+            if (!(strStart.equals("null"))){
+                start = Time.valueOf(strStart);
+            } else {
+                start = null;
+            }
+            String strEnd = tokenMsg.nextToken();
+            if (!(strEnd.equals("null"))){
+                end = Time.valueOf(strEnd);
+            } else {
+                end = null;
+            }
+            WorkingTime workingTime = new WorkingTime(start, end);
+            availability.setDayAvailability(workingTime, wd);
+        }
+        return availability;
     }
 
 }

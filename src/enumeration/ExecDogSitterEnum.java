@@ -3,11 +3,13 @@ package enumeration;
 import database.DBConnector;
 import server.*;
 import server.bank.PaymentMethod;
+import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -547,6 +549,29 @@ public enum ExecDogSitterEnum {
             } else {
                 return "false";
             }
+        }
+
+    },
+
+    GETAVAILABILITY{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            String serverMsg = "";
+            Availability availability = dogSitter.getDateTimeAvailability();
+            int nWeekDays = 7;
+            int i;
+            WorkingTime[] workingTimeArray = availability.getArrayDays();
+            for (i = 0; i < nWeekDays; i++){
+                Time start = workingTimeArray[i].getStart();
+                Time end = workingTimeArray[i].getEnd();
+                serverMsg = serverMsg + start + "#" + end + "#";
+            }
+            return serverMsg;
         }
 
     };
