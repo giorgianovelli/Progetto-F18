@@ -150,10 +150,17 @@ public class GUINewAssignment extends JFrame{
 
                 dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
                 System.out.println(dogsittersMailList);
-                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList);
+
+                // TEST
+                HashSet<String> test = new HashSet<>();
+                test.add("MARCO.CARTA@GMAIL.COM");
+                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(test);
+                guiChooseDogsitter.setVisible(true);
             }
 
         };
+
+
 
 
         buttonSearch.addActionListener(actionListener);
