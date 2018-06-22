@@ -371,4 +371,13 @@ public class DogSitterProxy implements InterfaceDogSitter {
         return availability;
     }
 
+    public boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant){
+        String serverMsg = getReply("DOGSITTER#UPDATELISTDOGSIZE#" + email + "#" + small + "#" + medium + "#" + big + "#" + giant);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

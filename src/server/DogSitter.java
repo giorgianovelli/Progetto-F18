@@ -360,7 +360,40 @@ public class DogSitter extends User implements InterfaceDogSitter {
                 this.dogsNumber = nDogs;
                 return true;
             } else {
-                System.out.println("Error in updating number of dogs per assignment with!");
+                System.out.println("Error in updating number of dogs per assignment!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS_ACCEPTED SET SMALL = " + small + ", MEDIUM = " + medium + ", BIG = " + big + ", GIANT = " + giant + " WHERE DOGSITTER = '" + email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The list of dogs accepted is now up to date!");
+                HashSet<DogSize> newDogSizeList = new HashSet<DogSize>();
+                if (small){
+                    newDogSizeList.add(DogSize.SMALL);
+                }
+                if (medium){
+                    newDogSizeList.add(DogSize.MEDIUM);
+                }
+                if (big){
+                    newDogSizeList.add(DogSize.BIG);
+                }
+                if (giant){
+                    newDogSizeList.add(DogSize.GIANT);
+                }
+                return true;
+            } else {
+                System.out.println("Error in updating the list of dogs accepted!");
                 return false;
             }
 

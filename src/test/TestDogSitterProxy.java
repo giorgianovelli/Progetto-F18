@@ -77,13 +77,14 @@ public class TestDogSitterProxy {
         //System.out.println(proxy.addNewPlaceArea("MILANO"));
         //System.out.println(proxy.removePlaceArea("MILANO"));
         //proxy.updateDogsNumber(7);
-        int i;
+        /*int i;
         Availability availability = proxy.getDateTimeAvailability();
         WorkingTime[] workingTimeArray = availability.getArrayDays();
         for (i = 0; i < 7; i++){
             Time start = workingTimeArray[i].getStart();
             Time end = workingTimeArray[i].getEnd();
             System.out.println(start + ", " + end);
-        }
+        }*/
+        proxy.updateListDogSize(true, true, true, true);
     }
 }

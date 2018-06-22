@@ -574,6 +574,27 @@ public enum ExecDogSitterEnum {
             return serverMsg;
         }
 
+    },
+
+    UPDATELISTDOGSIZE{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            boolean small = Boolean.parseBoolean(tokenMsg.nextToken());
+            boolean medium = Boolean.parseBoolean(tokenMsg.nextToken());
+            boolean big = Boolean.parseBoolean(tokenMsg.nextToken());
+            boolean giant = Boolean.parseBoolean(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateListDogSize(small, medium, big, giant)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 
