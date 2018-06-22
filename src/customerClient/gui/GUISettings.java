@@ -6,12 +6,11 @@ import server.places.Address;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 
 public class GUISettings extends JFrame {
     final int WIDTH = 600;
@@ -97,7 +96,6 @@ public class GUISettings extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
-
         for(int years = 1930; years<= Calendar.getCurrentYear() ; years++) {
             years_tmp.add(years+"");
         }
@@ -108,7 +106,6 @@ public class GUISettings extends JFrame {
 
         //per riempire le jcombobox con le date corrette
         Date strDate= proxy.getDateOfBirth();
-        // System.out.println(strDate);  //todo da eliminare
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
@@ -152,32 +149,6 @@ public class GUISettings extends JFrame {
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-        //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
-        ActionListener registration = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent registrationAe) {
-
-                if (registrationAe.getActionCommand().equals("Confirm")) {
-                  /*  if (textName == null) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect field", "Error", JOptionPane.ERROR_MESSAGE);
-
-                    } else {*/
-
-                        setNewValues();
-                        JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-                        //TODO nel caso in cui non viene fatta la modifica??
-                    }
-               //}
-                if (registrationAe.getActionCommand().equals("Cancel")) {
-                    dispose();
-                }
-
-            }
-        };
-        buttonCancel.addActionListener(registration);
-        buttonConfirm.addActionListener(registration);
-
 
         //  JRadioButton  per scegliere metodo di pagamento
         cash.setMnemonic(KeyEvent.VK_C);
@@ -195,22 +166,76 @@ public class GUISettings extends JFrame {
 
 
         //TODO Listener dei JRADIOBUTTON da sistemare
-        ActionListener a = new ActionListener() {
+      /*  ActionListener a = new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                if (proxy.getPaymentMethod() == null ){
+                    if (proxy.getPaymentMethod() == null ){
                     cash.isSelected();
+
+                    System.out.println(event.getActionCommand());
 
                 }
                 else {
                     creditCard.isSelected();
+                    System.out.println(event.getActionCommand());
+                }
+            }
+        };
+        cash.addActionListener(a);
+        creditCard.addActionListener(a);*/
 
+        //TODO SELEZIONE DEI BOTTONI
+
+        // A ItemListener for all Radio buttons
+        ItemListener listener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (e.getSource() == cash) {
+                       //cosa da far fare
+                    } else if (e.getSource() == creditCard) {
+                        //cosa da far fare al bottone
+                    }
+                }
+            }
+        };
+        cash.addItemListener(listener);
+        creditCard.addItemListener(listener);
+
+
+        //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
+        ActionListener registration = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent registrationAe) {
+
+                if (registrationAe.getActionCommand().equals("Confirm")) {
+                    if (textName.getText().equals("") || textSurname.getText().equals ("") ||textCountry.getText().equals("") ||textCity.getText().equals("") ||textCap.getText().equals("") || textStreet.getText().equals("") ||textNumber.getText().equals("") ||textPhoneNumber.getText().equals("")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
+                    }
+                    // se metodo di pagamento non è selezionato
+                    if(cash.isSelected() == false && creditCard.isSelected() == false){
+                        JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment method is not selected", "", JOptionPane.ERROR_MESSAGE);
+
+                    }
+                    else {
+                        setNewValues();
+
+                        JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                        //TODO nel caso in cui non viene fatta la modifica??
+                        //TODO fare in modo che il metodo di pagamento resti selezionato
+                    }
+
+                }
+
+                if (registrationAe.getActionCommand().equals("Cancel")) {
+                    dispose();
                 }
 
             }
         };
-        cash.addActionListener(a);
-        creditCard.addActionListener(a);
+        buttonCancel.addActionListener(registration);
+        buttonConfirm.addActionListener(registration);
 
 
 
@@ -270,6 +295,23 @@ public class GUISettings extends JFrame {
         labelSurname.setLabelFor(textSurname);
 
         //todo manca come aggiornare la data nelle JCombobox
+
+        //todo NON FUNZIONA!!! mi fa vedere la data aggiornata al giorno corrente e mi da eccezione se provo a cambiare il giorno
+     /*   Date dateofBirth = new Date();
+        boolean updateDate= proxy.updateDateOfBirth(dateofBirth);
+        SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
+        SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
+        SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
+
+        String day = dateFormatdd.format(updateDate);
+        String month = dateFormatmm.format(updateDate);
+        String year = dateFormatyyy.format(updateDate);
+
+        //serve per inserire i giorni mesi e anni  nelle jcombobox penso
+        dayList.setSelectedItem(day);
+        monthList.setSelectedItem(month);
+        yearList.setSelectedItem(year);
+        System.out.println("updateDate:" +updateDate);*/
 
         proxy.updateAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);

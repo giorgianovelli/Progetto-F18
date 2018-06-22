@@ -114,7 +114,7 @@ public class GUISignUp extends JFrame{
         yearList = new JComboBox(years_tmp.toArray());
 
         //per riempire le jcombobox con le date corrette
-      /*  Date strDate= proxy.getDateOfBirth();
+     /*   Date strDate= proxy.getDateOfBirth();
         // System.out.println(strDate);  //
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
@@ -124,9 +124,9 @@ public class GUISignUp extends JFrame{
         String month = dateFormatmm.format(strDate);
         String year = dateFormatyyy.format(strDate);
 
-        dayList.setSelectedItem(day);
-        monthList.setSelectedItem(month);
-        yearList.setSelectedItem(year);*/
+        dayList.addItem(day);
+        monthList.addItem(month);
+        yearList.addItem(year);*/
 
         panelDate.setLayout(new GridLayout(1,3,5,5));
         panelDate.add(dayList);
@@ -181,14 +181,19 @@ public class GUISignUp extends JFrame{
 
                     JOptionPane.showMessageDialog(new JFrame(), "registration was successfully performed", "", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
+                    GUILogin guiLogin = new GUILogin();
+                    guiLogin.setVisible(true);
+                  //  textEmail.setText("");
+                  //  textPassword.setText("");
 
-                 //todo aprire l'interfaccia GUICustomer una volta finita la registrazione?? oppure messaggio di conferma
 
                 }
 
                 if (registrationAe.getActionCommand().equals("Confirm Registration as DogSitter")) {
                     //todo  as Dogsitter: aprire un altro frame solo con le label dogsitter
                     // JFrame = new JFrame();
+                    GUIDogSitterLabel guiDogSitterLabel = new GUIDogSitterLabel();
+                    guiDogSitterLabel.setVisible(true);
 
                     ActionListener registrationDogSitter = new ActionListener() {
                         @Override
