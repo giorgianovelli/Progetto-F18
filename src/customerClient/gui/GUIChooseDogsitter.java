@@ -14,6 +14,7 @@ public class GUIChooseDogsitter extends JFrame {
 
     private JPanel panelOut = new JPanel();
     private JPanel panelDogsitter = new JPanel();
+    private JPanel panelButtons = new JPanel();
     private JScrollPane panelScroll = new JScrollPane(panelOut);
     private JButton buttonInfo = new JButton("Info");
     private JButton buttonSelect = new JButton("Select");
@@ -35,22 +36,29 @@ public class GUIChooseDogsitter extends JFrame {
         setLayout(new BorderLayout());
 
         this.dogsitterList = dogsitterList;
-        labelDogsitter.setText("test molto lungo di prova miseriaccia blalalalalalaalalalalaalalalalalaalalalaalalalaalalaal");
+        labelDogsitter.setText("test molto lungo di prova miseriaccia ");
         initComponents();
     }
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     public void initComponents() {
-        panelOut.setLayout(new GridBagLayout());
+        panelOut.setLayout(new BorderLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        panelDogsitter.setLayout(new BorderLayout());
+        panelDogsitter.setLayout(new GridLayout(1,3,20,0));
+        panelButtons.setLayout(new GridLayout(1,2,20,0));
 
-        panelOut.add(panelDogsitter);
 
-        panelDogsitter.add(labelDogsitter, BorderLayout.LINE_START);
-        panelDogsitter.add(buttonInfo, BorderLayout.CENTER);
-        panelDogsitter.add(buttonSelect, BorderLayout.LINE_END);
+        //TODO provare a creare un panel che contenga gli altri due panel (label e buttons) da aggiungere poi al panelOut
+
+
+
+        panelOut.add(panelDogsitter, BorderLayout.LINE_START);
+        panelOut.add(panelButtons, BorderLayout.AFTER_LINE_ENDS);
+
+        panelDogsitter.add(labelDogsitter);
+        panelButtons.add(buttonInfo);
+        panelButtons.add(buttonSelect);
 
         panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
