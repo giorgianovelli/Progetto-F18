@@ -1,8 +1,10 @@
 package customerClient.gui;
 
+import dogSitterClient.DogSitterProxy;
 import jdk.dynalink.linker.GuardedInvocation;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashSet;
 
@@ -13,12 +15,15 @@ public class GUIChooseDogsitter extends JFrame {
 
 
     private JPanel panelOut = new JPanel();
-    private JPanel panelDogsitter = new JPanel();
-    private JPanel panelButtons = new JPanel();
+    private JPanel panelDogsitter;
+    private JPanel panelLabel;
+    private JPanel panelButtons;
+    private JPanel panelContainer;
+    private GridLayout gridLayout = new GridLayout(1,1);
     private JScrollPane panelScroll = new JScrollPane(panelOut);
-    private JButton buttonInfo = new JButton("Info");
-    private JButton buttonSelect = new JButton("Select");
-    private JLabel labelDogsitter = new JLabel();
+    private JButton buttonInfo;
+    private JButton buttonSelect;
+    private JLabel labelDogsitter;
 
     HashSet<String> dogsitterList;
 
@@ -36,7 +41,6 @@ public class GUIChooseDogsitter extends JFrame {
         setLayout(new BorderLayout());
 
         this.dogsitterList = dogsitterList;
-        labelDogsitter.setText("test molto lungo di prova miseriaccia ");
         initComponents();
     }
 
@@ -44,21 +48,36 @@ public class GUIChooseDogsitter extends JFrame {
 
     public void initComponents() {
         panelOut.setLayout(new BorderLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        panelDogsitter.setLayout(new GridLayout(1,3,20,0));
-        panelButtons.setLayout(new GridLayout(1,2,20,0));
+        panelContainer = new JPanel(gridLayout);
 
 
-        //TODO provare a creare un panel che contenga gli altri due panel (label e buttons) da aggiungere poi al panelOut
+        for (String mailDogsitter: dogsitterList){
+            DogSitterProxy dogSitterProxy = new DogSitterProxy(mailDogsitter);
+            labelDogsitter = new JLabel("<html><br>" + dogSitterProxy.getName() + " " + dogSitterProxy.getSurname() + "<br/>" + mailDogsitter, SwingConstants.LEFT);
+            panelLabel = new JPanel();
+            panelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,0, 0));
+            panelLabel.add(labelDogsitter);
+            panelButtons = new JPanel();
+            panelButtons.setLayout(new GridLayout(1,2,10,0));
+            panelButtons.setBorder(BorderFactory.createEmptyBorder(15,0,15, 40));
+            buttonInfo = new JButton("Info");
+            buttonSelect = new JButton("Select");
+            panelButtons.add(buttonInfo);
+            panelButtons.add(buttonSelect);
+            panelDogsitter = new JPanel();
+            panelDogsitter.setLayout(new BorderLayout());
+            GridBagConstraints gridBagConstraints = new GridBagConstraints();
+            panelDogsitter.add(panelLabel, BorderLayout.WEST);
+            panelDogsitter.add(panelButtons, BorderLayout.EAST);
+            panelContainer.add(panelDogsitter);
+            gridLayout.setRows(gridLayout.getRows() + 1);
+
+        }
+
+        panelOut.add(panelContainer, BorderLayout.NORTH);
+        System.out.println(dogsitterList.toString());
 
 
-
-        panelOut.add(panelDogsitter, BorderLayout.LINE_START);
-        panelOut.add(panelButtons, BorderLayout.AFTER_LINE_ENDS);
-
-        panelDogsitter.add(labelDogsitter);
-        panelButtons.add(buttonInfo);
-        panelButtons.add(buttonSelect);
 
         panelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         panelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
