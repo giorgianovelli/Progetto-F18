@@ -3,6 +3,7 @@ package enumeration;
 import database.DBConnector;
 import server.*;
 import server.bank.PaymentMethod;
+import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
@@ -589,6 +590,43 @@ public enum ExecDogSitterEnum {
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);
             if (dogSitter.updateListDogSize(small, medium, big, giant)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    UPDATEAVAILABILITY{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Availability availability = new Availability();
+            Time start;
+            Time end;
+            for (WeekDays wd : WeekDays.values()) {
+                String strStart = tokenMsg.nextToken();
+                if (!(strStart.equals("null"))){
+                    start = Time.valueOf(strStart);
+                } else {
+                    start = null;
+                }
+                String strEnd = tokenMsg.nextToken();
+                if (!(strEnd.equals("null"))){
+                    end = Time.valueOf(strEnd);
+                } else {
+                    end = null;
+                }
+                WorkingTime workingTime = new WorkingTime(start, end);
+                availability.setDayAvailability(workingTime, wd);
+            }
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if (dogSitter.updateDateTimeAvailability(availability)){
                 return "true";
             } else {
                 return "false";

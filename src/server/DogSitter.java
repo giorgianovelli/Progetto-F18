@@ -3,6 +3,8 @@ package server;
 import database.DBConnector;
 import interfaces.InterfaceDogSitter;
 import server.bank.PaymentMethod;
+import server.dateTime.WeekDays;
+import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 
@@ -21,6 +23,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
     private String biography;
     private Availability dateTimeAvailability;
     private boolean acceptCash;
+    final int NWEEKDAYS = 7;
 
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
@@ -394,6 +397,48 @@ public class DogSitter extends User implements InterfaceDogSitter {
                 return true;
             } else {
                 System.out.println("Error in updating the list of dogs accepted!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateDateTimeAvailability(Availability availability){
+        int i;
+        WorkingTime[] workingTimeArray = availability.getArrayDays();
+        DBConnector dbConnector = new DBConnector();
+        String[] strStart = new String[7];
+        String[] strEnd = new String[7];
+        for (i = 0; i < NWEEKDAYS; i++){
+            if ((workingTimeArray[i].getStart() != null) && (workingTimeArray[i].getEnd() != null)){
+                strStart[i] = "'" + workingTimeArray[i].getStart().toString() + "'";
+                strEnd[i] = "'" + workingTimeArray[i].getEnd().toString() + "'";
+            } else {
+                strStart[i] = "null";
+                strEnd[i] = "null";
+            }
+        }
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE AVAILABILITY SET MON_START = "
+                    + strStart[0] + ", MON_END = " + strEnd[0]
+                    + ", TUE_START = " + strStart[1] + ", TUE_END = " + strEnd[1]
+                    + ", WED_START = " + strStart[2] + ", WED_END = " + strEnd[2]
+                    + ", THU_START = " + strStart[3] + ", THU_END = " + strEnd[3]
+                    + ", FRI_START = " + strStart[4] + ", FRI_END = " + strEnd[4]
+                    + ", SAT_START = " + strStart[5] + ", SAT_END = " + strEnd[5]
+                    + ", SUN_START = " + strStart[6] + ", SUN_END = " + strEnd[6]
+                    + " WHERE DOGSITTER = '" + email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Availability is now up to date!");
+                this.dateTimeAvailability = availability;
+                return true;
+            } else {
+                System.out.println("Error in updating availability!");
                 return false;
             }
 
