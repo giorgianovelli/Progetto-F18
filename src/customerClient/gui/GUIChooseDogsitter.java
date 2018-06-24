@@ -2,12 +2,10 @@ package customerClient.gui;
 
 import customerClient.CustomerProxy;
 import dogSitterClient.DogSitterProxy;
-import jdk.dynalink.linker.GuardedInvocation;
 import server.Dog;
 import server.places.Address;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

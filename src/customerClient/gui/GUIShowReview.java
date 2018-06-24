@@ -63,9 +63,12 @@ public class GUIShowReview extends JFrame {
         textTitle = new JTextArea(review.getTitle());
         textTitle.setEditable(false);
         textTitle.setLineWrap(true);
+        textTitle.setWrapStyleWord(true);
+
         textDescription = new JTextArea(review.getComment(),7,1);
         textDescription.setEditable(false);
         textDescription.setLineWrap(true);
+        textDescription.setWrapStyleWord(true);
         textReply = new JTextArea();
 
         panelReviewTop.setLayout(new GridLayout(2,2));
@@ -73,6 +76,8 @@ public class GUIShowReview extends JFrame {
         panelReviewTop.add(textTitle);
         panelReviewTop.add(labelVote);
         panelReviewTop.add(labelGrade);
+
+
 
         panelReviewDescription.setLayout(new GridLayout(2,1));
         panelReviewDescription.add(labelDescription);
@@ -100,10 +105,12 @@ public class GUIShowReview extends JFrame {
 
 
 */
-
+        
         contentPanel.setLayout(new GridLayout(2, 1));
         contentPanel.add(panelReviewTop);
         contentPanel.add(panelReviewDescription);
+
+
 
         if(!(review.getReply().equals("null"))){
             panelReply.setBorder(BorderFactory.createTitledBorder("Dogsitter Reply: "));
@@ -120,6 +127,7 @@ public class GUIShowReview extends JFrame {
 
         outPanel.add(contentPanel);
         outPanel.add(panelReply);
+        outPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         add(outPanel);
 
     }
