@@ -24,8 +24,10 @@ public class TestGUIChooseDogsitter {
         test.add("");
         test.add("");
         test.add("");
-        */
+
+
         GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(test);
         guiChooseDogsitter.setVisible(true);
+        */
     }
 }

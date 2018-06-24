@@ -139,6 +139,11 @@ public class GUINewAssignment extends JFrame{
                     }
                 }
 
+                // TEST
+                for (Dog dog: dogsSelected) {
+                    System.out.println(dog.getName());
+                }
+
 
                 // TODO fare in modo che si possa scegliere un solo metodo di pagamento
 
@@ -149,12 +154,9 @@ public class GUINewAssignment extends JFrame{
                 }
 
                 dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
-                System.out.println(dogsittersMailList);
+                //System.out.println(dogsittersMailList);
 
-                // TEST
-                HashSet<String> test = new HashSet<>();
-                test.add("MARCO.CARTA@GMAIL.COM");
-                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(test);
+                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
                 guiChooseDogsitter.setVisible(true);
             }
 

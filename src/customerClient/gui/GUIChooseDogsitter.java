@@ -1,17 +1,25 @@
 package customerClient.gui;
 
+import customerClient.CustomerProxy;
 import dogSitterClient.DogSitterProxy;
 import jdk.dynalink.linker.GuardedInvocation;
+import server.Dog;
+import server.places.Address;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashSet;
 
 public class GUIChooseDogsitter extends JFrame {
     final int WIDTH = 800;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    CustomerProxy customerProxy;
 
 
     private JPanel panelOut = new JPanel();
@@ -26,13 +34,18 @@ public class GUIChooseDogsitter extends JFrame {
     private JLabel labelDogsitter;
 
     HashSet<String> dogsitterList;
+    private Date dateStartassignment;
+    private Date dateEndAssignment;
+    HashSet<Dog> selectedDogs;
+    Address meetingPoint;
+    private boolean paymentInCash;
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     // Costruttore
 
-    public GUIChooseDogsitter(HashSet<String> dogsitterList) {
+    public GUIChooseDogsitter(HashSet<String> dogsitterList, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash, String emailCustomer) {
         setTitle("Choose the dogsitter");       // TODO Da cambiare??
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -41,6 +54,13 @@ public class GUIChooseDogsitter extends JFrame {
         setLayout(new BorderLayout());
 
         this.dogsitterList = dogsitterList;
+        this.dateStartassignment = dateStartAssignment;
+        this.dateEndAssignment = dateEndAssignment;
+        this.selectedDogs = selectedDogs;
+        this.meetingPoint = meetingPoint;
+        this.paymentInCash = paymentInCash;
+        customerProxy = new CustomerProxy(emailCustomer);
+
         initComponents();
     }
 
@@ -49,6 +69,8 @@ public class GUIChooseDogsitter extends JFrame {
     public void initComponents() {
         panelOut.setLayout(new BorderLayout());
         panelContainer = new JPanel(gridLayout);
+
+
 
 
         for (String mailDogsitter: dogsitterList){
@@ -71,6 +93,16 @@ public class GUIChooseDogsitter extends JFrame {
             panelDogsitter.add(panelButtons, BorderLayout.EAST);
             panelContainer.add(panelDogsitter);
             gridLayout.setRows(gridLayout.getRows() + 1);
+
+
+            ActionListener actionListener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    customerProxy.addAssignment(mailDogsitter, dateStartassignment, dateEndAssignment, selectedDogs, meetingPoint, paymentInCash);
+                }
+            };
+
+            buttonSelect.addActionListener(actionListener);
 
         }
 
