@@ -44,7 +44,7 @@ public class GUICustomer extends JFrame{
     private JMenuItem menuItemDogs = new JMenuItem("Dogs");
     private JMenu menuExtra = new JMenu("?");
     private JMenuItem menuItemInfo = new JMenuItem("Info");
-    private JMenuItem menuItemAwards = new JMenuItem("Awards");
+    private JMenuItem menuItemAwards = new JMenuItem("Credits");
     private JMenuItem menuItemCancel = new JMenuItem("Cancel");
 
     private JPanel panelToday = new JPanel();
@@ -334,6 +334,11 @@ public class GUICustomer extends JFrame{
                     GUIInfo info = new GUIInfo();
                     info.setVisible(true);
                 }
+
+                if (menuAe.getActionCommand().equals("Credits")){
+                    GUIAwards credits = new GUIAwards();
+                    credits.setVisible(true);
+                }
             }
         };
 
@@ -380,6 +385,7 @@ public class GUICustomer extends JFrame{
         menuItemAccount.addActionListener(menuAl);
         menuItemChangePassword.addActionListener(menuAl);
         menuItemInfo.addActionListener(menuAl);
+        menuItemAwards.addActionListener(menuAl);
         buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
 
         for (i = 0; i < nShownTodayAssignments; i++){
