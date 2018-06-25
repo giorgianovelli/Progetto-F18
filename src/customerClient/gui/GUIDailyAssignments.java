@@ -132,6 +132,7 @@ public class GUIDailyAssignments extends JFrame {
                     infoPanel[j].add(button[j], BorderLayout.EAST);
                     add(infoPanel[j]);
                     // p.add(infoPanel[j]); non funziona il pannello esterno !!
+                    //createPanelOrder(j); non mi fa vedere piu niente 
                     j++;
 
                 }
