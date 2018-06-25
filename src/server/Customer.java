@@ -300,9 +300,14 @@ public class Customer extends User implements InterfaceCustomer{
         searchStep6(cash);
 
         System.out.println("Dog sitters available:");
-        for (DogSitter ds : dogSitterSearchList) {
-            System.out.println(ds.getEmail());
+        if (dogSitterSearchList.size() != 0){
+            for (DogSitter ds : dogSitterSearchList) {
+                System.out.println(ds.getEmail());
+            }
+        } else {
+            System.out.println("There aren't dog sitters available!");
         }
+
 
         HashSet<String> dogSitterMailList = new HashSet<String>();
         for (DogSitter ds : dogSitterSearchList) {

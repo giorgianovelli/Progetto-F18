@@ -1,7 +1,7 @@
 package customerClient.gui;
 
 import customerClient.CustomerProxy;
-import org.omg.CORBA.CustomMarshal;
+//import org.omg.CORBA.CustomMarshal;   //TODO da problemi!!
 import server.Assignment;
 import server.Review;
 
