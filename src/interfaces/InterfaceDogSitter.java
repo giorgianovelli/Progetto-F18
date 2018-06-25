@@ -57,5 +57,5 @@ public interface InterfaceDogSitter {
 
     boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant);
 
-    //boolean updateDateTimeAvailability()
+    boolean updateDateTimeAvailability(Availability availability);
 }

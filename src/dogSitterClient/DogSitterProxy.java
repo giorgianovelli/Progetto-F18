@@ -380,4 +380,22 @@ public class DogSitterProxy implements InterfaceDogSitter {
         }
     }
 
+    public boolean updateDateTimeAvailability(Availability availability){
+        String clientMsg = "DOGSITTER#UPDATEAVAILABILITY#" + email + "#";
+        WorkingTime[] workingTimeArray = availability.getArrayDays();
+        for (WeekDays wd : WeekDays.values()) {
+            if ((workingTimeArray[wd.ordinal()].getStart().equals(Time.valueOf("00:00:00"))) && (workingTimeArray[wd.ordinal()].getEnd().equals(Time.valueOf("00:00:00")))){
+                clientMsg = clientMsg + "null#null#";
+            } else {
+                clientMsg = clientMsg + workingTimeArray[wd.ordinal()].getStart() + "#" + workingTimeArray[wd.ordinal()].getEnd() +"#";
+            }
+        }
+        String serverMsg = getReply(clientMsg);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

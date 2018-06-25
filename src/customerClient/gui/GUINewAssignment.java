@@ -139,6 +139,11 @@ public class GUINewAssignment extends JFrame{
                     }
                 }
 
+                // TEST
+                for (Dog dog: dogsSelected) {
+                    System.out.println(dog.getName());
+                }
+
 
                 // TODO fare in modo che si possa scegliere un solo metodo di pagamento
 
@@ -149,12 +154,9 @@ public class GUINewAssignment extends JFrame{
                 }
 
                 dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
-                System.out.println(dogsittersMailList);
+                //System.out.println(dogsittersMailList);
 
-                // TEST
-                HashSet<String> test = new HashSet<>();
-                test.add("MARCO.CARTA@GMAIL.COM");
-                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(test);
+                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
                 guiChooseDogsitter.setVisible(true);
             }
 
@@ -310,7 +312,7 @@ class NewAssignmentBox extends JPanel{
     String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] year = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
     String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
-    String[] minute = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
+    String[] minute = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"};
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -396,6 +398,8 @@ class NewAssignmentBox extends JPanel{
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+
+    // Getter
 
     public JLabel getFromDayLabel() {
         return fromDayLabel;

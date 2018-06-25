@@ -5,6 +5,7 @@ import server.Assignment;
 import server.Availability;
 import server.DogSize;
 import server.Review;
+import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
 import server.places.Area;
 
@@ -85,6 +86,29 @@ public class TestDogSitterProxy {
             Time end = workingTimeArray[i].getEnd();
             System.out.println(start + ", " + end);
         }*/
-        proxy.updateListDogSize(true, true, true, true);
+        //proxy.updateListDogSize(true, true, true, true);
+        Availability availability = new Availability();
+        String strTime1 = "00:30:00";
+        String strTime2 = "23:50:00";
+        String strTime3 = "14:00:00";
+        String strTime4 = "18:00:00";
+        String strTime5 = "00:10:00";
+        String strTime6 = "22:05:00";
+        String strTime7 = "06:30:00";
+        String strTime8 = "19:40:00";
+        String strTime0 = "00:00:00";
+        Time time1 = Time.valueOf(strTime1);
+        Time time2 = Time.valueOf(strTime3);
+        Time time5 = Time.valueOf(strTime5);
+        Time time7 = Time.valueOf(strTime7);
+        Time time8 = Time.valueOf(strTime8);
+        availability.setDayAvailability(new WorkingTime(time1, time2), WeekDays.MON);
+        availability.setDayAvailability(new WorkingTime(time7, time8), WeekDays.TUE);
+        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime5), Time.valueOf(strTime7)), WeekDays.WED);
+        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime1), Time.valueOf(strTime8)), WeekDays.THU);
+        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime6)), WeekDays.FRI);
+        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime4)), WeekDays.SAT);
+        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);
+        proxy.updateDateTimeAvailability(availability);
     }
 }

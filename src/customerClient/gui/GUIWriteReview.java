@@ -1,14 +1,21 @@
 package customerClient.gui;
 
+import customerClient.CustomerProxy;
+//import org.omg.CORBA.CustomMarshal;   //TODO da problemi!!
+import server.Assignment;
+import server.Review;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 public class GUIWriteReview extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 580;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    //TODO limitare il numero di righe o caratteri!!
 
     private JPanel outPanel;
     private JPanel contentPanel;
@@ -19,6 +26,7 @@ public class GUIWriteReview extends JFrame {
     private JPanel descriptionPanel;
 
     private JScrollPane descriptionFieldScroll;
+    private JScrollPane titleFieldScroll;
 
     private JLabel labelTitle;
     private JLabel labelVote;
@@ -32,7 +40,22 @@ public class GUIWriteReview extends JFrame {
     private JComboBox<String> voteBox;
     private String[] grade = new String[]{"1", "2", "3", "4", "5"};
 
-    public GUIWriteReview(){ //devo farmi passare l'appuntamento per aggiungere la recensione (per il codice)?
+    private Assignment assignmentToReview;
+    private String email;
+    private CustomerProxy proxy;
+
+
+    /**
+     *
+     * @param a appuntamento riferito alla recensione che devo scrivere
+     * @param email riferimento all'utente
+     */
+
+    public GUIWriteReview(Assignment a, String email)
+    { //devo farmi passare l'appuntamento per aggiungere la recensione (per il codice)?
+        assignmentToReview = a;
+        this.email = email;
+        proxy = new CustomerProxy(this.email);
         initComponent();
     }
 
@@ -56,14 +79,14 @@ public class GUIWriteReview extends JFrame {
         labelTitle = new JLabel("Title: ");
         labelVote = new JLabel("Vote: ");
         labelDescription = new JLabel("<html><br/><br/><br/><br/><br/>Comment: </html>");
-        //TODO limitare il numero di righe o caratteri!!
+
         titleField = new JTextArea(2,1);
         descriptionField = new JTextArea( 7,1);
         sendButton = new JButton("Send");
         cancelButton = new JButton("Cancel");
 
         descriptionFieldScroll = new JScrollPane(descriptionField);
-
+        titleFieldScroll = new JScrollPane(titleField);
         voteBox = new JComboBox<>(grade);
 
 
@@ -72,10 +95,10 @@ public class GUIWriteReview extends JFrame {
         topPanel.add(labelTitle);
         titleField.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         titleField.setLineWrap(true);
-        titleField.setWrapStyleWord(false);
+        titleField.setWrapStyleWord(true);
         titleField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        topPanel.add(titleField);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(5,5, 5,5));
+        topPanel.add(titleFieldScroll);
 
         votePanel.setLayout(new GridLayout(2,1));
         votePanel.add(labelVote);
@@ -89,6 +112,7 @@ public class GUIWriteReview extends JFrame {
 
         descriptionField.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         descriptionField.setLineWrap(true);
+        descriptionField.setWrapStyleWord(true);
         descriptionPanel.setBorder(BorderFactory.createEmptyBorder(0,5,5,5));
         descriptionPanel.add(descriptionFieldScroll);
 
@@ -97,26 +121,33 @@ public class GUIWriteReview extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Send")) {
-                    //TODO controlli sul testo (tutti i campi devono essere completi) + aggiungere la recensione nel db
 
 
                     int rating = Integer.parseInt((String) voteBox.getSelectedItem());
                     String title = titleField.getText();
                     String comment = descriptionField.getText();
+                    int code = assignmentToReview.getCode();
+                    Date date = assignmentToReview.getDateEnd();
 
-                    //System.out.println(rating + title + comment);
+                    //errore: quando chiudo il JOptionPane si blocca
+                    if(title.equals("")|| comment.equals("")){
+                        JOptionPane.showMessageDialog(new JFrame(), "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+                        titleField.setText("");
+                        descriptionField.setText("");
+                    }
+                    if(title.contains("#")|| comment.contains("#")){
+                        JOptionPane.showMessageDialog(new JFrame(), "# invalid character", "Error", JOptionPane.ERROR_MESSAGE);
+                        titleField.setText("");
+                        descriptionField.setText("");
+                    }
 
-                    /*Review reviewToAdd = new Review();
-                    int code  code dell'appuntamento??
-                    Date date  data dell'appuntamento???
-                    int rating
-                    String title
-                    String comment
-                    String reply ??????????
-                     */
-
+                    /*
+                    if(proxy.addReview(code, email, rating ,title ,comment)){ //TODO controllare l'aggiunta della recensione nel db
+                        JOptionPane.showMessageDialog(new JFrame(), "Review added", "Review", JOptionPane.INFORMATION_MESSAGE);
+                    }*/
                 }
                 if (registrationAe.getActionCommand().equals("Cancel")) {
+                    //System.exit(0);
                     dispose();
                 }
 
@@ -139,10 +170,10 @@ public class GUIWriteReview extends JFrame {
         contentPanel.add(descriptionPanel);
 
 
-        outPanel.setLayout(new BorderLayout());
+        outPanel.setLayout(new BoxLayout(outPanel, BoxLayout.Y_AXIS));
         outPanel.setBorder(BorderFactory.createEmptyBorder(15,20,5,20));
-        outPanel.add(contentPanel, BorderLayout.NORTH);
-        outPanel.add(buttonPanel, BorderLayout.SOUTH);
+        outPanel.add(contentPanel);
+        outPanel.add(buttonPanel);
 
         add(outPanel);
 
