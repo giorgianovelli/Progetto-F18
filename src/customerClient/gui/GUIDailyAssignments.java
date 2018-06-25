@@ -4,9 +4,9 @@ import customerClient.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
 import server.Customer;
-
 import javax.print.attribute.DocAttribute;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +16,16 @@ import java.util.HashMap;
 import java.lang.*;
 
 
+
 public class GUIDailyAssignments extends JFrame {
+
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
     private JPanel p = new JPanel();
-    private JButton button[];
-    private JLabel[] labelDescription;
+    private JButton button[] =new JButton[SwingConstants.RIGHT] ;
+    private JLabel[] labelDescription =new JLabel[SwingConstants.LEFT];
     private JPanel[] infoPanel;
     private JLabel lb = new JLabel();
     private JLabel[] createLabel ;
@@ -35,6 +38,7 @@ public class GUIDailyAssignments extends JFrame {
 
     public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {
         //TODO cambiare il costruttore: l'oggetto customer non sarà più accessibile
+
         setTitle("Daily assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -52,11 +56,18 @@ public class GUIDailyAssignments extends JFrame {
 
     private void initComponents(CalendarState cs) {
 
+        //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));  serve per creare il layout di GIO ,ma non fuonziona per il DELETE
+
+        p.setLayout(new GridLayout(9, 1, 20, 20));
+
         if (cs.equals(CalendarState.REMOVING)) {
+
             setTitle("Daily assignment");
+
             HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
 
             int n = 0;
+
             for (Integer i : listAssigment.keySet()) {
                 Assignment a = null;
                 a = listAssigment.get(i);
@@ -70,6 +81,7 @@ public class GUIDailyAssignments extends JFrame {
                 String dateStringEnd2 = date1.format(todayDate);
                 dateString1.equals(dateString2);
                 dateStringEnd1.equals(dateStringEnd2);
+
                 if (dateString1.equals(dateString2) || (dateStringEnd1.equals(dateStringEnd2))) {
 
                     todayAssigment.put(n, a);
@@ -78,42 +90,67 @@ public class GUIDailyAssignments extends JFrame {
 
                 n++;
             }
+
             System.out.println(todayAssigment.size());
             labelDescription = new JLabel[todayAssigment.size()];
             button = new JButton[todayAssigment.size()];
             infoPanel = new JPanel[todayAssigment.size()];
 
-            int j = 0;
-            for (Integer i : todayAssigment.keySet()) {
-                Assignment a = null;
-                String labelString = "";
-                a = todayAssigment.get(i);
-                String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-                String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                labelString = "<html>" + a.getDateStart() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                labelString = "<html>" + a.getDateEnd() + "<br/>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
-                labelDescription[j] = new JLabel(labelString);
-                button[j] = new JButton("Delete");
-                button[j].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
-                        dispose();
-                    }
-                });
-                infoPanel[j] = new JPanel();
-                infoPanel[j].add(labelDescription[j]);
-                infoPanel[j].add(button[j]);
-                add(infoPanel[j]);
-                j++;
+
+            if (todayAssigment.isEmpty()){
+
+                lb = new JLabel(" There aren't assignments today to be cancel ");
+                add(lb, BorderLayout.NORTH, SwingConstants.CENTER);
+
             }
+
+            else{
+
+                int j = 0;
+
+                for (Integer i : todayAssigment.keySet()) {
+                    Assignment a = null;
+                    String labelString = "";
+                    a = todayAssigment.get(i);
+                    String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
+                    String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
+                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + a.getDateStart() + "</html>";
+                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + a.getDateEnd() + "</html>";
+
+                    labelDescription[j] = new JLabel(labelString);
+                    button[j] = new JButton("Delete");
+                    button[j].addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
+                            dispose();
+                        }
+                    });
+
+                    infoPanel[j] = new JPanel();
+                    infoPanel[j].add(labelDescription[j], BorderLayout.WEST);
+                    infoPanel[j].add(button[j], BorderLayout.EAST);
+                    add(infoPanel[j]);
+                    // p.add(infoPanel[j]); non funziona il pannello esterno !!
+                    j++;
+
+                }
+
+            }
+
+
+
         }
+
+
 
         else if (cs.equals(CalendarState.NORMAL)) {
             setTitle("Daily assignment");
+
             HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
 
             int n = 0;
+
             for (Integer i : listAssigment.keySet()) {
                 Assignment a = null;
                 a = listAssigment.get(i);
@@ -135,17 +172,27 @@ public class GUIDailyAssignments extends JFrame {
 
                 n++;
             }
+
             System.out.println(todayAssigment.size());
             labelDescription = new JLabel[todayAssigment.size()];
             button = new JButton[todayAssigment.size()];
             infoPanel = new JPanel[todayAssigment.size()];
 
+
             if  (todayAssigment.isEmpty()){
-                lb = new JLabel(" There aren't assignments today ");
+
+                //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+                //lb.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
+                lb = new JLabel(" There aren't assignments today ",SwingConstants.CENTER);
+
                 p.add(lb);
-                }
+
+            }
+
             else {
+
                 int j = 0;
+
                 for (Integer i : todayAssigment.keySet()) {
                     Assignment a = null;
                     String labelString = "";
@@ -168,6 +215,9 @@ public class GUIDailyAssignments extends JFrame {
                     };
 
                     button[j].addActionListener(showInfo);
+
+                    //createPanelOrder(j);
+
                     infoPanel[j] = new JPanel();
                     infoPanel[j].add(labelDescription[j]);
                     infoPanel[j].add(button[j]);
@@ -185,12 +235,27 @@ public class GUIDailyAssignments extends JFrame {
         }
     }
 
+   /*
+
+       private void createPanelOrder(int i) {
+
+       infoPanel[i] = new JPanel();
 
 
+       infoPanel[i].setLayout(new BorderLayout());
+       infoPanel[i].setMaximumSize(new Dimension(450,100));
+
+       labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
+
+       infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
+       infoPanel[i].add(button[i], BorderLayout.EAST);
+       infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+
+       p.add(infoPanel[i]);
+
+    }
+*/
 
 }
 
 // da migliorare la parte del delete
-
-
-
