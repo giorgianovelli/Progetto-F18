@@ -40,10 +40,10 @@ public class GUIInfo extends JFrame {
         version = new JLabel("Version: 0.1.0 ", SwingConstants.CENTER);
         date = new JLabel("Publication date: 12/06/2018", SwingConstants.CENTER);
 
-        panelIcon.add(labelIcon,BorderLayout.CENTER);
-        panelLabel.setLayout(new GridLayout(2, 1, 10, 10));
+        panelIcon.add(labelIcon,BorderLayout.NORTH);
+        panelLabel.setLayout(new GridLayout(2, 1, 10, -160));
         panelLabel.add(version); panelLabel.add(date);
-        panelIcon.add(panelLabel,BorderLayout.SOUTH);
+        panelIcon.add(panelLabel,BorderLayout.CENTER);
         add(panelIcon);
 
     }
