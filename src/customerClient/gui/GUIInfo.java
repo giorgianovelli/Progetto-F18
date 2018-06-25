@@ -26,7 +26,7 @@ public class GUIInfo extends JFrame {
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(true); //TODO da mettere 'false'
+        setResizable(false);
 
         panelIcon = new JPanel(new BorderLayout());
         panelLabel = new JPanel();
@@ -40,13 +40,10 @@ public class GUIInfo extends JFrame {
         version = new JLabel("Version: 0.1.0 ", SwingConstants.CENTER);
         date = new JLabel("Publication date: 12/06/2018", SwingConstants.CENTER);
 
-        //panel.setLayout
         panelIcon.add(labelIcon,BorderLayout.CENTER);
         panelLabel.setLayout(new GridLayout(2, 1, 10, 10));
         panelLabel.add(version); panelLabel.add(date);
         panelIcon.add(panelLabel,BorderLayout.SOUTH);
-        //panel.add(version); panel.add(date);
-        //add(panelLabel);
         add(panelIcon);
 
     }
