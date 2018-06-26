@@ -1,6 +1,10 @@
 package test;
 
+import javafx.scene.layout.BorderImage;
+import javafx.scene.layout.BorderPane;
+
 import javax.swing.*;
+import javax.swing.text.BoxView;
 import java.awt.*;
 
 
@@ -19,24 +23,31 @@ class TestGUILogin {
 
         private JPanel panelLoginData = new JPanel();
         private JPanel panelBottom = new JPanel();
-        private JLabel labelUser = new JLabel("Email", SwingConstants.CENTER);
-        private JLabel labelPwd = new JLabel("Password", SwingConstants.CENTER);
+        private JPanel cont1 = new JPanel();   //pannello contenitore
+        private JPanel cont2 = new JPanel();   //pannello contenitore
+        private JLabel labelUser = new JLabel("Email",SwingConstants.CENTER);
+        private JLabel labelPwd = new JLabel("Password",SwingConstants.CENTER);
         private JTextField textUser = new JTextField();
         private JPasswordField textPwd = new JPasswordField();
-        private JButton buttonLogin = new JButton("Login");
-        private JButton buttonNewAccount = new JButton("Create a new account");
+        private JButton buttonLogin = new JButton(" Login ");
+        private JButton buttonNewAccount = new JButton(" Create a new account ");
 
 
 
         public ImageTest() {
 
+            cont1.setBorder(BorderFactory.createTitledBorder(" Main Fields: "));
+            cont2.setLayout(new BorderLayout(getWidth() / 2 ,getHeight() / 2 ));
 
-            panelBottom.setLayout(new GridLayout(2, 1));
-            panelBottom.add(buttonLogin);
-            panelBottom.add(buttonNewAccount);
 
-            textUser.setText("RICCARDOGIURA@GMAIL.COM");
-            textPwd.setText("PROVAPROVA123");
+            panelBottom.setLayout(new GridLayout(2, 2));
+            panelBottom.add(buttonLogin,BorderLayout.SOUTH);
+            panelBottom.add(buttonNewAccount,BorderLayout.SOUTH);
+
+
+            textUser.setText(" RICCARDOGIURA@GMAIL.COM ");
+            textPwd.setText(" PROVAPROVA123 ");
+
 
             panelLoginData.setLayout(new GridLayout(2, 2));
             panelLoginData.add(labelUser);
@@ -45,9 +56,16 @@ class TestGUILogin {
             panelLoginData.add(textPwd);
 
 
+            cont1.add(panelLoginData,BorderLayout.CENTER);
+            cont2.add(panelBottom,BorderLayout.SOUTH);
+
+
+
+
             //acquisisce le dimensioni dello schermo
             Toolkit kit = Toolkit.getDefaultToolkit();
             Dimension screenSize = kit.getScreenSize();
+
             int screenHeight = screenSize.height;
             int screenWidth = screenSize.width;
 
@@ -58,25 +76,31 @@ class TestGUILogin {
 
             Image img = getToolkit().getImage("bozza.jpg");
             setIconImage(img);
-            setTitle("Login Costumer");
+            setTitle("Login ");
+
 
             //aggiungo un pannello al frame
             ImagePanel panel = new ImagePanel();
             panel.setBackground(SystemColor.window);
             Container contentPane = getContentPane();
             contentPane.add(panel);
-            panel.add(panelLoginData);
-            panel.add(panelBottom);
-            panel.setOpaque(true);
-            //panel.setSize(80,20);
-            //panel.setBounds(20, 10, 80, 25);
+            panel.add(cont1);
+            panel.add(cont2);
+            cont1.setOpaque(false);
+            cont2.setOpaque(false);
+
+            cont1.setSize(100,100);
+            cont2.setSize(100,100);
             setExtendedState( JFrame.MAXIMIZED_BOTH);
 
 
         }
 
+
         class ImagePanel extends JPanel {
+
             private Image image;
+
 
             public ImagePanel() {
 
@@ -91,7 +115,9 @@ class TestGUILogin {
                 }
             }
 
+
             public void paintComponent(Graphics g) {
+
                 super.paintComponent(g);
 
                 //acquisisco le dimensioni dello schermo
