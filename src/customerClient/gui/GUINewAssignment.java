@@ -101,6 +101,16 @@ public class GUINewAssignment extends JFrame{
 
                 //TODO controllo sulla validità della data scelta
 
+                //show error message
+
+                /*
+                JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
+                        JOptionPane.ERROR_MESSAGE);
+                textUser.setText("");
+                textPwd.setText("");
+
+               */
+
                 String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
                 String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
                 String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
@@ -144,9 +154,6 @@ public class GUINewAssignment extends JFrame{
                     System.out.println(dog.getName());
                 }
 
-
-                // TODO fare in modo che si possa scegliere un solo metodo di pagamento
-
                 if (radioButtonCash.isSelected()) {
                     paymentMethod = true;
                 } else if (radioButtonCreditCard.isSelected()) {
@@ -154,10 +161,17 @@ public class GUINewAssignment extends JFrame{
                 }
 
                 dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
-                //System.out.println(dogsittersMailList);
 
-                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
-                guiChooseDogsitter.setVisible(true);
+
+                if (dateStart.after(dateEnd)) {
+
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                } else {
+                    GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
+                    guiChooseDogsitter.setVisible(true);
+                }
             }
 
         };
@@ -253,6 +267,10 @@ public class GUINewAssignment extends JFrame{
 
         panelPayment.add(radioButtonCreditCard);
         panelPayment.add(radioButtonCash);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(radioButtonCash);
+        group.add(radioButtonCreditCard);
 
         // Labels
 
