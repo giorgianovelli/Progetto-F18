@@ -739,6 +739,7 @@ public class GUICustomer extends JFrame{
     private void openListAssignment(){
         GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getAssignmentList(), email, this);
         guiListAssignments.setVisible(true);
+
     }
 
     public void setCalendarState(CalendarState cs){

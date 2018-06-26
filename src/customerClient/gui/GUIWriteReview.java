@@ -52,7 +52,7 @@ public class GUIWriteReview extends JFrame {
      */
 
     public GUIWriteReview(Assignment a, String email)
-    { //devo farmi passare l'appuntamento per aggiungere la recensione (per il codice)?
+    {
         assignmentToReview = a;
         this.email = email;
         proxy = new CustomerProxy(this.email);
@@ -121,7 +121,8 @@ public class GUIWriteReview extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Send")) {
-
+                    boolean strError = false;
+                    String error = "";
 
                     int rating = Integer.parseInt((String) voteBox.getSelectedItem());
                     String title = titleField.getText();
@@ -130,21 +131,33 @@ public class GUIWriteReview extends JFrame {
                     Date date = assignmentToReview.getDateEnd();
 
                     //errore: quando chiudo il JOptionPane si blocca
+
+
+
                     if(title.equals("")|| comment.equals("")){
-                        JOptionPane.showMessageDialog(new JFrame(), "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
-                        titleField.setText("");
-                        descriptionField.setText("");
+                            strError = true;
+                            error = "Please fill in all fields!";
                     }
                     if(title.contains("#")|| comment.contains("#")){
-                        JOptionPane.showMessageDialog(new JFrame(), "# invalid character", "Error", JOptionPane.ERROR_MESSAGE);
-                        titleField.setText("");
-                        descriptionField.setText("");
+                            strError = true;
+                            error = "# invalid character";
                     }
 
-                    /*
-                    if(proxy.addReview(code, email, rating ,title ,comment)){ //TODO controllare l'aggiunta della recensione nel db
-                        JOptionPane.showMessageDialog(new JFrame(), "Review added", "Review", JOptionPane.INFORMATION_MESSAGE);
-                    }*/
+
+
+                    if(strError){
+                        JOptionPane.showMessageDialog(new JFrame(), error, "Error", JOptionPane.ERROR_MESSAGE);
+                        titleField.setText("");
+                        descriptionField.setText("");
+                    } else if(proxy.addReview(code, email, rating ,title ,comment)){ //TODO controllare l'aggiunta della recensione nel db
+                        JOptionPane.showMessageDialog(new JFrame(), "Review added!", "Review", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+
+                    }
+
+
+
+
                 }
                 if (registrationAe.getActionCommand().equals("Cancel")) {
                     //System.exit(0);
