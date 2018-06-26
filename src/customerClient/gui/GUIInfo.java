@@ -5,8 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUIInfo extends JFrame {
-    final int WIDTH = 800;
-    final int HEIGHT = 450;
+    final int WIDTH = 500;
+    final int HEIGHT = 400;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     private JPanel panelIcon;
@@ -33,15 +33,17 @@ public class GUIInfo extends JFrame {
 
         splashScreenIcon = new ImageIcon("images/bozza_splashscreen.jpg");
         Image imageTransformIcon = splashScreenIcon.getImage();
-        Image newImageIcon = imageTransformIcon.getScaledInstance(800, 210,  java.awt.Image.SCALE_SMOOTH);
+        Image newImageIcon = imageTransformIcon.getScaledInstance(500, 210,  java.awt.Image.SCALE_SMOOTH);
         splashScreenIcon = new ImageIcon(newImageIcon);
         labelIcon = new JLabel(splashScreenIcon);
 
         version = new JLabel("Version: 0.1.0 ", SwingConstants.CENTER);
         date = new JLabel("Publication date: 12/06/2018", SwingConstants.CENTER);
+        version.setFont(new Font("Calibri", Font.PLAIN, 24));
+        date.setFont(new Font("Calibri", Font.PLAIN, 24));
 
         panelIcon.add(labelIcon,BorderLayout.NORTH);
-        panelLabel.setLayout(new GridLayout(2, 1, 10, -160));
+        panelLabel.setLayout(new GridLayout(2, 1, 10, -115));
         panelLabel.add(version); panelLabel.add(date);
         panelIcon.add(panelLabel,BorderLayout.CENTER);
         add(panelIcon);
