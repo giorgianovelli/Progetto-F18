@@ -101,16 +101,6 @@ public class GUINewAssignment extends JFrame{
 
                 //TODO controllo sulla validità della data scelta
 
-                //show error message
-
-                /*
-                JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
-                        JOptionPane.ERROR_MESSAGE);
-                textUser.setText("");
-                textPwd.setText("");
-
-               */
-
                 String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
                 String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
                 String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
@@ -132,13 +122,12 @@ public class GUINewAssignment extends JFrame{
                     e1.printStackTrace();
                 }
 
-                //TODO controllo sulla correttezza dell'indirizzo inserito
+                String countryText = String.valueOf(country.getField().getText().toUpperCase());
+                String cityText = String.valueOf(city.getField().getText().toUpperCase());
+                String capText = String.valueOf(cap.getField().getText().toUpperCase());
+                String addressText = String.valueOf(address.getField().getText().toUpperCase());
+                String numberText = String.valueOf(number.getField().getText().toUpperCase());
 
-                String countryText = String.valueOf(country.getField().getText());
-                String cityText = String.valueOf(city.getField().getText());
-                String capText = String.valueOf(cap.getField().getText());
-                String addressText = String.valueOf(address.getField().getText());
-                String numberText = String.valueOf(number.getField().getText());
 
                 Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
                 HashSet<Dog> dogsSelected = new HashSet<>();
@@ -164,20 +153,63 @@ public class GUINewAssignment extends JFrame{
 
 
                 if (dateStart.after(dateEnd)) {
-
                     JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
 
-                } else {
-                    GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
-                    guiChooseDogsitter.setVisible(true);
+                } else switch (month){
+
+                    case("02"): {
+                        if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            break;
+                        }
+                    }
+
+                    case ("04"): {
+                        if (day.equals("31")) {
+                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            break;
+                        }
+                    }
+
+                    case ("06"): {
+                        if (day.equals("31")) {
+                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            break;
+                        }
+                    }
+
+                    case ("09"): {
+                        if (day.equals("31")) {
+                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            break;
+                        }
+                    }
+
+                    case ("11"): {
+                        if (day.equals("31")) {
+                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            break;
+                        }
+                    }
+
+                    default: {
+                        if (dogsittersMailList.isEmpty()) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Sorry, we couldn't find any dogsitter!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
+                            guiChooseDogsitter.setVisible(true);
+                        }
+                    }
                 }
             }
-
         };
-
-
-
 
         buttonSearch.addActionListener(actionListener);
 
