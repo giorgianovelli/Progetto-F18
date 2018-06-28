@@ -224,6 +224,14 @@ public class GUINewAssignment extends JFrame{
             }
         };
 
+        ActionListener actionListener1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        };
+
+        buttonCancel.addActionListener(actionListener1);
         buttonSearch.addActionListener(actionListener);
 
 
