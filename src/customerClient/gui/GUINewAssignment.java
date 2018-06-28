@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
+
 public class GUINewAssignment extends JFrame{
+
+    //TODO sistemare divisione metodi; controllo su validità indirizzo;
 
     final int WIDTH = 800;
     final int HEIGHT = 600;

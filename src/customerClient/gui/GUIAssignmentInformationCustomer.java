@@ -60,21 +60,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
-    //TODO to remove
-    /*public GUIAssignmentInformationCustomer(){
-        setTitle("Assignment information");
-        setSize(WIDTH, HEIGHT);
-        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        setLayout(new BorderLayout());
-
-
-        // initComponents();
-    }*/
-
-//______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-
     /**
      *
      * @param a

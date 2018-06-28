@@ -32,11 +32,12 @@ public class GUIChooseDogsitter extends JFrame {
     private JLabel labelDogsitter;
 
     HashSet<String> dogsitterList;
-    private Date dateStartassignment;
+    private Date dateStartAssignment;
     private Date dateEndAssignment;
     HashSet<Dog> selectedDogs;
     Address meetingPoint;
     private boolean paymentInCash;
+    private String emailCustomer;
 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -52,11 +53,12 @@ public class GUIChooseDogsitter extends JFrame {
         setLayout(new BorderLayout());
 
         this.dogsitterList = dogsitterList;
-        this.dateStartassignment = dateStartAssignment;
+        this.dateStartAssignment = dateStartAssignment;
         this.dateEndAssignment = dateEndAssignment;
         this.selectedDogs = selectedDogs;
         this.meetingPoint = meetingPoint;
         this.paymentInCash = paymentInCash;
+        this.emailCustomer = emailCustomer;
         customerProxy = new CustomerProxy(emailCustomer);
 
         initComponents();
@@ -96,7 +98,9 @@ public class GUIChooseDogsitter extends JFrame {
             ActionListener actionListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    customerProxy.addAssignment(mailDogsitter, dateStartassignment, dateEndAssignment, selectedDogs, meetingPoint, paymentInCash);
+                    GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer);
+                    guiConfirmAssignment.setVisible(true);
+                    //customerProxy.addAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, paymentInCash);
                 }
             };
 
