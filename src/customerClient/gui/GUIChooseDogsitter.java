@@ -31,12 +31,13 @@ public class GUIChooseDogsitter extends JFrame {
     private JButton buttonSelect;
     private JLabel labelDogsitter;
 
-    HashSet<String> dogsitterList;
+    private HashSet<String> dogsitterList;
     private Date dateStartAssignment;
     private Date dateEndAssignment;
-    HashSet<Dog> selectedDogs;
-    Address meetingPoint;
+    private HashSet<Dog> selectedDogs;
+    private Address meetingPoint;
     private boolean paymentInCash;
+    private String paymentMethod;
     private String emailCustomer;
 
 
@@ -98,9 +99,11 @@ public class GUIChooseDogsitter extends JFrame {
             ActionListener actionListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer);
+                    GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer, paymentInCash);
                     guiConfirmAssignment.setVisible(true);
-                    //customerProxy.addAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, paymentInCash);
+                    if (!guiConfirmAssignment.isActive()) {
+                        dispose();
+                    }
                 }
             };
 

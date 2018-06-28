@@ -415,28 +415,6 @@ class NewAssignmentBox extends JPanel{
         fromMonthLabel.setText(selectedDaySplitted[1]);
         fromYearLabel.setText(selectedDaySplitted[2]);
 
-
-
-        /*
-
-
-        tmonthList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String monthSeleted = String.valueOf(tmonthList.getSelectedItem());
-                if (monthSeleted.equals("02")) {
-                    day[28] = null;
-                    day[29] = null;
-                    day[30] = null;
-                }
-
-
-
-            }
-        });
-
-        */
-
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);
         tdayList.setLightWeightPopupEnabled(false);
