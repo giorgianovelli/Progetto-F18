@@ -140,7 +140,7 @@ public class GUINewAssignment extends JFrame{
 
                 // TEST
                 for (Dog dog: dogsSelected) {
-                    System.out.println(dog.getName());
+                    System.out.println("TEST: " + dog.getName());
                 }
 
                 if (radioButtonCash.isSelected()) {
@@ -152,6 +152,9 @@ public class GUINewAssignment extends JFrame{
                 dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
 
 
+                //TODO Controllo su validità nazione e città
+
+
                 if (dateStart.after(dateEnd)) {
                     JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
@@ -159,10 +162,20 @@ public class GUINewAssignment extends JFrame{
                 } else switch (month){
 
                     case("02"): {
-                        if (day.equals("29") || day.equals("30") || day.equals("31")) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            break;
+                        if (Integer.parseInt(year) % 4 != 0) {
+                            if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+
+                        if(Integer.parseInt(year) % 4 == 0) {
+                            if (day.equals("30") || day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
                         }
                     }
 
