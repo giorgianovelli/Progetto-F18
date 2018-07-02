@@ -35,7 +35,7 @@ class TestGUILogin {
 
 
         public ImageTest() {
-
+            //cont2.setLayout(new GridLayout(2, 2, 0, 0));
             cont1.setBorder(BorderFactory.createTitledBorder(" Main Fields: "));
             cont2.setLayout(new BorderLayout(getWidth() / 2 ,getHeight() / 2 ));
 
@@ -74,7 +74,7 @@ class TestGUILogin {
             setLocation(screenWidth / 4, screenHeight / 4);
 
 
-            Image img = getToolkit().getImage("bozza.jpg");
+            Image img = getToolkit().getImage("bozza_splashscreeen.jpg");
             setIconImage(img);
             setTitle("Login ");
 
@@ -86,6 +86,10 @@ class TestGUILogin {
             contentPane.add(panel);
             panel.add(cont1);
             panel.add(cont2);
+           // panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
+
+
+
             cont1.setOpaque(false);
             cont2.setOpaque(false);
 
@@ -105,7 +109,7 @@ class TestGUILogin {
             public ImagePanel() {
 
                 //acquisisco l'immagine
-                image = Toolkit.getDefaultToolkit().getImage("C:/Users/Camelia/IdeaProjects/Progetto-F18Nuovo/images/bozza.jpg");
+                image = Toolkit.getDefaultToolkit().getImage("images/bozza_splashscreen.jpg");
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(image, 0);
                 try {
