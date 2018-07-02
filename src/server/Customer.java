@@ -77,7 +77,7 @@ public class Customer extends User implements InterfaceCustomer{
             try {
                 dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', 'NULL', '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
                 dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
-                for (Dog d : dogList) {
+                for (Dog d : selectedDogs) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
                 }
                 dbConnector.closeUpdate();
