@@ -296,7 +296,7 @@ public class Customer extends User implements InterfaceCustomer{
         searchStep2(dateStart, dateEnd, nStartDay, nEndDay);
         searchStep3(dogList);
         searchStep4(dogList);
-        searchStep5(dateStart, dateEnd, dogList);
+        searchStep5(dateStart, dateEnd);
         searchStep6(cash);
 
         System.out.println("Dog sitters available:");
@@ -401,8 +401,8 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep5(Date dateStart, Date dateEnd, HashSet<Dog> dogList){
-        //funzione che esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
+    private void searchStep5(Date dateStart, Date dateEnd){
+        //funzione che esclude i dog sitter che hanno già altri impegni nel periodo impostato dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
             HashMap<Integer, Assignment> listAssignment = ds.getAssignmentList();

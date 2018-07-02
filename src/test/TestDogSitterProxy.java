@@ -22,12 +22,12 @@ public class TestDogSitterProxy {
         DogSitterProxy proxyLogin = new DogSitterProxy();
         System.out.println("test login true: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGETTO123"));
         System.out.println("test login false: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGGGGETTO123"));
-        /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             System.out.println(a.getCode());
-        }*/
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+        }
+        /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         Assignment a = listAssignment.get(1);
         System.out.println(a.getDateStart());
         System.out.println(proxy.getCustomerNameOfAssignment(1));
@@ -39,7 +39,7 @@ public class TestDogSitterProxy {
         proxy.getPhoneNumber();
         proxy.getDateOfBirth();
         proxy.getAddress();
-        proxy.getPaymentMethod();
+        proxy.getPaymentMethod();*/
 
         /*proxy.updateName("PIPINO");
         proxy.updateSurname("IL GRANDE");
@@ -66,7 +66,7 @@ public class TestDogSitterProxy {
         Assignment one = listAssignment.get(1);
         System.out.println(one.getState());*/
         //proxy.updateCashFlag(true);
-        System.out.println(proxy.getDogsNumber());
+        /*System.out.println(proxy.getDogsNumber());
         Area area = proxy.getArea();
         area.printPlaces();
         System.out.println(proxy.isAcceptingCash());
@@ -74,7 +74,7 @@ public class TestDogSitterProxy {
         System.out.println("dog size list:");
         for (DogSize ds : listDogSize) {
             System.out.println(ds);
-        }
+        }*/
         //System.out.println(proxy.addNewPlaceArea("MILANO"));
         //System.out.println(proxy.removePlaceArea("MILANO"));
         //proxy.updateDogsNumber(7);
@@ -87,7 +87,7 @@ public class TestDogSitterProxy {
             System.out.println(start + ", " + end);
         }*/
         //proxy.updateListDogSize(true, true, true, true);
-        Availability availability = new Availability();
+        /*Availability availability = new Availability();
         String strTime1 = "00:30:00";
         String strTime2 = "23:50:00";
         String strTime3 = "14:00:00";
@@ -109,6 +109,6 @@ public class TestDogSitterProxy {
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime6)), WeekDays.FRI);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime4)), WeekDays.SAT);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);
-        proxy.updateDateTimeAvailability(availability);
+        proxy.updateDateTimeAvailability(availability);*/
     }
 }
