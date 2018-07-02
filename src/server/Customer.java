@@ -77,7 +77,7 @@ public class Customer extends User implements InterfaceCustomer{
             try {
                 dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', 'NULL', '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
                 dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
-                for (Dog d : dogList) {
+                for (Dog d : selectedDogs) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");
                 }
                 dbConnector.closeUpdate();
@@ -296,7 +296,7 @@ public class Customer extends User implements InterfaceCustomer{
         searchStep2(dateStart, dateEnd, nStartDay, nEndDay);
         searchStep3(dogList);
         searchStep4(dogList);
-        searchStep5(dateStart, dateEnd, dogList);
+        searchStep5(dateStart, dateEnd);
         searchStep6(cash);
 
         System.out.println("Dog sitters available:");
@@ -401,14 +401,22 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep5(Date dateStart, Date dateEnd, HashSet<Dog> dogList){
-        //funzione che esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
+    private void searchStep5(Date dateStart, Date dateEnd){
+        //funzione che esclude i dog sitter che hanno già altri impegni nel periodo impostato dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
             HashMap<Integer, Assignment> listAssignment = ds.getAssignmentList();
             for (Integer key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
-                if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart()))) || ((dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
+                if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))  ||  ((dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
+                    toRemove.add(ds);
+                }
+
+                if (dateStart.before(a.getDateStart()) && (dateEnd.after(a.getDateStart()) && dateEnd.before(a.getDateEnd()))){
+                    toRemove.add(ds);
+                }
+
+                if (dateEnd.after(a.getDateEnd()) && (dateStart.after(a.getDateStart()) && dateStart.before(a.getDateEnd()))){
                     toRemove.add(ds);
                 }
             }

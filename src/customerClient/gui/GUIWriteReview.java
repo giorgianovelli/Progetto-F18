@@ -1,21 +1,34 @@
 package customerClient.gui;
 
 import customerClient.CustomerProxy;
-//import org.omg.CORBA.CustomMarshal;   //TODO da problemi!!
+//import org.omg.CORBA.CustomMarshal;
 import server.Assignment;
 import server.Review;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 
 public class GUIWriteReview extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 580;
+
+    final int MAX_CHAR = 254;
+
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    //TODO limitare il numero di righe o caratteri!!
+    //TODO limitare il numero di righe o caratteri!! ok
+    //per il titolo 254
+    //per la descrizione 65535
+    //è necessario??
 
     private JPanel outPanel;
     private JPanel contentPanel;
@@ -44,6 +57,8 @@ public class GUIWriteReview extends JFrame {
     private String email;
     private CustomerProxy proxy;
 
+    private DefaultStyledDocument doc;
+
 
     /**
      *
@@ -52,10 +67,28 @@ public class GUIWriteReview extends JFrame {
      */
 
     public GUIWriteReview(Assignment a, String email)
-    { //devo farmi passare l'appuntamento per aggiungere la recensione (per il codice)?
+    {
         assignmentToReview = a;
         this.email = email;
         proxy = new CustomerProxy(this.email);
+        doc = new DefaultStyledDocument();
+
+        /*doc.setDocumentFilter(new DocumentSizeFilter(MAX_CHAR));
+        doc.addDocumentListener(new DocumentListener(){
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateCount();
+            }
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateCount();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateCount();
+            }
+        });*/
+
         initComponent();
     }
 
@@ -81,6 +114,17 @@ public class GUIWriteReview extends JFrame {
         labelDescription = new JLabel("<html><br/><br/><br/><br/><br/>Comment: </html>");
 
         titleField = new JTextArea(2,1);
+        //titleField.setDocument(doc);
+
+        /* secondo metodo, da provare
+        KeyEvent e = new KeyEvent(titleField, );
+        keyTyped(KeyEvent.KEY_TYPED , MAX_CHAR, titleField);
+        */
+
+        /*if(updateCount() > MAX_CHAR){
+            Toolkit.getDefaultToolkit().beep();
+        }*/
+
         descriptionField = new JTextArea( 7,1);
         sendButton = new JButton("Send");
         cancelButton = new JButton("Cancel");
@@ -91,12 +135,12 @@ public class GUIWriteReview extends JFrame {
 
 
         topPanel.setLayout(new GridLayout(2,1,5,5));
-        labelTitle.setFont(new Font("TimesRoman", Font.BOLD, 16));
+        labelTitle.setFont(new Font("TimesRoman", Font.PLAIN, 16));
         topPanel.add(labelTitle);
         titleField.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         titleField.setLineWrap(true);
         titleField.setWrapStyleWord(true);
-        titleField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        //titleField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         topPanel.setBorder(BorderFactory.createEmptyBorder(5,5, 5,5));
         topPanel.add(titleFieldScroll);
 
@@ -121,7 +165,8 @@ public class GUIWriteReview extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Send")) {
-
+                    boolean strError = false;
+                    String error = "";
 
                     int rating = Integer.parseInt((String) voteBox.getSelectedItem());
                     String title = titleField.getText();
@@ -129,22 +174,27 @@ public class GUIWriteReview extends JFrame {
                     int code = assignmentToReview.getCode();
                     Date date = assignmentToReview.getDateEnd();
 
-                    //errore: quando chiudo il JOptionPane si blocca
                     if(title.equals("")|| comment.equals("")){
-                        JOptionPane.showMessageDialog(new JFrame(), "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
-                        titleField.setText("");
-                        descriptionField.setText("");
+                            strError = true;
+                            error = "Please fill in all fields!";
                     }
                     if(title.contains("#")|| comment.contains("#")){
-                        JOptionPane.showMessageDialog(new JFrame(), "# invalid character", "Error", JOptionPane.ERROR_MESSAGE);
-                        titleField.setText("");
-                        descriptionField.setText("");
+                            strError = true;
+                            error = "# invalid character";
                     }
 
-                    /*
-                    if(proxy.addReview(code, email, rating ,title ,comment)){ //TODO controllare l'aggiunta della recensione nel db
-                        JOptionPane.showMessageDialog(new JFrame(), "Review added", "Review", JOptionPane.INFORMATION_MESSAGE);
-                    }*/
+
+
+                    if(strError){
+                        JOptionPane.showMessageDialog(new JFrame(), error, "Error", JOptionPane.ERROR_MESSAGE);
+                        titleField.setText("");
+                        descriptionField.setText("");
+                    } else if(proxy.addReview(code, email, rating ,title ,comment)){
+                        JOptionPane.showMessageDialog(new JFrame(), "Review added!", "Review", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+
+                    }
+
                 }
                 if (registrationAe.getActionCommand().equals("Cancel")) {
                     //System.exit(0);
@@ -181,4 +231,60 @@ public class GUIWriteReview extends JFrame {
 
     }
 
+   /* private int updateCount()
+    {
+        return MAX_CHAR - doc.getLength();
+    }
+
+    private void keyTyped(KeyEvent e, int maxChar, JTextArea text) {
+
+        if(text.getText().length() > maxChar+1) {
+            e.consume();
+            String shortened = text.getText().substring(0, maxChar);
+            text.setText(shortened);
+        }else if(text.getText().length() > maxChar) {
+            e.consume();
+        }
+    }*/
+
 }
+
+/*
+class DocumentSizeFilter extends DocumentFilter {
+    int maxCharacters;
+
+    //boolean DEBUG = false;
+
+    public DocumentSizeFilter(int maxChars) {
+        maxCharacters = maxChars;
+    }
+
+    public void insertString(FilterBypass fb, int offs, String str, AttributeSet a) throws BadLocationException {
+       */
+/* if (DEBUG) {
+            System.out.println("in DocumentSizeFilter's insertString method");
+        }*//*
+
+
+        //This rejects the entire insertion if it would make the contents too long.
+        if ((fb.getDocument().getLength() + str.length()) <= maxCharacters)
+            super.insertString(fb, offs, str, a);
+        else
+            Toolkit.getDefaultToolkit().beep();
+    }
+
+   public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a) throws BadLocationException {
+       */
+/*if (DEBUG) {
+           System.out.println("in DocumentSizeFilter's replace method");
+       }*//*
+
+
+        //This rejects the entire replacement if it would make the contents too long.
+        if ((fb.getDocument().getLength() + str.length() - length) <= maxCharacters)
+            super.replace(fb, offs, length, str, a);
+        else
+            Toolkit.getDefaultToolkit().beep();
+    }
+
+}*/

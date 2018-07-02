@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
+
 public class GUINewAssignment extends JFrame{
+
+    //TODO sistemare divisione metodi; controllo su validità indirizzo;
 
     final int WIDTH = 800;
     final int HEIGHT = 600;
@@ -44,6 +47,8 @@ public class GUINewAssignment extends JFrame{
     CustomerProxy customerProxy;
 
     //Others
+
+    public static GUIChooseDogsitter guiChooseDogsitter;
 
     private GridLayout gridLayout = new GridLayout(1,1);
 
@@ -111,8 +116,9 @@ public class GUINewAssignment extends JFrame{
                 String year = String.valueOf(newAssignmentBox.getTyearList().getSelectedItem());
                 String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
                 String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
+                System.out.println(toHour);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 Date dateStart = new Date();
                 Date dateEnd = new Date();
                 try {
@@ -122,13 +128,12 @@ public class GUINewAssignment extends JFrame{
                     e1.printStackTrace();
                 }
 
-                //TODO controllo sulla correttezza dell'indirizzo inserito
+                String countryText = String.valueOf(country.getField().getText().toUpperCase());
+                String cityText = String.valueOf(city.getField().getText().toUpperCase());
+                String capText = String.valueOf(cap.getField().getText().toUpperCase());
+                String addressText = String.valueOf(address.getField().getText().toUpperCase());
+                String numberText = String.valueOf(number.getField().getText().toUpperCase());
 
-                String countryText = String.valueOf(country.getField().getText());
-                String cityText = String.valueOf(city.getField().getText());
-                String capText = String.valueOf(cap.getField().getText());
-                String addressText = String.valueOf(address.getField().getText());
-                String numberText = String.valueOf(number.getField().getText());
 
                 Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
                 HashSet<Dog> dogsSelected = new HashSet<>();
@@ -139,32 +144,107 @@ public class GUINewAssignment extends JFrame{
                     }
                 }
 
-                // TEST
-                for (Dog dog: dogsSelected) {
-                    System.out.println(dog.getName());
-                }
-
-
-                // TODO fare in modo che si possa scegliere un solo metodo di pagamento
-
                 if (radioButtonCash.isSelected()) {
                     paymentMethod = true;
                 } else if (radioButtonCreditCard.isSelected()) {
                     paymentMethod = false;
                 }
 
-                dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
-                //System.out.println(dogsittersMailList);
+                //TODO Controllo su validità nazione e città
 
-                GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
-                guiChooseDogsitter.setVisible(true);
-            }
 
+                if (dateStart.after(dateEnd)) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong1!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    System.out.println(dateStart);
+                    System.out.println(dateEnd);
+
+                } else if (dogsSelected.size() == 0) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No dogs selected!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                } else if (!radioButtonCash.isSelected() && !radioButtonCreditCard.isSelected()) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No payment method selected!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+
+
+                } else switch (month){
+
+                        case("02"): {
+                            if (Integer.parseInt(year) % 4 != 0) {
+                                if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong2!", "Assignment error",
+                                            JOptionPane.ERROR_MESSAGE);
+                                    break;
+                                }
+                            }
+
+                            if(Integer.parseInt(year) % 4 == 0) {
+                                if (day.equals("30") || day.equals("31")) {
+                                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                            JOptionPane.ERROR_MESSAGE);
+                                    break;
+                                }
+                            }
+                        }
+
+                        case ("04"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong3!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+
+                        case ("06"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong4!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+
+                        case ("09"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong5!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+
+                        case ("11"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong6!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+
+                        default: {
+                            dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
+                            if (dogsittersMailList.isEmpty()) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Sorry, we couldn't find any dogsitter!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                            } else {
+
+                                guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
+                                guiChooseDogsitter.setVisible(true);
+
+
+                            }
+                        }
+                    }
+                }
         };
 
+        ActionListener actionListener1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        };
 
-
-
+        buttonCancel.addActionListener(actionListener1);
         buttonSearch.addActionListener(actionListener);
 
 
@@ -254,6 +334,10 @@ public class GUINewAssignment extends JFrame{
         panelPayment.add(radioButtonCreditCard);
         panelPayment.add(radioButtonCash);
 
+        ButtonGroup group = new ButtonGroup();
+        group.add(radioButtonCash);
+        group.add(radioButtonCreditCard);
+
         // Labels
 
 
@@ -340,28 +424,6 @@ class NewAssignmentBox extends JPanel{
         fromDayLabel.setText(selectedDaySplitted[0]);
         fromMonthLabel.setText(selectedDaySplitted[1]);
         fromYearLabel.setText(selectedDaySplitted[2]);
-
-
-
-        /*
-
-
-        tmonthList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String monthSeleted = String.valueOf(tmonthList.getSelectedItem());
-                if (monthSeleted.equals("02")) {
-                    day[28] = null;
-                    day[29] = null;
-                    day[30] = null;
-                }
-
-
-
-            }
-        });
-
-        */
 
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);

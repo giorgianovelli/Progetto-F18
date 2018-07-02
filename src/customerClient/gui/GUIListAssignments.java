@@ -27,12 +27,14 @@ public class GUIListAssignments extends JFrame{
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
-
+    //TODO refresh della finestra?
 
     private JPanel contentPanel = new JPanel(); //pannello esterno
     private JScrollPane scrollPanel = new JScrollPane(contentPanel);
 
     private JLabel labelState[];
+    private JLabel labelStr;
+
     private JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
     private JButton[] buttonAction;
     private JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
@@ -46,7 +48,7 @@ public class GUIListAssignments extends JFrame{
      * @param cs ??
      * @param listAssignment lista degli appuntamenti dell'utente
      * @param email riferimento all'utente
-     * @param guiCustomer non la sto usando, da togliere??
+     * @param guiCustomer
      */
 
     public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUICustomer guiCustomer){
@@ -68,7 +70,7 @@ public class GUIListAssignments extends JFrame{
     /**
      *
      * @param cs ??
-     * @param guiCustomer lo sto usando??
+     * @param guiCustomer
      */
 
     private void initComponents(CalendarState cs, GUICustomer guiCustomer){
@@ -76,7 +78,7 @@ public class GUIListAssignments extends JFrame{
         assignmentNumber = listAssignment.size();
         reviewNumber = listReview.size();
 
-        if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){ //da controllare
+        if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){
             infoPanel = new JPanel[reviewNumber];
             labelDescription = new JLabel[reviewNumber];
             buttonAction = new JButton[reviewNumber];
@@ -88,28 +90,28 @@ public class GUIListAssignments extends JFrame{
             labelState = new JLabel[assignmentNumber];
         }
 
-        //contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
-
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         if (cs.equals(CalendarState.REVIEWING)){
-            setTitle("Write a review"); //Fa vedere solo gli appuntamenti che non hanno ancora una recensione
+            setTitle("Write a review");
 
             int j = 0;
+            boolean haveAReview = false;//Fa vedere solo gli appuntamenti che non hanno ancora una recensione
+
             for(Integer i : listAssignment.keySet()){
                 Assignment a = null;
                 String labelString = "";
 
                 a = listAssignment.get(i);
-                boolean haveAReview = false;
+                haveAReview = false;
 
-                /*for (Integer k : listReview.keySet()){
+                for (Integer k : listReview.keySet()){
                     Review r = null;
                     r = listReview.get(k);
                     if(a.getCode()== r.getCode()){
                         haveAReview = true;
                     }
-                }*/
+                }
 
                 if(!haveAReview){
                     String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
@@ -128,13 +130,23 @@ public class GUIListAssignments extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             GUIWriteReview writeReview = new GUIWriteReview(listAssignment.get(i), email);
                             writeReview.setVisible(true);
+                            dispose();
+
                         }
+
                     });
+
                     createPanelReview(j);
 
                 }
 
+
                 j++;
+            }
+            if (haveAReview) {
+                labelStr = new JLabel("There aren't assignment to review!");
+                labelStr.setFont(new Font("TimesRoman", Font.PLAIN, 15));
+                contentPanel.add(labelStr);
             }
 
 
@@ -159,10 +171,13 @@ public class GUIListAssignments extends JFrame{
                 buttonAction[j].addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        //proxy.removeReview((listAssignment.get(i)).getCode());
                         int action = (JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Conferm Delete Review",JOptionPane.YES_NO_OPTION));
-                        /*if (action == JOptionPane.YES_OPTION){
+                        if (action == JOptionPane.YES_OPTION){
                             proxy.removeReview((listAssignment.get(i)).getCode()); //TODO controllare!!
-                        }*/
+                        }
+                        dispose();
+
                     }
 
                 });

@@ -1,7 +1,7 @@
 package test;
 
-import javafx.scene.layout.BorderImage;
-import javafx.scene.layout.BorderPane;
+//import javafx.scene.layout.BorderImage;   //TODO DA ERRORI
+//import javafx.scene.layout.BorderPane;    //TODO DA ERRORI
 
 import javax.swing.*;
 import javax.swing.text.BoxView;
