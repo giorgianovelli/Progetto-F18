@@ -101,9 +101,6 @@ public class GUIChooseDogsitter extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer, paymentInCash);
                     guiConfirmAssignment.setVisible(true);
-                    if (!guiConfirmAssignment.isActive()) {
-                        dispose();
-                    }
                 }
             };
 

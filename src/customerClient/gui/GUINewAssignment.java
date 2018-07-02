@@ -48,6 +48,8 @@ public class GUINewAssignment extends JFrame{
 
     //Others
 
+    public static GUIChooseDogsitter guiChooseDogsitter;
+
     private GridLayout gridLayout = new GridLayout(1,1);
 
     private JLabel labelMeetingPoint = new JLabel("Choose where you would like to meet the dogsitter: ");
@@ -219,8 +221,10 @@ public class GUINewAssignment extends JFrame{
                                 JOptionPane.showMessageDialog(new JFrame(), "Sorry, we couldn't find any dogsitter!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                         } else {
-                            GUIChooseDogsitter guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
+                            guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
                             guiChooseDogsitter.setVisible(true);
+
+
                         }
                     }
                 }
