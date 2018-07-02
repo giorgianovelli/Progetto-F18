@@ -58,8 +58,8 @@ public class TestCustomerExecEnum {
         Date end = new Date();
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         try {
-            start = dateFormat2.parse("10/07/2018 11:00");
-            end = dateFormat2.parse("10/07/2018 12:00");
+            start = dateFormat2.parse("10/07/2018 10:00");
+            end = dateFormat2.parse("10/07/2018 12:30");
         } catch (ParseException e) {
             e.printStackTrace();
         }

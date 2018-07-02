@@ -408,7 +408,15 @@ public class Customer extends User implements InterfaceCustomer{
             HashMap<Integer, Assignment> listAssignment = ds.getAssignmentList();
             for (Integer key : listAssignment.keySet()) {
                 Assignment a = listAssignment.get(key);
-                if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart()))) || ((dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
+                if (((dateStart.after(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateEnd.before(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))  ||  ((dateStart.before(a.getDateStart()) || dateStart.equals(a.getDateStart())) && (dateEnd.after(a.getDateEnd()) || dateEnd.equals(a.getDateEnd())))){
+                    toRemove.add(ds);
+                }
+
+                if (dateStart.before(a.getDateStart()) && (dateEnd.after(a.getDateStart()) && dateEnd.before(a.getDateEnd()))){
+                    toRemove.add(ds);
+                }
+
+                if (dateEnd.after(a.getDateEnd()) && (dateStart.after(a.getDateStart()) && dateStart.before(a.getDateEnd()))){
                     toRemove.add(ds);
                 }
             }
