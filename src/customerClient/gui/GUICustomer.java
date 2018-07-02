@@ -66,6 +66,7 @@ public class GUICustomer extends JFrame{
     private JButton buttonNextMonth = new JButton(">");
     private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
     private CalendarState calendarState = CalendarState.NORMAL;
+    public static GUINewAssignment guiNewAssignment;
 
     private CustomerProxy proxy;
     private String email;
@@ -195,7 +196,7 @@ public class GUICustomer extends JFrame{
 
                 if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
                     //JButton pressedButton = (JButton) cae.getSource();
-                    GUINewAssignment guiNewAssignment = new GUINewAssignment(todayDate, email);
+                    guiNewAssignment = new GUINewAssignment(todayDate, email);
                     guiNewAssignment.setVisible(true);
                 }
 

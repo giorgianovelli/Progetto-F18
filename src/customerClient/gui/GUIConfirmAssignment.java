@@ -44,6 +44,7 @@ public class GUIConfirmAssignment extends JFrame {
     private JButton buttonConfirm = new JButton("Confirm");
 
 
+    public JFrame success = new JFrame();
 
     private String mailDogsitter;
     private Date dateStartAssignment;
@@ -145,12 +146,15 @@ public class GUIConfirmAssignment extends JFrame {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame success;
+
                 customerProxy.addAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, dogsSelected, meetingPoint, paymentMethod);
                 JOptionPane.showMessageDialog(success = new JFrame(), "Assignment successfully confirmed!", "Assignment information",
                         JOptionPane.INFORMATION_MESSAGE);
                 if (!success.isActive()) {
+                    GUICustomer.guiNewAssignment.dispose();
+                    GUINewAssignment.guiChooseDogsitter.dispose();
                     dispose();
+
                 }
             }
         };
@@ -190,6 +194,7 @@ public class GUIConfirmAssignment extends JFrame {
         return toReturn;
     }
 
-
-
+    public JFrame getSuccess() {
+        return success;
+    }
 }
