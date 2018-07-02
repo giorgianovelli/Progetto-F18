@@ -783,7 +783,8 @@ public class GUICustomer extends JFrame{
             int i;
             String strButtonDate;
             for (i = 0; i < NDAYMONTH; i++){
-                if (i < 10){
+                int day = i + 1;
+                if (day < 10){
                     strButtonDate = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
                 } else {
                     strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
