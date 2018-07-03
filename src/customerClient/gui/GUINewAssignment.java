@@ -19,7 +19,7 @@ import java.util.HashSet;
 
 public class GUINewAssignment extends JFrame{
 
-    //TODO sistemare divisione metodi; controllo su validità indirizzo;
+    //TODO javadoc; controllo su validità indirizzo;
 
     final int WIDTH = 800;
     final int HEIGHT = 600;
@@ -104,8 +104,6 @@ public class GUINewAssignment extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //TODO controllo sulla validità della data scelta
-
                 String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
                 String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
                 String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
@@ -149,8 +147,7 @@ public class GUINewAssignment extends JFrame{
                 } else if (radioButtonCreditCard.isSelected()) {
                     paymentMethod = false;
                 }
-
-                //TODO Controllo su validità nazione e città
+                
 
 
                 if (dateStart.after(dateEnd)) {
