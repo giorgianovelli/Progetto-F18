@@ -75,24 +75,30 @@ public class GUIChooseDogsitter extends JFrame {
 
 
         for (String mailDogsitter: dogsitterList){
+
             DogSitterProxy dogSitterProxy = new DogSitterProxy(mailDogsitter);
+
             labelDogsitter = new JLabel("<html><br>" + dogSitterProxy.getName() + " " + dogSitterProxy.getSurname() + "<br/>" + mailDogsitter, SwingConstants.LEFT);
+
             panelLabel = new JPanel();
             panelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,0, 0));
             panelLabel.add(labelDogsitter);
+
             panelButtons = new JPanel();
             panelButtons.setLayout(new GridLayout(1,2,10,0));
             panelButtons.setBorder(BorderFactory.createEmptyBorder(15,0,15, 40));
+
             buttonInfo = new JButton("Info");
             buttonSelect = new JButton("Select");
             panelButtons.add(buttonInfo);
             panelButtons.add(buttonSelect);
+
             panelDogsitter = new JPanel();
             panelDogsitter.setLayout(new BorderLayout());
-            GridBagConstraints gridBagConstraints = new GridBagConstraints();
             panelDogsitter.add(panelLabel, BorderLayout.WEST);
             panelDogsitter.add(panelButtons, BorderLayout.EAST);
             panelContainer.add(panelDogsitter);
+
             gridLayout.setRows(gridLayout.getRows() + 1);
 
 
