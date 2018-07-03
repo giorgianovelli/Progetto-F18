@@ -21,9 +21,9 @@ public class GUIDogSitterLabel extends JFrame {
 
     private JTextField textArea = new JTextField();
     private JTextField textDogBreed = new JTextField();
-    private JTextField textDogsNumber = new JTextField();
+    private JTextField textDogsNumber = new JTextField();//todo da cambiare in menu a tendina con cui scegliere numero cani??
     private JTextField textAvailability = new JTextField();
-    private JTextField textBiography = new JTextField("immetti la tua biografia"); //da cambiare con area di testo
+    private JTextField textBiography = new JTextField("immetti la tua biografia"); //todo da cambiare con area di testo
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");

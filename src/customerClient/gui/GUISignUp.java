@@ -1,5 +1,6 @@
 package customerClient.gui;
 
+import com.sun.xml.internal.bind.v2.runtime.Name;
 import customerClient.CustomerProxy;
 //import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import server.User;
@@ -75,7 +76,7 @@ public class GUISignUp extends JFrame{
     //TODO attributi per client-server
     private CustomerProxy proxy;
     private String email;
-    private User user;
+    private User user;   //todo eliminare variabili inutilizzate
 
 
     public GUISignUp() {
@@ -85,6 +86,9 @@ public class GUISignUp extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        this.proxy = new CustomerProxy(email);
+        this.email = email;
 
         initComponents();
     }
@@ -161,6 +165,7 @@ public class GUISignUp extends JFrame{
         panelRadioButton.setLayout(new GridLayout(1,0));
         panelData.add(panelRadioButton);
 
+        //TODO DA SISTEMARE I BOTTONI
         panelButton.setLayout(new GridLayout(1, 2,5,5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
@@ -170,6 +175,9 @@ public class GUISignUp extends JFrame{
        // contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
 
 
+
+
+
         //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
         ActionListener registration = new ActionListener() {
             @Override
@@ -177,9 +185,12 @@ public class GUISignUp extends JFrame{
 
                 if (registrationAe.getActionCommand().equals("Confirm Registration as Cutomer")) {
 
+                    addCustomerValues();
+                    //System.out.println(addCustomerValues());
+
                     //TODO CONTROLLARE CHE I CAMPI PASSWORD E CONFIRM PASSWORD SIANO UGUALI
 
-                    JOptionPane.showMessageDialog(new JFrame(), "registration was successfully performed", "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showConfirmDialog(new JFrame(), "Please confirm your registration", "Second Step:", JOptionPane.OK_CANCEL_OPTION);
                     dispose();
                     GUILogin guiLogin = new GUILogin();
                     guiLogin.setVisible(true);
@@ -190,8 +201,10 @@ public class GUISignUp extends JFrame{
                 }
 
                 if (registrationAe.getActionCommand().equals("Confirm Registration as DogSitter")) {
-                    //todo  as Dogsitter: aprire un altro frame solo con le label dogsitter
-                    // JFrame = new JFrame();
+
+                      //TODO   addDogSitterValues();
+
+                    //  as Dogsitter: aprire un altro frame solo con le label dogsitter
                     GUIDogSitterLabel guiDogSitterLabel = new GUIDogSitterLabel();
                     guiDogSitterLabel.setVisible(true);
 
@@ -265,11 +278,40 @@ public class GUISignUp extends JFrame{
 
     }
 
+    //metodi per inserire le tuple nel database
+    //todo ho bisogno dei metodi set in CustomerProxy
+    private void addCustomerValues() {
+      //  String s = ;
+      //  proxy.setName(textName.setText());
+      /*  String strName = proxy.setName();
+        textName.setText(strName);
+        textName.setEditable(true);
+        labelName.setLabelFor(textName);
+
+        System.out.println(strName);*/
+
+        //todo MOSTRA IL CONTENUTO DEL DATABASE
+      /*  String strName = proxy.getName();
+        textName.setText(strName);
+        textName.setEditable(true);
+        labelName.setLabelFor(textName);*/
+
+
+       //todo MODIFICA IL DATABASE
+      /*  proxy.updateName(textName.getText());
+        textName.setEditable(true);
+        labelName.setLabelFor(textName);*/
+
+
+    }
 
 
 
+    private void addDogSitterValues(){
 
 
+
+    }
 
 
 
