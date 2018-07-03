@@ -327,6 +327,11 @@ public class GUICustomer extends JFrame{
                     guiChangePassword.setVisible(true);
                 }
 
+                if (menuAe.getActionCommand().equals("Dogs")){
+                    GUIDogs guiDogs = new GUIDogs(email);
+                    guiDogs.setVisible(true);
+                }
+
                 if (menuAe.getActionCommand().equals("Cancel")){
                     cancel();
                 }
@@ -340,6 +345,8 @@ public class GUICustomer extends JFrame{
                     GUIAwards credits = new GUIAwards();
                     credits.setVisible(true);
                 }
+
+
             }
         };
 
@@ -387,6 +394,7 @@ public class GUICustomer extends JFrame{
         menuItemChangePassword.addActionListener(menuAl);
         menuItemInfo.addActionListener(menuAl);
         menuItemAwards.addActionListener(menuAl);
+        menuItemDogs.addActionListener(menuAl);
         buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
 
         for (i = 0; i < nShownTodayAssignments; i++){
