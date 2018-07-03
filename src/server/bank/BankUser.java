@@ -27,7 +27,7 @@ public class BankUser {
             String ownerName = rs.getString("OWNER_NAME");
             String ownerSurname = rs.getString("OWNER_SURNAME");
             Date expirationDate = rs.getDate("EXPIRATION_DATE");
-            int cvv = rs.getInt("CVV");
+            String cvv = rs.getString("CVV");
             double amount = rs.getDouble("AMOUNT");
 
             this.paymentMethod = new PaymentMethod(num, ownerName, ownerSurname, expirationDate, cvv, amount);

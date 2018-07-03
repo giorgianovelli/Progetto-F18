@@ -47,7 +47,7 @@ public interface InterfaceCustomer {
 
     boolean updateAddress(String country, String city, String street, String number, String cap);
 
-    boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv);
+    boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv);
 
     String getName();
 

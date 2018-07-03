@@ -285,7 +285,7 @@ public class Singleton {
             String ownerName = rs.getString("OWNER_NAME");
             String ownerSurname = rs.getString("OWNER_SURNAME");
             Date expirationDate = rs.getDate("EXPIRATION_DATE");
-            int cvv = rs.getInt("CVV");
+            String cvv = rs.getString("CVV");
             double amount = rs.getDouble("AMOUNT");
             PaymentMethod paymentMethod = new PaymentMethod(payment, ownerName, ownerSurname, expirationDate, cvv, amount);
             dbConnector.closeConnection();

@@ -7,10 +7,10 @@ public class PaymentMethod {
     private String surname;
     private String number;
     private Date expirationDate;
-    private int cvv;
+    private String cvv;
     private double amount;
 
-    public PaymentMethod(String number, String name, String surname, Date expirationDate, int cvv, double amount) {
+    public PaymentMethod(String number, String name, String surname, Date expirationDate, String cvv, double amount) {
         this.number = number;
         this.name = name;
         this.surname = surname;
@@ -35,7 +35,7 @@ public class PaymentMethod {
         return expirationDate;
     }
 
-    public int getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
