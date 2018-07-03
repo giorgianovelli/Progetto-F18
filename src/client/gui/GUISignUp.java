@@ -1,6 +1,6 @@
 package client.gui;
 
-import com.sun.xml.internal.bind.v2.runtime.Name;
+//import com.sun.xml.internal.bind.v2.runtime.Name; //TODO da problemi
 import customerClient.CustomerProxy;
 //import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import server.User;
