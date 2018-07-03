@@ -36,6 +36,12 @@ public class GUISettings extends JFrame {
     private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
     private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
 
+    //TODO label per titolare carta di credito
+    private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:");
+    private JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:");
+    private JLabel labelExpirationDate = new JLabel("Expiration Date:"); //data di scadenza
+    private JLabel labelSecurityCode = new JLabel("Security code:");
+
     private JTextField textName = new JTextField();
     private JTextField textSurname = new JTextField();
     private JTextField textStreet = new JTextField();
@@ -44,6 +50,12 @@ public class GUISettings extends JFrame {
     private JTextField textCountry = new JTextField();
     private JTextField textCap = new JTextField();
     private JTextField textPhoneNumber = new JTextField();
+
+    //TODO textfield per titolare carta di credito
+    private JTextField textCreditCardOwnerName = new JTextField();
+    private JTextField textCreditCardNumber = new JTextField();
+    //todo jcombobox per expiration date
+    private JTextField textSecurityCode = new JTextField();
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
@@ -60,10 +72,11 @@ public class GUISettings extends JFrame {
     private ArrayList<String> years_tmp = new ArrayList<String>();
 
 
-    //TODO attributi per client-server
+    // attributi per client-server
     private CustomerProxy proxy;
     private String email;
-    private User user;
+    private User user;    //todo controllare tutte le variabili inutilizzate ed eliminarle
+    private CustomerProxy dateofBirth;
 
     public GUISettings(String email) {
         setTitle("Account settings");
@@ -299,6 +312,7 @@ public class GUISettings extends JFrame {
         //todo NON FUNZIONA!!! mi fa vedere la data aggiornata al giorno corrente e mi da eccezione se provo a cambiare il giorno
      /*   Date dateofBirth = new Date();
         boolean updateDate= proxy.updateDateOfBirth(dateofBirth);
+
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
@@ -311,7 +325,7 @@ public class GUISettings extends JFrame {
         dayList.setSelectedItem(day);
         monthList.setSelectedItem(month);
         yearList.setSelectedItem(year);
-        System.out.println("updateDate:" +updateDate);*/
+      //  System.out.println("updateDate:" +updateDate);*/
 
         proxy.updateAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
@@ -328,6 +342,8 @@ public class GUISettings extends JFrame {
         proxy.updatePhoneNumber(textPhoneNumber.getText());
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
+
+
 
 
 
