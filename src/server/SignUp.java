@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.HashSet;
 
 public class SignUp {
+    private final int NWEEKDAYS = 7;
+
     public boolean customerSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
         DBConnector dbConnector = new DBConnector();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -32,6 +34,7 @@ public class SignUp {
     public boolean dogSitterSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                                    Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
                                    String biography, Availability dateTimeAvailability, boolean acceptCash){
+        int i;
         DBConnector dbConnector = new DBConnector();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strBirth = dateFormat.format(dateOfBirth);
@@ -72,9 +75,21 @@ public class SignUp {
                 dbConnector.updateDB("INSERT INTO DOGSITTER_AREA VALUES ('" + email + "', '" + place + "');");
             }
 
-            dbConnector.updateDB("INSERT INTO AVAILABILITY VALUES ('" + email + "', '" + workingTimes[0].getStart() + "', '" + workingTimes[0].getEnd() + "', '" + workingTimes[1].getStart() + "', '" + workingTimes[1].getEnd() + "', '" + workingTimes[2].getStart()
-                    + "', '" + workingTimes[2].getEnd() + "', '" + workingTimes[3].getStart() + "', '" + workingTimes[3].getEnd() + "', '" + workingTimes[4].getStart() + "', '" + workingTimes[4].getEnd() + "', '" + workingTimes[5].getStart() + "', '" + workingTimes[5].getEnd()
-                    + "', '" + workingTimes[6].getStart() + "', '" + workingTimes[6].getEnd() + "');");
+            String[] strStart = new String[7];
+            String[] strEnd = new String[7];
+            for (i = 0; i < NWEEKDAYS; i++){
+                if ((workingTimes[i].getStart() != null) && (workingTimes[i].getEnd() != null)){
+                    strStart[i] = "'" + workingTimes[i].getStart().toString() + "'";
+                    strEnd[i] = "'" + workingTimes[i].getEnd().toString() + "'";
+                } else {
+                    strStart[i] = "null";
+                    strEnd[i] = "null";
+                }
+            }
+
+            dbConnector.updateDB("INSERT INTO AVAILABILITY VALUES ('" + email + "', " + strStart[0] + ", " + strEnd[0] + ", " + strStart[1] + ", " + strEnd[1] + ", " + strStart[2]
+                    + ", " + strEnd[2] + ", " + strStart[3] + ", " + strEnd[3] + ", " + strStart[4] + ", " + strEnd[4] + ", " + strStart[5] + ", " + strEnd[5]
+                    + ", " + strStart[6] + ", " + strEnd[6] + ");");
 
             dbConnector.updateDB("INSERT INTO DOGS_ACCEPTED VALUES ('" + email + "', " + small + ", " + medium + ", " + big + ", " + giant + ");");
 

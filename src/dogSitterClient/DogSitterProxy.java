@@ -398,4 +398,53 @@ public class DogSitterProxy implements InterfaceDogSitter {
         }
     }
 
+    public boolean dogSitterSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
+                                   Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
+                                   String biography, Availability dateTimeAvailability, boolean acceptCash){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strBirth = dateFormat.format(dateOfBirth);
+        String strExpiration = dateFormat.format(paymentMethod.getExpirationDate());
+        String clientMsg = "DOGSITTER#SIGNUP#" + email + "#" + name + "#" + surname + "#" + password + "#" + phoneNumber
+                + "#" + strBirth + "#" + address.getCountry() + "#" + address.getCity() + "#" + address.getStreet() + "#" + address.getNumber()
+                + "#" + address.getCap() + "#" + paymentMethod.getNumber() + "#" + paymentMethod.getName() + "#" + paymentMethod.getSurname()
+                + "#" + strExpiration + "#" + paymentMethod.getCvv() + "#" + paymentMethod.getAmount() + "#";
+
+        for (String city : area.getPlaces()) {
+            clientMsg = clientMsg + city + "*";
+        }
+
+        clientMsg = clientMsg + "#";
+
+        for (DogSize size: DogSize.values()) {
+            if (listDogSize.contains(size)){
+                clientMsg = clientMsg + "true#";
+            } else {
+                clientMsg = clientMsg + "false#";
+            }
+        }
+
+        clientMsg = clientMsg + dogsNumber + "#" + biography + "#";
+        WorkingTime[] workingTimeArray = dateTimeAvailability.getArrayDays();
+        for (WeekDays wd : WeekDays.values()) {
+            if ((workingTimeArray[wd.ordinal()].getStart().equals(Time.valueOf("00:00:00"))) && (workingTimeArray[wd.ordinal()].getEnd().equals(Time.valueOf("00:00:00")))){
+                clientMsg = clientMsg + "null#null#";
+            } else {
+                clientMsg = clientMsg + workingTimeArray[wd.ordinal()].getStart() + "#" + workingTimeArray[wd.ordinal()].getEnd() +"#";
+            }
+        }
+
+        if (acceptCash){
+            clientMsg = clientMsg + "true";
+        } else {
+            clientMsg = clientMsg + "false";
+        }
+
+        String serverMsg = getReply(clientMsg);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

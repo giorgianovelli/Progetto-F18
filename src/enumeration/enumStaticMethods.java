@@ -1,14 +1,13 @@
 package enumeration;
 
-import server.Assignment;
-import server.Dog;
-import server.Review;
-import server.Singleton;
+import server.*;
 import server.places.Address;
+import server.places.Area;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.StringTokenizer;
 
 public class enumStaticMethods {
     protected static String getDogListOfAssignment(int code){
@@ -47,5 +46,31 @@ public class enumStaticMethods {
             msg = msg + a.getCode() + "#" + getDogListOfAssignment(a.getCode()) + "#" + strDateStart + "#" + strDateEnd + "#" + a.getState() + "#" + getMeetingPoint(a.getCode()) + "#";
         }
         return msg;
+    }
+
+    protected static Area decodeArea(String strArea){
+        StringTokenizer token = new StringTokenizer(strArea, "*");
+        Area area = new Area();
+        while (token.hasMoreTokens()){
+            area.addPlace(token.nextToken());
+        }
+        return area;
+    }
+
+    protected static HashSet<DogSize> createDogSizeList(boolean small, boolean medium, boolean big, boolean giant){
+        HashSet<DogSize> dogSizeList = new HashSet<DogSize>();
+        if (small){
+            dogSizeList.add(DogSize.SMALL);
+        }
+        if (medium){
+            dogSizeList.add(DogSize.MEDIUM);
+        }
+        if (big){
+            dogSizeList.add(DogSize.BIG);
+        }
+        if (giant){
+            dogSizeList.add(DogSize.GIANT);
+        }
+        return dogSizeList;
     }
 }

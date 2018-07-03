@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 import static enumeration.enumStaticMethods.*;
@@ -627,6 +628,92 @@ public enum ExecDogSitterEnum {
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);
             if (dogSitter.updateDateTimeAvailability(availability)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    SIGNUP{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String name = tokenMsg.nextToken();
+            String surname = tokenMsg.nextToken();
+            String password = tokenMsg.nextToken();
+            String phoneNumber = tokenMsg.nextToken();
+            String strBirth = tokenMsg.nextToken();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateOfBirth = new Date();
+            try {
+                dateOfBirth = dateFormat.parse(strBirth);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String country = tokenMsg.nextToken();
+            String city = tokenMsg.nextToken();
+            String street = tokenMsg.nextToken();
+            String number = tokenMsg.nextToken();
+            String cap = tokenMsg.nextToken();
+            Address address = new Address(country, city, street, number, cap);
+            String cardNumber = tokenMsg.nextToken();
+            String cardName = tokenMsg.nextToken();
+            String cardSurname = tokenMsg.nextToken();
+            String strExpiration = tokenMsg.nextToken();
+            Date expirationDate = new Date();
+            try {
+                expirationDate = dateFormat.parse(strExpiration);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            int cvv = Integer.parseInt(tokenMsg.nextToken());
+            double amount = Double.parseDouble(tokenMsg.nextToken());
+            PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardName, cardSurname, expirationDate, cvv, amount);
+
+            Area area = decodeArea(tokenMsg.nextToken());
+
+            boolean small = Boolean.parseBoolean(tokenMsg.nextToken());
+            boolean medium = Boolean.parseBoolean(tokenMsg.nextToken());
+            boolean big = Boolean.parseBoolean(tokenMsg.nextToken());
+            boolean giant = Boolean.parseBoolean(tokenMsg.nextToken());
+
+            HashSet<DogSize> dogSizeList = createDogSizeList(small, medium, big, giant);
+
+            int dogsNumber = Integer.parseInt(tokenMsg.nextToken());
+            String biography = tokenMsg.nextToken();
+
+            Availability availability = new Availability();
+            Time start;
+            Time end;
+            for (WeekDays wd : WeekDays.values()) {
+                String strStart = tokenMsg.nextToken();
+                if (!(strStart.equals("null"))){
+                    start = Time.valueOf(strStart);
+                } else {
+                    start = null;
+                }
+                String strEnd = tokenMsg.nextToken();
+                if (!(strEnd.equals("null"))){
+                    end = Time.valueOf(strEnd);
+                } else {
+                    end = null;
+                }
+                WorkingTime workingTime = new WorkingTime(start, end);
+                availability.setDayAvailability(workingTime, wd);
+            }
+
+            boolean cashFlag;
+            if (tokenMsg.nextToken().equals("true")){
+                cashFlag = true;
+            } else {
+                cashFlag = false;
+            }
+
+            SignUp signUp = new SignUp();
+            if (signUp.dogSitterSignUp(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod, area, dogSizeList, dogsNumber, biography, availability, cashFlag)){
                 return "true";
             } else {
                 return "false";
