@@ -57,7 +57,7 @@ public class GUIListAssignments extends JFrame{
      * @param guiCustomer
      */
 
-    public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUICustomer guiCustomer){
+    public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiCustomer){
         setTitle("Your assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -79,7 +79,7 @@ public class GUIListAssignments extends JFrame{
      * @param guiCustomer
      */
 
-    private void initComponents(CalendarState cs, GUICustomer guiCustomer){
+    private void initComponents(CalendarState cs, GUIHome guiCustomer){
 
         assignmentNumber = listAssignment.size();
         reviewNumber = listReview.size();
