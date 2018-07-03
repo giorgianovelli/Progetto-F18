@@ -28,9 +28,12 @@ public class GUIListAssignments extends JFrame{
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     //TODO refresh della finestra?
+    private GridLayout gridLayout = new GridLayout(1,1);
 
     private JPanel contentPanel = new JPanel(); //pannello esterno
-    private JScrollPane scrollPanel = new JScrollPane(contentPanel);
+    private JPanel panelOut = new JPanel();
+    private JScrollPane scrollPanel = new JScrollPane(panelOut);
+
 
     private JLabel labelState[];
     private JLabel labelStr;
@@ -38,6 +41,9 @@ public class GUIListAssignments extends JFrame{
     private JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
     private JButton[] buttonAction;
     private JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
+    private JPanel panelLabel;
+    private JPanel panelButtons;
+
     private HashMap<Integer, Assignment> listAssignment;
     private HashMap<Integer, Review> listReview;
     private CustomerProxy proxy;
@@ -90,7 +96,9 @@ public class GUIListAssignments extends JFrame{
             labelState = new JLabel[assignmentNumber];
         }
 
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        //contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setLayout(gridLayout);
+        panelOut.setLayout(new BorderLayout());
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
@@ -137,6 +145,8 @@ public class GUIListAssignments extends JFrame{
                     });
 
                     createPanelReview(j);
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+
 
                 }
 
@@ -183,6 +193,7 @@ public class GUIListAssignments extends JFrame{
                 });
 
                 createPanelReview(j);
+                gridLayout.setRows(gridLayout.getRows() + 1);
                 j++;
 
             }
@@ -216,6 +227,7 @@ public class GUIListAssignments extends JFrame{
                 });
 
                 createPanelReview(j);
+                gridLayout.setRows(gridLayout.getRows() + 1);
                 j++;
 
             }
@@ -252,7 +264,7 @@ public class GUIListAssignments extends JFrame{
 
                 createPanelAssignment(a,j);
 
-
+                gridLayout.setRows(gridLayout.getRows() + 1);
                 j++;
 
             }
@@ -261,6 +273,7 @@ public class GUIListAssignments extends JFrame{
 
         }
 
+        panelOut.add(contentPanel, BorderLayout.NORTH);
         scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -286,6 +299,11 @@ public class GUIListAssignments extends JFrame{
      */
     private void createPanelAssignment(Assignment a, int i){
         infoPanel[i] = new JPanel();
+        panelLabel = new JPanel();
+
+        panelButtons = new JPanel();
+        panelButtons.setLayout(new GridLayout(1,1));
+        panelButtons.setBorder(BorderFactory.createEmptyBorder(10,0,15, 10));
 
         infoPanel[i].setLayout(new BorderLayout());
         //infoPanel[i].setMinimumSize(new Dimension(450, 100));
@@ -293,12 +311,13 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].setMaximumSize(new Dimension(450,100));
 
         labelState[i] = createLabelState(a);
-        labelState[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        infoPanel[i].add(labelState[i], BorderLayout.WEST);
+        //labelState[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-
-        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
-        infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
+        panelLabel.add(labelState[i], BorderLayout.WEST);
+        panelLabel.add(labelDescription[i], BorderLayout.CENTER);
+        panelButtons.add(buttonAction[i]);
+        infoPanel[i].add(panelLabel, BorderLayout.WEST);
+        infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
         infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
@@ -312,14 +331,21 @@ public class GUIListAssignments extends JFrame{
      */
     private void createPanelReview (int i){
         infoPanel[i] = new JPanel();
+        panelLabel = new JPanel();
+
+        panelButtons = new JPanel();
+        panelButtons.setLayout(new GridLayout(1,1));
+        panelButtons.setBorder(BorderFactory.createEmptyBorder(30,0,20, 10));
 
         infoPanel[i].setLayout(new BorderLayout());
-        infoPanel[i].setMaximumSize(new Dimension(450,100));
+        //infoPanel[i].setMaximumSize(new Dimension(450,100));
         labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
 
-        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
+        panelLabel.add(labelDescription[i], BorderLayout.CENTER);
+        panelButtons.add(buttonAction[i]);
+        infoPanel[i].add(panelLabel, BorderLayout.WEST);
+        infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
-        infoPanel[i].add(buttonAction[i], BorderLayout.EAST);
         infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         contentPanel.add(infoPanel[i]);
