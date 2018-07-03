@@ -56,8 +56,7 @@ public class GUIDailyAssignments extends JFrame {
 
     private void initComponents(CalendarState cs) {
 
-        //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));  serve per creare il layout di GIO ,ma non fuonziona per il DELETE
-
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setLayout(new GridLayout(9, 1, 20, 20));
 
         if (cs.equals(CalendarState.REMOVING)) {
@@ -99,8 +98,8 @@ public class GUIDailyAssignments extends JFrame {
 
             if (todayAssigment.isEmpty()){
 
-                lb = new JLabel(" There aren't assignments today to be cancel ");
-                add(lb, BorderLayout.NORTH, SwingConstants.CENTER);
+                lb = new JLabel(" There aren't assignments today to be cancel ", SwingConstants.CENTER);
+                add(lb, BorderLayout.NORTH);
 
             }
 
@@ -122,8 +121,13 @@ public class GUIDailyAssignments extends JFrame {
                     button[j].addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
-                            dispose();
+
+                            int action = JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
+                            if (action == JOptionPane.YES_OPTION) {
+                                proxy.removeAssignment(listAssigment.get(i).getCode()); //TODO da testare
+                                dispose();
+                            }
+
                         }
                     });
 
@@ -184,6 +188,7 @@ public class GUIDailyAssignments extends JFrame {
 
                 //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
                 //lb.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
+
                 lb = new JLabel(" There aren't assignments today ",SwingConstants.CENTER);
 
                 p.add(lb);
@@ -217,13 +222,14 @@ public class GUIDailyAssignments extends JFrame {
 
                     button[j].addActionListener(showInfo);
 
-                    //createPanelOrder(j);
+                    createPanelOrder(j);
 
-                    infoPanel[j] = new JPanel();
+                   /* infoPanel[j] = new JPanel();
                     infoPanel[j].add(labelDescription[j]);
                     infoPanel[j].add(button[j]);
                     add(infoPanel[j]);
-                    p.add(infoPanel[j]);
+                    p.add(infoPanel[j]);*/
+
                     j++;
 
 
@@ -236,7 +242,7 @@ public class GUIDailyAssignments extends JFrame {
         }
     }
 
-   /*
+
 
        private void createPanelOrder(int i) {
 
@@ -250,13 +256,14 @@ public class GUIDailyAssignments extends JFrame {
 
        infoPanel[i].add(labelDescription[i], BorderLayout.CENTER);
        infoPanel[i].add(button[i], BorderLayout.EAST);
-       infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+       infoPanel[i].setBorder(BorderFactory.createEmptyBorder(15,10,5,15)); //5,5,5,5
 
        p.add(infoPanel[i]);
 
     }
-*/
+
 
 }
 
-// da migliorare la parte del delete
+// 1. manca da migliorare il layout del Delete assignment se c'e un appuntamento che non funziona con il box layout
+// 2. Il metodo che cancella realmente l'appuntamento dal db - DEVE ESSERE CONTROLATO

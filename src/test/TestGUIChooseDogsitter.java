@@ -1,6 +1,6 @@
 package test;
 
-import customerClient.gui.GUIChooseDogsitter;
+import client.gui.GUIChooseDogsitter;
 
 import java.util.HashSet;
 
