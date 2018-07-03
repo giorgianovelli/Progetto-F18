@@ -162,7 +162,7 @@ CREATE TABLE REVIEW
 					(ASSIGNMENT_CODE INT PRIMARY KEY,
 					DATE DATETIME,
                     RATING INT,
-					TITLE CHAR(254),
+					TITLE CHAR(150),
                     DESCRIPTION TEXT,
                     REPLY TEXT,
                     
