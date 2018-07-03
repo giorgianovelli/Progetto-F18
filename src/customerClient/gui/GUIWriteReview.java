@@ -22,7 +22,7 @@ public class GUIWriteReview extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 580;
 
-    final int MAX_CHAR = 254;
+    final int MAX_CHAR = 150;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     //TODO limitare il numero di righe o caratteri!! ok
@@ -73,7 +73,7 @@ public class GUIWriteReview extends JFrame {
         proxy = new CustomerProxy(this.email);
         doc = new DefaultStyledDocument();
 
-        /*doc.setDocumentFilter(new DocumentSizeFilter(MAX_CHAR));
+        doc.setDocumentFilter(new DocumentSizeFilter(MAX_CHAR));
         doc.addDocumentListener(new DocumentListener(){
             @Override
             public void changedUpdate(DocumentEvent e) {
@@ -87,7 +87,7 @@ public class GUIWriteReview extends JFrame {
             public void removeUpdate(DocumentEvent e) {
                 updateCount();
             }
-        });*/
+        });
 
         initComponent();
     }
@@ -114,16 +114,16 @@ public class GUIWriteReview extends JFrame {
         labelDescription = new JLabel("<html><br/><br/><br/><br/><br/>Comment: </html>");
 
         titleField = new JTextArea(2,1);
-        //titleField.setDocument(doc);
+        titleField.setDocument(doc);
 
-        /* secondo metodo, da provare
+        /* //secondo metodo, da provare
         KeyEvent e = new KeyEvent(titleField, );
         keyTyped(KeyEvent.KEY_TYPED , MAX_CHAR, titleField);
         */
 
-        /*if(updateCount() > MAX_CHAR){
+        if(updateCount() > MAX_CHAR){
             Toolkit.getDefaultToolkit().beep();
-        }*/
+        }
 
         descriptionField = new JTextArea( 7,1);
         sendButton = new JButton("Send");
@@ -231,11 +231,12 @@ public class GUIWriteReview extends JFrame {
 
     }
 
-   /* private int updateCount()
+   private int updateCount()
     {
         return MAX_CHAR - doc.getLength();
     }
 
+    /*
     private void keyTyped(KeyEvent e, int maxChar, JTextArea text) {
 
         if(text.getText().length() > maxChar+1) {
@@ -245,11 +246,11 @@ public class GUIWriteReview extends JFrame {
         }else if(text.getText().length() > maxChar) {
             e.consume();
         }
-    }*/
-
+    }
+    */
 }
 
-/*
+
 class DocumentSizeFilter extends DocumentFilter {
     int maxCharacters;
 
@@ -260,10 +261,10 @@ class DocumentSizeFilter extends DocumentFilter {
     }
 
     public void insertString(FilterBypass fb, int offs, String str, AttributeSet a) throws BadLocationException {
-       */
-/* if (DEBUG) {
+
+        /* if (DEBUG) {
             System.out.println("in DocumentSizeFilter's insertString method");
-        }*//*
+        }*/
 
 
         //This rejects the entire insertion if it would make the contents too long.
@@ -274,10 +275,10 @@ class DocumentSizeFilter extends DocumentFilter {
     }
 
    public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a) throws BadLocationException {
-       */
-/*if (DEBUG) {
+
+        /*if (DEBUG) {
            System.out.println("in DocumentSizeFilter's replace method");
-       }*//*
+       }*/
 
 
         //This rejects the entire replacement if it would make the contents too long.
@@ -287,4 +288,4 @@ class DocumentSizeFilter extends DocumentFilter {
             Toolkit.getDefaultToolkit().beep();
     }
 
-}*/
+}
