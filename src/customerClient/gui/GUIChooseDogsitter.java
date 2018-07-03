@@ -41,9 +41,20 @@ public class GUIChooseDogsitter extends JFrame {
     private String emailCustomer;
 
 
-//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 
     // Costruttore
+
+    /**
+     *
+     * @param dogsitterList
+     * @param dateStartAssignment
+     * @param dateEndAssignment
+     * @param selectedDogs
+     * @param meetingPoint
+     * @param paymentInCash
+     * @param emailCustomer
+     */
 
     public GUIChooseDogsitter(HashSet<String> dogsitterList, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash, String emailCustomer) {
         setTitle("Choose the dogsitter");       // TODO Da cambiare??
@@ -65,7 +76,10 @@ public class GUIChooseDogsitter extends JFrame {
         initComponents();
     }
 
-//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+    /**
+     *
+     */
 
     public void initComponents() {
         panelOut.setLayout(new BorderLayout());
