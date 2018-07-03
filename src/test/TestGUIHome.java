@@ -1,6 +1,6 @@
 package test;
 
-import customerClient.gui.GUIHome;
+import client.gui.GUIHome;
 
 import java.text.ParseException;
 

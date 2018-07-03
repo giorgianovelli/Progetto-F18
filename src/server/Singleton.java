@@ -19,6 +19,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Singleton {
+
+    /**javadoc
+     *
+     * @param customerEmail
+     * @return the object of type Customer related to customerEmail.
+     */
     public Customer createCustomerFromDB(String customerEmail){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -44,6 +50,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param dogSitterEmail
+     * @return the object of type DogSitter related to dogSitterEmail.
+     */
     public DogSitter createDogSitterFromDB(String dogSitterEmail){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -134,6 +145,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param dogID
+     * @return the object of type Dog related to dogID.
+     */
     public Dog createDogFromDB(int dogID){
         DBConnector dbConnector = new DBConnector();
         Dog dog = null;
@@ -159,6 +175,11 @@ public class Singleton {
         return dog;
     }
 
+    /**javadoc
+     *
+     * @param dogSitter
+     * @return the HashMap of Assignment related to dogSitter. The key indicates the assignment's code.
+     */
     public HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(String dogSitter){
         HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
@@ -190,6 +211,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param customer
+     * @return the HashMap of Assignment related to customer. The key indicates the assignment's code.
+     */
     public HashMap<Integer, Assignment> getCustomerListAssignmentFromDB(String customer){
         HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
@@ -220,6 +246,11 @@ public class Singleton {
         return listAssignment;
     }
 
+    /**javadoc
+     *
+     * @param code
+     * @return the object of type Address related to code.
+     */
     public Address getMeetingPointFromDB(int code){
         DBConnector dbConnector = new DBConnector();
         Address address = null;
@@ -239,6 +270,11 @@ public class Singleton {
         return address;
     }
 
+    /**javadoc
+     *
+     * @param code
+     * @return the HashSet of Dog related to the Assignment indicated with code.
+     */
     public HashSet<Dog> getDogListFromDB(int code){
         HashSet<Dog> dogList= new HashSet<Dog>();
         DBConnector dbConnector = new DBConnector();
@@ -256,6 +292,11 @@ public class Singleton {
         return dogList;
     }
 
+    /**javadoc
+     *
+     * @param email
+     * @return the object Address related to email.
+     */
     public Address getAddressFromDB(String email){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
@@ -276,6 +317,11 @@ public class Singleton {
         }
     }
 
+    /**
+     *
+     * @param payment
+     * @return the object PaymentMethod related to the card's number 'payment'.
+     */
     public PaymentMethod getPaymentMethodFromDB(String payment){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
@@ -296,6 +342,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param customer
+     * @return the HashMap of Review related to customer. The key indicates the code of Assignment associated to Review.
+     */
     public HashMap<Integer, Review> getCustomerReviewList(Customer customer){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
@@ -321,6 +372,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param dogSitter
+     * @return the HashMap //TODO
+     */
     public HashMap<Integer, Review> getDogSitterReviewList(DogSitter dogSitter){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
@@ -346,6 +402,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param code
+     * @return the object of type Review related to code.
+     */
     public Review getReview(int code){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
@@ -369,6 +430,11 @@ public class Singleton {
         }
     }
 
+    /**javadoc
+     *
+     * @param dateOfBirth
+     * @return the age (int) of the dog
+     */
     public int getAge(Date dateOfBirth){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
         String strBirth = dateFormat.format(dateOfBirth);

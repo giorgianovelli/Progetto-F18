@@ -1,6 +1,6 @@
-package customerClient;
+package client;
 
-import customerClient.gui.GUILogin;
+import client.gui.GUILogin;
 
 public class CaniBau {
     public static void main(String[] args) {

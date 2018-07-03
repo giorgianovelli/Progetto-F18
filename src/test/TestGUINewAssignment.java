@@ -1,7 +1,6 @@
 package test;
-import customerClient.CustomerProxy;
-import customerClient.gui.GUINewAssignment;
-import customerClient.gui.GUISettings;
+import client.gui.GUINewAssignment;
+import client.gui.GUISettings;
 
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package customerClient.gui;
+package client.gui;
 
 import customerClient.CustomerProxy;
 //import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato

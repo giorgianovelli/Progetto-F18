@@ -1,4 +1,4 @@
-package customerClient.gui;
+package client.gui;
 
 import customerClient.CustomerProxy;
 import database.DBConnector;

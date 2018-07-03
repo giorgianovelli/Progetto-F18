@@ -1,6 +1,6 @@
 package test;
 
-import customerClient.gui.GUIInfo;
+import client.gui.GUIInfo;
 
 public class TesterCamilla {
 
