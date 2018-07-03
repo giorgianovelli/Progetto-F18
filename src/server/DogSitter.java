@@ -48,7 +48,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     public HashMap<Integer, Assignment> getAssignmentList(){
         Singleton singleton = new Singleton();
-        return singleton.getCustomerListAssignmentFromDB(email);
+        return singleton.getDogSitterListAssignmentFromDB(email);
     }
 
     public HashMap<Integer, Review> getReviewList(){

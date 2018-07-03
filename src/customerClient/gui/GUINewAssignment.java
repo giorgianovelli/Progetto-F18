@@ -19,7 +19,7 @@ import java.util.HashSet;
 
 public class GUINewAssignment extends JFrame{
 
-    //TODO sistemare divisione metodi; controllo su validità indirizzo;
+    //TODO javadoc; controllo su validità indirizzo;
 
     final int WIDTH = 800;
     final int HEIGHT = 600;
@@ -104,8 +104,6 @@ public class GUINewAssignment extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //TODO controllo sulla validità della data scelta
-
                 String fromDay = String.valueOf(newAssignmentBox.getFromDayLabel().getText());
                 String fromMonth = String.valueOf(newAssignmentBox.getFromMonthLabel().getText());
                 String fromYear = String.valueOf(newAssignmentBox.getFromYearLabel().getText());
@@ -116,8 +114,9 @@ public class GUINewAssignment extends JFrame{
                 String year = String.valueOf(newAssignmentBox.getTyearList().getSelectedItem());
                 String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
                 String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
+                System.out.println(toHour);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 Date dateStart = new Date();
                 Date dateEnd = new Date();
                 try {
@@ -143,92 +142,96 @@ public class GUINewAssignment extends JFrame{
                     }
                 }
 
-                // TEST
-                for (Dog dog: dogsSelected) {
-                    System.out.println("TEST: " + dog.getName());
-                }
-
                 if (radioButtonCash.isSelected()) {
                     paymentMethod = true;
                 } else if (radioButtonCreditCard.isSelected()) {
                     paymentMethod = false;
                 }
 
-                dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
-
-
-                //TODO Controllo su validità nazione e città
 
 
                 if (dateStart.after(dateEnd)) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong1!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
+                    System.out.println(dateStart);
+                    System.out.println(dateEnd);
+
+                } else if (dogsSelected.size() == 0) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No dogs selected!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                } else if (!radioButtonCash.isSelected() && !radioButtonCreditCard.isSelected()) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No payment method selected!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+
 
                 } else switch (month){
 
-                    case("02"): {
-                        if (Integer.parseInt(year) % 4 != 0) {
-                            if (day.equals("29") || day.equals("30") || day.equals("31")) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                        case("02"): {
+                            if (Integer.parseInt(year) % 4 != 0) {
+                                if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong2!", "Assignment error",
+                                            JOptionPane.ERROR_MESSAGE);
+                                    break;
+                                }
+                            }
+
+                            if(Integer.parseInt(year) % 4 == 0) {
+                                if (day.equals("30") || day.equals("31")) {
+                                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                            JOptionPane.ERROR_MESSAGE);
+                                    break;
+                                }
+                            }
+                        }
+
+                        case ("04"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong3!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
                         }
 
-                        if(Integer.parseInt(year) % 4 == 0) {
-                            if (day.equals("30") || day.equals("31")) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                        case ("06"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong4!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
                         }
-                    }
 
-                    case ("04"): {
-                        if (day.equals("31")) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            break;
+                        case ("09"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong5!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
                         }
-                    }
 
-                    case ("06"): {
-                        if (day.equals("31")) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            break;
+                        case ("11"): {
+                            if (day.equals("31")) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong6!", "Assignment error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
                         }
-                    }
 
-                    case ("09"): {
-                        if (day.equals("31")) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            break;
-                        }
-                    }
-
-                    case ("11"): {
-                        if (day.equals("31")) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            break;
-                        }
-                    }
-
-                    default: {
-                        if (dogsittersMailList.isEmpty()) {
+                        default: {
+                            dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
+                            if (dogsittersMailList.isEmpty()) {
                                 JOptionPane.showMessageDialog(new JFrame(), "Sorry, we couldn't find any dogsitter!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
-                        } else {
-                            guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
-                            guiChooseDogsitter.setVisible(true);
+                            } else {
+
+                                guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
+                                guiChooseDogsitter.setVisible(true);
 
 
+                            }
                         }
                     }
                 }
-            }
         };
 
         ActionListener actionListener1 = new ActionListener() {
