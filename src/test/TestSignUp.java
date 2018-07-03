@@ -1,5 +1,6 @@
 package test;
 
+import customerClient.CustomerProxy;
 import server.Availability;
 import server.DogSitter;
 import server.DogSize;
@@ -18,12 +19,12 @@ import java.util.HashSet;
 
 public class TestSignUp {
     public static void main(String[] args) {
-        SignUp signUp = new SignUp();
+        //SignUp signUp = new SignUp();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date birth = new Date();
         Date expiration = new Date();
         Address address = new Address("ITALY", "PIEVE PORTO MORONE", "VIA DEL CHI SA DOVE", "5", "27017");
-        Area area = new Area();
+        /*Area area = new Area();
         area.addPlace("PAVIA");
         area.addPlace("CORTEOLONA");
         area.addPlace("PIEVE PORTO MORONE");
@@ -52,7 +53,7 @@ public class TestSignUp {
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime1), Time.valueOf(strTime8)), WeekDays.THU);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime6)), WeekDays.FRI);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime4)), WeekDays.SAT);
-        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);
+        availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);*/
 
         try {
             birth = dateFormat.parse("23/06/1996");
@@ -61,8 +62,9 @@ public class TestSignUp {
             e.printStackTrace();
         }
         PaymentMethod paymentMethod = new PaymentMethod("1234567890987654", "NICOLAS", "CAROLO", expiration, 000, 1000);
-        PaymentMethod paymentMethod2 = new PaymentMethod("0987653267490924", "NICOLAS", "CAROLO", expiration, 111, 2000);
-        //signUp.customerSignUp("NICOLAS.CAROLO@EMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod);
-        signUp.dogSitterSignUp("NICOLAS.DOGSITTER@EMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod2, area, dogSizes, 2, "Mi presento...", availability, false);
+        //PaymentMethod paymentMethod2 = new PaymentMethod("0987653267490924", "NICOLAS", "CAROLO", expiration, 111, 2000);
+        CustomerProxy proxy = new CustomerProxy();
+        proxy.customerSignUp("NICOLAS.CAROLO@EMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod);
+        //signUp.dogSitterSignUp("NICOLAS.DOGSITTER@EMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod2, area, dogSizes, 2, "Mi presento...", availability, false);
     }
 }

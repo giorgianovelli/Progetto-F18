@@ -620,6 +620,53 @@ public enum ExecCustomerEnum {
             return msg;
         }
 
+    },
+
+    SIGNUP{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String name = tokenMsg.nextToken();
+            String surname = tokenMsg.nextToken();
+            String password = tokenMsg.nextToken();
+            String phoneNumber = tokenMsg.nextToken();
+            String strBirth = tokenMsg.nextToken();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateOfBirth = new Date();
+            try {
+                dateOfBirth = dateFormat.parse(strBirth);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String country = tokenMsg.nextToken();
+            String city = tokenMsg.nextToken();
+            String street = tokenMsg.nextToken();
+            String number = tokenMsg.nextToken();
+            String cap = tokenMsg.nextToken();
+            Address address = new Address(country, city, street, number, cap);
+            String cardNumber = tokenMsg.nextToken();
+            String cardName = tokenMsg.nextToken();
+            String cardSurname = tokenMsg.nextToken();
+            String strExpiration = tokenMsg.nextToken();
+            Date expirationDate = new Date();
+            try {
+                expirationDate = dateFormat.parse(strExpiration);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            int cvv = Integer.parseInt(tokenMsg.nextToken());
+            double amount = Double.parseDouble(tokenMsg.nextToken());
+            PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardName, cardSurname, expirationDate, cvv, amount);
+
+            SignUp signUp = new SignUp();
+            if (signUp.customerSignUp(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

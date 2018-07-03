@@ -399,10 +399,11 @@ public class CustomerProxy implements InterfaceCustomer {
     public boolean customerSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strBirth = dateFormat.format(dateOfBirth);
+        String strExpiration = dateFormat.format(paymentMethod.getExpirationDate());
         String clientMsg = "CUSTOMER#SIGNUP#" + email + "#" + name + "#" + surname + "#" + password + "#" + phoneNumber
                 + "#" + strBirth + "#" + address.getCountry() + "#" + address.getCity() + "#" + address.getStreet() + "#" + address.getNumber()
                 + "#" + address.getCap() + "#" + paymentMethod.getNumber() + "#" + paymentMethod.getName() + "#" + paymentMethod.getSurname()
-                + "#" + paymentMethod.getExpirationDate() + "#" + paymentMethod.getCvv() + "#" + paymentMethod.getAmount();
+                + "#" + strExpiration + "#" + paymentMethod.getCvv() + "#" + paymentMethod.getAmount();
         String serverMsg = getReply(clientMsg);
         if (serverMsg.equals("true")){
             return true;
