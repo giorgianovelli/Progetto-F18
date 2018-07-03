@@ -147,7 +147,7 @@ public class GUINewAssignment extends JFrame{
                 } else if (radioButtonCreditCard.isSelected()) {
                     paymentMethod = false;
                 }
-                
+
 
 
                 if (dateStart.after(dateEnd)) {
