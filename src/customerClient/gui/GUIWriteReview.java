@@ -3,7 +3,6 @@ package customerClient.gui;
 import customerClient.CustomerProxy;
 //import org.omg.CORBA.CustomMarshal;
 import server.Assignment;
-import server.Review;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -15,14 +14,15 @@ import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.Date;
 
 public class GUIWriteReview extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 580;
 
-    final int MAX_CHAR = 150;
+    final int MAX_CHAR_TITLE = 150;
+    final int MAX_CHAR_COMMENT = 65535;
+
 
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
     //TODO limitare il numero di righe o caratteri!! ok
@@ -57,7 +57,8 @@ public class GUIWriteReview extends JFrame {
     private String email;
     private CustomerProxy proxy;
 
-    private DefaultStyledDocument doc;
+    private DefaultStyledDocument docTitle;
+    private DefaultStyledDocument docComment;
 
 
     /**
@@ -71,25 +72,43 @@ public class GUIWriteReview extends JFrame {
         assignmentToReview = a;
         this.email = email;
         proxy = new CustomerProxy(this.email);
-        doc = new DefaultStyledDocument();
+        docTitle = new DefaultStyledDocument();
+        docComment = new DefaultStyledDocument();
 
-        doc.setDocumentFilter(new DocumentSizeFilter(MAX_CHAR));
-        doc.addDocumentListener(new DocumentListener(){
+        docTitle.setDocumentFilter(new DocumentSizeFilter(MAX_CHAR_TITLE));
+        docTitle.addDocumentListener(new DocumentListener(){
             @Override
             public void changedUpdate(DocumentEvent e) {
-                updateCount();
+                updateCountTitle();
             }
             @Override
             public void insertUpdate(DocumentEvent e) {
-                updateCount();
+                updateCountTitle();
             }
             @Override
             public void removeUpdate(DocumentEvent e) {
-                updateCount();
+                updateCountTitle();
             }
         });
 
-        initComponent();
+        docComment.setDocumentFilter(new DocumentSizeFilter(MAX_CHAR_COMMENT));
+        docComment.addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateCountComment();
+            }
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateCountComment();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateCountComment();
+            }
+
+        });
+
+                initComponent();
     }
 
     private void initComponent(){
@@ -114,18 +133,27 @@ public class GUIWriteReview extends JFrame {
         labelDescription = new JLabel("<html><br/><br/><br/><br/><br/>Comment: </html>");
 
         titleField = new JTextArea(2,1);
-        titleField.setDocument(doc);
+        titleField.setDocument(docTitle);
+
 
         /* //secondo metodo, da provare
         KeyEvent e = new KeyEvent(titleField, );
         keyTyped(KeyEvent.KEY_TYPED , MAX_CHAR, titleField);
         */
 
-        if(updateCount() > MAX_CHAR){
+        if(updateCountTitle() > MAX_CHAR_TITLE){
             Toolkit.getDefaultToolkit().beep();
         }
 
+
+
         descriptionField = new JTextArea( 7,1);
+        descriptionField.setDocument(docComment);
+
+        if(updateCountComment()> MAX_CHAR_COMMENT){
+            Toolkit.getDefaultToolkit().beep();
+        }
+
         sendButton = new JButton("Send");
         cancelButton = new JButton("Cancel");
 
@@ -231,9 +259,13 @@ public class GUIWriteReview extends JFrame {
 
     }
 
-   private int updateCount()
+   private int updateCountTitle()
     {
-        return MAX_CHAR - doc.getLength();
+        return MAX_CHAR_TITLE - docTitle.getLength();
+    }
+
+    private int updateCountComment(){
+        return MAX_CHAR_COMMENT - docComment.getLength();
     }
 
     /*
