@@ -57,8 +57,16 @@ public class GUIConfirmAssignment extends JFrame {
     private boolean paymentMethod;
 
 
-
-
+    /**
+     *
+     * @param mailDogsitter
+     * @param dateStartAssignment
+     * @param dateEndAssignment
+     * @param dogsSelected
+     * @param meetingPoint
+     * @param emailCustomer
+     * @param paymentMethod
+     */
 
     public GUIConfirmAssignment(String mailDogsitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> dogsSelected, Address meetingPoint, String emailCustomer, boolean paymentMethod) {
         setTitle("Assignment summary");
@@ -79,6 +87,10 @@ public class GUIConfirmAssignment extends JFrame {
 
         initComponents();
     }
+
+    /**
+     *
+     */
 
     private void initComponents() {
 
@@ -176,6 +188,11 @@ public class GUIConfirmAssignment extends JFrame {
 
     }
 
+    /**
+     *
+     * @return
+     */
+
     public String printMeetingPoint() {
         String toReturn = "";
         for (String token: meetingPoint.toString().split(";")) {
@@ -186,6 +203,11 @@ public class GUIConfirmAssignment extends JFrame {
         return toReturn;
     }
 
+    /**
+     *
+     * @return
+     */
+
     public String printDogNames(){
         String toReturn = "";
         for (Dog d : dogsSelected) {
@@ -193,6 +215,11 @@ public class GUIConfirmAssignment extends JFrame {
         }
         return toReturn;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public JFrame getSuccess() {
         return success;
