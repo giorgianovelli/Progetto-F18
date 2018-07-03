@@ -208,7 +208,7 @@ public class CustomerProxy implements InterfaceCustomer {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int cvv = Integer.parseInt(tokenMsg.nextToken());
+        String cvv = tokenMsg.nextToken();
         double amount = Double.parseDouble(tokenMsg.nextToken());
         return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
@@ -269,7 +269,7 @@ public class CustomerProxy implements InterfaceCustomer {
         }
     }
 
-    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv){
+    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strExpiration = dateFormat.format(expirationDate);
         String serverMsg = getReply("CUSTOMER#UPDATEPAYMENTMETHOD#" + email + "#" + number + "#" + name + "#" + surname + "#" + strExpiration + "#" + cvv);

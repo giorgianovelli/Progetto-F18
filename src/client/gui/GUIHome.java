@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.StringTokenizer;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
-public class GUICustomer extends JFrame{
+public class GUIHome extends JFrame{
     final int WIDTH = 1024;
     final int HEIGHT = 600;
     final int NDAYMONTH = 31;
@@ -26,55 +26,50 @@ public class GUICustomer extends JFrame{
     final int MAXVISIBLETODAYASSIGNMENT = 5;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuItemExit = new JMenuItem("Quit");
-    private JMenuItem menuItemLogout = new JMenuItem("Logout");
-    private JMenu menuAssignment = new JMenu("Assignment");
-    private JMenuItem menuItemAddAssignment = new JMenuItem("New assignment");
-    private JMenuItem menuItemRemoveAssignment = new JMenuItem("Delete assignment");
-    private JMenuItem menuItemShowAssignments = new JMenuItem("Show all assignments");
-    private JMenu menuReview = new JMenu("Review");
-    private JMenuItem menuItemAddReview = new JMenuItem("Write a review");
-    private JMenuItem menuItemRemoveReview = new JMenuItem("Delete review");
-    private JMenuItem menuItemShowReviews = new JMenuItem("Show all reviews");
-    private JMenu menuSettings = new JMenu("Settings");
-    private JMenuItem menuItemAccount = new JMenuItem("Account");
-    private JMenuItem menuItemChangePassword = new JMenuItem("Change Password");
-    private JMenuItem menuItemDogs = new JMenuItem("Dogs");
-    private JMenu menuExtra = new JMenu("?");
-    private JMenuItem menuItemInfo = new JMenuItem("Info");
-    private JMenuItem menuItemAwards = new JMenuItem("Credits");
-    private JMenuItem menuItemCancel = new JMenuItem("Cancel");
+    protected JMenuBar menuBar = new JMenuBar();
+    protected JMenu menuFile = new JMenu("Canibau");
+    protected JMenuItem menuItemExit = new JMenuItem("Quit");
+    protected JMenuItem menuItemLogout = new JMenuItem("Logout");
+    protected JMenu menuAssignment = new JMenu("Assignment");
+    protected JMenuItem menuItemShowAssignments = new JMenuItem("Show all assignments");
+    protected JMenu menuReview = new JMenu("Review");
+    protected JMenuItem menuItemShowReviews = new JMenuItem("Show all reviews");
+    protected JMenu menuSettings = new JMenu("Settings");
+    protected JMenuItem menuItemAccount = new JMenuItem("Account");
+    protected JMenuItem menuItemChangePassword = new JMenuItem("Change Password");
+    protected JMenu menuExtra = new JMenu("?");
+    protected JMenuItem menuItemInfo = new JMenuItem("Info");
+    protected JMenuItem menuItemAwards = new JMenuItem("Credits");
+    protected JMenuItem menuItemCancel = new JMenuItem("Cancel");
 
-    private JPanel panelToday = new JPanel();
-    private JLabel labelTodayAssignments = new JLabel("Today's assignments");
-    private JButton buttonTodayAssignment[];
-    private JButton buttonShowMoreTodayAssignments = new JButton("Show more");
-    private JLabel labelEmptyTodayAssignments[];
-    private int nTodayAssignments = 0;
+    protected JPanel panelToday = new JPanel();
+    protected JLabel labelTodayAssignments = new JLabel("Today's assignments");
+    protected JButton buttonTodayAssignment[];
+    protected JButton buttonShowMoreTodayAssignments = new JButton("Show more");
+    protected JLabel labelEmptyTodayAssignments[];
+    protected int nTodayAssignments = 0;
 
-    private JPanel calendar = new JPanel();
-    private JPanel panelDateCalendar = new JPanel();
-    private JPanel panelGridCalendar = new JPanel();
-    private JLabel labelDay[];
-    private JButton buttonDay[];
-    private JLabel labelEmpty[];
-    private JButton buttonPreviousYear = new JButton("<<");
-    private JButton buttonPreviousMonth = new JButton("<");
-    private JButton buttonNextYear = new JButton(">>");
-    private JButton buttonNextMonth = new JButton(">");
-    private JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
-    private CalendarState calendarState = CalendarState.NORMAL;
-    public static GUINewAssignment guiNewAssignment;
+    protected JPanel calendar = new JPanel();
+    protected JPanel panelDateCalendar = new JPanel();
+    protected JPanel panelGridCalendar = new JPanel();
+    protected JLabel labelDay[];
+    protected JButton buttonDay[];
+    protected JLabel labelEmpty[];
+    protected JButton buttonPreviousYear = new JButton("<<");
+    protected JButton buttonPreviousMonth = new JButton("<");
+    protected JButton buttonNextYear = new JButton(">>");
+    protected JButton buttonNextMonth = new JButton(">");
+    protected JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
+    protected CalendarState calendarState = CalendarState.NORMAL;
+    //public static GUINewAssignment guiNewAssignment;
 
     private CustomerProxy proxy;
     private String email;
     private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
 
 
-    public GUICustomer(String email) throws ParseException {
-        setTitle("CaniBau (Customer)");
+    public GUIHome(String email) throws ParseException {
+        setTitle("CaniBau");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -83,327 +78,9 @@ public class GUICustomer extends JFrame{
 
         this.email = email;
         this.proxy = new CustomerProxy(email);
-
-        initComponents();
     }
 
-    private void initComponents() throws ParseException {
-        //Crea il menù
-        menuBar.add(menuFile);
-        menuFile.add(menuItemLogout);
-        menuFile.add(menuItemExit);
-        menuAssignment.add(menuItemAddAssignment);
-        menuAssignment.add(menuItemRemoveAssignment);
-        menuAssignment.add(menuItemShowAssignments);
-        menuBar.add(menuAssignment);
-        menuReview.add(menuItemAddReview);
-        menuReview.add(menuItemRemoveReview);
-        menuReview.add(menuItemShowReviews);
-        menuBar.add(menuReview);
-        menuSettings.add(menuItemAccount);
-        menuSettings.add(menuItemChangePassword);
-        menuSettings.add(menuItemDogs);
-        menuBar.add(menuSettings);
-        menuExtra.add(menuItemInfo);
-        menuExtra.add(menuItemAwards);
-        menuBar.add(menuItemCancel);
-        menuItemCancel.setVisible(false);
-        menuBar.add(menuExtra);
-        add(menuBar, BorderLayout.NORTH);
-
-        panelToday.setLayout(new GridLayout(7, 1, 5, 5));
-        panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        labelTodayAssignments.setForeground(new Color(0,0, 255));
-        labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
-        panelToday.add(labelTodayAssignments);
-        int i;
-        int nShownTodayAssignments = 0;
-
-        //restituisce il numero di appuntamenti del giorno
-        nTodayAssignments = getNDailyAssignments();
-
-        //redundant code?
-        if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
-            buttonTodayAssignment = new JButton[nTodayAssignments];
-            for (i = 0; i < nTodayAssignments; i++){
-                buttonTodayAssignment[i] = new JButton("Test assignment");
-                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-                buttonTodayAssignment[i].setOpaque(true);
-                buttonTodayAssignment[i].setBorderPainted(false);
-                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-                panelToday.add(buttonTodayAssignment[i]);
-            }
-        } else {
-            buttonTodayAssignment = new JButton[MAXVISIBLETODAYASSIGNMENT];
-            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT; i++){
-                buttonTodayAssignment[i] = new JButton("Test assignment");
-                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-                buttonTodayAssignment[i].setOpaque(true);
-                buttonTodayAssignment[i].setBorderPainted(false);
-                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-                panelToday.add(buttonTodayAssignment[i]);
-            }
-        }
-
-        if ((nTodayAssignments > 0) && (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT)){
-            labelEmptyTodayAssignments = new JLabel[MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1];
-            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1; i++){
-                labelEmptyTodayAssignments[i] = new JLabel();
-                panelToday.add(labelEmptyTodayAssignments[i]);
-                nShownTodayAssignments = nTodayAssignments;
-            }
-        } else if (nTodayAssignments > MAXVISIBLETODAYASSIGNMENT){
-            panelToday.add(buttonShowMoreTodayAssignments);
-            nShownTodayAssignments = MAXVISIBLETODAYASSIGNMENT;
-        } else {
-            labelEmptyTodayAssignments = new JLabel[1];
-            labelEmptyTodayAssignments[0] = new JLabel("No assignment to show", SwingConstants.CENTER);
-            panelToday.add(labelEmptyTodayAssignments[0]);
-            nShownTodayAssignments = 0;
-        }
-
-        //carica i primi 5 appuntamenti del giorno
-        loadTheFirstFiveAssignments(nShownTodayAssignments);
-
-
-        add(panelToday, BorderLayout.EAST);
-
-        ActionListener cal = new ActionListener() {
-            ;
-
-            @Override
-            public void actionPerformed(ActionEvent cae) {
-                JButton pressedButton = (JButton) cae.getSource();
-                String strTodayDate;
-                if (Integer.parseInt(pressedButton.getText()) < 10){
-                    strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                } else {
-                    strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                }
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date todayDate = new Date();
-                try {
-                    todayDate = dateFormat.parse(strTodayDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
-                    guiDailyAssignments.setVisible(true);
-                }
-
-                if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
-                    //JButton pressedButton = (JButton) cae.getSource();
-                    guiNewAssignment = new GUINewAssignment(todayDate, email);
-                    guiNewAssignment.setVisible(true);
-                }
-
-            }
-        };
-
-        ActionListener ctrlCal = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ctrlAe) {
-                if (ctrlAe.getActionCommand().equals("<")){
-                    try {
-                        goBackMonthCalendar();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals(">")){
-                    try {
-                        goForwardMonthCalendar();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals("<<")){
-                    try {
-                        goBackYearCalendar();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals(">>")){
-                    try {
-                        goForwardYearCalendar();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals("Show more")){
-                    JButton pressedButton = (JButton) ctrlAe.getSource();
-
-                   String strTodayDate;
-                    if (Integer.parseInt(pressedButton.getText()) < 10){
-                        strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                    } else {
-                        strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                    }
-
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    Date todayDate = null;
-                    try {
-                        todayDate = dateFormat.parse(strTodayDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
-
-                    guiDailyAssignments.setVisible(true);
-                }
-            }
-        };
-
-        ActionListener menuAl = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent menuAe) {
-                if (menuAe.getActionCommand().equals("Quit")){
-                    System.exit(0);
-                }
-
-                if (menuAe.getActionCommand().equals("Logout")){
-                    GUILogin guiLogin = new GUILogin();
-                    guiLogin.setVisible(true);
-                    setVisible(false);
-                }
-
-                if (menuAe.getActionCommand().equals("Show all assignments")){
-                    openListAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Write a review")){
-                    calendarState = CalendarState.REVIEWING;
-                    openListAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Delete review")){
-                    calendarState = CalendarState.DELETING_REVIEW;
-                    openListAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Show all reviews")){
-                    calendarState = CalendarState.SHOW_REVIEWS;
-                    openListAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("New assignment")){
-                    try {
-                        enableDisableDateButtonAssignment();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    newAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Delete assignment")){
-                    try {
-                        enableDisableDateButtonAssignment();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    removeAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Account")){
-                    GUISettings guiSettings = new GUISettings(email);    //TODO customer
-                    guiSettings.setVisible(true);
-                }
-
-                if(menuAe.getActionCommand().equals("Change Password")) {
-                    GUIChangePassword guiChangePassword = new GUIChangePassword(email);
-                    guiChangePassword.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Dogs")){
-                    GUIDogs guiDogs = new GUIDogs(email);
-                    guiDogs.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Cancel")){
-                    cancel();
-                }
-
-                if (menuAe.getActionCommand().equals("Info")){
-                    GUIInfo info = new GUIInfo();
-                    info.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Credits")){
-                    GUIAwards credits = new GUIAwards();
-                    credits.setVisible(true);
-                }
-
-
-            }
-        };
-
-        ActionListener todayAssignmentsAl = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent todayAssignmentAe) {
-                if (!(todayAssignmentAe.getActionCommand().equals(""))){
-                    JButton pressedButton = (JButton) todayAssignmentAe.getSource();
-                    StringTokenizer cmdToken = new StringTokenizer(buttonTodayAssignment[0].getText(), " ");
-                    String cmd = cmdToken.nextToken();
-                    if (cmd.equals("Assignment")){
-                        calendarState = CalendarState.NORMAL;
-                        cancel();
-                        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
-                        Date date = new Date();
-                        String strMonthNumber = dateMonth.format(date);
-                        int monthNumber = Integer.parseInt(strMonthNumber);
-                        try {
-                            updateCalendar(monthNumber);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
-                        Assignment a = listAssignment.get(pressedButton.getDisplayedMnemonicIndex());
-                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email);
-                        guiAssignment.setVisible(true);
-                    }
-                }
-            }
-        };
-
-        //prepara il calendario
-        startCalendar(cal, ctrlCal);
-
-        menuItemExit.addActionListener(menuAl);
-        menuItemLogout.addActionListener(menuAl);
-        menuItemAddAssignment.addActionListener(menuAl);
-        menuItemCancel.addActionListener(menuAl);
-        menuItemRemoveAssignment.addActionListener(menuAl);
-        menuItemShowAssignments.addActionListener(menuAl);
-        menuItemAddReview.addActionListener(menuAl);
-        menuItemRemoveReview.addActionListener(menuAl);
-        menuItemShowReviews.addActionListener(menuAl);
-        menuItemAccount.addActionListener(menuAl);
-        menuItemChangePassword.addActionListener(menuAl);
-        menuItemInfo.addActionListener(menuAl);
-        menuItemAwards.addActionListener(menuAl);
-        menuItemDogs.addActionListener(menuAl);
-        buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
-
-        for (i = 0; i < nShownTodayAssignments; i++){
-            buttonTodayAssignment[i].addActionListener(todayAssignmentsAl);
-        }
-
-    }
-
-    private void startCalendar(ActionListener cal, ActionListener ctrlCal) throws ParseException {
+    protected void startCalendar(ActionListener cal, ActionListener ctrlCal) throws ParseException {
         calendar.setLayout(new BorderLayout());
         panelDateCalendar.setLayout(new GridLayout(1, 5));
         panelDateCalendar.add(buttonPreviousYear);
@@ -445,7 +122,7 @@ public class GUICustomer extends JFrame{
         buttonNextYear.addActionListener(ctrlCal);
     }
 
-    private void initializeCalendar() throws ParseException {
+    protected void initializeCalendar() throws ParseException {
         SimpleDateFormat dateMonth = new SimpleDateFormat("MM");
         Date currentMonth = new Date();
         int monthNumber = Integer.parseInt(dateMonth.format(currentMonth));
@@ -455,7 +132,7 @@ public class GUICustomer extends JFrame{
         updateCalendar(monthNumber);
     }
 
-    private void goBackMonthCalendar() throws ParseException {
+    protected void goBackMonthCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -487,7 +164,7 @@ public class GUICustomer extends JFrame{
         updateCalendar(monthNumber);
     }
 
-    private void goBackYearCalendar() throws ParseException {
+    protected void goBackYearCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -516,7 +193,7 @@ public class GUICustomer extends JFrame{
         updateCalendar(monthNumber);
     }
 
-    private void goForwardMonthCalendar() throws ParseException {
+    protected void goForwardMonthCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -548,7 +225,7 @@ public class GUICustomer extends JFrame{
         updateCalendar(monthNumber);
     }
 
-    private void goForwardYearCalendar() throws ParseException {
+    protected void goForwardYearCalendar() throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -577,7 +254,7 @@ public class GUICustomer extends JFrame{
         updateCalendar(monthNumber);
     }
 
-    private void updateCalendar(int monthNumber) throws ParseException {
+    protected void updateCalendar(int monthNumber) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
         Date currentDate = date.parse(strDate);
@@ -682,7 +359,7 @@ public class GUICustomer extends JFrame{
         }
     }
 
-    private boolean isLeap(Date yearToCheck){
+    protected boolean isLeap(Date yearToCheck){
         SimpleDateFormat date = new SimpleDateFormat("yyyy");
         String strYear = date.format(yearToCheck);
         int year = Integer.parseInt(strYear);
@@ -701,20 +378,7 @@ public class GUICustomer extends JFrame{
         }
     }
 
-    private void newAssignment(){
-        calendarState = CalendarState.ADDING;
-        int i;
-        for (i = 0; i < NDAYMONTH; i++){
-            buttonDay[i].setBackground(new Color(179, 255, 179));
-        }
-        menuAssignment.setVisible(false);
-        menuReview.setVisible(false);
-        menuSettings.setVisible(false);
-        menuExtra.setVisible(false);
-        menuItemCancel.setVisible(true);
-    }
-
-    private void cancel(){
+    /*protected void cancel(){
         calendarState = CalendarState.NORMAL;
         int i;
         for (i = 0; i < NDAYMONTH; i++){
@@ -730,22 +394,9 @@ public class GUICustomer extends JFrame{
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
             showAssignmentOnCalendar(email);
         }
-    }
+    }*/
 
-    private void removeAssignment(){
-        calendarState = CalendarState.REMOVING;
-        int i;
-        for (i = 0; i < NDAYMONTH; i++){
-            buttonDay[i].setBackground(new Color(242, 82, 37));
-        }
-        menuAssignment.setVisible(false);
-        menuReview.setVisible(false);
-        menuSettings.setVisible(false);
-        menuExtra.setVisible(false);
-        menuItemCancel.setVisible(true);
-    }
-
-    private void openListAssignment(){
+    protected void openListAssignment(){
         GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getAssignmentList(), email, this);
         guiListAssignments.setVisible(true);
 
@@ -755,7 +406,7 @@ public class GUICustomer extends JFrame{
         calendarState = cs;
     }
 
-    private void enableDisableDateButtonAssignment() throws ParseException {
+    protected void enableDisableDateButtonAssignment() throws ParseException {
         int i;
         String strDay;
         String strSelectedDate;
@@ -779,7 +430,7 @@ public class GUICustomer extends JFrame{
         }
     }
 
-    private void showAssignmentOnCalendar(String email){
+    protected void showAssignmentOnCalendar(String email){
         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         boolean included = false;
         for (Integer key : listAssignment.keySet()) {
@@ -813,7 +464,7 @@ public class GUICustomer extends JFrame{
         }
     }
 
-    private int getNDailyAssignments(){
+    protected int getNDailyAssignments(){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;
@@ -838,7 +489,7 @@ public class GUICustomer extends JFrame{
         return nAssignments;
     }
 
-    private void loadTheFirstFiveAssignments(int nShownAssignments){
+    protected void loadTheFirstFiveAssignments(int nShownAssignments){
         if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
@@ -879,3 +530,5 @@ public class GUICustomer extends JFrame{
 
 
 }
+
+

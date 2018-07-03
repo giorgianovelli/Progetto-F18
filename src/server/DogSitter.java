@@ -223,7 +223,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
-    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, int cvv){
+    public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
         double amount = this.paymentMethod.getAmount();
         String oldNum = this.paymentMethod.getNumber();
         this.paymentMethod = new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
@@ -231,7 +231,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
         String strExpiration = dateFormat.format(expirationDate);
         DBConnector dbConnector = new DBConnector();
         try {
-            boolean isUpdated = dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + number + "', '" + name + "', '" + surname + "', '" + strExpiration + "', " + cvv + ", " + amount + ")");
+            boolean isUpdated = dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + number + "', '" + name + "', '" + surname + "', '" + strExpiration + "', '" + cvv + "', " + amount + ")");
             dbConnector.closeUpdate();
 
             if (!(isUpdated)) {

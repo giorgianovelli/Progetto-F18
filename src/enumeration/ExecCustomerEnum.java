@@ -345,7 +345,7 @@ public enum ExecCustomerEnum {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            int cvv = Integer.parseInt(tokenMsg.nextToken());
+            String cvv = tokenMsg.nextToken();
 
             Singleton singleton = new Singleton();
             Customer customer = singleton.createCustomerFromDB(email);
@@ -655,7 +655,7 @@ public enum ExecCustomerEnum {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            int cvv = Integer.parseInt(tokenMsg.nextToken());
+            String cvv = tokenMsg.nextToken();
             double amount = Double.parseDouble(tokenMsg.nextToken());
             PaymentMethod paymentMethod = new PaymentMethod(cardNumber, cardName, cardSurname, expirationDate, cvv, amount);
 
