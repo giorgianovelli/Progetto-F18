@@ -29,9 +29,6 @@ public class GUISettings extends JFrame {
     private JPanel panelPayment = new JPanel();
     private JPanel panelExpiration = new JPanel();
 
-
-    private JScrollPane scrollPanel = new JScrollPane(panelOut);
-
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
     private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
     private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
@@ -104,6 +101,8 @@ public class GUISettings extends JFrame {
         // this.user = user;
         this.email = email;
         this.proxy = new CustomerProxy(email);
+
+        //todo METODO
         setValues();
 
         initComponents();
@@ -111,16 +110,15 @@ public class GUISettings extends JFrame {
 
 
     private void initComponents() {
-
+        /**
+         * Panel
+        */
         panelData.setLayout(new GridLayout(13, 1, 20, 10));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
-        // panelPayment.setLayout(new GridLayout(12, 1,20,10));
-        // panelPayment.setBorder(BorderFactory.createTitledBorder("Payment method: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButton, BorderLayout.SOUTH);
         panelOut.add(panelRadioButton);
-        add(scrollPanel);
 
         panelData.add(labelName);
         panelData.add(textName);
@@ -128,6 +126,9 @@ public class GUISettings extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
+        /**
+         * JCOMBOBOX di DATE OF BIRTH
+         */
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
             years_tmp.add(years + "");
         }
@@ -136,7 +137,10 @@ public class GUISettings extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        //per riempire le jcombobox con le date corrette
+        /**
+         *  Serve per fare in modo che le jcombobox di "Date of Birth" siano corrette
+         */
+
         Date strDate = proxy.getDateOfBirth();
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
@@ -149,6 +153,10 @@ public class GUISettings extends JFrame {
         dayList.setSelectedItem(day);
         monthList.setSelectedItem(month);
         yearList.setSelectedItem(year);
+
+        /**
+         * altri Jpanel
+         */
 
         panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
@@ -175,21 +183,24 @@ public class GUISettings extends JFrame {
         panelRadioButton.setLayout(new GridLayout(1, 0));
         panelData.add(panelRadioButton);
 
-
-        // panelPayment.setLayout(new GridLayout(4,1));
-        // panelPayment.setLayout(new BoxLayout(panelPayment, BoxLayout.PAGE_AXIS));
         panelData.add(labelCreditCardOwnerName);
         panelData.add(textCreditCardOwnerName);
         panelData.add(labelCreditCardNumber);
         panelData.add(textCreditCardNumber);
         panelData.add(labelExpirationDate);
-        //panelPayment.add();  todo jcombobox
+
+        /**
+         * JCOMBOBOX di EXPIRATION DATE
+         */
 
         expirationDay = new JComboBox<>(expirationDays);
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
-        //per riempire le jcombobox con le date corrette
+        /**
+         *  Serve per fare in modo che le jcombobox di "ExpirationDate" siano corrette
+         *
+         */
         PaymentMethod strExpirationDate = proxy.getPaymentMethod();
         SimpleDateFormat expirationDateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
@@ -219,83 +230,24 @@ public class GUISettings extends JFrame {
         expirationMonth.setSelectedItem(expirationMonths);
         expirationYear.setSelectedItem(expirationYears);
 
+        /**
+         * JPANEL DI EXPIRATION DATE per sistemare le jcombobox e JPANEL dei BOTTONI
+         */
+
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
         panelExpiration.add(expirationDay);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelData.add(panelExpiration);
 
-
         panelData.add(labelSecurityCode);
         panelData.add(textSecurityCode);
         // panelData.add(panelPayment);
-
-        scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        //add(scrollPanel);
-
         add(panelOut);
-
-
         panelButton.setLayout(new GridLayout(1, 2, 5, 5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
-
-
-     /*   //  JRadioButton  per scegliere metodo di pagamento
-        cash.setMnemonic(KeyEvent.VK_C);
-        cash.setActionCommand("");
-        panelRadioButton.add(cash, BorderLayout.EAST);
-
-        creditCard.setMnemonic(KeyEvent.VK_D);
-        panelRadioButton.add(creditCard, BorderLayout.EAST);
-
-
-        // buttongroup per far in modo che si possa selezionare SOLO un metodo di pagamento
-        ButtonGroup group = new ButtonGroup();
-        group.add(cash);
-        group.add(creditCard);
-*/
-
-        //TODO Listener dei JRADIOBUTTON da sistemare
-      /*  ActionListener a = new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-
-                    if (proxy.getPaymentMethod() == null ){
-                    cash.isSelected();
-
-                    System.out.println(event.getActionCommand());
-
-                }
-                else {
-                    creditCard.isSelected();
-                    System.out.println(event.getActionCommand());
-                }
-            }
-        };
-        cash.addActionListener(a);
-        creditCard.addActionListener(a);*/
-
-  /*      //TODO SELEZIONE DEI BOTTONI
-
-        // A ItemListener for all Radio buttons
-        ItemListener listener = new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    if (e.getSource() == cash) {
-                        //cosa da far fare
-                    } else if (e.getSource() == creditCard) {
-                        // System.out.println(creditCard);
-                        //cosa da far fare al bottone
-                    }
-                }
-            }
-        };
-        cash.addItemListener(listener);
-        creditCard.addItemListener(listener);*/
 
 
         //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
@@ -318,7 +270,7 @@ public class GUISettings extends JFrame {
                         JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                         //TODO nel caso in cui non viene fatta la modifica??
-                        //TODO fare in modo che il metodo di pagamento resti selezionato
+
                     }
 
                 }
@@ -335,6 +287,9 @@ public class GUISettings extends JFrame {
 
     }
 
+    /**
+     *  METODO PER INSERIRE I VALORI CONTENUTI NEL DATABASE
+     */
 
     private void setValues() {
 
@@ -391,7 +346,10 @@ public class GUISettings extends JFrame {
     }
 
 
-    //metodo AGGIORNARE IL DATABASE (per cambiare i valori aggiornati dall'utente nel database)
+    /**
+     *  METODO PER  AGGIORNARE IL DATABASE (per cambiare i valori aggiornati dall'utente nel database)
+      */
+
     private void setNewValues() {
         proxy.updateName(textName.getText());
         textName.setEditable(true);
