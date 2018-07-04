@@ -1,9 +1,20 @@
+/**
+ * This class contains some methods for handling a calendar
+ */
+
 package client;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class Calendar {
+
+    /**
+     * Check if a year is leap.
+     * @param yearToCheck
+     * @return true if yearToCheck is leap.
+     */
     public static boolean isLeap(Date yearToCheck){
         SimpleDateFormat date = new SimpleDateFormat("yyyy");
         String strYear = date.format(yearToCheck);
@@ -23,6 +34,13 @@ public class Calendar {
         }
     }
 
+
+    /**
+     *
+     * @param monthNumber is the number of the month we want to get the number of day.
+     * @param year (useful for leap check).
+     * @return the number of days of a month.
+     */
     public static int getNDayofMonth(int monthNumber, Date year){
         int nd;
         switch (monthNumber){
@@ -46,6 +64,10 @@ public class Calendar {
         return nd;
     }
 
+    /**
+     *
+     * @return an int corresponding to the current year.
+     */
     public static int getCurrentYear(){
          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
          Date now = new Date();
