@@ -58,4 +58,6 @@ public interface InterfaceCustomer {
     String getPhoneNumber();
 
     Date getDateOfBirth();
+
+    //TODO metodi per aggiornare i dati dei cani
 }

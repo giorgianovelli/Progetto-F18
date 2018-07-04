@@ -319,11 +319,11 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Update the customer's address with the following data inserted by the customer.
-     * @param country
-     * @param city
-     * @param street
-     * @param number civic number
-     * @param cap
+     * @param country the country in which the customer lives.
+     * @param city the city where the customer lives.
+     * @param street the street in which customer lives.
+     * @param number civic number.
+     * @param cap the cap of the city where the customer lives.
      * @return true if the update is successfully performed.
      */
     public boolean updateAddress(String country, String city, String street, String number, String cap){
@@ -338,11 +338,11 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Update the customer's payment method with the following data inserted by the customer.
-     * @param number card's number
-     * @param name owner's name
-     * @param surname owner's surname
-     * @param expirationDate
-     * @param cvv
+     * @param number card's number.
+     * @param name owner's name.
+     * @param surname owner's surname.
+     * @param expirationDate the card's expiration date.
+     * @param cvv the secure code of the card.
      * @return true if the update is successfully performed.
      */
     public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
