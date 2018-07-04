@@ -547,6 +547,15 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
         }
     }
 
+    
+    /**
+     * Get dog sitter's biography.
+     * @return the dog sitter's biography.
+     */
+    public String getBiography(){
+        return getReply("DOGSITTER#GETBIOGRAPHY#" + email);
+    }
+
     /**
      * Create a new dog sitter account with the following data.
      * @param email dog sitter's email address.

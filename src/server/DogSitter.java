@@ -663,4 +663,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Get dog sitter's biography.
+     * @return the dog sitter's biography.
+     */
+    public String getBiography() {
+        return biography;
+    }
 }

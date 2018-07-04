@@ -11,11 +11,11 @@ public class TestDogSitterProxy {
         DogSitterProxy proxyLogin = new DogSitterProxy();
         System.out.println("test login true: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGETTO123"));
         System.out.println("test login false: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGGGGETTO123"));
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+        /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             System.out.println(a.getCode());
-        }
+        }*/
         /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         Assignment a = listAssignment.get(1);
         System.out.println(a.getDateStart());
@@ -99,5 +99,6 @@ public class TestDogSitterProxy {
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime4)), WeekDays.SAT);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);
         proxy.updateDateTimeAvailability(availability);*/
+        proxy.getBiography();
     }
 }
