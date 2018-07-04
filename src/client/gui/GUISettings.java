@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import server.bank.PaymentMethod;
 
 public class GUISettings extends JFrame {
     final int WIDTH = 600;
@@ -23,6 +24,11 @@ public class GUISettings extends JFrame {
     private JPanel panelRadioButton = new JPanel();
     private JPanel panelDate = new JPanel();
     private JPanel panelAddress = new JPanel();
+    private JPanel panelPayment = new JPanel();
+    private JPanel panelExpiration = new JPanel();
+
+
+    private JScrollPane scrollPanel = new JScrollPane(panelOut);
 
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
     private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
@@ -37,10 +43,10 @@ public class GUISettings extends JFrame {
     private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
 
     //TODO label per titolare carta di credito
-    private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:");
-    private JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:");
-    private JLabel labelExpirationDate = new JLabel("Expiration Date:"); //data di scadenza
-    private JLabel labelSecurityCode = new JLabel("Security code:");
+    private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
+    private JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
+    private JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT); //data di scadenza
+    private JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
 
     private JTextField textName = new JTextField();
     private JTextField textSurname = new JTextField();
@@ -54,23 +60,27 @@ public class GUISettings extends JFrame {
     //TODO textfield per titolare carta di credito
     private JTextField textCreditCardOwnerName = new JTextField();
     private JTextField textCreditCardNumber = new JTextField();
-    //todo jcombobox per expiration date
-    private JTextField textSecurityCode = new JTextField();
+    private JComboBox<String> expirationMonth;
+    private JComboBox<String> expirationYear;
+    private JPasswordField textSecurityCode = new JPasswordField();
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
 
+
     private JRadioButton cash = new JRadioButton("Cash");
-    private JRadioButton  creditCard = new JRadioButton("Credit Card");
+    private JRadioButton creditCard = new JRadioButton("Credit Card");
 
     private JComboBox<String> dayList;
     private JComboBox<String> monthList;
     private JComboBox<String> yearList;
 
-    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13","14","15","16", "17", "18", "19", "20", "21", "22", "23", "24", "25","26", "27", "28", "29", "30", "31"};
+    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private ArrayList<String> years_tmp = new ArrayList<String>();
 
+    private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+    private String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 
     // attributi per client-server
     private CustomerProxy proxy;
@@ -96,12 +106,15 @@ public class GUISettings extends JFrame {
 
     private void initComponents() {
 
-        panelData.setLayout(new GridLayout(9, 1, 20, 20));
+        panelData.setLayout(new GridLayout(13, 1, 20, 10));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
+        // panelPayment.setLayout(new GridLayout(12, 1,20,10));
+        // panelPayment.setBorder(BorderFactory.createTitledBorder("Payment method: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButton, BorderLayout.SOUTH);
         panelOut.add(panelRadioButton);
+        add(scrollPanel);
 
         panelData.add(labelName);
         panelData.add(textName);
@@ -109,8 +122,8 @@ public class GUISettings extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
-        for(int years = 1930; years<= Calendar.getCurrentYear() ; years++) {
-            years_tmp.add(years+"");
+        for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
+            years_tmp.add(years + "");
         }
 
         dayList = new JComboBox<>(day);
@@ -118,7 +131,7 @@ public class GUISettings extends JFrame {
         yearList = new JComboBox(years_tmp.toArray());
 
         //per riempire le jcombobox con le date corrette
-        Date strDate= proxy.getDateOfBirth();
+        Date strDate = proxy.getDateOfBirth();
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
         SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
@@ -131,7 +144,7 @@ public class GUISettings extends JFrame {
         monthList.setSelectedItem(month);
         yearList.setSelectedItem(year);
 
-        panelDate.setLayout(new GridLayout(1,3,5,5));
+        panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
         panelDate.add(monthList);
         panelDate.add(yearList);
@@ -144,7 +157,7 @@ public class GUISettings extends JFrame {
         panelData.add(textCap);
 
         panelData.add(labelAddress);
-        panelAddress.setLayout(new BoxLayout(panelAddress,BoxLayout.X_AXIS));
+        panelAddress.setLayout(new BoxLayout(panelAddress, BoxLayout.X_AXIS));
         panelAddress.add(textStreet);
         panelAddress.add(textNumber);
         panelData.add(panelAddress);
@@ -152,12 +165,46 @@ public class GUISettings extends JFrame {
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
         panelData.add(labelPaymentMethod);
-        add(panelOut);
 
-        panelRadioButton.setLayout(new GridLayout(1,0));
+        panelRadioButton.setLayout(new GridLayout(1, 0));
         panelData.add(panelRadioButton);
 
-        panelButton.setLayout(new GridLayout(1, 2,5,5));
+
+        // panelPayment.setLayout(new GridLayout(4,1));
+        // panelPayment.setLayout(new BoxLayout(panelPayment, BoxLayout.PAGE_AXIS));
+        panelData.add(labelCreditCardOwnerName);
+        panelData.add(textCreditCardOwnerName);
+        panelData.add(labelCreditCardNumber);
+        panelData.add(textCreditCardNumber);
+        panelData.add(labelExpirationDate);
+        //panelPayment.add();  todo jcombobox
+
+        expirationMonth = new JComboBox<>(expirationMonths);
+        expirationYear = new JComboBox<>(expirationYears);
+
+
+        expirationMonth.setSelectedItem(expirationMonths);
+        expirationYear.setSelectedItem(expirationYears);
+
+        panelExpiration.setLayout(new GridLayout(1, 2, 10, 5));
+        panelExpiration.add(expirationMonth);
+        panelExpiration.add(expirationYear);
+        panelData.add(panelExpiration);
+
+
+        panelData.add(labelSecurityCode);
+        panelData.add(textSecurityCode);
+        // panelData.add(panelPayment);
+
+        scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        //add(scrollPanel);
+
+        add(panelOut);
+
+
+        panelButton.setLayout(new GridLayout(1, 2, 5, 5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
@@ -205,8 +252,9 @@ public class GUISettings extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (e.getSource() == cash) {
-                       //cosa da far fare
+                        //cosa da far fare
                     } else if (e.getSource() == creditCard) {
+                        // System.out.println(creditCard);
                         //cosa da far fare al bottone
                     }
                 }
@@ -222,15 +270,14 @@ public class GUISettings extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
-                    if (textName.getText().equals("") || textSurname.getText().equals ("") ||textCountry.getText().equals("") ||textCity.getText().equals("") ||textCap.getText().equals("") || textStreet.getText().equals("") ||textNumber.getText().equals("") ||textPhoneNumber.getText().equals("")) {
+                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
                     }
                     // se metodo di pagamento non è selezionato
-                    if(cash.isSelected() == false && creditCard.isSelected() == false){
+                    if (cash.isSelected() == false && creditCard.isSelected() == false) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment method is not selected", "", JOptionPane.ERROR_MESSAGE);
 
-                    }
-                    else {
+                    } else {
                         setNewValues();
 
                         JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
@@ -249,7 +296,6 @@ public class GUISettings extends JFrame {
         };
         buttonCancel.addActionListener(registration);
         buttonConfirm.addActionListener(registration);
-
 
 
     }
@@ -293,6 +339,19 @@ public class GUISettings extends JFrame {
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
+        PaymentMethod strPaymentmethod = proxy.getPaymentMethod();
+        textCreditCardOwnerName.setText(strPaymentmethod.getName());
+        textCreditCardOwnerName.setEditable(true);
+        labelCreditCardOwnerName.setLabelFor(textCreditCardOwnerName);
+
+        textCreditCardNumber.setText(strPaymentmethod.getNumber());
+        textCreditCardNumber.setEditable(true);
+        labelCreditCardNumber.setLabelFor(textCreditCardNumber);
+
+
+        textSecurityCode.setText(strPaymentmethod.getCvv());
+        textSecurityCode.setEditable(true);
+        labelSecurityCode.setLabelFor(textSecurityCode);
 
     }
 
@@ -327,7 +386,7 @@ public class GUISettings extends JFrame {
         yearList.setSelectedItem(year);
       //  System.out.println("updateDate:" +updateDate);*/
 
-        proxy.updateAddress( textCountry.getText(), textCity.getText(), textStreet.getText(),textNumber.getText(), textCap.getText());
+        proxy.updateAddress(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
         labelCountry.setLabelFor(textCountry);
         textCity.setEditable(true);
@@ -344,11 +403,5 @@ public class GUISettings extends JFrame {
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
 
-
-
-
-
     }
-
-
 }
