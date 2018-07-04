@@ -12,7 +12,7 @@ public class Calendar {
 
     /**
      * Check if a year is leap.
-     * @param yearToCheck
+     * @param yearToCheck the year we want to know if it is leap.
      * @return true if yearToCheck is leap.
      */
     public static boolean isLeap(Date yearToCheck){
@@ -36,9 +36,9 @@ public class Calendar {
 
 
     /**
-     *
+     * Get the number of the days of the month.
      * @param monthNumber is the number of the month we want to get the number of day.
-     * @param year (useful for leap check).
+     * @param year year is useful for leap check.
      * @return the number of days of a month.
      */
     public static int getNDayofMonth(int monthNumber, Date year){
@@ -65,7 +65,7 @@ public class Calendar {
     }
 
     /**
-     *
+     * Get an int value corresponding to the current year.
      * @return an int corresponding to the current year.
      */
     public static int getCurrentYear(){
