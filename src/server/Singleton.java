@@ -1,26 +1,26 @@
 package server;
 
 import database.DBConnector;
-//import javafx.util.converter.CurrencyStringConverter;
 import server.bank.PaymentMethod;
 import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
-import server.tools.dateTime.DateTimeDHMS;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This class implements Singleton Pattern for the creation of some different types of objects.
+ */
+
 public class Singleton {
 
-    /**javadoc
+    /**
      *
      * @param customerEmail
      * @return the object of type Customer related to customerEmail.
@@ -50,7 +50,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param dogSitterEmail
      * @return the object of type DogSitter related to dogSitterEmail.
@@ -145,7 +145,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param dogID
      * @return the object of type Dog related to dogID.
@@ -175,7 +175,7 @@ public class Singleton {
         return dog;
     }
 
-    /**javadoc
+    /**
      *
      * @param dogSitter
      * @return the HashMap of Assignment related to dogSitter. The key indicates the assignment's code.
@@ -211,7 +211,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param customer
      * @return the HashMap of Assignment related to customer. The key indicates the assignment's code.
@@ -246,7 +246,7 @@ public class Singleton {
         return listAssignment;
     }
 
-    /**javadoc
+    /**
      *
      * @param code
      * @return the object of type Address related to code.
@@ -270,7 +270,7 @@ public class Singleton {
         return address;
     }
 
-    /**javadoc
+    /**
      *
      * @param code
      * @return the HashSet of Dog related to the Assignment indicated with code.
@@ -292,7 +292,7 @@ public class Singleton {
         return dogList;
     }
 
-    /**javadoc
+    /**
      *
      * @param email
      * @return the object Address related to email.
@@ -342,7 +342,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param customer
      * @return the HashMap of Review related to customer. The key indicates the code of Assignment associated to Review.
@@ -372,7 +372,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param dogSitter
      * @return the HashMap //TODO
@@ -402,7 +402,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param code
      * @return the object of type Review related to code.
@@ -430,7 +430,7 @@ public class Singleton {
         }
     }
 
-    /**javadoc
+    /**
      *
      * @param dateOfBirth
      * @return the age (int) of the dog
