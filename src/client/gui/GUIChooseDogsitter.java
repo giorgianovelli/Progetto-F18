@@ -124,9 +124,18 @@ public class GUIChooseDogsitter extends JFrame {
                 }
             };
 
-            
+            ActionListener actionListener1 = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(mailDogsitter);
+                    guiDogsitterInfo.setVisible(true);
+                }
+            };
+
+
 
             buttonSelect.addActionListener(actionListener);
+            buttonInfo.addActionListener(actionListener1);
 
         }
 
