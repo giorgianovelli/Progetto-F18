@@ -1,7 +1,10 @@
 package client.gui;
 
+import client.proxy.DogSitterProxy;
+
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 
 public class GUIDogsitterInfo extends JFrame {
 
@@ -9,8 +12,11 @@ public class GUIDogsitterInfo extends JFrame {
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+
+
     private JPanel panelOut = new JPanel();
-    private JPanel panelAllInfo = new JPanel();
+    private JPanel panelInfo = new JPanel();
+    private JPanel panelInfoBio  = new JPanel();
     private JPanel panelName = new JPanel();
     private JPanel panelSurname = new JPanel();
     private JPanel panelBirth = new JPanel();
@@ -26,6 +32,14 @@ public class GUIDogsitterInfo extends JFrame {
     private JLabel labelAverage = new JLabel("Average reviews: ");
     private JLabel labelBio = new JLabel("Biography: ");
 
+    private JLabel labelNameToBeFilled = new JLabel();
+    private JLabel labelSurnameToBeFilled = new JLabel();
+    private JLabel labelBirthToBeFilled = new JLabel();
+    private JLabel labelAverageToBeFilled = new JLabel();
+    private JLabel labelBioToBeFilled = new JLabel();
+
+
+    private DogSitterProxy dogSitterProxy;
 
 
 
@@ -40,7 +54,7 @@ public class GUIDogsitterInfo extends JFrame {
         setLayout(new BorderLayout());
 
 
-
+        dogSitterProxy = new DogSitterProxy(mailDogsitter);
 
         initComponents();
     }
@@ -48,6 +62,45 @@ public class GUIDogsitterInfo extends JFrame {
 
     public void initComponents() {
 
+        panelOut.setLayout(new BorderLayout());
+        panelInfoBio.setLayout(new BorderLayout());
+        panelInfoBio.setBorder(BorderFactory.createTitledBorder("Bio:"));
+        panelInfo.setLayout(new GridLayout(4,1));
+        panelName.setLayout(new GridLayout(1,2));
+        panelSurname.setLayout(new GridLayout(1,2));
+        panelBirth.setLayout(new GridLayout(1,2));
+        panelAverage.setLayout(new GridLayout(1,2));
+
+        panelOut.add(panelInfoBio);
+        panelInfoBio.add(panelInfo, BorderLayout.NORTH);
+        panelInfoBio.add(panelBio, BorderLayout.CENTER);
+
+        panelInfo.add(panelName);
+        panelInfo.add(panelSurname);
+        panelInfo.add(panelBirth);
+        panelInfo.add(panelAverage);
+
+        panelName.add(labelName);
+        panelName.add(labelNameToBeFilled);
+        panelSurname.add(labelSurname);
+        panelSurname.add(labelSurnameToBeFilled);
+        panelBirth.add(labelBirth);
+        panelBirth.add(labelBirthToBeFilled);
+        panelAverage.add(labelAverage);
+        panelAverage.add(labelAverageToBeFilled);
+
+        panelBio.add(labelBio);
+        panelBio.add(labelBioToBeFilled);
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = simpleDateFormat.format(dogSitterProxy.getDateOfBirth());
+
+        labelNameToBeFilled.setText(dogSitterProxy.getName());
+        labelSurnameToBeFilled.setText(dogSitterProxy.getSurname());
+        labelBirthToBeFilled.setText(strDate);
+        labelAverageToBeFilled.setText("3");
+        //labelBioToBeFilled.setText(dogSitterProxy.getBiography);
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
