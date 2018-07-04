@@ -1,22 +1,19 @@
 package client.gui;
 
-import client.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
 import server.dateTime.WeekDays;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.StringTokenizer;
 
 import static client.Calendar.getNDayofMonth;
-import static client.Calendar.isLeap;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class GUIHome extends JFrame{

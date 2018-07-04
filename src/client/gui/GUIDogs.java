@@ -1,6 +1,6 @@
 package client.gui;
 
-import client.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Dog;
 
 import javax.swing.*;

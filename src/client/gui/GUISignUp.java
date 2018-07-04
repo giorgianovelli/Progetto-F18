@@ -2,7 +2,7 @@ package client.gui;
 
 //import com.sun.xml.internal.bind.v2.runtime.Name; //TODO da problemi
 import client.Calendar;
-import client.CustomerProxy;
+import client.proxy.CustomerProxy;
 //import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import server.User;
 

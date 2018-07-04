@@ -1,20 +1,9 @@
 package test;
 
-import dogSitterClient.DogSitterProxy;
+import client.proxy.DogSitterProxy;
 import server.Assignment;
-import server.Availability;
-import server.DogSize;
-import server.Review;
-import server.dateTime.WeekDays;
-import server.dateTime.WorkingTime;
-import server.places.Area;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class TestDogSitterProxy {
     public static void main(String[] args) {

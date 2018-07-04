@@ -1,5 +1,6 @@
-package dogSitterClient;
+package client.proxy;
 
+import client.proxy.Proxy;
 import interfaces.InterfaceDogSitter;
 import server.*;
 import server.bank.PaymentMethod;
@@ -8,10 +9,6 @@ import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,11 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class DogSitterProxy implements InterfaceDogSitter {
-    private BufferedReader msgIn = null;
-    private PrintStream msgOut = null;
-    private Socket socket = null;
-    private String serverReply;
+public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
     private String email;
 
     public DogSitterProxy(String email) {
@@ -33,28 +26,6 @@ public class DogSitterProxy implements InterfaceDogSitter {
 
     public DogSitterProxy() {
         this.email = null;
-    }
-
-    private String getReply(String clientMsg) {
-        try {
-            // open a socket connection
-            socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
-            // Apre i canali I/O
-            msgIn = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            msgOut = new PrintStream(socket.getOutputStream(), true);
-            msgOut.println(clientMsg);
-            msgOut.flush();
-            // Legge dal server
-            serverReply = msgIn.readLine();
-            System.out.println("Received message from server: " + serverReply);
-            msgOut.close();
-            msgIn.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            return serverReply;
-        }
     }
 
     public boolean dogSitterAccessDataVerifier(String inputUser, String inputPasword) {

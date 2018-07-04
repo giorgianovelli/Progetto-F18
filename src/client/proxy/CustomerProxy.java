@@ -3,38 +3,17 @@
  * to send to server and traslating server's messages in objects.
  */
 
-package client;
+package client.proxy;
 
 import interfaces.InterfaceCustomer;
 import server.*;
 import server.bank.PaymentMethod;
 import server.places.Address;
-import java.io.*;
-import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CustomerProxy implements InterfaceCustomer {
-    /**
-     * The buffer containing message received from the server.
-     */
-    private BufferedReader msgIn = null;
-
-    /**
-     * The message to send to the server.
-     */
-    private PrintStream msgOut = null;
-
-    /**
-     * The socket used for comunicating with the server.
-     */
-    private Socket socket = null;
-
-    /**
-     * The message received from the server.
-     */
-    private String serverReply;
+public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * The customer's email address
@@ -58,33 +37,6 @@ public class CustomerProxy implements InterfaceCustomer {
      */
     public CustomerProxy() {
         this.email = null;
-    }
-
-    /**
-     * Get a reply from the server on the base of the message sended.
-     * @param clientMsg
-     * @return the message send by the server.
-     */
-    private String getReply(String clientMsg) {
-        try {
-            // open a socket connection
-            socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
-            // Apre i canali I/O
-            msgIn = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            msgOut = new PrintStream(socket.getOutputStream(), true);
-            msgOut.println(clientMsg);
-            msgOut.flush();
-            // Legge dal server
-            serverReply = msgIn.readLine();
-            System.out.println("Received message from server: " + serverReply);
-            msgOut.close();
-            msgIn.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            return serverReply;
-        }
     }
 
     public boolean customerAccessDataVerifier(String inputUser, String inputPasword) {

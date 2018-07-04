@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.text.ParseException;
 
-import client.CustomerProxy;
-import server.Login;
+import client.proxy.CustomerProxy;
 
 public class GUILogin extends JFrame {
     final int WIDTH = 600;

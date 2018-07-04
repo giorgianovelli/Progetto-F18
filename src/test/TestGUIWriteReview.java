@@ -1,6 +1,6 @@
 package test;
 
-import client.CustomerProxy;
+import client.proxy.CustomerProxy;
 import client.gui.GUIWriteReview;
 import server.Assignment;
 
