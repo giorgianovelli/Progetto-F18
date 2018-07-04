@@ -1,3 +1,7 @@
+/**
+ * Launcher
+ */
+
 package client;
 
 import client.gui.GUILogin;
