@@ -1,10 +1,13 @@
 package client.gui;
 
 import client.proxy.DogSitterProxy;
+import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUIDogsitterInfo extends JFrame {
 
@@ -22,6 +25,7 @@ public class GUIDogsitterInfo extends JFrame {
     private JPanel panelBirth = new JPanel();
     private JPanel panelAverage = new JPanel();
     private JPanel panelBio = new JPanel();
+    private JPanel panelReviews = new JPanel();
 
     private JScrollPane scrollPane = new JScrollPane(panelOut);
 
@@ -39,7 +43,9 @@ public class GUIDogsitterInfo extends JFrame {
     private JLabel labelBioToBeFilled = new JLabel();
 
 
+    private HashMap<Integer, Review> listReview;
     private DogSitterProxy dogSitterProxy;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
 
@@ -71,7 +77,8 @@ public class GUIDogsitterInfo extends JFrame {
         panelBirth.setLayout(new GridLayout(1,2));
         panelAverage.setLayout(new GridLayout(1,2));
 
-        panelOut.add(panelInfoBio);
+        panelOut.add(panelInfoBio, BorderLayout.NORTH);
+
         panelInfoBio.add(panelInfo, BorderLayout.NORTH);
         panelInfoBio.add(panelBio, BorderLayout.CENTER);
 
@@ -93,7 +100,6 @@ public class GUIDogsitterInfo extends JFrame {
         panelBio.add(labelBioToBeFilled);
 
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = simpleDateFormat.format(dogSitterProxy.getDateOfBirth());
 
         labelNameToBeFilled.setText(dogSitterProxy.getName());
@@ -101,6 +107,29 @@ public class GUIDogsitterInfo extends JFrame {
         labelBirthToBeFilled.setText(strDate);
         labelAverageToBeFilled.setText("3");
         //labelBioToBeFilled.setText(dogSitterProxy.getBiography);
+
+        listReview = dogSitterProxy.getReviewList();
+
+        for (Map.Entry<Integer, Review> entry: listReview.entrySet()) {
+            //String nameCustomer = entry.getValue()
+            String title = entry.getValue().getTitle();
+            String date = simpleDateFormat.format(entry.getValue().getDate());
+            String vote = String.valueOf(entry.getValue().getRating());
+            String allText;
+            
+            JLabel labelName = new JLabel("Review by TESTTEST");
+            JLabel labelTitle = new JLabel(title);
+            JLabel labelDate = new JLabel(date);
+            JLabel labelVote = new JLabel(vote);
+
+            JLabel labelReview = new JLabel();
+            JButton buttonShowMore = new JButton("Show More");
+
+            JPanel panelReview = new JPanel();
+            panelReview.setLayout(new BorderLayout());
+
+
+        }
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

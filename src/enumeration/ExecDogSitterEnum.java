@@ -720,6 +720,19 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    GETBIOGRAPHY{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            return dogSitter.getBiography();
+        }
+
     };
 
 
