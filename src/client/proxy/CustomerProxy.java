@@ -23,7 +23,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     * Create a new CustomerProxy object using the email address of a customer.
+     * Create a new CustomerProxy using the email address of a customer.
      * @param email
      */
     public CustomerProxy(String email) {
