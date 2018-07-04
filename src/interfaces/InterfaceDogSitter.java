@@ -58,4 +58,6 @@ public interface InterfaceDogSitter {
     boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant);
 
     boolean updateDateTimeAvailability(Availability availability);
+
+    String getBiography();
 }

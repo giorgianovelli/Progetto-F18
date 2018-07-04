@@ -2,12 +2,14 @@ package client.gui;
 
 import client.Calendar;
 import client.proxy.CustomerProxy;
+import com.mysql.fabric.xmlrpc.base.Data;
 import server.User;
 import server.places.Address;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,16 +62,17 @@ public class GUISettings extends JFrame {
     //TODO textfield per titolare carta di credito
     private JTextField textCreditCardOwnerName = new JTextField();
     private JTextField textCreditCardNumber = new JTextField();
+    private JComboBox<String> expirationDay;
     private JComboBox<String> expirationMonth;
     private JComboBox<String> expirationYear;
-    private JPasswordField textSecurityCode = new JPasswordField();
+    private JTextField textSecurityCode = new JTextField();
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
 
 
-    private JRadioButton cash = new JRadioButton("Cash");
-    private JRadioButton creditCard = new JRadioButton("Credit Card");
+  //  private JRadioButton cash = new JRadioButton("Cash");
+ //   private JRadioButton creditCard = new JRadioButton("Credit Card");
 
     private JComboBox<String> dayList;
     private JComboBox<String> monthList;
@@ -79,8 +82,11 @@ public class GUISettings extends JFrame {
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private ArrayList<String> years_tmp = new ArrayList<String>();
 
-    private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+
+    private String[] expirationDays = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+
 
     // attributi per client-server
     private CustomerProxy proxy;
@@ -179,14 +185,42 @@ public class GUISettings extends JFrame {
         panelData.add(labelExpirationDate);
         //panelPayment.add();  todo jcombobox
 
+        expirationDay = new JComboBox<>(expirationDays);
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
+        //per riempire le jcombobox con le date corrette
+        PaymentMethod strExpirationDate = proxy.getPaymentMethod();
+        SimpleDateFormat expirationDateFormatdd = new SimpleDateFormat("dd");
+        SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
+        SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
 
+        //TODO INSERIMENTO DATA DI SCADENZA NON FUNZIONA
+      /*  SimpleDateFormat expirationDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        int monthNumber=0;
+        Date exYear = new Date();
+        Date expirationDate = new Date();
+
+        try{
+            expirationDate = expirationDateFormat.parse(Calendar.getNDayofMonth(monthNumber, exYear) + "/" + strExpirationDate.getExpirationDate() + "/" + expirationYears);
+
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        */
+
+
+        String expirationDays = expirationDateFormatdd.format(strExpirationDate.getExpirationDate());
+        String expirationMonths = expirationDateFormatmm.format(strExpirationDate.getExpirationDate());
+        String expirationYears = expirationDateFormatyyyy.format(strExpirationDate.getExpirationDate());
+
+
+        expirationDay.setSelectedItem(expirationDays);
         expirationMonth.setSelectedItem(expirationMonths);
         expirationYear.setSelectedItem(expirationYears);
 
-        panelExpiration.setLayout(new GridLayout(1, 2, 10, 5));
+        panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
+        panelExpiration.add(expirationDay);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelData.add(panelExpiration);
@@ -210,7 +244,7 @@ public class GUISettings extends JFrame {
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
 
-        //  JRadioButton  per scegliere metodo di pagamento
+     /*   //  JRadioButton  per scegliere metodo di pagamento
         cash.setMnemonic(KeyEvent.VK_C);
         cash.setActionCommand("");
         panelRadioButton.add(cash, BorderLayout.EAST);
@@ -223,7 +257,7 @@ public class GUISettings extends JFrame {
         ButtonGroup group = new ButtonGroup();
         group.add(cash);
         group.add(creditCard);
-
+*/
 
         //TODO Listener dei JRADIOBUTTON da sistemare
       /*  ActionListener a = new ActionListener() {
@@ -244,7 +278,7 @@ public class GUISettings extends JFrame {
         cash.addActionListener(a);
         creditCard.addActionListener(a);*/
 
-        //TODO SELEZIONE DEI BOTTONI
+  /*      //TODO SELEZIONE DEI BOTTONI
 
         // A ItemListener for all Radio buttons
         ItemListener listener = new ItemListener() {
@@ -261,7 +295,7 @@ public class GUISettings extends JFrame {
             }
         };
         cash.addItemListener(listener);
-        creditCard.addItemListener(listener);
+        creditCard.addItemListener(listener);*/
 
 
         //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
@@ -273,11 +307,12 @@ public class GUISettings extends JFrame {
                     if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
                     }
-                    // se metodo di pagamento non è selezionato
-                    if (cash.isSelected() == false && creditCard.isSelected() == false) {
-                        JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment method is not selected", "", JOptionPane.ERROR_MESSAGE);
+                    //todo da ELIMINARE  se metodo di pagamento non è selezionato
+                  //  if (cash.isSelected() == false && creditCard.isSelected() == false) {
+                   //     JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment method is not selected", "", JOptionPane.ERROR_MESSAGE);
 
-                    } else {
+                   // }
+                    else {
                         setNewValues();
 
                         JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
