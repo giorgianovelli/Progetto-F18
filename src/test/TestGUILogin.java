@@ -36,7 +36,6 @@ class TestGUILogin {
     private JButton buttonLoginSitter = new JButton(" Login as Dogsitter");
     private JButton buttonNewAccount = new JButton(" Create a new account ");
     private JLabel status = new JLabel(" ");
-    private customerClient.CustomerProxy proxy = new customerClient.CustomerProxy();
 
 
 
