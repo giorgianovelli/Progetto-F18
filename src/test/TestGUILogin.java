@@ -89,7 +89,7 @@ class TestGUILogin {
         setLocation(screenWidth / 4, screenHeight / 4);
 
 
-        Image img = getToolkit().getImage("logo.jpg");
+        Image img = getToolkit().getImage("new-logo.jpg");
         setIconImage(img);
         setTitle("Login ");
 
@@ -124,7 +124,7 @@ class TestGUILogin {
         public ImagePanel() {
 
             //acquisisco l'immagine
-            image = Toolkit.getDefaultToolkit().getImage("images/logo.jpg");
+            image = Toolkit.getDefaultToolkit().getImage("images/new-logo.jpg");
             MediaTracker tracker = new MediaTracker(this);
             tracker.addImage(image, 0);
             try {
