@@ -45,15 +45,12 @@ public abstract class Proxy {
      */
     protected String getReply(String clientMsg) {
         try {
-            // open a socket connection
             socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
-            // Apre i canali I/O
             msgIn = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
             msgOut = new PrintStream(socket.getOutputStream(), true);
             msgOut.println(clientMsg);
             msgOut.flush();
-            // Legge dal server
             serverReply = msgIn.readLine();
             System.out.println("Received message from server: " + serverReply);
             msgOut.close();
@@ -66,6 +63,11 @@ public abstract class Proxy {
     }
 
 
+    /**
+     * Decode a String that corresponding to a meeting point.
+     * @param msg (or fragment of a message) received form the server.
+     * @return the meeting point.
+     */
     protected Address decodeMeetingPoint(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
         String country = tokenMsg.nextToken();
@@ -76,6 +78,12 @@ public abstract class Proxy {
         return new Address(country, city, street, number, cap);
     }
 
+
+    /**
+     * Decode a String that corresponding to an address.
+     * @param msg (or fragment of a message) received form the server.
+     * @return an object of type Address.
+     */
     protected Address decodeAddress(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "#");
         String country = tokenMsg.nextToken();
@@ -86,6 +94,12 @@ public abstract class Proxy {
         return new Address(country, city, street, number, cap);
     }
 
+
+    /**
+     * Decode a String that corresponding to a payment method.
+     * @param msg (or fragment of a message) received form the server.
+     * @return the payment method.
+     */
     protected PaymentMethod decodePaymentMethod(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
         String number = tokenMsg.nextToken();
