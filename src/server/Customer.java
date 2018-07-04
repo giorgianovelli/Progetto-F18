@@ -1,3 +1,7 @@
+/**
+ * This class contains some methods of the actions that a customer can do.
+ */
+
 package server;
 
 import database.DBConnector;
@@ -21,9 +25,30 @@ import static server.tools.dateTime.DateTimeTools.getAge;
 
 
 public class Customer extends User implements InterfaceCustomer{
+
+    /**
+     * List of dogs.
+     */
     private HashSet<Dog> dogList;
+
+    /**
+     * HashSet of registered DogSitter.
+     */
     private HashSet<DogSitter> dogSitterSearchList;
 
+
+
+    /**
+     * Create a new Customer.
+     * @param email customer's email address.
+     * @param name customer's name.
+     * @param surname customer's surname.
+     * @param password customer's password.
+     * @param phoneNumber customer's phone number.
+     * @param dateOfBirth customer's date of birth.
+     * @param address customer's address.
+     * @param paymentMethod customer's payment method.
+     */
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod) {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);
