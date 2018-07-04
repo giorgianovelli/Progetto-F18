@@ -58,20 +58,20 @@ public class DogSitter extends User implements InterfaceDogSitter {
     /**
      * Create a new DogSitter using the following parameters.
      *
-     * @param email
-     * @param name
-     * @param surname
-     * @param password
-     * @param phoneNumber
-     * @param dateOfBirth
-     * @param address
-     * @param paymentMethod
-     * @param area
-     * @param listDogSize
-     * @param dogsNumber
-     * @param biography
-     * @param dateTimeAvailability
-     * @param acceptCash
+     * @param email dog's sitter email address.
+     * @param name dog sitter's name.
+     * @param surname dog sitter's surname.
+     * @param password dog sitter's password.
+     * @param phoneNumber dog sitter's phone number.
+     * @param dateOfBirth dog sitter's date of birth.
+     * @param address dog sitter's address.
+     * @param paymentMethod dog sitter's payment method.
+     * @param area dog sitter's area of work.
+     * @param listDogSize the list of dogs' sizes accepted by the dog sitter.
+     * @param dogsNumber the number of dogs that dog sitter accepts simultaneously.
+     * @param biography a short biography.
+     * @param dateTimeAvailability dog sitter's availability.
+     * @param acceptCash true if dog sitter accepts cash payment.
      */
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
@@ -92,14 +92,14 @@ public class DogSitter extends User implements InterfaceDogSitter {
     /**
      * Create a new DogSitter using the following parameters.
      *
-     * @param email
-     * @param name
-     * @param surname
-     * @param password
-     * @param phoneNumber
-     * @param dateOfBirth
-     * @param address
-     * @param paymentMethod
+     * @param email dog's sitter email address.
+     * @param name dog sitter's name.
+     * @param surname dog sitter's surname.
+     * @param password dog sitter's password.
+     * @param phoneNumber dog sitter's phone number.
+     * @param dateOfBirth dog sitter's date of birth.
+     * @param address dog sitter's address.
+     * @param paymentMethod dog sitter's payment method.
      */
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod) {
@@ -109,7 +109,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the list of the assignment of the dog sitter.
      * @return the HashMap of dog sitter's assignments. The Integer key is the code of Assignment.
      */
     public HashMap<Integer, Assignment> getAssignmentList(){
@@ -119,7 +119,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the list of the reviews of the dog sitter.
      * @return the HashMap of reviews. The Integer key is the code of the assignment associated to Review.
      */
     public HashMap<Integer, Review> getReviewList(){
@@ -128,8 +128,8 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
-     * @return the Availability of DogSitter.
+     * Get dog sitter's availability.
+     * @return dog sitter's availability.
      */
     public Availability getDateTimeAvailability() {
         return dateTimeAvailability;
@@ -137,8 +137,8 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
-     * @return true if DogSitter accecepts cash payment.
+     * Get true id dog sitter accepts cash payment.
+     * @return true if dog sitter accecepts cash payment.
      */
     public boolean isAcceptingCash() {
         return acceptCash;
@@ -146,7 +146,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's email address.
      * @return the email address of the dog sitter.
      */
     public String getEmail(){
@@ -155,7 +155,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the number of dogs that the dog sitter accepts simultaneously.
      * @return the number of dogs that the dog sitter accepts simultaneously.
      */
     public int getDogsNumber() {
@@ -164,7 +164,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the list of dogs' sizes that the dog sitter accepts.
      * @return the HashSet of DogSize that the dog sitter accepts.
      */
     public HashSet<DogSize> getListDogSize() {
@@ -173,7 +173,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's area of work.
      * @return the object of type Area containing the cities where the dog sitter works.
      */
     public Area getArea() {
@@ -182,8 +182,8 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
-     * @return the dog sitter's Address.
+     * Get the dog sitter's address.
+     * @return the dog sitter's address.
      */
     public Address getAddress(){
         return address;
@@ -199,7 +199,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's name.
      * @return dog sitter's name.
      */
     public String getName(){
@@ -207,7 +207,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
     }
 
     /**
-     *
+     * Get the dog sitter's surname.
      * @return dog sitter's surname
      */
     public String getSurname(){
@@ -217,7 +217,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's name.
-     * @param name
+     * @param name new dog sitter's name.
      * @return true if the update is successfully performed.
      */
     public boolean updateName(String name){
@@ -244,7 +244,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's surname
-     * @param surname
+     * @param surname new dog sitter's surname.
      * @return true if the update is successfully performed.
      */
     public boolean updateSurname(String surname){
@@ -271,7 +271,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's password
-     * @param password
+     * @param password new dog sitter's password.
      * @return true if the update is successfully performed.
      */
     public boolean updatePassword(String password){
@@ -298,7 +298,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's phone number.
-     * @param phoneNumber
+     * @param phoneNumber new dog sitter's phone number.
      * @return true if the update is successfully performed.
      */
     public boolean updatePhoneNumber(String phoneNumber){
@@ -325,7 +325,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's date of birth.
-     * @param dateOfBirth
+     * @param dateOfBirth new dog sitter's date of birth.
      * @return true if the update is successfully performed.
      */
     public boolean updateDateOfBirth(Date dateOfBirth){
@@ -354,11 +354,11 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's Address.
-     * @param country
-     * @param city
-     * @param street
-     * @param number
-     * @param cap
+     * @param country the country in which the dog sitter lives.
+     * @param city the city where the dog sitter lives.
+     * @param street the street in which the dog sitter lives.
+     * @param number the civic number
+     * @param cap the cap of the city where the dog sitter lives.
      * @return true if the update is successfully performed.
      */
     public boolean updateAddress(String country, String city, String street, String number, String cap){
@@ -385,11 +385,11 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's PaymentMethod.
-     * @param number
-     * @param name
-     * @param surname
-     * @param expirationDate
-     * @param cvv
+     * @param number card's number.
+     * @param name the owner's name.
+     * @param surname thw owner's surname.
+     * @param expirationDate the expiration date of the card.
+     * @param cvv the card's secure code.
      * @return true if the update is successfully performed.
      */
     public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
@@ -436,7 +436,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's cash flag.
-     * @param acceptCash
+     * @param acceptCash true if dog sitter accepts cash payment.
      * @return true if the update is successfully performed.
      */
     public boolean updateCashFlag(boolean acceptCash){
@@ -463,8 +463,8 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the state of the Assignment related to code.
-     * @param code
-     * @param state
+     * @param code the code of the assignment.
+     * @param state the new state of the assignment.
      * @return true if the update is successfully performed.
      */
     public boolean updateAssignmentState(int code, Boolean state){
@@ -503,7 +503,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Add a new city where the dog sitter can work.
-     * @param city
+     * @param city the city to add.
      * @return true if the update is successfully performed.
      */
     public boolean addNewPlaceArea(String city){
@@ -526,7 +526,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Remove a city where the dog sitter can't work no longer.
-     * @param city
+     * @param city the city to remove.
      * @return true if the update is successfully performed.
      */
     public boolean removePlaceArea(String city){
@@ -549,7 +549,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the number of dogs that the dog sitter accepts simultaneously.
-     * @param nDogs
+     * @param nDogs the new number of dogs that the dog sitter accepts simultaneously.
      * @return true if the update is successfully performed.
      */
     public boolean updateDogsNumber(int nDogs){
@@ -576,10 +576,10 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the DogSize that the dog sitter accepts.
-     * @param small
-     * @param medium
-     * @param big
-     * @param giant
+     * @param small if dog sitter will accept small dogs.
+     * @param medium if dog sitter will accept medium dogs.
+     * @param big if dog sitter will accept big dogs.
+     * @param giant if dog sitter will accept giant dogs.
      * @return true if the update is successfully performed.
      */
     public boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant){
@@ -618,7 +618,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
     /**
      * Update the dog sitter's availability
-     * @param availability
+     * @param availability the new dog sitter's availability.
      * @return true if the update is successfully performed.
      */
     public boolean updateDateTimeAvailability(Availability availability){

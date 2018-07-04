@@ -60,7 +60,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
     }
 
     /**
-     *
+     * Get the list of the assignment of the dog sitter.
      * @return the HashMap of dog sitter's assignments. The Integer key is the code of the Assignment.
      */
     public HashMap<Integer, Assignment> getAssignmentList() {
@@ -97,7 +97,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
     /**
      * Decode a String corresponding to an HashSet of dogs.
-     * @param msg (or fragment of a message) received from the server.
+     * @param msg the message (or the fragment of a message) received from the server.
      * @return an HashMap of dogs.
      */
     private HashSet<Dog> decodeDogList(String msg) {
@@ -123,8 +123,8 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
-     * @param code of the assignment.
+     * Get customer's name of the assignment.
+     * @param code the code of the assignment.
      * @return the customer's name of the assignment related to code.
      */
     public String getCustomerNameOfAssignment(int code) {
@@ -133,8 +133,8 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
-     * @param code of the assignment.
+     * Get the customer's surname of the assignment.
+     * @param code the code of the assignment.
      * @return the customer's surname of the assignment related to code.
      */
     public String getCustomerSurnameOfAssignment(int code) {
@@ -143,8 +143,8 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
-     * @param code of the assignment.
+     * Get the review indicated with code.
+     * @param code the code of the assignment.
      * @return the review related to assignment indicated with code.
      */
     public Review getReview(int code){
@@ -166,7 +166,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's name.
      * @return the dog sitter's name.
      */
     public String getName(){
@@ -175,7 +175,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's surname.
      * @return the dog sitter's surname.
      */
     public String getSurname(){
@@ -184,7 +184,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's password.
      * @return the dog sitter's password.
      */
     public String getPassword(){
@@ -193,7 +193,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's password.
      * @return the dog sitter's phone number.
      */
     public String getPhoneNumber(){
@@ -202,7 +202,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's date of birth.
      * @return the dog sitter's date of birth.
      */
     public Date getDateOfBirth(){
@@ -218,7 +218,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's address.
      * @return the dog sitter's address.
      */
     public Address getAddress(){
@@ -228,7 +228,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's payment method.
      * @return the dog sitter's payment method.
      */
     public PaymentMethod getPaymentMethod(){
@@ -314,8 +314,8 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
      * @param number card's number
      * @param name owner's name
      * @param surname owner's surname
-     * @param expirationDate
-     * @param cvv
+     * @param expirationDate the card's expiration date.
+     * @param cvv the card's secure code.
      * @return true if the update is successfully performed.
      */
     public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
@@ -327,7 +327,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the list of reviews written on the dog sitter.
      * @return the HashSet of reviews. The Integer value is the code of the Assignment.
      * associated to Review.
      */
@@ -376,7 +376,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the number of dogs that dog sitter accepts simultaneously.
      * @return the number of dogs accepted simoultaneously by the dog sitter.
      */
     public int getDogsNumber() {
@@ -386,7 +386,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the dog sitter's area of work.
      * @return the area of work of dog sitter.
      */
     public Area getArea() {
@@ -401,7 +401,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get true if dog sitter accepts cash.
      * @return true if dog sitter accepts cash payment.
      */
     public boolean isAcceptingCash() {
@@ -415,7 +415,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get the list of dogs' size accepted by the dog sitters.
      * @return HashSet of DogSize accepted by dog sitter.
      */
     public HashSet<DogSize> getListDogSize(){
@@ -477,7 +477,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
 
     /**
-     *
+     * Get dog sitter's availability.
      * @return the dog sitter's availability.
      */
     public Availability getDateTimeAvailability(){
@@ -508,10 +508,10 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
     /**
      * Update the dogs' sizes accepted by the dog sitter.
-     * @param small
-     * @param medium
-     * @param big
-     * @param giant
+     * @param small true if dog sitter accepts small dogs.
+     * @param medium true if dog sitter accepts medium dogs.
+     * @param big true if dog sitter accepts big dogs.
+     * @param giant true if dog sitter accepts giant dogs.
      * @return true if the update is successfully performed.
      */
     public boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant){
