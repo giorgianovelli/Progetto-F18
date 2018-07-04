@@ -1,6 +1,6 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 //import org.omg.CORBA.CustomMarshal;
 import server.Assignment;
 

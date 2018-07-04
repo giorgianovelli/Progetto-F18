@@ -1,11 +1,8 @@
 package test;
 
-import customerClient.CustomerProxy;
-import dogSitterClient.DogSitterProxy;
+import client.proxy.DogSitterProxy;
 import server.Availability;
-import server.DogSitter;
 import server.DogSize;
-import server.SignUp;
 import server.bank.PaymentMethod;
 import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;

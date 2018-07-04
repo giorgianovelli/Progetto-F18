@@ -1,7 +1,10 @@
+/**
+ * This class contains some methods of the actions that a customer can do.
+ */
+
 package server;
 
 import database.DBConnector;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -9,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import interfaces.InterfaceCustomer;
 import server.bank.Bank;
 import server.bank.PaymentMethod;
@@ -17,16 +19,36 @@ import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 import server.tools.dateTime.DateTimeDHMS;
-
 import static server.tools.DoubleTools.round2Decimal;
 import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 import static server.tools.dateTime.DateTimeTools.getAge;
 
 
 public class Customer extends User implements InterfaceCustomer{
+
+    /**
+     * List of dogs.
+     */
     private HashSet<Dog> dogList;
+
+    /**
+     * HashSet of registered DogSitter.
+     */
     private HashSet<DogSitter> dogSitterSearchList;
 
+
+
+    /**
+     * Create a new Customer.
+     * @param email customer's email address.
+     * @param name customer's name.
+     * @param surname customer's surname.
+     * @param password customer's password.
+     * @param phoneNumber customer's phone number.
+     * @param dateOfBirth customer's date of birth.
+     * @param address customer's address.
+     * @param paymentMethod customer's payment method.
+     */
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod) {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
         dogList = new HashSet<Dog>(3);
@@ -39,11 +61,28 @@ public class Customer extends User implements InterfaceCustomer{
         dogSitterSearchList = new HashSet<DogSitter>();
     }
 
+
+    /**
+     *
+     * @return the HashMap of the assignments of the customer. The Integer key is the code of the Assignment.
+     */
     public HashMap<Integer, Assignment> getAssignmentList(){
         Singleton singleton = new Singleton();
         return singleton.getCustomerListAssignmentFromDB(email);
     }
 
+
+    /**
+     * Confirm an assignment with the following parameters.
+     * @param emailDogSitter dog sitter's email.
+     * @param dateStartAssignment start of the assignment.
+     * @param dateEndAssignment end of the assignment.
+     * @param selectedDogs the list of dogs to assign to dog sitter.
+     * @param meetingPoint the place where customer and dog sitter will meet.
+     * @param paymentInCash true if customer will pay dog sitter in cash
+     * @return true if assignment is successfully confirmed.
+     */
+    //TODO refactor
     public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash) {
         //chiamata alla classe banca per effettuare la transazione
         DBConnector dbConnector = new DBConnector();
@@ -98,6 +137,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Remove the assignment indicated with code.
+     * @param code the code of assignment to remove.
+     * @return true if the assignment is successfully removed.
+     */
     public boolean removeAssignment(int code) {
         Assignment a = null;
         a = assignmentList.get(code);
@@ -124,6 +169,15 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+    /**
+     * Add a review to an Assignment (if it doesn't already exist).
+     * @param codeAssignment the code of the assignment to be reviewed.
+     * @param emailDogSitter dog sitter's email address.
+     * @param rating an int value from 1 to 5.
+     * @param title the title of review.
+     * @param comment the text of review.
+     * @return true if the review is successfully added.
+     */
     public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment) {
         SimpleDateFormat dateFormatSql = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateReview = new Date();
@@ -155,6 +209,12 @@ public class Customer extends User implements InterfaceCustomer{
         return true;
     }
 
+
+    /**
+     * Remove the review indicated with code.
+     * @param code the code of review to be remove.
+     * @return true if the review is removed successfully.
+     */
     public boolean removeReview(Integer code) {
         Review r = null;
         r = reviewList.get(code);
@@ -177,32 +237,16 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    //TODO inutile!!
-    public HashMap<Integer, Assignment> listAssignment() {
-        Assignment a = null;
-        for (Integer key : assignmentList.keySet()) {
-            a = assignmentList.get(key);
-            System.out.println(a.toString());
-        }
-        if (a == null) {
-            System.out.println("There are no assignment available!");
-        }
-        return assignmentList;
-    }
 
-    //TODO inutile!!
-    public HashMap<Integer, Review> listReview() {
-        Review r = null;
-        for (Integer key : reviewList.keySet()) {
-            r = reviewList.get(key);
-            System.out.println(r.toString());
-        }
-        if (r == null) {
-            System.out.println("There are no reviews available!");
-        }
-        return reviewList;
-    }
-
+    /**
+     * Add a new dog.
+     * @param customerEmail owner's email address.
+     * @param name dog's name.
+     * @param breed dog's breed.
+     * @param dateOfBirth dog's date of birth.
+     * @param weight dog's weight.
+     * @return true if the new dog is successfully added.
+     */
     public boolean addDog(String customerEmail, String name, String breed, Date dateOfBirth, double weight) {
         DBConnector dbConnector = new DBConnector();
         DogSize size;
@@ -230,6 +274,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Disable the dog indicated by ID.
+     * @param ID the ID of the dog to be removed.
+     * @return true if selected dog is successfully removed.
+     */
     public boolean disableDog(int ID){
         Singleton singleton = new Singleton();
         Dog dog = singleton.createDogFromDB(ID);
@@ -249,22 +299,31 @@ public class Customer extends User implements InterfaceCustomer{
         return isDisabled;
     }
 
-    //public HashMap<Integer, Assignment> getAssignmentList() {
-    //    return assignmentList;
-    //}
 
+    /**
+     * Get the list of reviews written by the customer.
+     * @return the HashMap of reviews. The Integer key is the code of the assignment
+     * related to the review.
+     */
     public HashMap<Integer, Review> getReviewList() {
         return reviewList;
     }
 
-    //public Address getAddress() {
-    //    return address;
-    //}
 
+    /**
+     * Get the list of dogs.
+     * @return the HashSet of dogs.
+     */
     public HashSet<Dog> getDogList() {
         return dogList;
     }
 
+
+    /**
+     * Get the list of dogs from database.
+     * @param email the email address of customer.
+     * @return the HashSet of dogs.
+     */
     private HashSet<Dog> getDogListFromDB(String email) {
         DBConnector dbConnector = new DBConnector();
         try {
@@ -282,6 +341,16 @@ public class Customer extends User implements InterfaceCustomer{
         return dogList;
     }
 
+
+    /**
+     * Perform a search for a dog sitter.
+     * @param dateStart start of the assignment.
+     * @param dateEnd end of the assignment.
+     * @param meetingPoint the place where customer and dog sitter will meet.
+     * @param dogList the list of dogs to assign to dog sitter.
+     * @param cash true if customer will pay dog sitter in cash.
+     * @return an HashSet of dog sitters available for the assignment.
+     */
     public HashSet<String> search(Date dateStart, Date dateEnd, Address meetingPoint, HashSet<Dog> dogList, boolean cash){
         //TODO Al termine, rimuovere le System.out utili per il debug
 
@@ -291,13 +360,13 @@ public class Customer extends User implements InterfaceCustomer{
         int nStartDay = Integer.parseInt(dateNumDayOfWeek.format(dateStart));
         int nEndDay = Integer.parseInt(dateNumDayOfWeek.format(dateEnd));
 
-        searchStep0(meetingPoint);
-        searchStep1(dateStart, dateEnd, nStartDay, nEndDay);
-        searchStep2(dateStart, dateEnd, nStartDay, nEndDay);
-        searchStep3(dogList);
-        searchStep4(dogList);
-        searchStep5(dateStart, dateEnd);
-        searchStep6(cash);
+        searchMeetingPoint(meetingPoint);
+        searchDayOfWork(dateStart, dateEnd, nStartDay, nEndDay);
+        searchTimeOfWork(dateStart, dateEnd, nStartDay, nEndDay);
+        searchDogsNumber(dogList);
+        searchDogSize(dogList);
+        searchAvailable(dateStart, dateEnd);
+        searchPaymentMethod(cash);
 
         System.out.println("Dog sitters available:");
         if (dogSitterSearchList.size() != 0){
@@ -317,7 +386,12 @@ public class Customer extends User implements InterfaceCustomer{
         return dogSitterMailList;
     }
 
-    private void searchStep0(Address meetingPoint){
+
+    /**
+     * Filter dog sitters that work in the city selected by customer.
+     * @param meetingPoint the place where customer and dog sitter will meet.
+     */
+    private void searchMeetingPoint(Address meetingPoint){
         //funzione che filtra i dog sitter in base al meeting point
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
@@ -331,7 +405,15 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep1(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
+
+    /**
+     * Filter dog sitters that work in the days of the week selected by the customer.
+     * @param dateStart start of the assignment.
+     * @param dateEnd end of the assignment.
+     * @param nStartDay number of the day of the week in which the assignment starts.
+     * @param nEndDay number of the day of the week in which the assignment ends.
+     */
+    private void searchDayOfWork(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //rimuove i dogsitter che non lavorano nei giorni richiesti dal cliente
         int i;
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -348,7 +430,15 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep2(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
+
+    /**
+     * Filter dog sitters that work in times selected by the customer.
+     * @param dateStart start of the assignment.
+     * @param dateEnd end of the assignment.
+     * @param nStartDay number of the day of the week in which the assignment starts.
+     * @param nEndDay number of the day of the week in which the assignment ends.
+     */
+    private void searchTimeOfWork(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
         int i;
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -370,7 +460,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep3(HashSet<Dog> dogList){
+
+    /**
+     * Filter dog sitters that accept at least the number of dogs requested by the customer.
+     * @param dogList the list of dogs to assign to the dog sitter.
+     */
+    private void searchDogsNumber(HashSet<Dog> dogList){
         //funzione che escude i dogsitter che non danno disponibilità
         //per il numero di cani richiesto dall'utente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -384,7 +479,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep4(HashSet<Dog> dogList){
+
+    /**
+     * Filter dog sitters that accept the sizes of dogs requested by the customer.
+     * @param dogList the list of dogs to assign to the dog sitter.
+     */
+    private void searchDogSize(HashSet<Dog> dogList){
         //funzione che esclude i dogsitter che non danno dispobilità
         //per le taglie indicate dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -401,7 +501,13 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep5(Date dateStart, Date dateEnd){
+
+    /**
+     * Filter dog sitters that are available in the period selected by the customer.
+     * @param dateStart start of the assignment.
+     * @param dateEnd end of the assignment.
+     */
+    private void searchAvailable(Date dateStart, Date dateEnd){
         //funzione che esclude i dog sitter che hanno già altri impegni nel periodo impostato dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
@@ -427,7 +533,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep6(boolean cash){
+
+    /**
+     * Filter dog sitter based on the payment method.
+     * @param cash if customer want to pay in cash.
+     */
+    private void searchPaymentMethod(boolean cash){
         //nel caso in cui il cliente vuole pagare in contanti,
         //esclude i dog sitter che accettano il pagamento solo con carta di credito
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -443,6 +554,15 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Estimate the price of the assignment with the following parameters.
+     * @param dogList the list of dogs to assign to the dog sitter.
+     * @param dateStart start of assignment.
+     * @param dateEnd end of assignment.
+     * @return the price of the assignment.
+     */
+    //TODO refactor
     public double estimatePriceAssignment(HashSet<Dog> dogList, Date dateStart, Date dateEnd){
         DBConnector dbConnector = new DBConnector();
         HashMap<DogSize, Double> priceMap = new HashMap<DogSize, Double>(4);
@@ -505,6 +625,12 @@ public class Customer extends User implements InterfaceCustomer{
         return round2Decimal(price);
     }
 
+
+    /**
+     * Update the customer's name.
+     * @param name the new customer's name.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateName(String name){
         this.name = name;
         DBConnector dbConnector = new DBConnector();
@@ -526,6 +652,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the customer's surname.
+     * @param surname the new customer's surname.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateSurname(String surname){
         this.surname = surname;
         DBConnector dbConnector = new DBConnector();
@@ -547,6 +679,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the customer's password.
+     * @param password the new customer's password.
+     * @return true if the update is successfully performed.
+     */
     public boolean updatePassword(String password){
         this.password = password;
         DBConnector dbConnector = new DBConnector();
@@ -568,6 +706,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the customer's phone number.
+     * @param phoneNumber the new customer's phone number.
+     * @return true if the update is successfully performed.
+     */
     public boolean updatePhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
         DBConnector dbConnector = new DBConnector();
@@ -589,6 +733,12 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the customer's date of birth.
+     * @param dateOfBirth the new customer's date of birth.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDateOfBirth(Date dateOfBirth){
         this.dateOfBirth = dateOfBirth;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -612,6 +762,16 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the customer's address with the following data inserted by the customer.
+     * @param country the country in which the customer lives.
+     * @param city the city where the customer lives.
+     * @param street the street in which customer lives.
+     * @param number civic number.
+     * @param cap the cap of the city where the customer lives.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateAddress(String country, String city, String street, String number, String cap){
         this.address = new Address(country, city, street, number, cap);
         DBConnector dbConnector = new DBConnector();
@@ -633,6 +793,16 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the customer's payment method with the following data inserted by the customer.
+     * @param number card's number.
+     * @param name owner's name.
+     * @param surname owner's surname.
+     * @param expirationDate the card's expiration date.
+     * @param cvv the secure code of the card.
+     * @return true if the update is successfully performed.
+     */
     public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
         double amount = this.paymentMethod.getAmount();
         String oldNum = this.paymentMethod.getNumber();
@@ -674,6 +844,10 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Load the list of the dog sitters registered to Canibau.
+     */
     private void loadDogSitterList(){
         DBConnector dbConnector = new DBConnector();
         Singleton singleton = new Singleton();

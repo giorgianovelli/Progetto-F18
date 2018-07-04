@@ -1,7 +1,6 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
-import server.Assignment;
+import client.proxy.CustomerProxy;
 import server.Dog;
 import server.places.Address;
 

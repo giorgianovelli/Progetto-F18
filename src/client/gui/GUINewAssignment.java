@@ -2,7 +2,7 @@ package client.gui;
 
 
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Dog;
 import server.places.Address;
 

@@ -1,12 +1,10 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
-import server.Customer;
-import javax.print.attribute.DocAttribute;
+
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

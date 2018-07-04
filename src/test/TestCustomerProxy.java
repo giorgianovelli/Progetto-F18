@@ -1,15 +1,9 @@
 package test;
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Dog;
-import server.Review;
 import server.Singleton;
-import server.places.Address;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class TestCustomerProxy {

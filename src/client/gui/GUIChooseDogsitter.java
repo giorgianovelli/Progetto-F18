@@ -1,7 +1,7 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
-import dogSitterClient.DogSitterProxy;
+import client.proxy.CustomerProxy;
+import client.proxy.DogSitterProxy;
 import server.Dog;
 import server.places.Address;
 

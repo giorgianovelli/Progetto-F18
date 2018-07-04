@@ -1,30 +1,78 @@
+/**
+ * This class contains some methods of the actions that a dog sitter can do.
+ */
+
 package server;
 
 import database.DBConnector;
 import interfaces.InterfaceDogSitter;
 import server.bank.PaymentMethod;
-import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
-
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-//import static staticClasses.ObjectCreator.getDogSitterListAssignmentFromDB;
 
 public class DogSitter extends User implements InterfaceDogSitter {
+    /**
+     * The places where the dog sitter works.
+     */
     private Area area;
+
+    /**
+     * The sizes of dogs that the dog sitter accepts.
+     */
     private HashSet<DogSize> listDogSize;
+
+    /**
+     * The number of dogs that dog sitter accepts simultaneously.
+     */
     private int dogsNumber;
+
+    /**
+     * A short biography.
+     */
     private String biography;
+
+    /**
+     * The days in which dog sitter works.
+     */
     private Availability dateTimeAvailability;
+
+    /**
+     * The flag indicating if dog sitter accepts cash payment
+     */
     private boolean acceptCash;
+
+    /**
+     * A int costant indicating the number of days in a week.
+     */
     final int NWEEKDAYS = 7;
 
+
+
+    /**
+     * Create a new DogSitter using the following parameters.
+     *
+     * @param email dog's sitter email address.
+     * @param name dog sitter's name.
+     * @param surname dog sitter's surname.
+     * @param password dog sitter's password.
+     * @param phoneNumber dog sitter's phone number.
+     * @param dateOfBirth dog sitter's date of birth.
+     * @param address dog sitter's address.
+     * @param paymentMethod dog sitter's payment method.
+     * @param area dog sitter's area of work.
+     * @param listDogSize the list of dogs' sizes accepted by the dog sitter.
+     * @param dogsNumber the number of dogs that dog sitter accepts simultaneously.
+     * @param biography a short biography.
+     * @param dateTimeAvailability dog sitter's availability.
+     * @param acceptCash true if dog sitter accepts cash payment.
+     */
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
                      String biography, Availability dateTimeAvailability, boolean acceptCash) {
@@ -40,61 +88,138 @@ public class DogSitter extends User implements InterfaceDogSitter {
         this.reviewList = singleton.getDogSitterReviewList(this);
     }
 
+
+    /**
+     * Create a new DogSitter using the following parameters.
+     *
+     * @param email dog's sitter email address.
+     * @param name dog sitter's name.
+     * @param surname dog sitter's surname.
+     * @param password dog sitter's password.
+     * @param phoneNumber dog sitter's phone number.
+     * @param dateOfBirth dog sitter's date of birth.
+     * @param address dog sitter's address.
+     * @param paymentMethod dog sitter's payment method.
+     */
     public DogSitter(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                      Address address, PaymentMethod paymentMethod) {
         //metodo provvisorio per eseguire test
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
     }
 
+
+    /**
+     * Get the list of the assignment of the dog sitter.
+     * @return the HashMap of dog sitter's assignments. The Integer key is the code of Assignment.
+     */
     public HashMap<Integer, Assignment> getAssignmentList(){
         Singleton singleton = new Singleton();
         return singleton.getDogSitterListAssignmentFromDB(email);
     }
 
+
+    /**
+     * Get the list of the reviews of the dog sitter.
+     * @return the HashMap of reviews. The Integer key is the code of the assignment associated to Review.
+     */
     public HashMap<Integer, Review> getReviewList(){
         return reviewList;
     }
 
+
+    /**
+     * Get dog sitter's availability.
+     * @return dog sitter's availability.
+     */
     public Availability getDateTimeAvailability() {
         return dateTimeAvailability;
     }
 
+
+    /**
+     * Get true id dog sitter accepts cash payment.
+     * @return true if dog sitter accecepts cash payment.
+     */
     public boolean isAcceptingCash() {
         return acceptCash;
     }
 
+
+    /**
+     * Get the dog sitter's email address.
+     * @return the email address of the dog sitter.
+     */
     public String getEmail(){
         return email;
     }
 
+
+    /**
+     * Get the number of dogs that the dog sitter accepts simultaneously.
+     * @return the number of dogs that the dog sitter accepts simultaneously.
+     */
     public int getDogsNumber() {
         return dogsNumber;
     }
 
+
+    /**
+     * Get the list of dogs' sizes that the dog sitter accepts.
+     * @return the HashSet of DogSize that the dog sitter accepts.
+     */
     public HashSet<DogSize> getListDogSize() {
         return listDogSize;
     }
 
+
+    /**
+     * Get the dog sitter's area of work.
+     * @return the object of type Area containing the cities where the dog sitter works.
+     */
     public Area getArea() {
         return area;
     }
 
+
+    /**
+     * Get the dog sitter's address.
+     * @return the dog sitter's address.
+     */
     public Address getAddress(){
         return address;
     }
 
+
+    /**
+     * Print area attribute.
+     */
     public void printArea(){
         area.printPlaces();
     }
 
+
+    /**
+     * Get the dog sitter's name.
+     * @return dog sitter's name.
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Get the dog sitter's surname.
+     * @return dog sitter's surname
+     */
     public String getSurname(){
         return surname;
     }
 
+
+    /**
+     * Update the dog sitter's name.
+     * @param name new dog sitter's name.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateName(String name){
         this.name = name;
         DBConnector dbConnector = new DBConnector();
@@ -116,6 +241,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's surname
+     * @param surname new dog sitter's surname.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateSurname(String surname){
         this.surname = surname;
         DBConnector dbConnector = new DBConnector();
@@ -137,6 +268,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's password
+     * @param password new dog sitter's password.
+     * @return true if the update is successfully performed.
+     */
     public boolean updatePassword(String password){
         this.password = password;
         DBConnector dbConnector = new DBConnector();
@@ -158,6 +295,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's phone number.
+     * @param phoneNumber new dog sitter's phone number.
+     * @return true if the update is successfully performed.
+     */
     public boolean updatePhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
         DBConnector dbConnector = new DBConnector();
@@ -179,6 +322,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's date of birth.
+     * @param dateOfBirth new dog sitter's date of birth.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDateOfBirth(Date dateOfBirth){
         this.dateOfBirth = dateOfBirth;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -202,6 +351,16 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's Address.
+     * @param country the country in which the dog sitter lives.
+     * @param city the city where the dog sitter lives.
+     * @param street the street in which the dog sitter lives.
+     * @param number the civic number
+     * @param cap the cap of the city where the dog sitter lives.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateAddress(String country, String city, String street, String number, String cap){
         this.address = new Address(country, city, street, number, cap);
         DBConnector dbConnector = new DBConnector();
@@ -223,6 +382,16 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's PaymentMethod.
+     * @param number card's number.
+     * @param name the owner's name.
+     * @param surname thw owner's surname.
+     * @param expirationDate the expiration date of the card.
+     * @param cvv the card's secure code.
+     * @return true if the update is successfully performed.
+     */
     public boolean updatePaymentMethod(String number, String name, String surname, Date expirationDate, String cvv){
         double amount = this.paymentMethod.getAmount();
         String oldNum = this.paymentMethod.getNumber();
@@ -264,6 +433,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's cash flag.
+     * @param acceptCash true if dog sitter accepts cash payment.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateCashFlag(boolean acceptCash){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -285,6 +460,13 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the state of the Assignment related to code.
+     * @param code the code of the assignment.
+     * @param state the new state of the assignment.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateAssignmentState(int code, Boolean state){
         DBConnector dbConnector = new DBConnector();
 
@@ -318,6 +500,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Add a new city where the dog sitter can work.
+     * @param city the city to add.
+     * @return true if the update is successfully performed.
+     */
     public boolean addNewPlaceArea(String city){
         DBConnector dbConnector = new DBConnector();
 
@@ -335,6 +523,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Remove a city where the dog sitter can't work no longer.
+     * @param city the city to remove.
+     * @return true if the update is successfully performed.
+     */
     public boolean removePlaceArea(String city){
         DBConnector dbConnector = new DBConnector();
         if (area.contains(city)){
@@ -352,6 +546,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the number of dogs that the dog sitter accepts simultaneously.
+     * @param nDogs the new number of dogs that the dog sitter accepts simultaneously.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogsNumber(int nDogs){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -373,6 +573,15 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the DogSize that the dog sitter accepts.
+     * @param small if dog sitter will accept small dogs.
+     * @param medium if dog sitter will accept medium dogs.
+     * @param big if dog sitter will accept big dogs.
+     * @param giant if dog sitter will accept giant dogs.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateListDogSize(boolean small, boolean medium, boolean big, boolean giant){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -406,6 +615,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Update the dog sitter's availability
+     * @param availability the new dog sitter's availability.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDateTimeAvailability(Availability availability){
         int i;
         WorkingTime[] workingTimeArray = availability.getArrayDays();
@@ -448,4 +663,12 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Get dog sitter's biography.
+     * @return the dog sitter's biography.
+     */
+    public String getBiography() {
+        return biography;
+    }
 }

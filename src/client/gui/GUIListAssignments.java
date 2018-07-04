@@ -1,9 +1,7 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
-import database.DBConnector;
+import client.proxy.CustomerProxy;
 import server.Assignment;
-import server.Customer;
 import server.Review;
 import enumeration.CalendarState;
 
@@ -13,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;

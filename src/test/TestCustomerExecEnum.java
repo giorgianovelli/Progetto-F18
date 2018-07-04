@@ -1,8 +1,7 @@
 package test;
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Assignment;
-import server.Customer;
 import server.Dog;
 import server.Singleton;
 import server.places.Address;

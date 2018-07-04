@@ -1,6 +1,6 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Assignment;
 import javax.swing.*;
 import java.awt.*;

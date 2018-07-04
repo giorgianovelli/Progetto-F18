@@ -1,9 +1,9 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
+import client.proxy.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
-import server.dateTime.WeekDays;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
-import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class GUICustomer extends GUIHome{
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );

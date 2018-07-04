@@ -1,20 +1,9 @@
 package test;
 
-import dogSitterClient.DogSitterProxy;
+import client.proxy.DogSitterProxy;
 import server.Assignment;
-import server.Availability;
-import server.DogSize;
-import server.Review;
-import server.dateTime.WeekDays;
-import server.dateTime.WorkingTime;
-import server.places.Area;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class TestDogSitterProxy {
     public static void main(String[] args) {
@@ -22,11 +11,11 @@ public class TestDogSitterProxy {
         DogSitterProxy proxyLogin = new DogSitterProxy();
         System.out.println("test login true: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGETTO123"));
         System.out.println("test login false: " + proxyLogin.dogSitterAccessDataVerifier("MARCO.CARTA@GMAIL.COM", "PROGGGGETTO123"));
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+        /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
             System.out.println(a.getCode());
-        }
+        }*/
         /*HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         Assignment a = listAssignment.get(1);
         System.out.println(a.getDateStart());
@@ -110,5 +99,6 @@ public class TestDogSitterProxy {
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime4)), WeekDays.SAT);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);
         proxy.updateDateTimeAvailability(availability);*/
+        proxy.getBiography();
     }
 }
