@@ -86,16 +86,6 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
         return dogList;
     }
 
-    private Address decodeMeetingPoint(String msg) {
-        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
-        String country = tokenMsg.nextToken();
-        String city = tokenMsg.nextToken();
-        String street = tokenMsg.nextToken();
-        String number = tokenMsg.nextToken();
-        String cap = tokenMsg.nextToken();
-        return new Address(country, city, street, number, cap);
-    }
-
     public String getCustomerNameOfAssignment(int code) {
         return getReply("DOGSITTER#GETCUSTOMERNAMEOFASSIGNMENT#" + code);
     }
@@ -156,33 +146,6 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
     public PaymentMethod getPaymentMethod(){
         String serverMsg = getReply("DOGSITTER#GETPAYMENTMETHOD#" + email);
         return decodePaymentMethod(serverMsg);
-    }
-
-    private Address decodeAddress(String msg) {
-        StringTokenizer tokenMsg = new StringTokenizer(msg, "#");
-        String country = tokenMsg.nextToken();
-        String city = tokenMsg.nextToken();
-        String street = tokenMsg.nextToken();
-        String number = tokenMsg.nextToken();
-        String cap = tokenMsg.nextToken();
-        return new Address(country, city, street, number, cap);
-    }
-
-    private PaymentMethod decodePaymentMethod(String msg) {
-        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
-        String number = tokenMsg.nextToken();
-        String name = tokenMsg.nextToken();
-        String surname = tokenMsg.nextToken();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date expirationDate = new Date();
-        try {
-            expirationDate = dateFormat.parse(tokenMsg.nextToken());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String cvv = tokenMsg.nextToken();
-        double amount = Double.parseDouble(tokenMsg.nextToken());
-        return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
 
     public boolean updateName(String name){
