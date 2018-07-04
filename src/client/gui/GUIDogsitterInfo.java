@@ -12,7 +12,7 @@ import java.util.Map;
 public class GUIDogsitterInfo extends JFrame {
 
     final int WIDTH = 512;
-    final int HEIGHT = 412;
+    final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
@@ -48,6 +48,7 @@ public class GUIDogsitterInfo extends JFrame {
 
     private HashMap<Integer, Review> listReview;
     private DogSitterProxy dogSitterProxy;
+    private double average;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
@@ -119,10 +120,24 @@ public class GUIDogsitterInfo extends JFrame {
         labelNameToBeFilled.setText(dogSitterProxy.getName());
         labelSurnameToBeFilled.setText(dogSitterProxy.getSurname());
         labelBirthToBeFilled.setText(strDate);
-        labelAverageToBeFilled.setText("3");
         textBiography.setText(biography.toUpperCase());
 
         listReview = dogSitterProxy.getReviewList();
+
+        average = 0;
+        int c = 0;
+        double sum = 0;
+
+        for (Map.Entry<Integer, Review> entry: listReview.entrySet()) {
+            sum += entry.getValue().getRating();
+            c++;
+        }
+        average = sum / c;
+        String format  = String.format("%.2f", average).replace(",",".");
+        labelAverageToBeFilled.setText(format);
+
+
+
 
         for (Map.Entry<Integer, Review> entry: listReview.entrySet()) {
 
