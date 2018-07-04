@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import customerClient.CustomerProxy;
+import client.CustomerProxy;
 import server.Login;
 
 public class GUILogin extends JFrame {

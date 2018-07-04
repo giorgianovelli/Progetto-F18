@@ -1,4 +1,4 @@
-package customerClient;
+package client;
 
 import interfaces.InterfaceCustomer;
 import server.*;

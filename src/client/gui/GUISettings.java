@@ -1,7 +1,7 @@
 package client.gui;
 
 import client.Calendar;
-import customerClient.CustomerProxy;
+import client.CustomerProxy;
 import server.User;
 import server.places.Address;
 

@@ -1,6 +1,6 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
+import client.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
 import server.Customer;

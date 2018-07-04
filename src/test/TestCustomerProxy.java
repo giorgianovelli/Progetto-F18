@@ -1,6 +1,6 @@
 package test;
 
-import customerClient.CustomerProxy;
+import client.CustomerProxy;
 import server.Dog;
 import server.Review;
 import server.Singleton;

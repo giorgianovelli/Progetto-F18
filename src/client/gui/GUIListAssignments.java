@@ -1,6 +1,6 @@
 package client.gui;
 
-import customerClient.CustomerProxy;
+import client.CustomerProxy;
 import database.DBConnector;
 import server.Assignment;
 import server.Customer;
