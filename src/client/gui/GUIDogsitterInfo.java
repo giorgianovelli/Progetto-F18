@@ -17,7 +17,7 @@ public class GUIDogsitterInfo extends JFrame {
 
 
 
-    //TODO List: media recensioni
+    //TODO List:
 
     private JPanel panelOut = new JPanel();
     private JPanel panelInfo = new JPanel();

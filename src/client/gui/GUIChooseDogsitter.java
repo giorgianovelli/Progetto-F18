@@ -124,6 +124,8 @@ public class GUIChooseDogsitter extends JFrame {
                 }
             };
 
+            
+
             buttonSelect.addActionListener(actionListener);
 
         }
