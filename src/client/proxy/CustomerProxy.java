@@ -96,7 +96,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Decode the list of dogs.
-     * @param msg fragment of message received from the server containing dogs' ID.
+     * @param msg the fragment of the message received from the server containing dogs' ID.
      * @return the HashSet of Dogs.
      */
     private HashSet<Dog> decodeDogList(String msg) {

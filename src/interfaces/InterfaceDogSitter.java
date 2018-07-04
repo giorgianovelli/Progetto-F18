@@ -60,4 +60,6 @@ public interface InterfaceDogSitter {
     boolean updateDateTimeAvailability(Availability availability);
 
     String getBiography();
+
+    //TODO implemetare metodo per rispondere alla recensioni
 }
