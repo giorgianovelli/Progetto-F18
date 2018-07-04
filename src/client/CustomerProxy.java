@@ -1,3 +1,8 @@
+/**
+ * This class performs comunication between client and server translating objects in messages
+ * to send to server and traslating server's messages in objects.
+ */
+
 package client;
 
 import interfaces.InterfaceCustomer;
@@ -11,20 +16,55 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CustomerProxy implements InterfaceCustomer {
+    /**
+     * The buffer containing message received from the server.
+     */
     private BufferedReader msgIn = null;
+
+    /**
+     * The message to send to the server.
+     */
     private PrintStream msgOut = null;
+
+    /**
+     * The socket used for comunicating with the server.
+     */
     private Socket socket = null;
+
+    /**
+     * The message received from the server.
+     */
     private String serverReply;
+
+    /**
+     * The customer's email address
+     */
     private String email;
 
+
+    /**
+     * Create a new CustomerProxy object using the email address of a customer.
+     * @param email
+     */
     public CustomerProxy(String email) {
         this.email = email;
     }
 
+
+    /**
+     * Create a new CustomerProxy object.
+     * WARNING: use this constructor only for calling method
+     * customerAccessDataVerifier(String inputUser, String inputPasword).
+     */
     public CustomerProxy() {
         this.email = null;
     }
 
+    /**
+     * Get a reply from the server on the base of the message sended.
+     * @param clientMsg
+     * @return the message send by the server.
+     */
     private String getReply(String clientMsg) {
         try {
             // open a socket connection
