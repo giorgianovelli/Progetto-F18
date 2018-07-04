@@ -24,7 +24,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Create a new CustomerProxy using the email address of a customer.
-     * @param email
+     * @param email the customer's email address.
      */
     public CustomerProxy(String email) {
         this.email = email;
@@ -95,7 +95,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Decode the list of dogs.
      * @param msg fragment of message received from the server containing dogs' ID.
      * @return the HashSet of Dogs.
      */
@@ -126,8 +126,8 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
-     * @param code of the Assignment.
+     * Get the dog sitter's name of the assignment.
+     * @param code the code of the Assignment.
      * @return the dog sitter's name of the Assignment related to code.
      */
     public String getDogSitterNameOfAssignment(int code) {
@@ -136,9 +136,9 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
-     * @param code of the Assignment.
-     * @return the dog sitter's name of the Assignment related to code.
+     * Get the dog sitter's surname of the assignment.
+     * @param code the code of the Assignment.
+     * @return the dog sitter's surname of the Assignment related to code.
      */
     public String getDogSitterSurnameOfAssignment(int code) {
         return getReply("CUSTOMER#GETDOGSITTERSURNAMEOFASSIGNMENT#" + code);
@@ -146,8 +146,8 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
-     * @param code of the Assignment.
+     * Get the review indicated with code.
+     * @param code the code of the Assignment.
      * @return the Review associated to Assignment related to code.
      */
     public Review getReview(int code){
@@ -170,7 +170,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the customer's name.
      * @return the customer's name.
      */
     public String getName(){
@@ -179,7 +179,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the customer's surname.
      * @return the customer's surname.
      */
     public String getSurname(){
@@ -188,7 +188,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the customer's password.
      * @return the customer's password.
      */
     public String getPassword(){
@@ -197,7 +197,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the customer's phone number.
      * @return the customer's phone number.
      */
     public String getPhoneNumber(){
@@ -206,7 +206,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the customer's date of birth.
      * @return the customer's date of birth.
      */
     public Date getDateOfBirth(){
@@ -221,7 +221,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
     }
 
     /**
-     *
+     * Get the customer's address.
      * @return the customer's Address.
      */
     public Address getAddress(){
@@ -231,7 +231,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the customer's payment method.
      * @return the customer's PaymentMethod.
      */
     public PaymentMethod getPaymentMethod(){
@@ -412,8 +412,8 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
     /**
      * Confirm the assignment for the following parameters.
      * @param emailDogSitter dog sitter's email address.
-     * @param dateStartAssignment start of assignment.
-     * @param dateEndAssignment end of assignment.
+     * @param dateStartAssignment start of the assignment.
+     * @param dateEndAssignment end of the assignment.
      * @param selectedDogs the HashSet of dogs to assign to the dog sitter.
      * @param meetingPoint place (Address type) in which customer and dog sitter will meet.
      * @param paymentInCash true if customer will pay dog sitter in cash.
@@ -455,11 +455,11 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Add a review.
-     * @param codeAssignment of Assignment customer want to review.
-     * @param emailDogSitter email address of dog sitter.
+     * @param codeAssignment the code of the assignment that customer want to review.
+     * @param emailDogSitter dog sitter's email address.
      * @param rating int value from 1 to 5.
-     * @param title of review.
-     * @param comment description inserted by the customer.
+     * @param title the title of the review.
+     * @param comment the description inserted by the customer.
      * @return true if review is successfully created.
      */
     public boolean addReview(int codeAssignment, String  emailDogSitter, int rating, String title, String comment) {
@@ -474,7 +474,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Remove the review related to code.
-     * @param code of the review that the customer want to remove.
+     * @param code the code of the review that the customer want to remove.
      * @return true if the review is successfully removed.
      */
     public boolean removeReview(Integer code) {
@@ -488,7 +488,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the list of the reviews written by the customer.
      * @return the HashMap of the Reviews written by the customer. The Integer key is the
      * assignment's code related to review.
      */
@@ -529,7 +529,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Disable a dog.
-     * @param ID of the dog that customer want to disable.
+     * @param ID the ID of the dog that customer want to disable.
      * @return true if the dog is successfully disabled.
      */
     public boolean disableDog(int ID){
@@ -543,7 +543,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
 
     /**
-     *
+     * Get the list of dogs of the customer.
      * @return the HashSet containing the dogs of the customer.
      */
     public HashSet<Dog> getDogList(){
@@ -553,14 +553,14 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**
      * Create a new customer account based on following data.
-     * @param email
-     * @param name
-     * @param surname
-     * @param password
-     * @param phoneNumber
-     * @param dateOfBirth
-     * @param address
-     * @param paymentMethod
+     * @param email user's email address.
+     * @param name user's name.
+     * @param surname user's surname.
+     * @param password user's password.
+     * @param phoneNumber user's phone number.
+     * @param dateOfBirth user's date of birth.
+     * @param address user's address.
+     * @param paymentMethod user's payment method.
      * @return true if the new customer account is successfully created.
      */
     public boolean customerSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
