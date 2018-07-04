@@ -1,4 +1,4 @@
-package client.gui;
+package client;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +23,7 @@ public class Calendar {
         }
     }
 
-    public  static int getNDayofMonth(int monthNumber, Date year){
+    public static int getNDayofMonth(int monthNumber, Date year){
         int nd;
         switch (monthNumber){
             case 4:

@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.Calendar;
 import customerClient.CustomerProxy;
 import server.User;
 import server.places.Address;
@@ -10,7 +11,6 @@ import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 
 public class GUISettings extends JFrame {
     final int WIDTH = 600;

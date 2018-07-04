@@ -1,6 +1,7 @@
 package client.gui;
 
 //import com.sun.xml.internal.bind.v2.runtime.Name; //TODO da problemi
+import client.Calendar;
 import customerClient.CustomerProxy;
 //import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import server.User;
@@ -10,9 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class GUISignUp extends JFrame{
     final int WIDTH = 700;

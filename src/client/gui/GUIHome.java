@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
+
+import static client.Calendar.getNDayofMonth;
+import static client.Calendar.isLeap;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class GUIHome extends JFrame{
@@ -297,25 +300,7 @@ public class GUIHome extends JFrame{
         }
 
         i = 0;
-        int nd;
-        switch (monthNumber){
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                nd = 30;
-                break;
-            case 2:
-                if (isLeap(currentDate)){
-                    nd = 29;
-                } else {
-                    nd = 28;
-                }
-                break;
-            default:
-                nd = 31;
-                break;
-        }
+        int nd = getNDayofMonth(monthNumber, currentDate);
 
         for (i = 0; i < nd; i++){
             panelGridCalendar.add(buttonDay[i]);
@@ -333,8 +318,6 @@ public class GUIHome extends JFrame{
         }
 
         for (i = 0; i < NDAYMONTH; i++){
-            //buttonDay[i].setBackground(new Color(204, 230, 255));
-
             if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
                 buttonDay[i].setBackground(new Color(204, 230, 255));
             }
@@ -356,25 +339,6 @@ public class GUIHome extends JFrame{
 
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
             showAssignmentOnCalendar(email);
-        }
-    }
-
-    protected boolean isLeap(Date yearToCheck){
-        SimpleDateFormat date = new SimpleDateFormat("yyyy");
-        String strYear = date.format(yearToCheck);
-        int year = Integer.parseInt(strYear);
-        if (year % 4 == 0){
-            if (year % 100 == 0){
-                if (year % 400 == 0){
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
         }
     }
 

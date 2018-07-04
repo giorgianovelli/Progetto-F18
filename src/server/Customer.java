@@ -1,7 +1,6 @@
 package server;
 
 import database.DBConnector;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -9,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import interfaces.InterfaceCustomer;
 import server.bank.Bank;
 import server.bank.PaymentMethod;
@@ -17,7 +15,6 @@ import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 import server.tools.dateTime.DateTimeDHMS;
-
 import static server.tools.DoubleTools.round2Decimal;
 import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 import static server.tools.dateTime.DateTimeTools.getAge;
@@ -249,17 +246,9 @@ public class Customer extends User implements InterfaceCustomer{
         return isDisabled;
     }
 
-    //public HashMap<Integer, Assignment> getAssignmentList() {
-    //    return assignmentList;
-    //}
-
     public HashMap<Integer, Review> getReviewList() {
         return reviewList;
     }
-
-    //public Address getAddress() {
-    //    return address;
-    //}
 
     public HashSet<Dog> getDogList() {
         return dogList;
@@ -291,13 +280,13 @@ public class Customer extends User implements InterfaceCustomer{
         int nStartDay = Integer.parseInt(dateNumDayOfWeek.format(dateStart));
         int nEndDay = Integer.parseInt(dateNumDayOfWeek.format(dateEnd));
 
-        searchStep0(meetingPoint);
-        searchStep1(dateStart, dateEnd, nStartDay, nEndDay);
-        searchStep2(dateStart, dateEnd, nStartDay, nEndDay);
-        searchStep3(dogList);
-        searchStep4(dogList);
-        searchStep5(dateStart, dateEnd);
-        searchStep6(cash);
+        searchMeetingPoint(meetingPoint);
+        searchDayOfWork(dateStart, dateEnd, nStartDay, nEndDay);
+        searchTimeOfWork(dateStart, dateEnd, nStartDay, nEndDay);
+        searchDogsNumber(dogList);
+        searchDogSize(dogList);
+        searchAvailable(dateStart, dateEnd);
+        searchPaymentMethod(cash);
 
         System.out.println("Dog sitters available:");
         if (dogSitterSearchList.size() != 0){
@@ -317,7 +306,7 @@ public class Customer extends User implements InterfaceCustomer{
         return dogSitterMailList;
     }
 
-    private void searchStep0(Address meetingPoint){
+    private void searchMeetingPoint(Address meetingPoint){
         //funzione che filtra i dog sitter in base al meeting point
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
@@ -331,7 +320,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep1(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
+    private void searchDayOfWork(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //rimuove i dogsitter che non lavorano nei giorni richiesti dal cliente
         int i;
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -348,7 +337,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep2(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
+    private void searchTimeOfWork(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
         int i;
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -370,7 +359,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep3(HashSet<Dog> dogList){
+    private void searchDogsNumber(HashSet<Dog> dogList){
         //funzione che escude i dogsitter che non danno disponibilità
         //per il numero di cani richiesto dall'utente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -384,7 +373,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep4(HashSet<Dog> dogList){
+    private void searchDogSize(HashSet<Dog> dogList){
         //funzione che esclude i dogsitter che non danno dispobilità
         //per le taglie indicate dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
@@ -401,7 +390,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep5(Date dateStart, Date dateEnd){
+    private void searchAvailable(Date dateStart, Date dateEnd){
         //funzione che esclude i dog sitter che hanno già altri impegni nel periodo impostato dal cliente
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
         for (DogSitter ds : dogSitterSearchList) {
@@ -427,7 +416,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
-    private void searchStep6(boolean cash){
+    private void searchPaymentMethod(boolean cash){
         //nel caso in cui il cliente vuole pagare in contanti,
         //esclude i dog sitter che accettano il pagamento solo con carta di credito
         HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
