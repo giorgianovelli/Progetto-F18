@@ -90,7 +90,7 @@ public class GUIChangePassword extends JFrame {
         textCurrentPassword.setEditable(true);
         labelCurrentPassword.setLabelFor(textCurrentPassword);
 
-       /* textPasswordConf.setText("");
+        textPasswordConf.setText("");
         textPasswordConf.setEditable(true);
         labelPasswordConf.setLabelFor(textPasswordConf);*/
 

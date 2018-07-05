@@ -243,7 +243,7 @@ public class GUISettings extends JFrame {
         expirationYear.setSelectedItem(expiration_Years);
 
         //TODO INSERIMENTO ultimo giorno del mese in modo automatico
-
+        //non riesco a fare in modo che si veda solo il giorno del mese
         Date exYear = new Date();
         int monthNumber = 0;
 
