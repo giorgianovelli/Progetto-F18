@@ -750,6 +750,25 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    UPDATEDOGBREED{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            String breed = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogBreed(ID, breed)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

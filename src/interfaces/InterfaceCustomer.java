@@ -63,7 +63,7 @@ public interface InterfaceCustomer {
 
     boolean updateDogName(int ID, String name);
 
-    //boolean updateDogBreed(int ID, String breed);
+    boolean updateDogBreed(int ID, String breed);
 
     boolean updateDogAge(int ID, Date dateOfBirth);
 

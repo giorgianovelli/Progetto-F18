@@ -579,6 +579,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+
     /**
      * Check if the payment method of the assignment is in cash.
      * @param code the code of the assignment.
@@ -595,6 +596,13 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+
+    /**
+     * Update the dog's name.
+     * @param ID the dog's ID.
+     * @param name the new dog's name.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogName(int ID, String name){
         String serverMsg = getReply("CUSTOMER#UPDATEDOGNAME#" + email + "#" + ID + "#" + name);
         if (serverMsg.equals("true")){
@@ -604,6 +612,13 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+
+    /**
+     * Update the dog's date of birth.
+     * @param ID the dog's ID.
+     * @param dateOfBirth the new dog's date of birth.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogAge(int ID, Date dateOfBirth){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strBirth = dateFormat.format(dateOfBirth);
@@ -615,8 +630,31 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+
+    /**
+     * Update the dog's weight.
+     * @param ID the dog's ID.
+     * @param weight the new dog's weight.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogWeight(int ID, double weight){
         String serverMsg = getReply("CUSTOMER#UPDATEDOGWEIGHT#" + email + "#" + ID + "#" + weight);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Update the dog's breed.
+     * @param ID the dog's ID.
+     * @param breed the new dog's breed.
+     * @return true if the update is successfully performed.
+     */
+    public boolean updateDogBreed(int ID, String breed){
+        String serverMsg = getReply("CUSTOMER#UPDATEDOGBREED#" + email + "#" + ID + "#" + breed);
         if (serverMsg.equals("true")){
             return true;
         } else {
