@@ -67,5 +67,5 @@ public interface InterfaceCustomer {
 
     boolean updateDogAge(int ID, Date dateOfBirth);
 
-    //boolean updateDogWeight(int ID, double weight);
+    boolean updateDogWeight(int ID, double weight);
 }

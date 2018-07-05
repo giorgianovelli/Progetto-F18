@@ -731,6 +731,25 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    UPDATEDOGWEIGHT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            Double weight = Double.parseDouble(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogWeight(ID, weight)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

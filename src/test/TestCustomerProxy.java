@@ -83,7 +83,8 @@ public class TestCustomerProxy {
         }*/
         //proxy.isInCashPaymentMethodOfAssignment(5);
         //proxy.updateDogName(3, "TIBERIO");
-        Date date = new Date();
-        proxy.updateDogAge(3, date);
+        //Date date = new Date();
+        //proxy.updateDogAge(3, date);
+        proxy.updateDogWeight(3, 66.5);
     }
 }

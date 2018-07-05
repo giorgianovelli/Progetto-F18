@@ -895,10 +895,10 @@ public class Customer extends User implements InterfaceCustomer{
             dbConnector.closeUpdate();
 
             if (isUpdated) {
-                System.out.println("The dog's name with ID = " + ID + " now is up to date!");
+                System.out.println("The name of the dog with ID = " + ID + " now is up to date!");
                 return true;
             } else {
-                System.out.println("Error in updating the dog's name with ID = " + ID + "!");
+                System.out.println("Error in updating the name of the dog with ID = " + ID + "!");
                 return false;
             }
 
@@ -921,6 +921,26 @@ public class Customer extends User implements InterfaceCustomer{
                 return true;
             } else {
                 System.out.println("Error in updating the date of birth of the dog with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateDogWeight(int ID, double weight){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET WEIGHT = " + weight + " WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The weight of the dog with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the weight of the dog with ID = " + ID + "!");
                 return false;
             }
 
