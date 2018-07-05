@@ -57,7 +57,7 @@ public class GUIShowReview extends JFrame {
         labelVote = new JLabel("Vote: " , SwingConstants.LEFT);
         labelDescription = new JLabel("Comment: ");
 
-        labelGrade = new JLabel(Integer.toString(review.getRating()));
+        labelGrade = new JLabel(review.starsRating());
         //labelReply = new JLabel("Dogsitter reply: ");
 
         textTitle = new JTextArea(review.getTitle());

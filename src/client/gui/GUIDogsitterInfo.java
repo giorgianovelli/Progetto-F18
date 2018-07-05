@@ -16,10 +16,7 @@ public class GUIDogsitterInfo extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-
-
-    //TODO List:
+    
 
     private JPanel panelOut = new JPanel();
     private JPanel panelInfo = new JPanel();
@@ -57,8 +54,11 @@ public class GUIDogsitterInfo extends JFrame {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
-
-
+    /**
+     * Constructor of GUIDogsitterInfo's class
+     *
+     * @param mailDogsitter
+     */
 
     public GUIDogsitterInfo(String mailDogsitter) {
         setTitle("Dogsitter Informations");
@@ -74,6 +74,10 @@ public class GUIDogsitterInfo extends JFrame {
         initComponents();
     }
 
+
+    /**
+     * This method implements graphics objects
+     */
 
     public void initComponents() {
 
@@ -191,7 +195,7 @@ public class GUIDogsitterInfo extends JFrame {
         add(scrollPane);
 
 
-        // Action Listener
+        // Action Listener chiusura
 
         ActionListener actionListener = new ActionListener() {
             @Override
