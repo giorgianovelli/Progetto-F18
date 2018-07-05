@@ -91,7 +91,7 @@ public class GUISettings extends JFrame {
     private ArrayList<String> years_tmp = new ArrayList<String>();
 
 
-  //  private String[] expirationDays = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    //  private String[] expirationDays = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
     private JTextField textExpirationDays = new JTextField();
@@ -298,7 +298,7 @@ public class GUISettings extends JFrame {
                     //  if (cash.isSelected() == false && creditCard.isSelected() == false) {
                     //     JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment method is not selected", "", JOptionPane.ERROR_MESSAGE);
 
-                   // }
+                    // }
                     else {
                         setNewValues();
                         JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);

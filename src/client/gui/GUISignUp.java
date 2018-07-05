@@ -163,7 +163,7 @@ public class GUISignUp extends JFrame{
 
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
-       // panelData.add(labelPaymentMethod);
+        // panelData.add(labelPaymentMethod);
         add(panelOut);
 
      /*   panelRadioButton.setLayout(new GridLayout(1,0));
@@ -176,7 +176,7 @@ public class GUISignUp extends JFrame{
         panelButton.add(buttonCustomerConfirm, BorderLayout.SOUTH);
         panelButton.add(buttonDogSitterConfirm, BorderLayout.SOUTH);
 
-       // contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
+        // contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
 
 
 
@@ -207,7 +207,7 @@ public class GUISignUp extends JFrame{
 
                 if (registrationAe.getActionCommand().equals("Continue Registration as DogSitter")) {
 
-                      //   addDogSitterValues();
+                    //   addDogSitterValues();
 
                     //  as Dogsitter: apre un altro frame solo con le label dogsitter
                     GUIDogSitterLabel guiDogSitterLabel = new GUIDogSitterLabel();

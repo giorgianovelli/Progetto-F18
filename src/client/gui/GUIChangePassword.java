@@ -25,7 +25,7 @@ public class GUIChangePassword extends JFrame {
     private JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
     private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
 
-   // String strCurrentPassword = proxy.getPassword();
+    // String strCurrentPassword = proxy.getPassword();
     //private String currentPassword = new String();
     private String newPassword = new String();
     private String confirmPassword = new String();
@@ -85,7 +85,7 @@ public class GUIChangePassword extends JFrame {
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-      // String strCurrentPassword = proxy.getPassword();
+        // String strCurrentPassword = proxy.getPassword();
       /*  textCurrentPassword.setText(strCurrentPassword);
         textCurrentPassword.setEditable(true);
         labelCurrentPassword.setLabelFor(textCurrentPassword);
@@ -137,16 +137,16 @@ public class GUIChangePassword extends JFrame {
         char[] strConfirmPassword = textPasswordConf.getPassword();
 
 
-      //  if (oldPassword.equals(strCurrentPassword)) {
+        //  if (oldPassword.equals(strCurrentPassword)) {
 
 
-       // }
+        // }
         if(strNewPassword.length == strConfirmPassword.length) {
             for (int i = 0; i < strNewPassword.length; i++) {
                 newPassword += strNewPassword[i];
                 confirmPassword += strConfirmPassword[i];
-                }
             }
+        }
             /*else {
             JOptionPane.showMessageDialog(new JFrame(), "Incorrect password!", "Password error", JOptionPane.ERROR_MESSAGE);
             //updatePassword = false;
