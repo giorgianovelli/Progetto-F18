@@ -369,7 +369,12 @@ public class GUISettings extends JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        boolean updateDate= proxy.updateDateOfBirth(dateOfBirth);
+
+        boolean updateDate;
+
+        if(!(updateDate= proxy.updateDateOfBirth(dateOfBirth))){
+            System.out.println("Error in updating the date of birth");
+        }
 
         proxy.updateAddress(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
