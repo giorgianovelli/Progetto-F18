@@ -733,6 +733,26 @@ public enum ExecDogSitterEnum {
             return dogSitter.getBiography();
         }
 
+    },
+
+    REPLYTOREVIEW{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int code = Integer.parseInt(tokenMsg.nextToken());
+            String reply = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if(dogSitter.replyToReview(code, reply)){
+                System.out.println("test reply");
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 
