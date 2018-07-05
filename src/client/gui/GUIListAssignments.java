@@ -77,6 +77,9 @@ public class GUIListAssignments extends JFrame{
 
     private void initComponents(CalendarState cs, GUIHome guiCustomer){
 
+        UIManager.put("OptionPane.noButtonText", "No");
+        UIManager.put("OptionPane.yesButtonText", "Yes");
+
         assignmentNumber = listAssignment.size();
         reviewNumber = listReview.size();
 
@@ -388,7 +391,7 @@ public class GUIListAssignments extends JFrame{
      * @param icon immagine da modificare
      * @param width nuova larghezza
      * @param height nuova altezza
-     * @return
+     * @return icona modificata in altezza e larghezza
      */
 
     private ImageIcon transformImage(ImageIcon icon, int width, int height){

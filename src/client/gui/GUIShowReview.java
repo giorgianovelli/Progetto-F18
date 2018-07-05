@@ -4,6 +4,8 @@ import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUIShowReview extends JFrame {
 
@@ -17,6 +19,7 @@ public class GUIShowReview extends JFrame {
     private JPanel panelReviewTop;
     private JPanel panelReviewDescription;
     private JPanel panelReply;
+    private JPanel closePanel;
 
     private JLabel labelTitle;
     private JLabel labelDescription;
@@ -28,6 +31,7 @@ public class GUIShowReview extends JFrame {
     private JTextArea textDescription;
     private JTextArea textReply;
 
+    private JButton closeButton;
     //private int numberRow;
 
     public GUIShowReview(Review review){
@@ -44,12 +48,13 @@ public class GUIShowReview extends JFrame {
     }
 
     private void initComponent(){
-        //TODO migliorare il layout
+        //TODO si potrebbe provare a usare GridBagLayout
         outPanel = new JPanel();
         contentPanel = new JPanel();
         panelReviewTop = new JPanel();
         panelReviewDescription = new JPanel();
         panelReply = new JPanel();
+        closePanel = new JPanel();
 
         contentPanel.setBorder(BorderFactory.createTitledBorder("Your Review: "));
 
@@ -83,28 +88,6 @@ public class GUIShowReview extends JFrame {
         panelReviewDescription.add(labelDescription);
         panelReviewDescription.add(textDescription);
 
-
-
-
-        /*GridBagLayout gridBag = new GridBagLayout();
-        panelReviewTop.setLayout(gridBag);
-        GridBagConstraints c = new GridBagConstraints();
-
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
-        panelReviewTop.add(labelTitle, gridBag, 0);
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        panelReviewTop.add(textTitle, gridBag, 1);
-        c.weightx = 1.0;
-        panelReviewTop.add(labelVote, gridBag, 1);
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        panelReviewTop.add(labelTitle, gridBag, 2);
-
-        c.weightx = 0.0;
-        panelReviewTop.add(labelDescription, gridBag, 1);
-
-
-*/
         
         contentPanel.setLayout(new GridLayout(2, 1));
         contentPanel.add(panelReviewTop);
@@ -122,11 +105,25 @@ public class GUIShowReview extends JFrame {
             panelReply.add(textReply);
 
         }
+        ActionListener close = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        outPanel.setLayout(new GridLayout(2,1));
+                dispose();
+            }
+        };
 
+        closeButton = new JButton("Close");
+        closeButton.addActionListener(close);
+
+        closePanel.add(closeButton);
+        //outPanel.setLayout(new BoxLayout(outPanel, BoxLayout.Y_AXIS));
+        outPanel.setLayout(new GridLayout(3,1));
+        //contentPanel.setPreferredSize(new Dimension(WIDTH-10, (HEIGHT/2)-30));
+        //closePanel.setBorder(BorderFactory.createEmptyBorder(20,40,5,30));
         outPanel.add(contentPanel);
         outPanel.add(panelReply);
+        outPanel.add(closePanel);
         outPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         add(outPanel);
 
