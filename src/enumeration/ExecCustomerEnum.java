@@ -667,6 +667,26 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    ISINCASHASSIGNMENT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.isInCashPaymentMethodOfAssignment(code) == true){
+                return "true";
+            } else if (customer.isInCashPaymentMethodOfAssignment(code) == false){
+                return "false";
+            } else {
+                return "null";
+            }
+        }
+
     };
 
 

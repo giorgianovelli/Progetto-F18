@@ -862,4 +862,29 @@ public class Customer extends User implements InterfaceCustomer{
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Check if the payment method of the assignment is in cash.
+     * @param code the code of the assignment.
+     * @return true if the customer pays the dog sitter in cash.
+     */
+    public Boolean isInCashPaymentMethodOfAssignment(int code){
+        DBConnector dbConnector = new DBConnector();
+        Singleton singleton = new Singleton();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT * FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + code);
+            rs.last();
+            int cardFlag = rs.getRow();
+            dbConnector.closeConnection();
+            if (cardFlag == 1){
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

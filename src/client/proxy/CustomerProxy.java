@@ -579,4 +579,20 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+    /**
+     * Check if the payment method of the assignment is in cash.
+     * @param code the code of the assignment.
+     * @return true if the customer pays the dog sitter in cash.
+     */
+    public Boolean isInCashPaymentMethodOfAssignment(int code){
+        String serverMsg = getReply("CUSTOMER#ISINCASHASSIGNMENT#" + email + "#" + code);
+        if (serverMsg.equals("true")){
+            return true;
+        } else if (serverMsg.equals("false")){
+            return false;
+        } else {
+            return null;
+        }
+    }
+
 }

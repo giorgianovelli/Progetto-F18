@@ -59,5 +59,7 @@ public interface InterfaceCustomer {
 
     Date getDateOfBirth();
 
+    Boolean isInCashPaymentMethodOfAssignment(int code);
+
     //TODO metodi per aggiornare i dati dei cani
 }
