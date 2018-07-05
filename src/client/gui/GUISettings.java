@@ -370,9 +370,7 @@ public class GUISettings extends JFrame {
             e.printStackTrace();
         }
 
-        boolean updateDate;
-
-        if(!(updateDate= proxy.updateDateOfBirth(dateOfBirth))){
+        if(!(proxy.updateDateOfBirth(dateOfBirth))){
             System.out.println("Error in updating the date of birth");
         }
 
