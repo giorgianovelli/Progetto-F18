@@ -4,6 +4,7 @@ import client.proxy.CustomerProxy;
 import server.Dog;
 import server.Singleton;
 
+import java.util.Date;
 import java.util.HashSet;
 
 public class TestCustomerProxy {
@@ -81,6 +82,8 @@ public class TestCustomerProxy {
             }
         }*/
         //proxy.isInCashPaymentMethodOfAssignment(5);
-        proxy.updateDogName(3, "TIBERIO");
+        //proxy.updateDogName(3, "TIBERIO");
+        Date date = new Date();
+        proxy.updateDogAge(3, date);
     }
 }

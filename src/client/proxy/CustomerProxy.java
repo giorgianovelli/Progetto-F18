@@ -604,4 +604,15 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+    public boolean updateDogAge(int ID, Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strBirth = dateFormat.format(dateOfBirth);
+        String serverMsg = getReply("CUSTOMER#UPDATEDOGAGE#" + email + "#" + ID + "#" + strBirth);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

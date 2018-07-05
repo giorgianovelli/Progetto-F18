@@ -61,12 +61,11 @@ public interface InterfaceCustomer {
 
     Boolean isInCashPaymentMethodOfAssignment(int code);
 
-    //TODO metodi per aggiornare i dati dei cani
-    //updateDogName(int ID, String name);
+    boolean updateDogName(int ID, String name);
 
-    //String updateDogBreed();
+    //boolean updateDogBreed(int ID, String breed);
 
-    //int updateDogAge();
+    boolean updateDogAge(int ID, Date dateOfBirth);
 
-    //double updateDogWeight();
+    //boolean updateDogWeight(int ID, double weight);
 }

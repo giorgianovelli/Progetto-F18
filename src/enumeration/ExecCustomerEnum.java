@@ -706,6 +706,31 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    UPDATEDOGAGE{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateOfBirth = new Date();
+            try {
+                dateOfBirth = dateFormat.parse(tokenMsg.nextToken());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogAge(ID, dateOfBirth)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

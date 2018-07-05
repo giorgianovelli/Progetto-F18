@@ -907,4 +907,26 @@ public class Customer extends User implements InterfaceCustomer{
             return false;
         }
     }
+
+    public boolean updateDogAge(int ID, Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strBirth = dateFormat.format(dateOfBirth);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET AGE = '" + strBirth + "' WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The date of birth of the dog with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the date of birth of the dog with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
