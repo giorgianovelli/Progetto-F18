@@ -80,6 +80,7 @@ public class TestCustomerProxy {
                 System.out.println("Tony is in dogList!");
             }
         }*/
-        proxy.isInCashPaymentMethodOfAssignment(5);
+        //proxy.isInCashPaymentMethodOfAssignment(5);
+        proxy.updateDogName(3, "TIBERIO");
     }
 }

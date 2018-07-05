@@ -687,6 +687,25 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    UPDATEDOGNAME{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            String name = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogName(ID, name)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

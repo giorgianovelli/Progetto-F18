@@ -887,4 +887,24 @@ public class Customer extends User implements InterfaceCustomer{
             return null;
         }
     }
+
+    public boolean updateDogName(int ID, String name){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET NAME = '" + name + "' WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The dog's name with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the dog's name with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

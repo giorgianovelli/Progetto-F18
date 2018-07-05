@@ -595,4 +595,13 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+    public boolean updateDogName(int ID, String name){
+        String serverMsg = getReply("CUSTOMER#UPDATEDOGNAME#" + email + "#" + ID + "#" + name);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
