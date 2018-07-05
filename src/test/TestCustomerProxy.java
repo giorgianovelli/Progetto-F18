@@ -85,6 +85,7 @@ public class TestCustomerProxy {
         //proxy.updateDogName(3, "TIBERIO");
         //Date date = new Date();
         //proxy.updateDogAge(3, date);
-        proxy.updateDogWeight(3, 66.5);
+        //proxy.updateDogWeight(3, 66.5);
+        proxy.updateDogBreed(3, "NEWFOUNDLAND");
     }
 }

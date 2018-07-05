@@ -888,6 +888,13 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the dog's name.
+     * @param ID the dog's ID.
+     * @param name the new dog's name.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogName(int ID, String name){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -908,6 +915,13 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the dog's date of birth.
+     * @param ID the dog's ID.
+     * @param dateOfBirth the new dog's date of birth.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogAge(int ID, Date dateOfBirth){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strBirth = dateFormat.format(dateOfBirth);
@@ -930,6 +944,13 @@ public class Customer extends User implements InterfaceCustomer{
         }
     }
 
+
+    /**
+     * Update the dog's weight.
+     * @param ID the dog's ID.
+     * @param weight the new dog's weight.
+     * @return true if the update is successfully performed.
+     */
     public boolean updateDogWeight(int ID, double weight){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -941,6 +962,33 @@ public class Customer extends User implements InterfaceCustomer{
                 return true;
             } else {
                 System.out.println("Error in updating the weight of the dog with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    /**
+     * Update the dog's breed.
+     * @param ID the dog's ID.
+     * @param breed the new dog's breed.
+     * @return true if the update is successfully performed.
+     */
+    public boolean updateDogBreed(int ID, String breed){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET BREED = '" + breed + "' WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The breed of the dog with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the breed of the dog with ID = " + ID + "!");
                 return false;
             }
 
