@@ -5,6 +5,8 @@ import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,7 @@ public class GUIDogsitterInfo extends JFrame {
     private JPanel panelAverage = new JPanel();
     private JPanel panelBio = new JPanel();
     private JPanel panelReviews = new JPanel();
+    private JPanel panelClose = new JPanel();
     private GridLayout gridLayout = new GridLayout(1,1);
 
     private JScrollPane scrollPane = new JScrollPane(panelOut);
@@ -44,6 +47,8 @@ public class GUIDogsitterInfo extends JFrame {
     private JLabel labelBirthToBeFilled = new JLabel();
     private JLabel labelAverageToBeFilled = new JLabel();
     private JTextArea textBiography = new JTextArea();
+
+    private JButton buttonClose = new JButton("Close");
 
 
     private HashMap<Integer, Review> listReview;
@@ -74,7 +79,7 @@ public class GUIDogsitterInfo extends JFrame {
 
         panelOut.setLayout(new BorderLayout());
         panelInfoBio.setLayout(new BorderLayout());
-        panelInfoBio.setBorder(BorderFactory.createTitledBorder("Bio:"));
+        panelInfoBio.setBorder(BorderFactory.createTitledBorder("Dogsitter: "));
         panelInfo.setLayout(new GridLayout(4,1));
         panelBio.setLayout(new BorderLayout());
         panelName.setLayout(new GridLayout(1,2));
@@ -83,9 +88,12 @@ public class GUIDogsitterInfo extends JFrame {
         panelAverage.setLayout(new GridLayout(1,2));
         panelReviews.setLayout(gridLayout);
         panelReviews.setBorder(BorderFactory.createTitledBorder("Reviews: "));
+        panelClose.setLayout(new BorderLayout());
+        panelClose.setBorder(BorderFactory.createEmptyBorder(20,190,20,190));
 
         panelOut.add(panelInfoBio, BorderLayout.NORTH);
         panelOut.add(panelReviews, BorderLayout.CENTER);
+        panelOut.add(panelClose, BorderLayout.SOUTH);
 
         panelInfoBio.add(panelInfo, BorderLayout.NORTH);
         panelInfoBio.add(panelBio, BorderLayout.CENTER);
@@ -113,9 +121,6 @@ public class GUIDogsitterInfo extends JFrame {
 
         String strDate = simpleDateFormat.format(dogSitterProxy.getDateOfBirth());
         String biography = dogSitterProxy.getBiography();
-        if (biography.length() > 50) {
-            biography.split("\n");
-        }
 
         labelNameToBeFilled.setText(dogSitterProxy.getName());
         labelSurnameToBeFilled.setText(dogSitterProxy.getSurname());
@@ -137,7 +142,11 @@ public class GUIDogsitterInfo extends JFrame {
         labelAverageToBeFilled.setText(format);
 
 
+        // Bottone close
 
+        panelClose.add(buttonClose);
+
+        // Pannello reviews
 
         for (Map.Entry<Integer, Review> entry: listReview.entrySet()) {
 
@@ -164,12 +173,34 @@ public class GUIDogsitterInfo extends JFrame {
             panelReviews.add(panelReview);
             gridLayout.setRows(gridLayout.getRows() + 1);
 
+
+            ActionListener actionListener1 = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    GUIShowReview guiShowReview = new GUIShowReview(entry.getValue());
+                    guiShowReview.setVisible(true);
+                }
+            };
+
+            buttonShowMore.addActionListener(actionListener1);
+
         }
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
 
+
+        // Action Listener
+
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        };
+
+        buttonClose.addActionListener(actionListener);
 
 
     }
