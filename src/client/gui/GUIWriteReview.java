@@ -25,10 +25,7 @@ public class GUIWriteReview extends JFrame {
 
 
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    //TODO limitare il numero di righe o caratteri!! ok
-    //per il titolo 254
-    //per la descrizione 65535
-    //è necessario??
+
 
     private JPanel outPanel;
     private JPanel contentPanel;
@@ -51,7 +48,7 @@ public class GUIWriteReview extends JFrame {
 
 
     private JComboBox<String> voteBox;
-    private String[] grade = new String[]{"1", "2", "3", "4", "5"};
+    private String[] grade = new String[]{"★", "★★", "★★★", "★★★★", "★★★★★"};
 
     private Assignment assignmentToReview;
     private String email;
@@ -108,9 +105,13 @@ public class GUIWriteReview extends JFrame {
 
         });
 
-                initComponent();
+        initComponent();
     }
 
+
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
     private void initComponent(){
         setTitle("Write a review");
         setSize(WIDTH, HEIGHT);
@@ -196,7 +197,7 @@ public class GUIWriteReview extends JFrame {
                     boolean strError = false;
                     String error = "";
 
-                    int rating = Integer.parseInt((String) voteBox.getSelectedItem());
+                    int rating = starsRating(voteBox.getSelectedItem().toString());
                     String title = titleField.getText();
                     String comment = descriptionField.getText();
                     int code = assignmentToReview.getCode();
@@ -259,11 +260,45 @@ public class GUIWriteReview extends JFrame {
 
     }
 
-   private int updateCountTitle()
+
+    /**
+     *
+     * @param rating stringa che indica il voto della recensione
+     * @return rating della recensione convertito in int
+     */
+    private int starsRating(String rating){
+        switch (rating){
+            case "★":
+                return 1;
+            case "★★":
+                return 2;
+            case "★★★":
+                return 3;
+            case "★★★★":
+                return 4;
+            case "★★★★★":
+                return 5;
+            default:
+                return 0;
+        }
+    }
+
+
+    //ne posso fare solo uno o sono necessari entrambi?
+
+    /**
+     * aggiorna il conteggio di caratteri nel titolo
+     * @return numero di caratteri ancora ammessi
+     */
+    private int updateCountTitle()
     {
         return MAX_CHAR_TITLE - docTitle.getLength();
     }
 
+    /**
+     * aggiorna il conteggio di caratteri nel titolo
+     * @return numero di caratteri ancora ammessi
+     */
     private int updateCountComment(){
         return MAX_CHAR_COMMENT - docComment.getLength();
     }
@@ -282,6 +317,10 @@ public class GUIWriteReview extends JFrame {
     */
 }
 
+
+/**
+ * classe predefinita per il conteggio di caratteri in un documento (JTextArea)
+ */
 
 class DocumentSizeFilter extends DocumentFilter {
     int maxCharacters;

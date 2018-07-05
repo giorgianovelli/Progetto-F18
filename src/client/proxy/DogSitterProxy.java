@@ -623,4 +623,20 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
         }
     }
 
+
+    /**
+     * Reply to the customer's review.
+     * @param code the code of the assignment associated to the review.
+     * @param dogSitterReply the dog sitter's reply.
+     * @return true if the update is successfully performed.
+     */
+    public boolean replyToReview(int code, String dogSitterReply){
+        String serverMsg = getReply("DOGSITTER#REPLYTOREVIEW#" + email + "#" + code + "#" + dogSitterReply);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

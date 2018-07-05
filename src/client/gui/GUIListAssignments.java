@@ -77,6 +77,9 @@ public class GUIListAssignments extends JFrame{
 
     private void initComponents(CalendarState cs, GUIHome guiCustomer){
 
+        UIManager.put("OptionPane.noButtonText", "No");
+        UIManager.put("OptionPane.yesButtonText", "Yes");
+
         assignmentNumber = listAssignment.size();
         reviewNumber = listReview.size();
 
@@ -149,11 +152,11 @@ public class GUIListAssignments extends JFrame{
 
                 j++;
             }
-            if (haveAReview) {
+            /*if (haveAReview) {
                 labelStr = new JLabel("There aren't assignment to review!");
                 labelStr.setFont(new Font("TimesRoman", Font.PLAIN, 15));
                 contentPanel.add(labelStr);
-            }
+            }*/
 
 
         }
@@ -171,7 +174,7 @@ public class GUIListAssignments extends JFrame{
                 Date reviewDate = r.getDate();
                 String dateStringReview = date.format(reviewDate);
 
-                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.getRating() + "</html>";
+                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>";
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Delete review");
                 buttonAction[j].addActionListener(new ActionListener(){
@@ -210,7 +213,7 @@ public class GUIListAssignments extends JFrame{
                 Date reviewDate = r.getDate();
                 String dateStringReview = date.format(reviewDate);
 
-                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.getRating() + "</html>";
+                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>";
                 labelDescription[j]= new JLabel(labelString);
                 buttonAction[j]= new JButton("Show more");
                 buttonAction[j].addActionListener(new ActionListener(){
@@ -388,7 +391,7 @@ public class GUIListAssignments extends JFrame{
      * @param icon immagine da modificare
      * @param width nuova larghezza
      * @param height nuova altezza
-     * @return
+     * @return icona modificata in altezza e larghezza
      */
 
     private ImageIcon transformImage(ImageIcon icon, int width, int height){

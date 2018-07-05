@@ -99,6 +99,7 @@ public class TestDogSitterProxy {
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime3), Time.valueOf(strTime4)), WeekDays.SAT);
         availability.setDayAvailability(new WorkingTime(Time.valueOf(strTime0), Time.valueOf(strTime0)), WeekDays.SUN);
         proxy.updateDateTimeAvailability(availability);*/
-        proxy.getBiography();
+        //proxy.getBiography();
+        proxy.replyToReview(1, "prova review!");
     }
 }

@@ -59,5 +59,13 @@ public interface InterfaceCustomer {
 
     Date getDateOfBirth();
 
-    //TODO metodi per aggiornare i dati dei cani
+    Boolean isInCashPaymentMethodOfAssignment(int code);
+
+    boolean updateDogName(int ID, String name);
+
+    //boolean updateDogBreed(int ID, String breed);
+
+    boolean updateDogAge(int ID, Date dateOfBirth);
+
+    boolean updateDogWeight(int ID, double weight);
 }

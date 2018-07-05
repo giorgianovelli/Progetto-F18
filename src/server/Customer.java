@@ -862,4 +862,91 @@ public class Customer extends User implements InterfaceCustomer{
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Check if the payment method of the assignment is in cash.
+     * @param code the code of the assignment.
+     * @return true if the customer pays the dog sitter in cash.
+     */
+    public Boolean isInCashPaymentMethodOfAssignment(int code){
+        DBConnector dbConnector = new DBConnector();
+        Singleton singleton = new Singleton();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT * FROM TRANSACTIONS WHERE CODE_ASSIGNMENT = " + code);
+            rs.last();
+            int cardFlag = rs.getRow();
+            dbConnector.closeConnection();
+            if (cardFlag == 1){
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean updateDogName(int ID, String name){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET NAME = '" + name + "' WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The name of the dog with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the name of the dog with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateDogAge(int ID, Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strBirth = dateFormat.format(dateOfBirth);
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET AGE = '" + strBirth + "' WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The date of birth of the dog with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the date of birth of the dog with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateDogWeight(int ID, double weight){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGS SET WEIGHT = " + weight + " WHERE ID = '" + ID + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("The weight of the dog with ID = " + ID + " now is up to date!");
+                return true;
+            } else {
+                System.out.println("Error in updating the weight of the dog with ID = " + ID + "!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

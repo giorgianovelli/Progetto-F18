@@ -2,27 +2,50 @@ package client.gui;
 
 import client.proxy.CustomerProxy;
 import server.Assignment;
+import server.Dog;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 
 
 public class GUIAssignmentInformationCustomer extends JFrame {
     final int WIDTH = 512;
-    final int HEIGHT = 512;
+    final int HEIGHT = 550;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private JPanel panelAssignmentData = new JPanel();
-    private GridLayout gridLayout = new GridLayout(8, 2, 0, 10);
-    private JScrollPane scrollPane = new JScrollPane(panelAssignmentData);
-    private JLabel labelCode1 = new JLabel("Code: ", SwingConstants.CENTER);
-    private JLabel labelStartDate1 = new JLabel("Start Date: ", SwingConstants.CENTER);
-    private JLabel labelEndDate1 = new JLabel("End Date: ", SwingConstants.CENTER);
-    private JLabel labelDogsitter1 = new JLabel("Dogsitter: ", SwingConstants.CENTER);
-    private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ", SwingConstants.CENTER);
-    private JLabel labelAmount1 = new JLabel("Amount: ", SwingConstants.CENTER);
-    private JLabel labelPaymentMethod1 = new JLabel("Paymenth Method: ", SwingConstants.CENTER);
-    private JLabel labelDogs1 = new JLabel("Dogs: ", SwingConstants.CENTER);
+
+    private GridLayout gridLayout = new GridLayout(1, 2);
+    private GridLayout gridLayout2 = new GridLayout(1,1);
+    private JPanel panelOut = new JPanel(new BorderLayout());
+    private JPanel panelAssignmentData = new JPanel(new GridLayout(7,1));
+    private JPanel panelDogs = new JPanel(gridLayout2);
+    private JPanel panelClose = new JPanel(new BorderLayout());
+
+    private JPanel panelCode = new JPanel(gridLayout);
+    private JPanel panelStartDate = new JPanel(gridLayout);
+    private JPanel panelEndDate = new JPanel(gridLayout);
+    private JPanel panelDogsitter = new JPanel(gridLayout);
+    private JPanel panelMeetingPoint = new JPanel(gridLayout);
+    private JPanel panelAmount = new JPanel(gridLayout);
+    private JPanel panelPaymentMethod = new JPanel(gridLayout);
+
+    private JScrollPane scrollPane = new JScrollPane(panelOut);
+
+
+
+
+    private JLabel labelCode1 = new JLabel("Code: ");
+    private JLabel labelStartDate1 = new JLabel("Start Date: ");
+    private JLabel labelEndDate1 = new JLabel("End Date: ");
+    private JLabel labelDogsitter1 = new JLabel("Dogsitter: ");
+    private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ");
+    private JLabel labelAmount1 = new JLabel("Amount: ");
+    private JLabel labelPaymentMethod1 = new JLabel("Paymenth Method: ");
+    private JLabel labelDogs1 = new JLabel("Dogs: ");
     private JLabel labelEmpty = new JLabel("\t");
 
     private JLabel labelCode2 = new JLabel();
@@ -33,10 +56,10 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JLabel labelAmount2 = new JLabel();
     private JLabel labelPaymentMethod2 = new JLabel();
 
+    private JButton buttonClose = new JButton("Close");
+
     private String email;
 
-
-//________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
     /**
      *
@@ -57,34 +80,56 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         initComponents(a);
     }
 
-//_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-
-
     /**
      *
      * @param a
      */
 
     private void initComponents(Assignment a){
-        panelAssignmentData.setLayout(gridLayout);
-        panelAssignmentData.add(labelCode1);
-        panelAssignmentData.add(labelCode2);
-        panelAssignmentData.add(labelStartDate1);
-        panelAssignmentData.add(labelStartDate2);
-        panelAssignmentData.add(labelEndDate1);
-        panelAssignmentData.add(labelEndDate2);
-        panelAssignmentData.add(labelDogsitter1);
-        panelAssignmentData.add(labelDogsitter2);
-        panelAssignmentData.add(labelMeetingPoint1);
-        panelAssignmentData.add(labelMeetingPoint2);
-        panelAssignmentData.add(labelAmount1);
-        panelAssignmentData.add(labelAmount2);
-        panelAssignmentData.add(labelPaymentMethod1);
-        panelAssignmentData.add(labelPaymentMethod2);
-        panelAssignmentData.add(labelDogs1);
-        panelAssignmentData.add(labelEmpty);
 
+        panelOut.add(panelAssignmentData, BorderLayout.NORTH);
+        panelOut.add(panelDogs, BorderLayout.CENTER);
+        panelOut.add(panelClose, BorderLayout.SOUTH);
 
+        panelAssignmentData.setBorder(BorderFactory.createTitledBorder("Summary: "));
+        panelDogs.setBorder(BorderFactory.createTitledBorder("Dogs: "));
+
+        panelAssignmentData.add(panelCode);
+        panelAssignmentData.add(panelStartDate);
+        panelAssignmentData.add(panelEndDate);
+        panelAssignmentData.add(panelDogsitter);
+        panelAssignmentData.add(panelMeetingPoint);
+        panelAssignmentData.add(panelAmount);
+        panelAssignmentData.add(panelPaymentMethod);
+
+        panelCode.add(labelCode1);
+        panelCode.add(labelCode2);
+        panelStartDate.add(labelStartDate1);
+        panelStartDate.add(labelStartDate2);
+        panelEndDate.add(labelEndDate1);
+        panelEndDate.add(labelEndDate2);
+        panelDogsitter.add(labelDogsitter1);
+        panelDogsitter.add(labelDogsitter2);
+        panelMeetingPoint.add(labelMeetingPoint1);
+        panelMeetingPoint.add(labelMeetingPoint2);
+        panelAmount.add(labelAmount1);
+        panelAmount.add(labelAmount2);
+        panelPaymentMethod.add(labelPaymentMethod1);
+        panelPaymentMethod.add(labelPaymentMethod2);
+
+        //Pannello bottone Close e Action Listener
+
+        panelClose.add(buttonClose);
+        panelClose.setBorder(BorderFactory.createEmptyBorder(20, 190, 20, 190));
+
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                dispose();
+            }
+        };
+        buttonClose.addActionListener(actionListener);
 
         //Implementazione scrollbar
 
@@ -103,10 +148,12 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         String strEndDate = dateFormat.format(a.getDateEnd());
 
         String strDogsitter = customerProxy.getDogSitterNameOfAssignment(intCode) + " " + customerProxy.getDogSitterSurnameOfAssignment(intCode);
+        HashSet<Dog> dogList = a.getDogList();
         String strDogs = a.printDogNames();
         String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
+        String amount = String.format("%.2f", doubleAmount).replace(",",".");
         String strPayment = customerProxy.getPaymentMethod().getNumber();
 
         //Passaggio delle variabili alle Jlabel che contengono i dati
@@ -116,21 +163,22 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         labelEndDate2.setText(strEndDate);
         labelMeetingPoint2.setText(strMeetingPoint);
         labelDogsitter2.setText(strDogsitter);
-        labelAmount2.setText(String.valueOf(doubleAmount));
+        labelAmount2.setText(amount);
         labelPaymentMethod2.setText(strPayment);
 
         // Creazione e passaggio JLabel per i cani
 
+
         int i = 1;
-        for (String token: strDogsSplitted) {
-            if (!token.isEmpty()) {
-                JLabel tmpLabel1 = new JLabel("[" + i + "]", SwingConstants.CENTER);
-                JLabel tmplabel2 = new JLabel(token);
-                gridLayout.setRows(gridLayout.getRows() + 1);
-                panelAssignmentData.add(tmpLabel1);
-                panelAssignmentData.add(tmplabel2);
+        for (Dog dog: dogList) {
+
+                JPanel panelDog = new JPanel(new GridLayout(1,1));
+                JLabel tmplabel = new JLabel(i + ".     " + dog.getName());
+                panelDog.add(tmplabel);
+                panelDogs.add(panelDog);
+                gridLayout2.setRows(gridLayout.getRows() + 1);
                 i++;
-            }
         }
+
     }
 }

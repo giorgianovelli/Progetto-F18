@@ -667,6 +667,89 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    ISINCASHASSIGNMENT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.isInCashPaymentMethodOfAssignment(code) == true){
+                return "true";
+            } else if (customer.isInCashPaymentMethodOfAssignment(code) == false){
+                return "false";
+            } else {
+                return "null";
+            }
+        }
+
+    },
+
+    UPDATEDOGNAME{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            String name = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogName(ID, name)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    UPDATEDOGAGE{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateOfBirth = new Date();
+            try {
+                dateOfBirth = dateFormat.parse(tokenMsg.nextToken());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogAge(ID, dateOfBirth)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+    },
+
+    UPDATEDOGWEIGHT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+            Double weight = Double.parseDouble(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            if (customer.updateDogWeight(ID, weight)){
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
 

@@ -671,4 +671,38 @@ public class DogSitter extends User implements InterfaceDogSitter {
     public String getBiography() {
         return biography;
     }
+
+
+    /**
+     * Reply to the customer's review.
+     * @param code the code of the assignment associated to the review.
+     * @param dogSitterReply the dog sitter's reply.
+     * @return true if the update is successfully performed.
+     */
+    public boolean replyToReview(int code, String dogSitterReply){
+        Review r;
+        r = reviewList.get(code);
+        if (r == null){
+            return false;
+        }
+
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE REVIEW SET REPLY = '" + dogSitterReply + "' WHERE ASSIGNMENT_CODE = " + code + ";");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Reply successfully saved!");
+                reviewList.get(code).setReply(dogSitterReply);
+                return true;
+            } else {
+                System.out.println("Error in saving reply!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

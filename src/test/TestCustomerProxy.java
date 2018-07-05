@@ -4,6 +4,7 @@ import client.proxy.CustomerProxy;
 import server.Dog;
 import server.Singleton;
 
+import java.util.Date;
 import java.util.HashSet;
 
 public class TestCustomerProxy {
@@ -62,7 +63,7 @@ public class TestCustomerProxy {
         System.out.println(proxy.getDateOfBirth());
         System.out.println(proxy.getPassword());
         System.out.println(proxy.disableDog(3));*/
-        HashSet<Dog> dogList = proxy.getDogList();
+        /*HashSet<Dog> dogList = proxy.getDogList();
         Singleton singleton = new Singleton();
         Dog hermes = singleton.createDogFromDB(3);
         Dog alfonso = singleton.createDogFromDB(5);
@@ -79,6 +80,11 @@ public class TestCustomerProxy {
             if (d.getID() == tony.getID()){
                 System.out.println("Tony is in dogList!");
             }
-        }
+        }*/
+        //proxy.isInCashPaymentMethodOfAssignment(5);
+        //proxy.updateDogName(3, "TIBERIO");
+        //Date date = new Date();
+        //proxy.updateDogAge(3, date);
+        proxy.updateDogWeight(3, 66.5);
     }
 }

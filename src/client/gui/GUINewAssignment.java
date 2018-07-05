@@ -446,6 +446,30 @@ class NewAssignmentBox extends JPanel{
         fromMonthLabel.setText(selectedDaySplitted[1]);
         fromYearLabel.setText(selectedDaySplitted[2]);
 
+        for (int i = 0; i < 32; i++) {
+            if (day[i].equals(selectedDaySplitted[0])) {
+                tdayList.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < 13; i++) {
+            if (month[i].equals(selectedDaySplitted[1])) {
+                tmonthList.setSelectedIndex(i);
+                break;
+            }
+        }
+
+
+        for (int i = 0; i < 24; i++) {
+            if (year[i].equals(selectedDaySplitted[2])) {
+                tyearList.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        thourList.setSelectedIndex(1);
+
         fhourList.setLightWeightPopupEnabled(false);
         fminuteList.setLightWeightPopupEnabled(false);
         tdayList.setLightWeightPopupEnabled(false);

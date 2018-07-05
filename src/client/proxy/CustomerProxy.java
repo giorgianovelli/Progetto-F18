@@ -579,4 +579,49 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+    /**
+     * Check if the payment method of the assignment is in cash.
+     * @param code the code of the assignment.
+     * @return true if the customer pays the dog sitter in cash.
+     */
+    public Boolean isInCashPaymentMethodOfAssignment(int code){
+        String serverMsg = getReply("CUSTOMER#ISINCASHASSIGNMENT#" + email + "#" + code);
+        if (serverMsg.equals("true")){
+            return true;
+        } else if (serverMsg.equals("false")){
+            return false;
+        } else {
+            return null;
+        }
+    }
+
+    public boolean updateDogName(int ID, String name){
+        String serverMsg = getReply("CUSTOMER#UPDATEDOGNAME#" + email + "#" + ID + "#" + name);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateDogAge(int ID, Date dateOfBirth){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strBirth = dateFormat.format(dateOfBirth);
+        String serverMsg = getReply("CUSTOMER#UPDATEDOGAGE#" + email + "#" + ID + "#" + strBirth);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateDogWeight(int ID, double weight){
+        String serverMsg = getReply("CUSTOMER#UPDATEDOGWEIGHT#" + email + "#" + ID + "#" + weight);
+        if (serverMsg.equals("true")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

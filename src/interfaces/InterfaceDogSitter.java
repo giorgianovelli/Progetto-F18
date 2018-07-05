@@ -61,5 +61,5 @@ public interface InterfaceDogSitter {
 
     String getBiography();
 
-    //TODO implemetare metodo per rispondere alla recensioni
+    boolean replyToReview(int code, String dogSitterReply);
 }
