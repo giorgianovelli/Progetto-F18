@@ -34,9 +34,17 @@ public class GUIChangePassword extends JFrame {
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
 
-    //TODO attributi per client-server
+    //attributi per client-server
     private CustomerProxy proxy;
     private String email;
+
+//______________________________________________________________________________________________________________________________________________________________
+
+    /**
+     * Constructor
+     * @param email: reference to the user
+     */
+
 
     public GUIChangePassword(String email) {
         setTitle("Change Password");
@@ -51,6 +59,9 @@ public class GUIChangePassword extends JFrame {
         initComponents();
 
     }
+
+//______________________________________________________________________________________________________________________________________________________________
+
 
     private void initComponents() {
 
@@ -83,6 +94,8 @@ public class GUIChangePassword extends JFrame {
         textPasswordConf.setEditable(true);
         labelPasswordConf.setLabelFor(textPasswordConf);*/
 
+        //-----------------------------------------------------------------------------------
+
         /**
          *  TODO  METODO BOTTONI  (CONFERMA MODIFICA PASSWORD da SITEMARE)
          */
@@ -107,6 +120,8 @@ public class GUIChangePassword extends JFrame {
 
 
     }
+
+//______________________________________________________________________________________________________________________________________________________________
 
     /**
      * metodo per controllare se le nuova password inserita nel campo "NewPassword" corrisponda  al campo "ConfirmPassword"
@@ -161,4 +176,3 @@ public class GUIChangePassword extends JFrame {
 }
 
 
-   
