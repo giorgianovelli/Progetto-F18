@@ -193,7 +193,7 @@ public class GUISignUp extends JFrame{
                 if (registrationAe.getActionCommand().equals("Continue Registration as Cutomer")) {
 
                     addCustomerValues();
-                    
+
 
                     //TODO CONTROLLARE CHE I CAMPI PASSWORD E CONFIRM PASSWORD SIANO UGUALI
 

@@ -88,8 +88,10 @@ public class GUIDogSitterLabel extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Next >>")) {
-                    GUIPaymentMethodRegistration guiPaymentMethodRegistration = new GUIPaymentMethodRegistration();
-                    guiPaymentMethodRegistration.setVisible(true);
+                    //GUIPaymentMethodRegistratio in fase di elaborazione non ancora caricata su git
+
+                    /*   GUIPaymentMethodRegistration guiPaymentMethodRegistration = new GUIPaymentMethodRegistration();
+                    guiPaymentMethodRegistration.setVisible(true);*/
                 }
                 //Back da fare
             }
