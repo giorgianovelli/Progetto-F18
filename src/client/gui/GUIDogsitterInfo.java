@@ -52,6 +52,7 @@ public class GUIDogsitterInfo extends JFrame {
     private DogSitterProxy dogSitterProxy;
     private double average;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 
     /**
@@ -156,8 +157,7 @@ public class GUIDogsitterInfo extends JFrame {
 
             String customer = dogSitterProxy.getCustomerNameOfAssignment(entry.getKey()) + " " + dogSitterProxy.getCustomerSurnameOfAssignment(entry.getKey());
             String title = entry.getValue().getTitle();
-            String date = simpleDateFormat.format(entry.getValue().getDate());
-            //String vote = String.valueOf(entry.getValue().getRating());
+            String date = simpleDateFormat1.format(entry.getValue().getDate());
             String vote = entry.getValue().starsRating();
             JLabel label = new JLabel("<html>" + "Review by: " + customer + "<br>" + title + "<br>" + date + "<br>" + vote + "<br/>");
             JButton buttonShowMore = new JButton("Show More");
