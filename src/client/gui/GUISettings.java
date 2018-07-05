@@ -89,7 +89,7 @@ public class GUISettings extends JFrame {
     private CustomerProxy proxy;
     private String email;
     private User user;    //todo controllare tutte le variabili inutilizzate ed eliminarle
-    private CustomerProxy dateofBirth;
+    //private CustomerProxy dateofBirth; TODO Oh Shit!
 
     public GUISettings(String email) {
         setTitle("Account settings");
@@ -359,25 +359,17 @@ public class GUISettings extends JFrame {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        //todo manca come aggiornare la data nelle JCombobox
+        //aggiorna la data di nascita
+        Date dateOfBirth = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        //todo NON FUNZIONA!!! mi fa vedere la data aggiornata al giorno corrente e mi da eccezione se provo a cambiare il giorno
-     /*   Date dateofBirth = new Date();
-        boolean updateDate= proxy.updateDateOfBirth(dateofBirth);
-
-        SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
-        SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
-        SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
-
-        String day = dateFormatdd.format(updateDate);
-        String month = dateFormatmm.format(updateDate);
-        String year = dateFormatyyy.format(updateDate);
-
-        //serve per inserire i giorni mesi e anni  nelle jcombobox penso
-        dayList.setSelectedItem(day);
-        monthList.setSelectedItem(month);
-        yearList.setSelectedItem(year);
-      //  System.out.println("updateDate:" +updateDate);*/
+        String strDateOfBirth = dayList.getSelectedItem().toString() + "/" + monthList.getSelectedItem().toString() + "/" + yearList.getSelectedItem().toString();
+        try {
+            dateOfBirth = dateFormat.parse(strDateOfBirth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        boolean updateDate= proxy.updateDateOfBirth(dateOfBirth);
 
         proxy.updateAddress(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
         textCountry.setEditable(true);
