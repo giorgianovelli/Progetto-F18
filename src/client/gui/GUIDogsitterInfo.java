@@ -16,7 +16,7 @@ public class GUIDogsitterInfo extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    
+
 
     private JPanel panelOut = new JPanel();
     private JPanel panelInfo = new JPanel();
