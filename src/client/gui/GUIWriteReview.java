@@ -51,7 +51,7 @@ public class GUIWriteReview extends JFrame {
 
 
     private JComboBox<String> voteBox;
-    private String[] grade = new String[]{"1", "2", "3", "4", "5"};
+    private String[] grade = new String[]{"★", "★★", "★★★", "★★★★", "★★★★★"};
 
     private Assignment assignmentToReview;
     private String email;
@@ -196,7 +196,7 @@ public class GUIWriteReview extends JFrame {
                     boolean strError = false;
                     String error = "";
 
-                    int rating = Integer.parseInt((String) voteBox.getSelectedItem());
+                    int rating = starsRating(voteBox.getSelectedItem().toString());
                     String title = titleField.getText();
                     String comment = descriptionField.getText();
                     int code = assignmentToReview.getCode();
@@ -257,6 +257,24 @@ public class GUIWriteReview extends JFrame {
 
 
 
+    }
+
+
+    private int starsRating(String rating){
+        switch (rating){
+            case "★":
+                return 1;
+            case "★★":
+                return 2;
+            case "★★★":
+                return 3;
+            case "★★★★":
+                return 4;
+            case "★★★★★":
+                return 5;
+            default:
+                return 0;
+        }
     }
 
    private int updateCountTitle()
