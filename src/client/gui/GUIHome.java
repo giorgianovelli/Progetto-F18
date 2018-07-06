@@ -478,6 +478,8 @@ public abstract class GUIHome extends JFrame{
 
     protected void execCalendarAction(String cmd, Proxy proxy){
         try {
+            cmd = cmd.toUpperCase();
+            cmd = cmd.replace(" ", "");
             CalendarAction calendarAction = CalendarAction.valueOf(cmd);
             switch (calendarAction){
                 case NEXTYEAR:
@@ -502,7 +504,6 @@ public abstract class GUIHome extends JFrame{
             e.printStackTrace();
         }
     }
-
 
 }
 

@@ -111,10 +111,7 @@ public class GUIDogSitter extends GUIHome{
             public void actionPerformed(ActionEvent ctrlAe) {
                 if (!(ctrlAe.getActionCommand().equals(""))){
                     JButton pressedButton = (JButton) ctrlAe.getSource();
-                    String strCmd = pressedButton.getText().toUpperCase();
-                    strCmd = strCmd.replace(" ", "");
-                    execCalendarAction(strCmd, proxy);
-
+                    execCalendarAction(pressedButton.getText(), proxy);
                 }
             }
         };

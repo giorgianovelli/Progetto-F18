@@ -91,8 +91,6 @@ public class GUICustomer extends GUIHome{
         add(panelToday, BorderLayout.EAST);
 
         ActionListener cal = new ActionListener() {
-            ;
-
             @Override
             public void actionPerformed(ActionEvent cae) {
                 JButton pressedButton = (JButton) cae.getSource();
@@ -131,10 +129,7 @@ public class GUICustomer extends GUIHome{
 
                 if (!(ctrlAe.getActionCommand().equals(""))){
                     JButton pressedButton = (JButton) ctrlAe.getSource();
-                    String strCmd = pressedButton.getText().toUpperCase();
-                    strCmd = strCmd.replace(" ", "");
-                    execCalendarAction(strCmd, proxy);
-
+                    execCalendarAction(pressedButton.getText(), proxy);
                 }
             }
         };
