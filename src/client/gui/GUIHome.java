@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
+import client.proxy.Proxy;
 import server.Assignment;
 import enumeration.CalendarState;
 import server.dateTime.WeekDays;
@@ -16,7 +17,7 @@ import java.util.HashSet;
 import static client.Calendar.getNDayofMonth;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
-public class GUIHome extends JFrame{
+public abstract class GUIHome extends JFrame{
     final int WIDTH = 1024;
     final int HEIGHT = 600;
     final int NDAYMONTH = 31;
@@ -40,7 +41,6 @@ public class GUIHome extends JFrame{
     protected JMenu menuExtra = new JMenu("?");
     protected JMenuItem menuItemInfo = new JMenuItem("Info");
     protected JMenuItem menuItemAwards = new JMenuItem("Credits");
-    protected JMenuItem menuItemCancel = new JMenuItem("Cancel");
 
     protected JPanel panelToday = new JPanel();
     protected JLabel labelTodayAssignments = new JLabel("Today's assignments");
@@ -63,9 +63,9 @@ public class GUIHome extends JFrame{
     protected CalendarState calendarState = CalendarState.NORMAL;
     //public static GUINewAssignment guiNewAssignment;
 
-    private CustomerProxy proxy;
+    //private CustomerProxy proxy;
     private String email;
-    private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
+    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
 
 
     public GUIHome(String email) throws ParseException {
@@ -77,10 +77,9 @@ public class GUIHome extends JFrame{
         setLayout(new BorderLayout());
 
         this.email = email;
-        this.proxy = new CustomerProxy(email);
     }
 
-    protected void startCalendar(ActionListener cal, ActionListener ctrlCal) throws ParseException {
+    protected void startCalendar(ActionListener cal, ActionListener ctrlCal, Proxy proxy) throws ParseException {
         calendar.setLayout(new BorderLayout());
         panelDateCalendar.setLayout(new GridLayout(1, 5));
         panelDateCalendar.add(buttonPreviousYear);
@@ -114,7 +113,7 @@ public class GUIHome extends JFrame{
         }
 
         add(calendar, BorderLayout.CENTER);
-        initializeCalendar();
+        initializeCalendar(proxy);
 
         buttonPreviousMonth.addActionListener(ctrlCal);
         buttonNextMonth.addActionListener(ctrlCal);
@@ -122,17 +121,17 @@ public class GUIHome extends JFrame{
         buttonNextYear.addActionListener(ctrlCal);
     }
 
-    protected void initializeCalendar() throws ParseException {
+    protected void initializeCalendar(Proxy proxy) throws ParseException {
         SimpleDateFormat dateMonth = new SimpleDateFormat("MM");
         Date currentMonth = new Date();
         int monthNumber = Integer.parseInt(dateMonth.format(currentMonth));
         SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
         Date currentYear = new Date();
         labelDateMonthYear.setText(dateMonth.format(currentMonth) + "/" + dateYear.format(currentYear));
-        updateCalendar(monthNumber);
+        updateCalendar(monthNumber, proxy);
     }
 
-    protected void goBackMonthCalendar() throws ParseException {
+    protected void goBackMonthCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -161,10 +160,10 @@ public class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber);
+        updateCalendar(monthNumber, proxy);
     }
 
-    protected void goBackYearCalendar() throws ParseException {
+    protected void goBackYearCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -190,10 +189,10 @@ public class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber);
+        updateCalendar(monthNumber, proxy);
     }
 
-    protected void goForwardMonthCalendar() throws ParseException {
+    protected void goForwardMonthCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -222,10 +221,10 @@ public class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber);
+        updateCalendar(monthNumber, proxy);
     }
 
-    protected void goForwardYearCalendar() throws ParseException {
+    protected void goForwardYearCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
         panelGridCalendar.repaint();
@@ -251,10 +250,10 @@ public class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber);
+        updateCalendar(monthNumber, proxy);
     }
 
-    protected void updateCalendar(int monthNumber) throws ParseException {
+    protected void updateCalendar(int monthNumber, Proxy proxy) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
         Date currentDate = date.parse(strDate);
@@ -335,7 +334,7 @@ public class GUIHome extends JFrame{
         }
 
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
-            showAssignmentOnCalendar(email);
+            showAssignmentOnCalendar(email, proxy);
         }
     }
 
@@ -357,7 +356,7 @@ public class GUIHome extends JFrame{
         }
     }*/
 
-    protected void openListAssignment(){
+    protected void openListAssignment(Proxy proxy){
         GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getAssignmentList(), email, this);
         guiListAssignments.setVisible(true);
 
@@ -391,7 +390,7 @@ public class GUIHome extends JFrame{
         }
     }
 
-    protected void showAssignmentOnCalendar(String email){
+    protected void showAssignmentOnCalendar(String email, Proxy proxy){
         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         boolean included = false;
         for (Integer key : listAssignment.keySet()) {
@@ -425,7 +424,7 @@ public class GUIHome extends JFrame{
         }
     }
 
-    protected int getNDailyAssignments(){
+    protected int getNDailyAssignments(Proxy proxy){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
         int nAssignments = 0;
@@ -450,7 +449,7 @@ public class GUIHome extends JFrame{
         return nAssignments;
     }
 
-    protected void loadTheFirstFiveAssignments(int nShownAssignments){
+    /*protected void loadTheFirstFiveAssignments(int nShownAssignments, Proxy proxy){
         if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
@@ -458,6 +457,7 @@ public class GUIHome extends JFrame{
         int i = 0;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
+
         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
 
         for (Integer key : listAssignment.keySet()) {
@@ -487,7 +487,7 @@ public class GUIHome extends JFrame{
             buttonTodayAssignment[n].setDisplayedMnemonicIndex(key);
             n++;
         }
-    }
+    }*/
 
 
 }

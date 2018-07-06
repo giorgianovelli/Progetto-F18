@@ -5,6 +5,7 @@
 
 package client.proxy;
 
+import server.Assignment;
 import server.bank.PaymentMethod;
 import server.places.Address;
 
@@ -15,6 +16,7 @@ import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public abstract class Proxy {
@@ -116,4 +118,6 @@ public abstract class Proxy {
         double amount = Double.parseDouble(tokenMsg.nextToken());
         return new PaymentMethod(number, name, surname, expirationDate, cvv, amount);
     }
+
+    public abstract HashMap<Integer, Assignment> getAssignmentList();
 }
