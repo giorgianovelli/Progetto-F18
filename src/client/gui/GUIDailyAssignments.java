@@ -21,12 +21,15 @@ public class GUIDailyAssignments extends JFrame {
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private JPanel p = new JPanel();
+    private JPanel p = new JPanel();//pannello esterno
+    private GridLayout gridLayout = new GridLayout(1,1);
     private JButton button[] =new JButton[SwingConstants.RIGHT] ;
+    private JButton button1[] =new JButton[SwingConstants.RIGHT] ;
     private JLabel[] labelDescription =new JLabel[SwingConstants.LEFT];
     private JPanel[] infoPanel;
+    private JPanel[] infoPanel2 ;
     private JLabel lb = new JLabel();
-    private JLabel[] createLabel ;
+    private JPanel contentPanel = new JPanel();
     private JScrollPane scroll = new JScrollPane(p);
     private HashMap<Integer, Assignment> listAssigment;
     private CustomerProxy proxy;
@@ -91,6 +94,7 @@ public class GUIDailyAssignments extends JFrame {
             System.out.println(todayAssigment.size());
             labelDescription = new JLabel[todayAssigment.size()];
             button = new JButton[todayAssigment.size()];
+            button1 = new JButton[todayAssigment.size()];
             infoPanel = new JPanel[todayAssigment.size()];
 
 
@@ -111,28 +115,68 @@ public class GUIDailyAssignments extends JFrame {
                     a = todayAssigment.get(i);
                     String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                     String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + a.getDateStart() + "</html>";
-                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + a.getDateEnd() + "</html>";
+
+                    /*if(todayAssigment.size() > 1)
+                        todayAssigment.size();
+                        listAssigment.get(i)
+
+                      siccome mi fa vedere solo un appuntamento anche se ci sono 2 nello stesso giorno
+                      volevo fare un controllo sul nr di appuntamenti ,ma non funziona
+                    */
+
+                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "</html>";
+                    //labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + a.getDateStart() + "</html>"; come era prima
+                    //labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + a.getDateEnd() + "</html>";
 
                     labelDescription[j] = new JLabel(labelString);
+                    button1[j] = new JButton("More info");
                     button[j] = new JButton("Delete");
+
+
+
+
                     button[j].addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
 
                             int action = JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
                             if (action == JOptionPane.YES_OPTION) {
-                                proxy.removeAssignment(listAssigment.get(i).getCode()); //TODO da testare
+                                proxy.removeAssignment(listAssigment.get(i).getCode()); //TODO controllato ma non funzionante
                                 dispose();
                             }
 
                         }
                     });
 
+                    ActionListener showInfo = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                            GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(todayAssigment.get(i), email);
+                            assignmentInfo.setVisible(true);
+
+                        }
+                    };
+
+                    button1[j].addActionListener(showInfo);
+
+
                     infoPanel[j] = new JPanel();
                     infoPanel[j].add(labelDescription[j], BorderLayout.WEST);
-                    infoPanel[j].add(button[j], BorderLayout.EAST);
-                    add(infoPanel[j]);
+                    infoPanel[j].add(button[j],BorderLayout.EAST);
+                    infoPanel[j].add(button1[j], BorderLayout.EAST);
+                    contentPanel.add(infoPanel[j]);
+
+                    contentPanel.setLayout(gridLayout);
+                    add(contentPanel);
+                   /* contentPanel.add(infoPanel[j]);
+                   // scroll.add(contentPanel);
+                    contentPanel.setLayout(gridLayout);
+                    add(contentPanel);
+                    p.setLayout(new BorderLayout());
+                    add(p);*/
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+
                     // p.add(infoPanel[j]); non funziona il pannello esterno !!
                     //createPanelOrder(j); non mi fa vedere piu niente 
                     j++;
@@ -140,8 +184,8 @@ public class GUIDailyAssignments extends JFrame {
                 }
 
             }
-
-
+            //scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            //getContentPane().add(scroll);
 
         }
 
@@ -263,5 +307,6 @@ public class GUIDailyAssignments extends JFrame {
 
 }
 
-// 1. manca da migliorare il layout del Delete assignment se c'e un appuntamento che non funziona con il box layout
-// 2. Il metodo che cancella realmente l'appuntamento dal db - DEVE ESSERE CONTROLATO
+// 1. Migliorie sul layout Delete Assignments - ancora da testare le nuove cose
+// 2. Testato il metodo cancella NON FUNZIONA - cancella l'appuntamento  ma dopo si impalla tutto
+// 3. Problema intervenuto : se esistono 2 appuntamenti nello stesso giorno nel delete assignment mi fa vedere solo 1
