@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.clientEnumerations.CalendarAction;
 import client.proxy.Proxy;
 import server.Assignment;
 import enumeration.CalendarState;
@@ -53,15 +54,17 @@ public abstract class GUIHome extends JFrame{
     protected JLabel labelDay[];
     protected JButton buttonDay[];
     protected JLabel labelEmpty[];
-    protected JButton buttonPreviousYear = new JButton("<<");
+    /*protected JButton buttonPreviousYear = new JButton("<<");
     protected JButton buttonPreviousMonth = new JButton("<");
     protected JButton buttonNextYear = new JButton(">>");
-    protected JButton buttonNextMonth = new JButton(">");
+    protected JButton buttonNextMonth = new JButton(">");*/
+    protected JButton buttonPreviousYear = new JButton("Previous year");
+    protected JButton buttonPreviousMonth = new JButton("Previous month");
+    protected JButton buttonNextYear = new JButton("Next year");
+    protected JButton buttonNextMonth = new JButton("Next Month");
     protected JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
     protected CalendarState calendarState = CalendarState.NORMAL;
-    //public static GUINewAssignment guiNewAssignment;
 
-    //private CustomerProxy proxy;
     private String email;
     protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
 
@@ -469,8 +472,35 @@ public abstract class GUIHome extends JFrame{
         buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
         buttonTodayAssignment[i].setOpaque(true);
         buttonTodayAssignment[i].setBorderPainted(false);
-        buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
+        //buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
         panelToday.add(buttonTodayAssignment[i]);
+    }
+
+    protected void execCalendarAction(String cmd, Proxy proxy){
+        try {
+            CalendarAction calendarAction = CalendarAction.valueOf(cmd);
+            switch (calendarAction){
+                case NEXTYEAR:
+                    goForwardYearCalendar(proxy);
+                    break;
+                case NEXTMONTH:
+                    goForwardMonthCalendar(proxy);
+                    break;
+                case PREVIOUSYEAR:
+                    goBackYearCalendar(proxy);
+                    break;
+                case PREVIOUSMONTH:
+                    goBackMonthCalendar(proxy);
+                    break;
+                case SHOWMORE:
+                    String strTodayDate;
+                    Date todayDate = new Date();
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
+                    guiDailyAssignments.setVisible(true);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 
