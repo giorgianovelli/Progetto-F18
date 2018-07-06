@@ -2,6 +2,8 @@ package client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUIDogSitterLabel extends JFrame {
     final int WIDTH = 500;
@@ -25,9 +27,14 @@ public class GUIDogSitterLabel extends JFrame {
     private JTextField textAvailability = new JTextField();
     private JTextField textBiography = new JTextField("immetti la tua biografia"); //todo da cambiare con area di testo
 
-    private JButton buttonConfirm = new JButton("Confirm");
-    private JButton buttonCancel = new JButton("Cancel");
+    private JButton buttonContinue = new JButton("Next >>");
+    private JButton buttonBack = new JButton("<< Back");
 
+//______________________________________________________________________________________________________________________________________________________________________________
+
+    /**
+     * Constructor
+     */
 
     public GUIDogSitterLabel() {
         setTitle("CaniBau (Sign up)");
@@ -40,18 +47,21 @@ public class GUIDogSitterLabel extends JFrame {
         initComponents();
     }
 
+//______________________________________________________________________________________________________________________________________________________________________________
 
     private void initComponents()  {
-
+        /**
+         * Panels
+         */
         panelData.setLayout(new GridLayout(5, 1, 70, 30));
-        panelData.setBorder(BorderFactory.createTitledBorder("Second Step:(DogSitter Fields) "));
+        panelData.setBorder(BorderFactory.createTitledBorder("SECOND STEP_DogSitter Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButton, BorderLayout.SOUTH);
         panelButton.setLayout(new GridLayout(1, 2,5,5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
-        panelButton.add(buttonCancel, BorderLayout.SOUTH);
-        panelButton.add(buttonConfirm, BorderLayout.SOUTH);
+        panelButton.add(buttonBack, BorderLayout.SOUTH);
+        panelButton.add(buttonContinue, BorderLayout.SOUTH);
 
         panelData.add(labelArea);
         panelData.add(textArea);
@@ -69,6 +79,28 @@ public class GUIDogSitterLabel extends JFrame {
         panelData.add(panelArea);*/
         add(panelOut);
 
+        //-----------------------------------------------------------------------------------
+
+
+
+        ActionListener registration = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent registrationAe) {
+
+                if (registrationAe.getActionCommand().equals("Next >>")) {
+                    //GUIPaymentMethodRegistratio in fase di elaborazione non ancora caricata su git
+
+                    /*   GUIPaymentMethodRegistration guiPaymentMethodRegistration = new GUIPaymentMethodRegistration();
+                    guiPaymentMethodRegistration.setVisible(true);*/
+                }
+                //Back da fare
+            }
+        };
+        buttonBack.addActionListener(registration);
+        buttonContinue.addActionListener(registration);
+
+
+        //-----------------------------------------------------------------------------------
 
         textArea.setText("");
         textArea.setEditable(true);

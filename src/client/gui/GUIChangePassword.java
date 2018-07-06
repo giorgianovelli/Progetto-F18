@@ -25,7 +25,7 @@ public class GUIChangePassword extends JFrame {
     private JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
     private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
 
-   // String strCurrentPassword = proxy.getPassword();
+    // String strCurrentPassword = proxy.getPassword();
     //private String currentPassword = new String();
     private String newPassword = new String();
     private String confirmPassword = new String();
@@ -34,9 +34,17 @@ public class GUIChangePassword extends JFrame {
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
 
-    //TODO attributi per client-server
+    //attributi per client-server
     private CustomerProxy proxy;
     private String email;
+
+//______________________________________________________________________________________________________________________________________________________________
+
+    /**
+     * Constructor
+     * @param email: reference to the user
+     */
+
 
     public GUIChangePassword(String email) {
         setTitle("Change Password");
@@ -51,6 +59,9 @@ public class GUIChangePassword extends JFrame {
         initComponents();
 
     }
+
+//______________________________________________________________________________________________________________________________________________________________
+
 
     private void initComponents() {
 
@@ -74,14 +85,16 @@ public class GUIChangePassword extends JFrame {
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-      // String strCurrentPassword = proxy.getPassword();
+        // String strCurrentPassword = proxy.getPassword();
       /*  textCurrentPassword.setText(strCurrentPassword);
         textCurrentPassword.setEditable(true);
         labelCurrentPassword.setLabelFor(textCurrentPassword);
 
-       /* textPasswordConf.setText("");
+        textPasswordConf.setText("");
         textPasswordConf.setEditable(true);
         labelPasswordConf.setLabelFor(textPasswordConf);*/
+
+        //-----------------------------------------------------------------------------------
 
         /**
          *  TODO  METODO BOTTONI  (CONFERMA MODIFICA PASSWORD da SITEMARE)
@@ -108,6 +121,8 @@ public class GUIChangePassword extends JFrame {
 
     }
 
+//______________________________________________________________________________________________________________________________________________________________
+
     /**
      * metodo per controllare se le nuova password inserita nel campo "NewPassword" corrisponda  al campo "ConfirmPassword"
      * inoltre gestisce l'errore in caso le due password non corrispondano
@@ -122,16 +137,16 @@ public class GUIChangePassword extends JFrame {
         char[] strConfirmPassword = textPasswordConf.getPassword();
 
 
-      //  if (oldPassword.equals(strCurrentPassword)) {
+        //  if (oldPassword.equals(strCurrentPassword)) {
 
 
-       // }
+        // }
         if(strNewPassword.length == strConfirmPassword.length) {
             for (int i = 0; i < strNewPassword.length; i++) {
                 newPassword += strNewPassword[i];
                 confirmPassword += strConfirmPassword[i];
-                }
             }
+        }
             /*else {
             JOptionPane.showMessageDialog(new JFrame(), "Incorrect password!", "Password error", JOptionPane.ERROR_MESSAGE);
             //updatePassword = false;
@@ -161,4 +176,3 @@ public class GUIChangePassword extends JFrame {
 }
 
 
-   

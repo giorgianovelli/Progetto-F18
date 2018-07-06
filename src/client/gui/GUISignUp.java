@@ -27,8 +27,6 @@ public class GUISignUp extends JFrame{
     private JPanel panelAddress = new JPanel();
     private JPanel contentPanel = new JPanel();
 
-    private JScrollPane scrollPanel = new JScrollPane(panelOut);
-
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
     private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
     private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
@@ -56,12 +54,11 @@ public class GUISignUp extends JFrame{
     private JTextField textCap = new JTextField();
     private JTextField textPhoneNumber = new JTextField();
 
-    private JButton buttonCustomerConfirm = new JButton("Confirm Registration as Cutomer");
-    private JButton buttonDogSitterConfirm = new JButton("Confirm Registration as DogSitter");
+    private JButton buttonCustomerConfirm = new JButton("Continue Registration as Cutomer");
+    private JButton buttonDogSitterConfirm = new JButton("Continue Registration as DogSitter");
     private JButton buttonCancel = new JButton("Cancel");
 
-    private JRadioButton cash = new JRadioButton("Cash");
-    private JRadioButton  creditCard = new JRadioButton("Credit Card");
+
 
     private JComboBox<String> dayList;
     private JComboBox<String> monthList;
@@ -77,6 +74,11 @@ public class GUISignUp extends JFrame{
     private String email;
     private User user;   //todo eliminare variabili inutilizzate
 
+//______________________________________________________________________________________________________________________________________________________________________________
+
+    /**
+     * Constructor
+     */
 
     public GUISignUp() {
         setTitle("CaniBau (Sign up)");
@@ -92,11 +94,17 @@ public class GUISignUp extends JFrame{
         initComponents();
     }
 
+//______________________________________________________________________________________________________________________________________________________________________________
+
 
     private void initComponents()  {
 
+        /**
+         * Panels
+         */
+
         panelData.setLayout(new GridLayout(12, 1, 20, 20));
-        panelData.setBorder(BorderFactory.createTitledBorder("First Step: "));
+        panelData.setBorder(BorderFactory.createTitledBorder("FIRST STEP: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButton, BorderLayout.SOUTH);
@@ -108,6 +116,12 @@ public class GUISignUp extends JFrame{
         panelData.add(textSurname);
         panelData.add(labelDate);
 
+        //-----------------------------------------------------------------------------------
+
+        /**
+         * JCOMBOBOX di DATE OF BIRTH
+         */
+
         for(int years = 1930; years<= Calendar.getCurrentYear() ; years++) {
             years_tmp.add(years+"");
         }
@@ -116,20 +130,11 @@ public class GUISignUp extends JFrame{
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        //per riempire le jcombobox con le date corrette
-     /*   Date strDate= proxy.getDateOfBirth();
-        // System.out.println(strDate);  //
-        SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
-        SimpleDateFormat dateFormatmm = new SimpleDateFormat("MM");
-        SimpleDateFormat dateFormatyyy = new SimpleDateFormat("yyyy");
+        //-----------------------------------------------------------------------------------
 
-        String day = dateFormatdd.format(strDate);
-        String month = dateFormatmm.format(strDate);
-        String year = dateFormatyyy.format(strDate);
-
-        dayList.addItem(day);
-        monthList.addItem(month);
-        yearList.addItem(year);*/
+        /**
+         * others panels
+         */
 
         panelDate.setLayout(new GridLayout(1,3,5,5));
         panelDate.add(dayList);
@@ -158,11 +163,11 @@ public class GUISignUp extends JFrame{
 
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
-        panelData.add(labelPaymentMethod);
+        // panelData.add(labelPaymentMethod);
         add(panelOut);
 
-        panelRadioButton.setLayout(new GridLayout(1,0));
-        panelData.add(panelRadioButton);
+     /*   panelRadioButton.setLayout(new GridLayout(1,0));
+        panelData.add(panelRadioButton);*/
 
         //TODO DA SISTEMARE I BOTTONI
         panelButton.setLayout(new GridLayout(1, 2,5,5));
@@ -171,52 +176,44 @@ public class GUISignUp extends JFrame{
         panelButton.add(buttonCustomerConfirm, BorderLayout.SOUTH);
         panelButton.add(buttonDogSitterConfirm, BorderLayout.SOUTH);
 
-       // contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
+        // contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
 
 
 
+        //-----------------------------------------------------------------------------------
 
+        /**
+         *  TODO METODO DELLA MODIFICA dei dati da SISTEMARE
+         */
 
-        //TODO METODO DELLA MODIFICA dei dati da SISTEMARE
         ActionListener registration = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
 
-                if (registrationAe.getActionCommand().equals("Confirm Registration as Cutomer")) {
+                if (registrationAe.getActionCommand().equals("Continue Registration as Cutomer")) {
 
                     addCustomerValues();
-                    //System.out.println(addCustomerValues());
+
 
                     //TODO CONTROLLARE CHE I CAMPI PASSWORD E CONFIRM PASSWORD SIANO UGUALI
 
-                    JOptionPane.showConfirmDialog(new JFrame(), "Please confirm your registration", "Second Step:", JOptionPane.OK_CANCEL_OPTION);
-                    dispose();
-                    GUILogin guiLogin = new GUILogin();
-                    guiLogin.setVisible(true);
-                  //  textEmail.setText("");
-                  //  textPassword.setText("");
+
+                    GUICustomerLabel guiCustomerLabel = new GUICustomerLabel();
+                    guiCustomerLabel.setVisible(true);
+
 
 
                 }
 
-                if (registrationAe.getActionCommand().equals("Confirm Registration as DogSitter")) {
+                if (registrationAe.getActionCommand().equals("Continue Registration as DogSitter")) {
 
-                      //TODO   addDogSitterValues();
+                    //   addDogSitterValues();
 
-                    //  as Dogsitter: aprire un altro frame solo con le label dogsitter
+                    //  as Dogsitter: apre un altro frame solo con le label dogsitter
                     GUIDogSitterLabel guiDogSitterLabel = new GUIDogSitterLabel();
                     guiDogSitterLabel.setVisible(true);
 
-                    ActionListener registrationDogSitter = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                          //  MainFrame frame = new MainFrame();
-                          //  frame.setVisible(true);
 
-                          // GUIDogSitterLabel
-
-                        }
-                    };
 
 
                 }
@@ -233,73 +230,16 @@ public class GUISignUp extends JFrame{
         buttonDogSitterConfirm.addActionListener(registration);
 
 
-        //  JRadioButton  per scegliere metodo di pagamento
-        cash.setMnemonic(KeyEvent.VK_C);
-        cash.setActionCommand("");
-        panelRadioButton.add(cash, BorderLayout.EAST);
-
-        creditCard.setMnemonic(KeyEvent.VK_D);
-        panelRadioButton.add(creditCard, BorderLayout.EAST);
-
-
-        // buttongroup per far in modo che si possa selezionare SOLO un metodo di pagamento
-        ButtonGroup group = new ButtonGroup();
-        group.add(cash);
-        group.add(creditCard);
-
-
-        //TODO Listener dei JRADIOBUTTON da sistemare
-        ActionListener a = new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-
-                if (proxy.getPaymentMethod() == null ){
-                    cash.isSelected();
-
-                }
-                else {
-                    creditCard.isSelected();
-
-                }
-
-            }
-        };
-        cash.addActionListener(a);
-        creditCard.addActionListener(a);
-
-
-        //TODO DA SISTEMARE
-     /*  scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        add(scrollPanel);*/
-
-
-
     }
 
-    //metodi per inserire le tuple nel database
-    //todo ho bisogno dei metodi set in CustomerProxy
+//______________________________________________________________________________________________________________________________________________________________________________
+
+    /**
+     *  metodi per inserire le tuple nel database DA FARE
+     */
+
+
     private void addCustomerValues() {
-      //  String s = ;
-      //  proxy.setName(textName.setText());
-      /*  String strName = proxy.setName();
-        textName.setText(strName);
-        textName.setEditable(true);
-        labelName.setLabelFor(textName);
-
-        System.out.println(strName);*/
-
-        //todo MOSTRA IL CONTENUTO DEL DATABASE
-      /*  String strName = proxy.getName();
-        textName.setText(strName);
-        textName.setEditable(true);
-        labelName.setLabelFor(textName);*/
-
-
-       //todo MODIFICA IL DATABASE
-      /*  proxy.updateName(textName.getText());
-        textName.setEditable(true);
-        labelName.setLabelFor(textName);*/
 
 
     }
