@@ -1,6 +1,5 @@
 package client.gui;
 
-import client.proxy.CustomerProxy;
 import client.proxy.Proxy;
 import server.Assignment;
 import enumeration.CalendarState;
@@ -15,7 +14,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static client.Calendar.getNDayofMonth;
-import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public abstract class GUIHome extends JFrame{
     final int WIDTH = 1024;
@@ -338,24 +336,6 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
-    /*protected void cancel(){
-        calendarState = CalendarState.NORMAL;
-        int i;
-        for (i = 0; i < NDAYMONTH; i++){
-            buttonDay[i].setBackground(new Color(204, 230, 255));
-            buttonDay[i].setEnabled(true);
-        }
-        menuAssignment.setVisible(true);
-        menuReview.setVisible(true);
-        menuSettings.setVisible(true);
-        menuExtra.setVisible(true);
-        menuItemCancel.setVisible(false);
-
-        if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
-            showAssignmentOnCalendar(email);
-        }
-    }*/
-
     protected void openListAssignment(Proxy proxy){
         GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getAssignmentList(), email, this);
         guiListAssignments.setVisible(true);
@@ -455,22 +435,12 @@ public abstract class GUIHome extends JFrame{
         if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
             buttonTodayAssignment = new JButton[nTodayAssignments];
             for (i = 0; i < nTodayAssignments; i++){
-                buttonTodayAssignment[i] = new JButton(" ");
-                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-                buttonTodayAssignment[i].setOpaque(true);
-                buttonTodayAssignment[i].setBorderPainted(false);
-                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-                panelToday.add(buttonTodayAssignment[i]);
+                disposeButtonsTodayAssignment(i);
             }
         } else {
             buttonTodayAssignment = new JButton[MAXVISIBLETODAYASSIGNMENT];
             for (i = 0; i < MAXVISIBLETODAYASSIGNMENT; i++){
-                buttonTodayAssignment[i] = new JButton(" ");
-                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-                buttonTodayAssignment[i].setOpaque(true);
-                buttonTodayAssignment[i].setBorderPainted(false);
-                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-                panelToday.add(buttonTodayAssignment[i]);
+                disposeButtonsTodayAssignment(i);
             }
         }
 
@@ -491,6 +461,16 @@ public abstract class GUIHome extends JFrame{
             nShownTodayAssignments = 0;
         }
         return nShownTodayAssignments;
+    }
+
+
+    private void disposeButtonsTodayAssignment(int i){
+        buttonTodayAssignment[i] = new JButton(" ");
+        buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+        buttonTodayAssignment[i].setOpaque(true);
+        buttonTodayAssignment[i].setBorderPainted(false);
+        buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
+        panelToday.add(buttonTodayAssignment[i]);
     }
 
 
