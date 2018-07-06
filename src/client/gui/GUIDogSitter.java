@@ -65,50 +65,11 @@ public class GUIDogSitter extends GUIHome{
         labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
         panelToday.add(labelTodayAssignments);
         int i;
-        int nShownTodayAssignments = 0;
 
         //restituisce il numero di appuntamenti del giorno
         nTodayAssignments = getNDailyAssignments(proxy);
 
-        //redundant code?
-        if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
-            buttonTodayAssignment = new JButton[nTodayAssignments];
-            for (i = 0; i < nTodayAssignments; i++){
-                buttonTodayAssignment[i] = new JButton("Test assignment");
-                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-                buttonTodayAssignment[i].setOpaque(true);
-                buttonTodayAssignment[i].setBorderPainted(false);
-                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-                panelToday.add(buttonTodayAssignment[i]);
-            }
-        } else {
-            buttonTodayAssignment = new JButton[MAXVISIBLETODAYASSIGNMENT];
-            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT; i++){
-                buttonTodayAssignment[i] = new JButton("Test assignment");
-                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
-                buttonTodayAssignment[i].setOpaque(true);
-                buttonTodayAssignment[i].setBorderPainted(false);
-                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
-                panelToday.add(buttonTodayAssignment[i]);
-            }
-        }
-
-        if ((nTodayAssignments > 0) && (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT)){
-            labelEmptyTodayAssignments = new JLabel[MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1];
-            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1; i++){
-                labelEmptyTodayAssignments[i] = new JLabel();
-                panelToday.add(labelEmptyTodayAssignments[i]);
-                nShownTodayAssignments = nTodayAssignments;
-            }
-        } else if (nTodayAssignments > MAXVISIBLETODAYASSIGNMENT){
-            panelToday.add(buttonShowMoreTodayAssignments);
-            nShownTodayAssignments = MAXVISIBLETODAYASSIGNMENT;
-        } else {
-            labelEmptyTodayAssignments = new JLabel[1];
-            labelEmptyTodayAssignments[0] = new JLabel("No assignment to show", SwingConstants.CENTER);
-            panelToday.add(labelEmptyTodayAssignments[0]);
-            nShownTodayAssignments = 0;
-        }
+        int nShownTodayAssignments = disposeTodayAssignmentList();
 
         //carica i primi 5 appuntamenti del giorno
         loadTheFirstFiveAssignments(nShownTodayAssignments);

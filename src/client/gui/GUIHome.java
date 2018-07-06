@@ -449,45 +449,49 @@ public abstract class GUIHome extends JFrame{
         return nAssignments;
     }
 
-    /*protected void loadTheFirstFiveAssignments(int nShownAssignments, Proxy proxy){
-        if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
-            nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
-        }
-
-        int i = 0;
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        Date todayDate = new Date();
-
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
-
-        for (Integer key : listAssignment.keySet()) {
-            Assignment a = listAssignment.get(key);
-            String strDateStart = date.format(a.getDateStart());
-            String strDateEnd = date.format(a.getDateEnd());
-            String strTodayDate = date.format(todayDate);
-            try {
-                Date dayStart = date.parse(strDateStart);
-                Date dayEnd = date.parse(strDateEnd);
-                Date today = date.parse(strTodayDate);
-                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
-                    codeFirstFiveAssignmentsList.add(key);
-                    i++;
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+    protected int disposeTodayAssignmentList(){
+        int i;
+        int nShownTodayAssignments = 0;
+        if (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT){
+            buttonTodayAssignment = new JButton[nTodayAssignments];
+            for (i = 0; i < nTodayAssignments; i++){
+                buttonTodayAssignment[i] = new JButton(" ");
+                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+                buttonTodayAssignment[i].setOpaque(true);
+                buttonTodayAssignment[i].setBorderPainted(false);
+                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
+                panelToday.add(buttonTodayAssignment[i]);
+            }
+        } else {
+            buttonTodayAssignment = new JButton[MAXVISIBLETODAYASSIGNMENT];
+            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT; i++){
+                buttonTodayAssignment[i] = new JButton(" ");
+                buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
+                buttonTodayAssignment[i].setOpaque(true);
+                buttonTodayAssignment[i].setBorderPainted(false);
+                buttonTodayAssignment[i].setDisplayedMnemonicIndex(i);
+                panelToday.add(buttonTodayAssignment[i]);
             }
         }
 
-        int n = 0;
-        for (Integer key : codeFirstFiveAssignmentsList) {
-            Assignment a = listAssignment.get(key);
-            String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-            String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-            buttonTodayAssignment[n].setText("Assignment with " + capitalizeFirstLetter(nameDogSitter) + " " + capitalizeFirstLetter(surnameDogSitter));
-            buttonTodayAssignment[n].setDisplayedMnemonicIndex(key);
-            n++;
+        if ((nTodayAssignments > 0) && (nTodayAssignments <= MAXVISIBLETODAYASSIGNMENT)){
+            labelEmptyTodayAssignments = new JLabel[MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1];
+            for (i = 0; i < MAXVISIBLETODAYASSIGNMENT - nTodayAssignments + 1; i++){
+                labelEmptyTodayAssignments[i] = new JLabel();
+                panelToday.add(labelEmptyTodayAssignments[i]);
+                nShownTodayAssignments = nTodayAssignments;
+            }
+        } else if (nTodayAssignments > MAXVISIBLETODAYASSIGNMENT){
+            panelToday.add(buttonShowMoreTodayAssignments);
+            nShownTodayAssignments = MAXVISIBLETODAYASSIGNMENT;
+        } else {
+            labelEmptyTodayAssignments = new JLabel[1];
+            labelEmptyTodayAssignments[0] = new JLabel("No assignment to show", SwingConstants.CENTER);
+            panelToday.add(labelEmptyTodayAssignments[0]);
+            nShownTodayAssignments = 0;
         }
-    }*/
+        return nShownTodayAssignments;
+    }
 
 
 }
