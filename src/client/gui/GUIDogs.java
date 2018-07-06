@@ -60,6 +60,15 @@ public class GUIDogs extends JFrame {
         panelContainer.setBorder(BorderFactory.createTitledBorder("Your Dogs: "));
         panelButton = new JPanel();
         addDogButton = new JButton("Add new dog");
+        addDogButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GUIAddDog guiAddDog = new GUIAddDog(email);
+                guiAddDog.setVisible(true);
+
+                dispose();
+            }
+        });
 
 
         for (Dog dog:dogList) {
