@@ -5,6 +5,8 @@ import server.Dog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashSet;
 
 public class GUIDogs extends JFrame {
@@ -17,7 +19,10 @@ public class GUIDogs extends JFrame {
 
     private HashSet<Dog> dogList;
     private JPanel panelContainer;
+    private JPanel panelButton;
     private JPanel panelOut = new JPanel();
+
+    private JButton addDogButton;
 
     private DogBox [] dogBoxes;
 
@@ -48,13 +53,26 @@ public class GUIDogs extends JFrame {
     private void initComponents(){
         int i = 0;
         //Dog d = null;
-        panelContainer = new JPanel();
         panelOut.setLayout(new BorderLayout());
+        panelContainer = new JPanel();
+
         panelContainer = new JPanel(gridLayout);
+        panelContainer.setBorder(BorderFactory.createTitledBorder("Your Dogs: "));
+        panelButton = new JPanel();
+        addDogButton = new JButton("Add new dog");
+
 
         for (Dog dog:dogList) {
             //d = dog;
             dogBoxes[i] = new DogBox(dog.getName(), "Change info");
+            dogBoxes[i].getInfoButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    GUIDogInfo dogInfo = new GUIDogInfo(dog, email);
+                    dogInfo.setVisible(true);
+                }
+            });
+
             panelContainer.add(dogBoxes[i]);
 
             gridLayout.setRows(gridLayout.getRows() + 1);
@@ -62,7 +80,11 @@ public class GUIDogs extends JFrame {
             i++;
         }
 
-        panelOut.add(panelContainer);
+        panelButton.add(addDogButton);
+        panelButton.setBorder(BorderFactory.createEmptyBorder(5,5,20,5));
+
+        panelOut.add(panelContainer, BorderLayout.NORTH);
+        panelOut.add(panelButton, BorderLayout.SOUTH);
         add(panelScroll);
 
     }
@@ -79,36 +101,46 @@ class DogBox extends JPanel{
     private JPanel panelButton;
 
 
+
+
     public DogBox(String name, String button){
         nameLabel = new JLabel(name);
         infoButton = new JButton(button);
 
         panelDog = new JPanel();
+        panelDog.setLayout(new BorderLayout());
+
         panelLabel = new JPanel();
+        panelLabel.setLayout(new BorderLayout());
+
         panelButton = new JPanel();
+        panelButton.setLayout(new GridLayout(1,1));
 
-        panelLabel.add(nameLabel);
-        panelLabel.setBorder(BorderFactory.createEmptyBorder(0,5,0, 80));
+        panelLabel.add(nameLabel, BorderLayout.CENTER);
+        panelLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5,20));
 
-        panelButton.setLayout(new GridLayout(1,1,10,0));
+        panelButton.setLayout(new GridLayout(1,1));
         panelButton.setBorder(BorderFactory.createEmptyBorder(5,20,5, 20));
         panelButton.add(infoButton);
 
-        panelDog.setLayout(new BorderLayout());
+
         panelDog.add(panelLabel, BorderLayout.WEST);
         panelDog.add(panelButton, BorderLayout.EAST);
+
 
         add(panelDog);
 
 
 
 
+
+
+    }
+    public JButton getInfoButton() {
+        return infoButton;
     }
 
 
 
 
-
-
-
-        }
+    }
