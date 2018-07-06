@@ -109,63 +109,9 @@ public class GUIDogSitter extends GUIHome{
         ActionListener ctrlCal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ctrlAe) {
-                if (ctrlAe.getActionCommand().equals("<")){
-                    try {
-                        goBackMonthCalendar(proxy);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals(">")){
-                    try {
-                        goForwardMonthCalendar(proxy);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals("<<")){
-                    try {
-                        goBackYearCalendar(proxy);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals(">>")){
-                    try {
-                        goForwardYearCalendar(proxy);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                if (ctrlAe.getActionCommand().equals("Show more")){
+                if (!(ctrlAe.getActionCommand().equals(""))){
                     JButton pressedButton = (JButton) ctrlAe.getSource();
-
-                    String strTodayDate;
-                    if (Integer.parseInt(pressedButton.getText()) < 10){
-                        strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                    } else {
-                        strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                    }
-
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    Date todayDate = null;
-                    try {
-                        todayDate = dateFormat.parse(strTodayDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
-
-                    guiDailyAssignments.setVisible(true);
+                    execCalendarAction(pressedButton.getText(), proxy);
                 }
             }
         };
