@@ -539,6 +539,24 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
+    public abstract void showAllAssignments();
+
+    public abstract void showAllReviews();
+
+    public abstract void accountSettings();
+
+    public abstract void changePassword();
+
+    public void info(){
+        GUIInfo info = new GUIInfo();
+        info.setVisible(true);
+    }
+
+    public void credits(){
+        GUIAwards credits = new GUIAwards();
+        credits.setVisible(true);
+    }
+
 }
 
 

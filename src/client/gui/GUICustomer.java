@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.clientEnumerations.MenuBarAction;
 import client.proxy.CustomerProxy;
 import server.Assignment;
 import enumeration.CalendarState;
@@ -69,7 +70,10 @@ public class GUICustomer extends GUIHome{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-                if (menuAe.getActionCommand().equals("Quit")){
+
+                clickOnMenuBarButton(menuAe);
+
+                /*if (menuAe.getActionCommand().equals("Quit")){
                     System.exit(0);
                 }
 
@@ -117,7 +121,7 @@ public class GUICustomer extends GUIHome{
                 }
 
                 if (menuAe.getActionCommand().equals("Account")){
-                    GUISettings guiSettings = new GUISettings(email);    //TODO customer
+                    GUISettings guiSettings = new GUISettings(email);
                     guiSettings.setVisible(true);
                 }
 
@@ -143,7 +147,7 @@ public class GUICustomer extends GUIHome{
                 if (menuAe.getActionCommand().equals("Credits")){
                     GUIAwards credits = new GUIAwards();
                     credits.setVisible(true);
-                }
+                }*/
 
 
             }
@@ -203,7 +207,12 @@ public class GUICustomer extends GUIHome{
 
     }
 
-    private void newAssignment(){
+    public void newAssignment(){
+        try {
+            enableDisableDateButtonAssignment();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         calendarState = CalendarState.ADDING;
         int i;
         for (i = 0; i < NDAYMONTH; i++){
@@ -216,7 +225,7 @@ public class GUICustomer extends GUIHome{
         menuItemCancel.setVisible(true);
     }
 
-    private void cancel(){
+    public void cancel(){
         calendarState = CalendarState.NORMAL;
         int i;
         for (i = 0; i < NDAYMONTH; i++){
@@ -234,7 +243,12 @@ public class GUICustomer extends GUIHome{
         }
     }
 
-    private void removeAssignment(){
+    public void removeAssignment(){
+        try {
+            enableDisableDateButtonAssignment();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         calendarState = CalendarState.REMOVING;
         int i;
         for (i = 0; i < NDAYMONTH; i++){
@@ -341,5 +355,47 @@ public class GUICustomer extends GUIHome{
             guiNewAssignment = new GUINewAssignment(todayDate, email);
             guiNewAssignment.setVisible(true);
         }
+    }
+
+    protected void clickOnMenuBarButton(ActionEvent menuAe){
+        JMenuItem pressedItem = (JMenuItem) menuAe.getSource();
+        String cmd = pressedItem.getText().toUpperCase();
+        cmd = cmd.replace(" ", "");
+        MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
+        execMenuBarAction.execute(this);
+    }
+
+    public void showAllAssignments(){
+        openListAssignment(proxy);
+    }
+
+    public void writeReview(){
+        calendarState = CalendarState.REVIEWING;
+        openListAssignment(proxy);
+    }
+
+    public void deleteReview(){
+        calendarState = CalendarState.DELETING_REVIEW;
+        openListAssignment(proxy);
+    }
+
+    public void showAllReviews(){
+        calendarState = CalendarState.SHOW_REVIEWS;
+        openListAssignment(proxy);
+    }
+
+    public void accountSettings(){
+        GUISettings guiSettings = new GUISettings(email);
+        guiSettings.setVisible(true);
+    }
+
+    public void changePassword(){
+        GUIChangePassword guiChangePassword = new GUIChangePassword(email);
+        guiChangePassword.setVisible(true);
+    }
+
+    public void dogsSettings(){
+        GUIDogs guiDogs = new GUIDogs(email);
+        guiDogs.setVisible(true);
     }
 }

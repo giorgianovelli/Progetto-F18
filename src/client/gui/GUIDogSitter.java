@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.clientEnumerations.MenuBarAction;
 import client.proxy.DogSitterProxy;
 import enumeration.CalendarState;
 import server.Assignment;
@@ -62,7 +63,10 @@ public class GUIDogSitter extends GUIHome{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-                if (menuAe.getActionCommand().equals("Quit")){
+
+                clickOnMenuBarButton(menuAe);
+
+                /*if (menuAe.getActionCommand().equals("Quit")){
                     System.exit(0);
                 }
 
@@ -100,7 +104,7 @@ public class GUIDogSitter extends GUIHome{
                 if (menuAe.getActionCommand().equals("Credits")){
                     GUIAwards credits = new GUIAwards();
                     credits.setVisible(true);
-                }
+                }*/
 
 
             }
@@ -235,5 +239,38 @@ public class GUIDogSitter extends GUIHome{
         }
     }
 
+    public void showAllAssignments(){
+        //TODO da implementare
+        //openListAssignment(proxy);
+    }
+
+    public void showAllReviews(){
+        //TODO da implementare
+        //calendarState = CalendarState.SHOW_REVIEWS;
+        //openListAssignment(proxy);
+    }
+
+    public void accountSettings(){
+        //TODO da implementare
+        //GUISettings guiSettings = new GUISettings(email);
+        //guiSettings.setVisible(true);
+    }
+
+    public void changePassword(){
+        //TODO da implementare
+    }
+
+    public void replyToReview(){
+        //TODO da implementare
+        System.out.println("Test reply");
+    }
+
+    protected void clickOnMenuBarButton(ActionEvent menuAe){
+        JMenuItem pressedItem = (JMenuItem) menuAe.getSource();
+        String cmd = pressedItem.getText().toUpperCase();
+        cmd = cmd.replace(" ", "");
+        MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
+        execMenuBarAction.execute(this);
+    }
 
 }
