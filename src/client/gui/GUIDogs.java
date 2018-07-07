@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.HashSet;
 
 public class GUIDogs extends JFrame {
-    final int WIDTH = 512;
-    final int HEIGHT = 512;
+    final int WIDTH = 450;
+    final int HEIGHT = 500;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     private CustomerProxy proxy;
@@ -21,13 +21,14 @@ public class GUIDogs extends JFrame {
     private JPanel panelContainer;
     private JPanel panelButton;
     private JPanel panelOut = new JPanel();
+    private JScrollPane dogScroll;
 
     private JButton addDogButton;
 
     private DogBox [] dogBoxes;
 
     private GridLayout gridLayout = new GridLayout(1,1);
-    private JScrollPane panelScroll = new JScrollPane(panelOut);
+    //private JScrollPane panelScroll = new JScrollPane(panelOut);
 
 
     public GUIDogs(String email){
@@ -55,6 +56,7 @@ public class GUIDogs extends JFrame {
         //Dog d = null;
         panelOut.setLayout(new BorderLayout());
         panelContainer = new JPanel();
+
 
         panelContainer = new JPanel(gridLayout);
         panelContainer.setBorder(BorderFactory.createTitledBorder("Your Dogs: "));
@@ -92,9 +94,14 @@ public class GUIDogs extends JFrame {
         panelButton.add(addDogButton);
         panelButton.setBorder(BorderFactory.createEmptyBorder(5,5,20,5));
 
-        panelOut.add(panelContainer, BorderLayout.NORTH);
+        dogScroll = new JScrollPane(panelContainer);
+        dogScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        dogScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+        panelOut.add(dogScroll, BorderLayout.CENTER);
         panelOut.add(panelButton, BorderLayout.SOUTH);
-        add(panelScroll);
+        add(panelOut);
 
     }
 }
@@ -117,30 +124,30 @@ class DogBox extends JPanel{
         infoButton = new JButton(button);
 
         panelDog = new JPanel();
-        panelDog.setLayout(new BorderLayout());
+        panelDog.setLayout(new GridLayout(1,2, 5,5));
 
         panelLabel = new JPanel();
         panelLabel.setLayout(new BorderLayout());
 
         panelButton = new JPanel();
-        panelButton.setLayout(new GridLayout(1,1));
+        //panelButton.setLayout(new GridLayout(1,1));
 
-        panelLabel.add(nameLabel, BorderLayout.CENTER);
-        panelLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5,20));
+        panelLabel.add(nameLabel, BorderLayout.WEST);
+        //panelLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5,20));
+        panelLabel.setBorder(BorderFactory.createEmptyBorder(0,10,0, 70));
 
-        panelButton.setLayout(new GridLayout(1,1));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(5,20,5, 20));
+        //panelButton.setLayout(new GridLayout(1,1));
+        //panelButton.setBorder(BorderFactory.createEmptyBorder(5,20,5, 20));
+        panelButton.setBorder(BorderFactory.createEmptyBorder(0,50,0, 10));
+
         panelButton.add(infoButton);
 
 
-        panelDog.add(panelLabel, BorderLayout.WEST);
-        panelDog.add(panelButton, BorderLayout.EAST);
+        panelDog.add(panelLabel);
+        panelDog.add(panelButton);
 
 
         add(panelDog);
-
-
-
 
 
 
