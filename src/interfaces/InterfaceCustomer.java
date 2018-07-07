@@ -70,4 +70,6 @@ public interface InterfaceCustomer {
     boolean updateDogWeight(int ID, double weight);
 
     Date getDogDateOfBirth(int ID);
+
+    HashSet<String> getDogsBreedsList();
 }

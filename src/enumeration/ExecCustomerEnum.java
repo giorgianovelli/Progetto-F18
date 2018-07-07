@@ -785,6 +785,24 @@ public enum ExecCustomerEnum {
             return dateFormat.format(dogDateOfBirth);
         }
 
+    },
+
+    GETDOGSBREEDSLIST{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            HashSet<String> dogsBreedsList = customer.getDogsBreedsList();
+            String serverMsg = "";
+            for (String breed : dogsBreedsList) {
+                serverMsg = serverMsg + breed + "#";
+            }
+            return serverMsg;
+        }
+
     };
 
 

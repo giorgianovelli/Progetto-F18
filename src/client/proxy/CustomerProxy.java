@@ -679,4 +679,19 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+
+    /**
+     * Get the list of breeds of dogs.
+     * @return the list of breeds.
+     */
+    public HashSet<String> getDogsBreedsList(){
+        String serverMsg = getReply("CUSTOMER#GETDOGSBREEDSLIST#" + email);
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        HashSet<String> dogsBreedsList = new HashSet<String>();
+        while (tokenMsg.hasMoreTokens()){
+            dogsBreedsList.add(tokenMsg.nextToken());
+        }
+        return dogsBreedsList;
+    }
+
 }

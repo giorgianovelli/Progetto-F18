@@ -1018,4 +1018,26 @@ public class Customer extends User implements InterfaceCustomer{
             return null;
         }
     }
+
+
+    /**
+     * Get the list of breeds of dogs.
+     * @return the list of breeds.
+     */
+    public HashSet<String> getDogsBreedsList(){
+        DBConnector dbConnector = new DBConnector();
+        HashSet<String> dogsBreedsList = new HashSet<String>();
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT NAME FROM BREEDS");
+            while (rs.next()) {
+                String breed = rs.getString("NAME");
+                dogsBreedsList.add(breed);
+            }
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return dogsBreedsList;
+    }
 }
