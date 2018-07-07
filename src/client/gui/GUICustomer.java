@@ -49,28 +49,7 @@ public class GUICustomer extends GUIHome{
     }
 
     private void initComponents() throws ParseException {
-        //Crea il menù
-        menuBar.add(menuFile);
-        menuFile.add(menuItemLogout);
-        menuFile.add(menuItemExit);
-        menuAssignment.add(menuItemAddAssignment);
-        menuAssignment.add(menuItemRemoveAssignment);
-        menuAssignment.add(menuItemShowAssignments);
-        menuBar.add(menuAssignment);
-        menuReview.add(menuItemAddReview);
-        menuReview.add(menuItemRemoveReview);
-        menuReview.add(menuItemShowReviews);
-        menuBar.add(menuReview);
-        menuSettings.add(menuItemAccount);
-        menuSettings.add(menuItemChangePassword);
-        menuSettings.add(menuItemDogs);
-        menuBar.add(menuSettings);
-        menuExtra.add(menuItemInfo);
-        menuExtra.add(menuItemAwards);
-        menuBar.add(menuItemCancel);
-        menuItemCancel.setVisible(false);
-        menuBar.add(menuExtra);
-        add(menuBar, BorderLayout.NORTH);
+        disposeMenuBar();
 
         panelToday.setLayout(new GridLayout(7, 1, 5, 5));
         panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -352,6 +331,32 @@ public class GUICustomer extends GUIHome{
             buttonTodayAssignment[n].setDisplayedMnemonicIndex(key);
             n++;
         }
+    }
+
+    protected void disposeMenuBar(){
+        //Crea il menù
+        menuBar.add(menuFile);
+        menuFile.add(menuItemLogout);
+        menuFile.add(menuItemExit);
+        menuAssignment.add(menuItemAddAssignment);
+        menuAssignment.add(menuItemRemoveAssignment);
+        menuAssignment.add(menuItemShowAssignments);
+        menuBar.add(menuAssignment);
+        menuReview.add(menuItemAddReview);
+        menuReview.add(menuItemRemoveReview);
+        menuReview.add(menuItemShowReviews);
+        menuBar.add(menuReview);
+        menuSettings.add(menuItemAccount);
+        menuSettings.add(menuItemChangePassword);
+        menuSettings.add(menuItemDogs);
+        menuBar.add(menuSettings);
+        menuExtra.add(menuItemInfo);
+        menuExtra.add(menuItemAwards);
+        menuBar.add(menuItemCancel);
+        menuItemCancel.setVisible(false);
+        menuBar.add(menuExtra);
+        add(menuBar, BorderLayout.NORTH);
+
     }
 
 }

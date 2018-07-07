@@ -1,6 +1,5 @@
 package client.gui;
 
-import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 import enumeration.CalendarState;
 import server.Assignment;
@@ -42,22 +41,7 @@ public class GUIDogSitter extends GUIHome{
     }
 
     private void initComponents() throws ParseException {
-        //Crea il menù
-        menuBar.add(menuFile);
-        menuFile.add(menuItemLogout);
-        menuFile.add(menuItemExit);
-        menuAssignment.add(menuItemShowAssignments);
-        menuBar.add(menuAssignment);
-        menuReview.add(menuItemReplyToReview);
-        menuReview.add(menuItemShowReviews);
-        menuBar.add(menuReview);
-        menuSettings.add(menuItemAccount);
-        menuSettings.add(menuItemChangePassword);
-        menuBar.add(menuSettings);
-        menuExtra.add(menuItemInfo);
-        menuExtra.add(menuItemAwards);
-        menuBar.add(menuExtra);
-        add(menuBar, BorderLayout.NORTH);
+        disposeMenuBar();
 
         panelToday.setLayout(new GridLayout(7, 1, 5, 5));
         panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -247,5 +231,24 @@ public class GUIDogSitter extends GUIHome{
             buttonTodayAssignment[n].setDisplayedMnemonicIndex(key);
             n++;
         }
+    }
+
+    protected void disposeMenuBar(){
+        //Crea il menù
+        menuBar.add(menuFile);
+        menuFile.add(menuItemLogout);
+        menuFile.add(menuItemExit);
+        menuAssignment.add(menuItemShowAssignments);
+        menuBar.add(menuAssignment);
+        menuReview.add(menuItemReplyToReview);
+        menuReview.add(menuItemShowReviews);
+        menuBar.add(menuReview);
+        menuSettings.add(menuItemAccount);
+        menuSettings.add(menuItemChangePassword);
+        menuBar.add(menuSettings);
+        menuExtra.add(menuItemInfo);
+        menuExtra.add(menuItemAwards);
+        menuBar.add(menuExtra);
+        add(menuBar, BorderLayout.NORTH);
     }
 }

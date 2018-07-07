@@ -505,6 +505,8 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
+    protected abstract void disposeMenuBar();
+
 }
 
 
