@@ -507,6 +507,28 @@ public abstract class GUIHome extends JFrame{
 
     protected abstract void disposeMenuBar();
 
+    protected int disposeTodayPanel(Proxy proxy){
+        panelToday.setLayout(new GridLayout(7, 1, 5, 5));
+        panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        labelTodayAssignments.setForeground(new Color(0,0, 255));
+        labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
+        panelToday.add(labelTodayAssignments);
+
+        //restituisce il numero di appuntamenti del giorno
+        nTodayAssignments = getNDailyAssignments(proxy);
+
+        int nShownTodayAssignments = disposeTodayAssignmentList();
+
+        //carica i primi 5 appuntamenti del giorno
+        loadTheFirstFiveAssignments(nShownTodayAssignments);
+
+
+        add(panelToday, BorderLayout.EAST);
+        return nShownTodayAssignments;
+    }
+
+    protected abstract void loadTheFirstFiveAssignments(int nShownTodayAssignments);
+
 }
 
 

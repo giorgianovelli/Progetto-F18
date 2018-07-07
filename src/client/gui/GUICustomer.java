@@ -50,24 +50,7 @@ public class GUICustomer extends GUIHome{
 
     private void initComponents() throws ParseException {
         disposeMenuBar();
-
-        panelToday.setLayout(new GridLayout(7, 1, 5, 5));
-        panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        labelTodayAssignments.setForeground(new Color(0,0, 255));
-        labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
-        panelToday.add(labelTodayAssignments);
-        int i;
-
-        //restituisce il numero di appuntamenti del giorno
-        nTodayAssignments = getNDailyAssignments(proxy);
-
-        int nShownTodayAssignments = disposeTodayAssignmentList();
-
-        //carica i primi 5 appuntamenti del giorno
-        loadTheFirstFiveAssignments(nShownTodayAssignments);
-
-
-        add(panelToday, BorderLayout.EAST);
+        int nShownTodayAssignments = disposeTodayPanel(proxy);
 
         ActionListener cal = new ActionListener() {
             @Override
@@ -243,6 +226,7 @@ public class GUICustomer extends GUIHome{
         menuItemDogs.addActionListener(menuAl);
         buttonShowMoreTodayAssignments.addActionListener(ctrlCal);
 
+        int i;
         for (i = 0; i < nShownTodayAssignments; i++){
             buttonTodayAssignment[i].addActionListener(todayAssignmentsAl);
         }
@@ -293,7 +277,7 @@ public class GUICustomer extends GUIHome{
         menuItemCancel.setVisible(true);
     }
 
-    private void loadTheFirstFiveAssignments(int nShownAssignments){
+    protected void loadTheFirstFiveAssignments(int nShownAssignments){
         if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
@@ -358,5 +342,24 @@ public class GUICustomer extends GUIHome{
         add(menuBar, BorderLayout.NORTH);
 
     }
+
+    /*protected int disposeTodayPanel(){
+        panelToday.setLayout(new GridLayout(7, 1, 5, 5));
+        panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        labelTodayAssignments.setForeground(new Color(0,0, 255));
+        labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
+        panelToday.add(labelTodayAssignments);
+
+        //restituisce il numero di appuntamenti del giorno
+        nTodayAssignments = getNDailyAssignments(proxy);
+
+        int nShownTodayAssignments = disposeTodayAssignmentList();
+
+        //carica i primi 5 appuntamenti del giorno
+        loadTheFirstFiveAssignments(nShownTodayAssignments);
+
+        add(panelToday, BorderLayout.EAST);
+        return nShownTodayAssignments;
+    }*/
 
 }
