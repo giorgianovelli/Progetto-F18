@@ -48,37 +48,14 @@ public class GUIDogSitter extends GUIHome{
         ActionListener cal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent cae) {
-                JButton pressedButton = (JButton) cae.getSource();
-                String strTodayDate;
-                if (Integer.parseInt(pressedButton.getText()) < 10){
-                    strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                } else {
-                    strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                }
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date todayDate = new Date();
-                try {
-                    todayDate = dateFormat.parse(strTodayDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
-                    guiDailyAssignments.setVisible(true);
-                }
-
+                clickOnCalendarButton(cae);
             }
         };
 
         ActionListener ctrlCal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ctrlAe) {
-                if (!(ctrlAe.getActionCommand().equals(""))){
-                    JButton pressedButton = (JButton) ctrlAe.getSource();
-                    execCalendarAction(pressedButton.getText(), proxy);
-                }
+                clickOnCtrlCalendarButton(ctrlAe, proxy);
             }
         };
 
@@ -233,6 +210,29 @@ public class GUIDogSitter extends GUIHome{
         menuExtra.add(menuItemAwards);
         menuBar.add(menuExtra);
         add(menuBar, BorderLayout.NORTH);
+    }
+
+    protected void clickOnCalendarButton(ActionEvent cae){
+        JButton pressedButton = (JButton) cae.getSource();
+        String strTodayDate;
+        if (Integer.parseInt(pressedButton.getText()) < 10){
+            strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
+        } else {
+            strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+        try {
+            todayDate = dateFormat.parse(strTodayDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
+            GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
+            guiDailyAssignments.setVisible(true);
+        }
     }
 
 

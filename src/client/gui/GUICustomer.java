@@ -55,44 +55,14 @@ public class GUICustomer extends GUIHome{
         ActionListener cal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent cae) {
-                JButton pressedButton = (JButton) cae.getSource();
-                String strTodayDate;
-                if (Integer.parseInt(pressedButton.getText()) < 10){
-                    strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                } else {
-                    strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
-                }
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date todayDate = new Date();
-                try {
-                    todayDate = dateFormat.parse(strTodayDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
-                    guiDailyAssignments.setVisible(true);
-                }
-
-                if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
-                    //JButton pressedButton = (JButton) cae.getSource();
-                    guiNewAssignment = new GUINewAssignment(todayDate, email);
-                    guiNewAssignment.setVisible(true);
-                }
-
+                clickOnCalendarButton(cae);
             }
         };
 
         ActionListener ctrlCal = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ctrlAe) {
-
-                if (!(ctrlAe.getActionCommand().equals(""))){
-                    JButton pressedButton = (JButton) ctrlAe.getSource();
-                    execCalendarAction(pressedButton.getText(), proxy);
-                }
+                clickOnCtrlCalendarButton(ctrlAe, proxy);
             }
         };
 
@@ -343,23 +313,33 @@ public class GUICustomer extends GUIHome{
 
     }
 
-    /*protected int disposeTodayPanel(){
-        panelToday.setLayout(new GridLayout(7, 1, 5, 5));
-        panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        labelTodayAssignments.setForeground(new Color(0,0, 255));
-        labelTodayAssignments.setFont(new Font("Serif", Font.BOLD, 24));
-        panelToday.add(labelTodayAssignments);
+    @Override
+    protected void clickOnCalendarButton(ActionEvent cae) {
+        JButton pressedButton = (JButton) cae.getSource();
+        String strTodayDate;
+        if (Integer.parseInt(pressedButton.getText()) < 10){
+            strTodayDate =  "0" + pressedButton.getText() + "/" + labelDateMonthYear.getText();
+        } else {
+            strTodayDate = pressedButton.getText() + "/" + labelDateMonthYear.getText();
+        }
 
-        //restituisce il numero di appuntamenti del giorno
-        nTodayAssignments = getNDailyAssignments(proxy);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+        try {
+            todayDate = dateFormat.parse(strTodayDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        int nShownTodayAssignments = disposeTodayAssignmentList();
+        if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
+            GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
+            guiDailyAssignments.setVisible(true);
+        }
 
-        //carica i primi 5 appuntamenti del giorno
-        loadTheFirstFiveAssignments(nShownTodayAssignments);
-
-        add(panelToday, BorderLayout.EAST);
-        return nShownTodayAssignments;
-    }*/
-
+        if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
+            //JButton pressedButton = (JButton) cae.getSource();
+            guiNewAssignment = new GUINewAssignment(todayDate, email);
+            guiNewAssignment.setVisible(true);
+        }
+    }
 }

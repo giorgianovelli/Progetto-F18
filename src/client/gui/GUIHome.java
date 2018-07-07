@@ -7,6 +7,7 @@ import enumeration.CalendarState;
 import server.dateTime.WeekDays;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -528,6 +529,15 @@ public abstract class GUIHome extends JFrame{
     }
 
     protected abstract void loadTheFirstFiveAssignments(int nShownTodayAssignments);
+
+    protected abstract void clickOnCalendarButton(ActionEvent cae);
+
+    protected void clickOnCtrlCalendarButton(ActionEvent ctrlAe, Proxy proxy){
+        if (!(ctrlAe.getActionCommand().equals(""))){
+            JButton pressedButton = (JButton) ctrlAe.getSource();
+            execCalendarAction(pressedButton.getText(), proxy);
+        }
+    }
 
 }
 
