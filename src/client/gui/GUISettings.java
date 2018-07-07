@@ -242,16 +242,29 @@ public class GUISettings extends JFrame {
         expirationMonth.setSelectedItem(expiration_Months);
         expirationYear.setSelectedItem(expiration_Years);
 
-        //TODO INSERIMENTO ultimo giorno del mese in modo automatico
-        //non riesco a fare in modo che si veda solo il giorno del mese
+        /**
+         * inserimento ultimo giorno del mese in modo automatico
+         */
+
         Date exYear = new Date();
-        int monthNumber = 0;
 
-        String expirationDate = Calendar.getNDayofMonth(monthNumber, exYear) + "/" + expiration_Months + "/" + expiration_Years;
+        try{
+            exYear = expirationDateFormatyyyy.parse(expiration_Years); //prende come data solo l'anno
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
 
-        textExpirationDays.setText(String.valueOf(expirationDate));
+        String expiration_Days = Integer.toString(Calendar.getNDayofMonth(Integer.parseInt(expiration_Months), exYear));
+
+        /**
+         * stampa il giorno sulla label nell'interfaccia
+         */
+
+        textExpirationDays.setText(expiration_Days);
         textExpirationDays.setEditable(false);
         labelExpirationDate.setLabelFor(textExpirationDays);
+
+
 
         //-----------------------------------------------------------------------------------
 
