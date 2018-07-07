@@ -662,4 +662,21 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         }
     }
 
+
+    /**
+     * Get dog's date of birth.
+     * @param ID the dog's ID.
+     * @return the dog's date of birth.
+     */
+    public Date getDogDateOfBirth(int ID){
+        String serverMsg = getReply("CUSTOMER#GETDOGDATEOFBIRTH#" + email + "#" + ID);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return dateFormat.parse(serverMsg);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

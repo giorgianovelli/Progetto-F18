@@ -22,7 +22,7 @@ public class TestCustomerExecEnum {
         }
 
         CustomerProxy proxy = new CustomerProxy("RICCARDOGIURA@GMAIL.COM");
-        HashMap<Integer, Assignment> assignmentList = proxy.getAssignmentList();
+        //HashMap<Integer, Assignment> assignmentList = proxy.getAssignmentList();
         /*proxy.getDogSitterNameOfAssignment(2);
         proxy.getDogSitterSurnameOfAssignment(2);
         proxy.getName();
@@ -36,19 +36,19 @@ public class TestCustomerExecEnum {
         proxy.updateSurname("GIU");
         proxy.updatePassword("PROVA");
         proxy.updatePhoneNumber("1111111111");*/
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date birthdate = new Date();
         try {
             birthdate = dateFormat.parse("23/06/1996");
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
         //proxy.updateDateOfBirth(birthdate);
         //proxy.updateAddress("ITALY", "PAVIA", "VIA FERRATA", "1", "27100");
         //System.out.println(proxy.updatePaymentMethod("2222221112222222", "RICK", "GIU", new Date(), 555));
-        HashSet<Dog> selectedDogs = new HashSet<Dog>(2);
+        /*HashSet<Dog> selectedDogs = new HashSet<Dog>(2);*/
         //creare oggetti Dog
-        Singleton singleton = new Singleton();
+        /*Singleton singleton = new Singleton();
         Dog d = singleton.createDogFromDB(3);
         selectedDogs.add(d);
         d = singleton.createDogFromDB(4);
@@ -64,11 +64,11 @@ public class TestCustomerExecEnum {
         }
 
         System.out.println("search:");
-        proxy.search(start, end, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), selectedDogs, false);
+        proxy.search(start, end, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), selectedDogs, false);*/
 
         //proxy.estimatePriceAssignment(selectedDogs, start, end);
         //System.out.println("addAssignment:");
-        proxy.addAssignment("ERICA.ROSSI@GMAIL.COM", start, end, selectedDogs, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), true);
+        //proxy.addAssignment("ERICA.ROSSI@GMAIL.COM", start, end, selectedDogs, new Address("ITALY", "GENOVA", "VIA DEL PORTO", "1", "16121"), true);
         //proxy.removeAssignment(5);
         /*proxy.addReview(1, "MARCO.CARTA@GMAIL.COM", 4, "prova", "funziona! Molto utile!");
         proxy.removeReview(1);
@@ -78,5 +78,6 @@ public class TestCustomerExecEnum {
         //proxy.disableDog(3);
         //proxy.getDogList();
         //System.out.println(proxy.getReview(1).getComment());
+        proxy.getDogDateOfBirth(3);
     }
 }

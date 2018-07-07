@@ -997,4 +997,25 @@ public class Customer extends User implements InterfaceCustomer{
             return false;
         }
     }
+
+
+    /**
+     * Get dog's date of birth.
+     * @param ID the dog's ID.
+     * @return the dog's date of birth.
+     */
+    public Date getDogDateOfBirth(int ID){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs;
+        try {
+            rs = dbConnector.askDB("SELECT AGE FROM DOGS WHERE ID = " + ID);
+            rs.next();
+            Date dogDateOfBirth = rs.getDate("AGE");
+            dbConnector.closeConnection();
+            return dogDateOfBirth;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

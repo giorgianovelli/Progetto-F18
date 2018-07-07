@@ -769,7 +769,25 @@ public enum ExecCustomerEnum {
             }
         }
 
+    },
+
+    GETDOGDATEOFBIRTH{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int ID = Integer.parseInt(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            Customer customer = singleton.createCustomerFromDB(email);
+            Date dogDateOfBirth = customer.getDogDateOfBirth(ID);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            return dateFormat.format(dogDateOfBirth);
+        }
+
     };
+
+
 
 
     public abstract String execute(String clientMsg);
