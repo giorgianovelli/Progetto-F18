@@ -70,86 +70,7 @@ public class GUICustomer extends GUIHome{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-
                 clickOnMenuBarButton(menuAe);
-
-                /*if (menuAe.getActionCommand().equals("Quit")){
-                    System.exit(0);
-                }
-
-                if (menuAe.getActionCommand().equals("Logout")){
-                    GUILogin guiLogin = new GUILogin();
-                    guiLogin.setVisible(true);
-                    setVisible(false);
-                }
-
-                if (menuAe.getActionCommand().equals("Show all assignments")){
-                    openListAssignment(proxy);
-                }
-
-                if (menuAe.getActionCommand().equals("Write a review")){
-                    calendarState = CalendarState.REVIEWING;
-                    openListAssignment(proxy);
-                }
-
-                if (menuAe.getActionCommand().equals("Delete review")){
-                    calendarState = CalendarState.DELETING_REVIEW;
-                    openListAssignment(proxy);
-                }
-
-                if (menuAe.getActionCommand().equals("Show all reviews")){
-                    calendarState = CalendarState.SHOW_REVIEWS;
-                    openListAssignment(proxy);
-                }
-
-                if (menuAe.getActionCommand().equals("New assignment")){
-                    try {
-                        enableDisableDateButtonAssignment();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    newAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Delete assignment")){
-                    try {
-                        enableDisableDateButtonAssignment();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    removeAssignment();
-                }
-
-                if (menuAe.getActionCommand().equals("Account")){
-                    GUISettings guiSettings = new GUISettings(email);
-                    guiSettings.setVisible(true);
-                }
-
-                if(menuAe.getActionCommand().equals("Change Password")) {
-                    GUIChangePassword guiChangePassword = new GUIChangePassword(email);
-                    guiChangePassword.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Dogs")){
-                    GUIDogs guiDogs = new GUIDogs(email);
-                    guiDogs.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Cancel")){
-                    cancel();
-                }
-
-                if (menuAe.getActionCommand().equals("Info")){
-                    GUIInfo info = new GUIInfo();
-                    info.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Credits")){
-                    GUIAwards credits = new GUIAwards();
-                    credits.setVisible(true);
-                }*/
-
-
             }
         };
 
@@ -355,14 +276,6 @@ public class GUICustomer extends GUIHome{
             guiNewAssignment = new GUINewAssignment(todayDate, email);
             guiNewAssignment.setVisible(true);
         }
-    }
-
-    protected void clickOnMenuBarButton(ActionEvent menuAe){
-        JMenuItem pressedItem = (JMenuItem) menuAe.getSource();
-        String cmd = pressedItem.getText().toUpperCase();
-        cmd = cmd.replace(" ", "");
-        MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
-        execMenuBarAction.execute(this);
     }
 
     public void showAllAssignments(){

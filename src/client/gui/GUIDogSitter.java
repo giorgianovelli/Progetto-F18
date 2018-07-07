@@ -63,50 +63,7 @@ public class GUIDogSitter extends GUIHome{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-
                 clickOnMenuBarButton(menuAe);
-
-                /*if (menuAe.getActionCommand().equals("Quit")){
-                    System.exit(0);
-                }
-
-                if (menuAe.getActionCommand().equals("Logout")){
-                    GUILogin guiLogin = new GUILogin();
-                    guiLogin.setVisible(true);
-                    setVisible(false);
-                }
-
-                if (menuAe.getActionCommand().equals("Show all assignments")){
-                    //TODO da implementare
-                }
-
-                if (menuAe.getActionCommand().equals("Reply to a review")){
-                    //TODO da implementare
-                }
-
-                if (menuAe.getActionCommand().equals("Show all reviews")){
-                    //TODO da implementare
-                }
-
-                if (menuAe.getActionCommand().equals("Account")){
-                    //TODO da implementare
-                }
-
-                if(menuAe.getActionCommand().equals("Change Password")) {
-                    //TODO da implementare
-                }
-
-                if (menuAe.getActionCommand().equals("Info")){
-                    GUIInfo info = new GUIInfo();
-                    info.setVisible(true);
-                }
-
-                if (menuAe.getActionCommand().equals("Credits")){
-                    GUIAwards credits = new GUIAwards();
-                    credits.setVisible(true);
-                }*/
-
-
             }
         };
 
@@ -263,14 +220,6 @@ public class GUIDogSitter extends GUIHome{
     public void replyToReview(){
         //TODO da implementare
         System.out.println("Test reply");
-    }
-
-    protected void clickOnMenuBarButton(ActionEvent menuAe){
-        JMenuItem pressedItem = (JMenuItem) menuAe.getSource();
-        String cmd = pressedItem.getText().toUpperCase();
-        cmd = cmd.replace(" ", "");
-        MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
-        execMenuBarAction.execute(this);
     }
 
 }

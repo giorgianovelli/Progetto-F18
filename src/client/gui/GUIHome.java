@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.clientEnumerations.CalendarAction;
+import client.clientEnumerations.MenuBarAction;
 import client.proxy.Proxy;
 import server.Assignment;
 import enumeration.CalendarState;
@@ -555,6 +556,14 @@ public abstract class GUIHome extends JFrame{
     public void credits(){
         GUIAwards credits = new GUIAwards();
         credits.setVisible(true);
+    }
+
+    protected void clickOnMenuBarButton(ActionEvent menuAe){
+        JMenuItem pressedItem = (JMenuItem) menuAe.getSource();
+        String cmd = pressedItem.getText().toUpperCase();
+        cmd = cmd.replace(" ", "");
+        MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
+        execMenuBarAction.execute(this);
     }
 
 }
