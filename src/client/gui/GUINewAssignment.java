@@ -154,7 +154,7 @@ public class GUINewAssignment extends JFrame{
 
 
                 if (dateStart.after(dateEnd)) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong1!", "Assignment error",
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
                     System.out.println(dateStart);
                     System.out.println(dateEnd);
@@ -173,7 +173,7 @@ public class GUINewAssignment extends JFrame{
                         case("02"): {
                             if (Integer.parseInt(year) % 4 != 0) {
                                 if (day.equals("29") || day.equals("30") || day.equals("31")) {
-                                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong2!", "Assignment error",
+                                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                                             JOptionPane.ERROR_MESSAGE);
                                     break;
                                 }
@@ -190,7 +190,7 @@ public class GUINewAssignment extends JFrame{
 
                         case ("04"): {
                             if (day.equals("31")) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong3!", "Assignment error",
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
@@ -198,7 +198,7 @@ public class GUINewAssignment extends JFrame{
 
                         case ("06"): {
                             if (day.equals("31")) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong4!", "Assignment error",
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
@@ -206,7 +206,7 @@ public class GUINewAssignment extends JFrame{
 
                         case ("09"): {
                             if (day.equals("31")) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong5!", "Assignment error",
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
@@ -214,7 +214,7 @@ public class GUINewAssignment extends JFrame{
 
                         case ("11"): {
                             if (day.equals("31")) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong6!", "Assignment error",
+                                JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
