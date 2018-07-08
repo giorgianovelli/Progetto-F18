@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.HashSet;
 
 public class GUIDogs extends JFrame {
-    final int WIDTH = 450;
+    final int WIDTH = 512;
     final int HEIGHT = 500;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
@@ -28,7 +28,7 @@ public class GUIDogs extends JFrame {
     private DogBox [] dogBoxes;
 
     private GridLayout gridLayout = new GridLayout(1,1);
-    //private JScrollPane panelScroll = new JScrollPane(panelOut);
+
 
 
     public GUIDogs(String email){
@@ -72,15 +72,33 @@ public class GUIDogs extends JFrame {
             }
         });
 
+        HashSet<Dog> dogListEnabled = new HashSet<>();
 
-        for (Dog dog:dogList) {
+        for(Dog dog: dogList)
+        {
+            if(dog.isEnabled()){
+                dogListEnabled.add(dog);
+            }
+        }
+        for (Dog dog:dogListEnabled) {
             //d = dog;
-            dogBoxes[i] = new DogBox(dog.getName(), "Change info");
+            dogBoxes[i] = new DogBox(dog.getName(), "Change info", "Disable dog");
             dogBoxes[i].getInfoButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     GUIDogInfo dogInfo = new GUIDogInfo(dog, email);
                     dogInfo.setVisible(true);
+                    dispose();
+                }
+            });
+
+            dogBoxes[i].getDisableButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(proxy.disableDog(dog.getID())){
+                        JOptionPane.showMessageDialog(new Frame(), dog.getName()+" disabled!", "", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    }
                 }
             });
 
@@ -111,6 +129,7 @@ class DogBox extends JPanel{
 
     private JLabel nameLabel;
     private JButton infoButton;
+    private JButton disableButton;
 
     private JPanel panelDog;
     private JPanel panelLabel;
@@ -119,9 +138,11 @@ class DogBox extends JPanel{
 
 
 
-    public DogBox(String name, String button){
+    public DogBox(String name, String button1, String button2 ){
         nameLabel = new JLabel(name);
-        infoButton = new JButton(button);
+        infoButton = new JButton(button1);
+        disableButton = new JButton(button2);
+
 
         panelDog = new JPanel();
         panelDog.setLayout(new GridLayout(1,2, 5,5));
@@ -130,17 +151,17 @@ class DogBox extends JPanel{
         panelLabel.setLayout(new BorderLayout());
 
         panelButton = new JPanel();
-        //panelButton.setLayout(new GridLayout(1,1));
+        panelButton.setLayout(new GridLayout(1,2, 5 ,5 ));
 
         panelLabel.add(nameLabel, BorderLayout.WEST);
-        //panelLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5,20));
+
         panelLabel.setBorder(BorderFactory.createEmptyBorder(0,10,0, 70));
 
-        //panelButton.setLayout(new GridLayout(1,1));
-        //panelButton.setBorder(BorderFactory.createEmptyBorder(5,20,5, 20));
-        panelButton.setBorder(BorderFactory.createEmptyBorder(0,50,0, 10));
+
+        panelButton.setBorder(BorderFactory.createEmptyBorder(0,20,0, 10));
 
         panelButton.add(infoButton);
+        panelButton.add(disableButton);
 
 
         panelDog.add(panelLabel);
@@ -156,7 +177,7 @@ class DogBox extends JPanel{
         return infoButton;
     }
 
-
-
-
+    public JButton getDisableButton() {
+        return disableButton;
     }
+}

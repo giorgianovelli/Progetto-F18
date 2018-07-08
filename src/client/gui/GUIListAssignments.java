@@ -102,7 +102,7 @@ public class GUIListAssignments extends JFrame{
             setTitle("Write a review");
 
             HashMap<Integer, Assignment> newListAssignment = new HashMap<>(); //nuova lista degli appuntamente precedenti alla data attuale
-            
+
             for(Integer i : listAssignment.keySet()){
                 Assignment a = null;
                 a = listAssignment.get(i);

@@ -218,7 +218,7 @@ public class GUIWriteReview extends JFrame {
                         JOptionPane.showMessageDialog(new JFrame(), error, "Error", JOptionPane.ERROR_MESSAGE);
                         titleField.setText("");
                         descriptionField.setText("");
-                    } else if(proxy.addReview(code, email, rating ,title ,comment)){
+                    } else if(proxy.addReview(code, email, rating ,title.toUpperCase() ,comment.toUpperCase())){
                         JOptionPane.showMessageDialog(new JFrame(), "Review added!", "Review", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
 

@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 public class GUIAddDog extends JFrame {
     final int WIDTH = 512;
@@ -35,8 +36,11 @@ public class GUIAddDog extends JFrame {
 
     private JTextField textName = new JTextField();
     private JTextField textWeight = new JTextField();
-    private JTextField textBreed = new JTextField(); //può diventare una combobox?
+    //private JTextField textBreed = new JTextField(); //può diventare una combobox?
     //private JTextField textAge = new JTextField();
+
+    private JComboBox<String> breedList;
+    private String[] breed;
 
     private JButton buttonAdd = new JButton("Add");
     private JButton buttonCancel = new JButton("Cancel");
@@ -73,7 +77,7 @@ public class GUIAddDog extends JFrame {
             public void actionPerformed(ActionEvent registrationAe) {
 
                 if (registrationAe.getActionCommand().equals("Add")) {
-                    if (textName.getText().equals("") || textWeight.getText().equals("") || textBreed.getText().equals("")) {
+                    if (textName.getText().equals("") || textWeight.getText().equals("") ) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
                     } else{
@@ -104,6 +108,17 @@ public class GUIAddDog extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
+        HashSet<String> breedSet = proxy.getDogsBreedsList();
+        breed = new String[breedSet.size()];
+
+        int i = 0;
+        for (String breedStr : breedSet){
+            breed[i] = breedStr;
+            i++;
+        }
+
+        breedList = new JComboBox<>(breed);
+
         panelDate.setLayout(new GridLayout(1,3,5,5));
         panelDate.add(dayList);
         panelDate.add(monthList);
@@ -116,7 +131,7 @@ public class GUIAddDog extends JFrame {
         panelData.add(labelName);
         panelData.add(textName);
         panelData.add(labelBreed);
-        panelData.add(textBreed);
+        panelData.add(breedList);
         panelData.add(labelWeight);
         panelData.add(textWeight);
         panelData.add(labelDate);
@@ -143,6 +158,7 @@ public class GUIAddDog extends JFrame {
         Date dateOfBirth = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+
         String strDateOfBirth = dayList.getSelectedItem().toString() + "/" + monthList.getSelectedItem().toString() + "/" + yearList.getSelectedItem().toString();
         try {
             dateOfBirth = dateFormat.parse(strDateOfBirth);
@@ -150,7 +166,7 @@ public class GUIAddDog extends JFrame {
             e.printStackTrace();
         }
 
-        return proxy.addDog(email,textName.getText(), textBreed.getText(), dateOfBirth, Double.parseDouble(textWeight.getText()));
+        return proxy.addDog(email,textName.getText().toUpperCase(), breedList.getSelectedItem().toString(), dateOfBirth, Double.parseDouble(textWeight.getText()));
 
     }
 
