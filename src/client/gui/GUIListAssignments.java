@@ -32,7 +32,6 @@ public class GUIListAssignments extends JFrame{
 
 
     private JLabel labelState[];
-    private JLabel labelStr;
 
     private JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
     private JButton[] buttonAction;
@@ -102,10 +101,22 @@ public class GUIListAssignments extends JFrame{
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
 
+            HashMap<Integer, Assignment> newListAssignment = new HashMap<>(); //nuova lista degli appuntamente precedenti alla data attuale
+            
+            for(Integer i : listAssignment.keySet()){
+                Assignment a = null;
+                a = listAssignment.get(i);
+                if(dateBeforeToday(a.getDateEnd())){
+                    newListAssignment.put(a.getCode(), a);
+                }
+
+            }
+
             int j = 0;
+            int review = 0;
             boolean haveAReview = false;//Fa vedere solo gli appuntamenti che non hanno ancora una recensione
 
-            for(Integer i : listAssignment.keySet()){
+            for(Integer i : newListAssignment.keySet()){
                 Assignment a = null;
                 String labelString = "";
 
@@ -117,10 +128,12 @@ public class GUIListAssignments extends JFrame{
                     r = listReview.get(k);
                     if(a.getCode()== r.getCode()){
                         haveAReview = true;
+                        review++;
                     }
                 }
 
                 if(!haveAReview){
+
                     String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
                     String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
                     SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -143,6 +156,9 @@ public class GUIListAssignments extends JFrame{
 
                     });
 
+
+
+
                     createPanelReview(j);
                     gridLayout.setRows(gridLayout.getRows() + 1);
 
@@ -152,10 +168,19 @@ public class GUIListAssignments extends JFrame{
 
                 j++;
             }
+
+            System.out.println(review);
+
+            if(review == newListAssignment.size()){
+                System.out.println("Non ci sono recensioni");
+                JLabel noReviewLabel = new JLabel("There aren't assignment to review!");
+                setSize(WIDTH, 200);
+                panelOut.setLayout(new BorderLayout());
+                contentPanel.setBorder(BorderFactory.createEmptyBorder(60,100,10,30));
+                contentPanel.add(noReviewLabel, BorderLayout.CENTER);
+            }
             /*if (haveAReview) {
-                labelStr = new JLabel("There aren't assignment to review!");
-                labelStr.setFont(new Font("TimesRoman", Font.PLAIN, 15));
-                contentPanel.add(labelStr);
+
             }*/
 
 
@@ -362,8 +387,8 @@ public class GUIListAssignments extends JFrame{
     private JLabel createLabelState(Assignment a){
         //da controllare il funzionamento
 
-        JLabel label = new JLabel();
-        Date todayDate= new Date(System.currentTimeMillis());
+        JLabel label;
+
 
         ImageIcon green = transformImage(new ImageIcon("images/Green_square.svg.png"), 30,30);
         ImageIcon gray = transformImage(new ImageIcon("images/gray_square.png"), 30,30);
@@ -371,7 +396,7 @@ public class GUIListAssignments extends JFrame{
 
         Boolean state = a.getState();
 
-        if(a.getDateEnd().before(todayDate)){
+        if(dateBeforeToday(a.getDateEnd())){
             label = new JLabel(gray);
 
         }
@@ -402,6 +427,16 @@ public class GUIListAssignments extends JFrame{
         return icon;
     }
 
+
+    private boolean dateBeforeToday(Date date){
+        Date todayDate = new Date(System.currentTimeMillis());
+
+        if(date.before(todayDate)){
+            return true;
+        }
+
+        return false;
+    }
 
 
 
