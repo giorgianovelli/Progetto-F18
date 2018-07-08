@@ -122,9 +122,12 @@ public class GUINewAssignment extends JFrame{
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 Date dateStart = new Date();
                 Date dateEnd = new Date();
+                String strDateStart = fromDay + "/" + fromMonth + "/" + fromYear + " " + fromHour + ":" + fromMinute;
+                String strDateEnd = day + "/" + month + "/" + year + " " + toHour + ":" + toMinute;
+
                 try {
-                    dateStart = simpleDateFormat.parse(fromDay + "/" + fromMonth + "/" + fromYear + " " + fromHour + ":" + fromMinute);
-                    dateEnd = simpleDateFormat.parse(day + "/" + month + "/" + year + " " + toHour + ":" + toMinute);
+                    dateStart = simpleDateFormat.parse(strDateStart);
+                    dateEnd = simpleDateFormat.parse(strDateEnd);
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
@@ -153,11 +156,9 @@ public class GUINewAssignment extends JFrame{
 
 
 
-                if (dateStart.after(dateEnd)) {
+                if (dateStart.after(dateEnd) || strDateStart.equals(strDateEnd)) {
                     JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
-                    System.out.println(dateStart);
-                    System.out.println(dateEnd);
 
                 } else if (dogsSelected.size() == 0) {
                     JOptionPane.showMessageDialog(new JFrame(), "No dogs selected!", "Assignment error",
