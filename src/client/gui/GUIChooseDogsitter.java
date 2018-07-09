@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -56,13 +58,14 @@ public class GUIChooseDogsitter extends JFrame {
      * @param emailCustomer
      */
 
-    public GUIChooseDogsitter(HashSet<String> dogsitterList, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash, String emailCustomer) {
+    public GUIChooseDogsitter(HashSet<String> dogsitterList, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash, String emailCustomer, GUINewAssignment guiNewAssignment) {
         setTitle("Choose the dogsitter");       // TODO Da cambiare??
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
 
         this.dogsitterList = dogsitterList;
         this.dateStartAssignment = dateStartAssignment;
@@ -72,6 +75,17 @@ public class GUIChooseDogsitter extends JFrame {
         this.paymentInCash = paymentInCash;
         this.emailCustomer = emailCustomer;
         customerProxy = new CustomerProxy(emailCustomer);
+
+        guiNewAssignment.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiNewAssignment.setEnabled(true);
+            }
+        });
+
 
         initComponents();
     }
@@ -85,12 +99,15 @@ public class GUIChooseDogsitter extends JFrame {
         panelOut.setLayout(new BorderLayout());
         panelContainer = new JPanel(gridLayout);
 
+        GUIChooseDogsitter guiChooseDogsitter = this;
+
 
 
 
         for (String mailDogsitter: dogsitterList){
 
             DogSitterProxy dogSitterProxy = new DogSitterProxy(mailDogsitter);
+
 
             labelDogsitter = new JLabel("<html><br>" + dogSitterProxy.getName() + " " + dogSitterProxy.getSurname() + "<br/>" + mailDogsitter, SwingConstants.LEFT);
 
@@ -119,7 +136,7 @@ public class GUIChooseDogsitter extends JFrame {
             ActionListener actionListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer, paymentInCash);
+                    GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer, paymentInCash, guiChooseDogsitter);
                     guiConfirmAssignment.setVisible(true);
                 }
             };
@@ -127,7 +144,7 @@ public class GUIChooseDogsitter extends JFrame {
             ActionListener actionListener1 = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(mailDogsitter);
+                    GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(mailDogsitter, guiChooseDogsitter );
                     guiDogsitterInfo.setVisible(true);
                 }
             };

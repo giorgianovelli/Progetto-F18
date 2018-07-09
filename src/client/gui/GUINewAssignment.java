@@ -10,10 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventListener;
 import java.util.HashSet;
 
 
@@ -81,13 +84,24 @@ public class GUINewAssignment extends JFrame{
      * @param email
      */
 
-    public GUINewAssignment(Date date, String email) {
+    public GUINewAssignment(Date date, String email, GUICustomer guiCustomer) {
         setTitle("New Assignment");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+        guiCustomer.setEnabled(false);
+        GUINewAssignment guiNewAssignment = this;
+
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiCustomer.setEnabled(true);
+            }
+        });
 
         this.date = date;
         this.email = email;
@@ -117,7 +131,6 @@ public class GUINewAssignment extends JFrame{
                 String year = String.valueOf(newAssignmentBox.getTyearList().getSelectedItem());
                 String toHour = String.valueOf(newAssignmentBox.getThourList().getSelectedItem());
                 String toMinute = String.valueOf(newAssignmentBox.getTminuteList().getSelectedItem());
-                System.out.println(toHour);
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 Date dateStart = new Date();
@@ -228,7 +241,7 @@ public class GUINewAssignment extends JFrame{
                                         JOptionPane.ERROR_MESSAGE);
                             } else {
 
-                                guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email);
+                                guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email, guiNewAssignment);
                                 guiChooseDogsitter.setVisible(true);
 
 
@@ -336,6 +349,12 @@ public class GUINewAssignment extends JFrame{
         panelAddress.add(cap);
         panelAddress.add(address);
         panelAddress.add(number);
+
+        country.getField().setText(customerProxy.getAddress().getCountry());
+        city.getField().setText(customerProxy.getAddress().getCity());
+        cap.getField().setText(customerProxy.getAddress().getCap());
+        address.getField().setText(customerProxy.getAddress().getStreet());
+        number.getField().setText(customerProxy.getAddress().getNumber());
 
         // Pannello Metodo di pagamento
 

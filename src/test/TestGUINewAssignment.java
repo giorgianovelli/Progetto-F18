@@ -21,8 +21,10 @@ public class TestGUINewAssignment {
             e.printStackTrace();
         }
 
+        /*
         GUINewAssignment guiNewAssignment = new GUINewAssignment(date, "RICCARDOGIURA@GMAIL.COM");
         guiNewAssignment.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         guiNewAssignment.setVisible(true);
+        */
     }
 }
