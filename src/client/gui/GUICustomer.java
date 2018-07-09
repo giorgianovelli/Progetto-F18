@@ -187,33 +187,12 @@ public class GUICustomer extends GUIHome{
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
 
-        int i = 0;
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        Date todayDate = new Date();
-
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
-
-        for (Integer key : listAssignment.keySet()) {
-            Assignment a = listAssignment.get(key);
-            String strDateStart = date.format(a.getDateStart());
-            String strDateEnd = date.format(a.getDateEnd());
-            String strTodayDate = date.format(todayDate);
-            try {
-                Date dayStart = date.parse(strDateStart);
-                Date dayEnd = date.parse(strDateEnd);
-                Date today = date.parse(strTodayDate);
-                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
-                    codeFirstFiveAssignmentsList.add(key);
-                    i++;
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        HashMap<Integer, Assignment> assignmentList = proxy.getAssignmentList();
+        codeFirstFiveAssignmentsList = getCodeFirstFiveAssignments(nShownAssignments, assignmentList);
 
         int n = 0;
         for (Integer key : codeFirstFiveAssignmentsList) {
-            Assignment a = listAssignment.get(key);
+            Assignment a = assignmentList.get(key);
             String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
             String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
             buttonTodayAssignment[n].setText("Assignment with " + capitalizeFirstLetter(nameDogSitter) + " " + capitalizeFirstLetter(surnameDogSitter));

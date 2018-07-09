@@ -573,6 +573,33 @@ public abstract class GUIHome extends JFrame{
         execMenuBarAction.execute(this);
     }
 
+    protected HashSet<Integer> getCodeFirstFiveAssignments(int nShownAssignments, HashMap<Integer, Assignment> assignmentList){
+        int i = 0;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+
+        HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
+
+        for (Integer key : assignmentList.keySet()) {
+            Assignment a = assignmentList.get(key);
+            String strDateStart = date.format(a.getDateStart());
+            String strDateEnd = date.format(a.getDateEnd());
+            String strTodayDate = date.format(todayDate);
+            try {
+                Date dayStart = date.parse(strDateStart);
+                Date dayEnd = date.parse(strDateEnd);
+                Date today = date.parse(strTodayDate);
+                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
+                    codeFirstFiveAssignmentsList.add(key);
+                    i++;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return codeFirstFiveAssignmentsList;
+    }
+
 }
 
 
