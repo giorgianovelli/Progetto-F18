@@ -181,30 +181,13 @@ public class Singleton {
      * @return the HashMap of Assignment related to dogSitter. The key indicates the assignment's code.
      */
     public HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(String dogSitter){
-        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
+        //HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE DOGSITTER = '" + dogSitter + "'");
-            while (rs.next()){
-                int code = rs.getInt("CODE");
-                Boolean state;
-                String strState = rs.getString("CONFIRMATION");
-                if (strState.equals("TRUE")){
-                    state = true;
-                } else if (strState.equals("FALSE")){
-                    state = false;
-                } else {
-                    state = null;
-                }
-                Date dateStart = rs.getTimestamp("DATE_START");
-                Date dateEnd = rs.getTimestamp("DATE_END");
-                Address meetingPoint = getMeetingPointFromDB(code);
-                HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
-                listAssignment.put(code, assignment);
-            }
+            HashMap<Integer, Assignment> assignmentList = getAssignmentList(rs);
             dbConnector.closeConnection();
-            return listAssignment;
+            return assignmentList;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -217,33 +200,17 @@ public class Singleton {
      * @return the HashMap of Assignment related to customer. The key indicates the assignment's code.
      */
     public HashMap<Integer, Assignment> getCustomerListAssignmentFromDB(String customer){
-        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
+        //HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + customer + "'");
-            while (rs.next()){
-                int code = rs.getInt("CODE");
-                Boolean state;
-                String strState = rs.getString("CONFIRMATION");
-                if (strState.equals("TRUE")){
-                   state = true;
-                } else if (strState.equals("FALSE")){
-                    state = false;
-                } else {
-                    state = null;
-                }
-                Date dateStart = rs.getTimestamp("DATE_START");
-                Date dateEnd = rs.getTimestamp("DATE_END");
-                Address meetingPoint = getMeetingPointFromDB(code);
-                HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
-                listAssignment.put(code, assignment);
-            }
+            HashMap<Integer, Assignment> assignmentList = getAssignmentList(rs);
             dbConnector.closeConnection();
+            return assignmentList;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return listAssignment;
     }
 
     /**
@@ -443,5 +410,29 @@ public class Singleton {
         String strNow = dateFormat.format(nowDate);
         int now = Integer.parseInt(strNow);
         return now - birth;
+    }
+
+
+    private HashMap<Integer, Assignment> getAssignmentList(ResultSet rs) throws SQLException {
+        HashMap<Integer, Assignment> assignmentList = new HashMap<Integer, Assignment>();
+        while (rs.next()){
+            int code = rs.getInt("CODE");
+            Boolean state;
+            String strState = rs.getString("CONFIRMATION");
+            if (strState.equals("TRUE")){
+                state = true;
+            } else if (strState.equals("FALSE")){
+                state = false;
+            } else {
+                state = null;
+            }
+            Date dateStart = rs.getTimestamp("DATE_START");
+            Date dateEnd = rs.getTimestamp("DATE_END");
+            Address meetingPoint = getMeetingPointFromDB(code);
+            HashSet dogList = getDogListFromDB(code);
+            Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
+            assignmentList.put(code, assignment);
+        }
+        return assignmentList;
     }
 }
