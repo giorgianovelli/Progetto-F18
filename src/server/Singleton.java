@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static server.tools.dateTime.DateTimeTools.getAge;
+
 /**
  * This class implements Singleton Pattern for the creation of some different types of objects.
  */
@@ -380,7 +382,7 @@ public class Singleton {
      * @param dateOfBirth
      * @return the age (int) of the dog
      */
-    public int getAge(Date dateOfBirth){
+    /*public int getAge(Date dateOfBirth){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
         String strBirth = dateFormat.format(dateOfBirth);
         int birth = Integer.parseInt(strBirth);
@@ -388,7 +390,7 @@ public class Singleton {
         String strNow = dateFormat.format(nowDate);
         int now = Integer.parseInt(strNow);
         return now - birth;
-    }
+    }*/
 
 
     /**
