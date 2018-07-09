@@ -173,7 +173,7 @@ public class GUIListAssignments extends JFrame{
 
             if(review == newListAssignment.size()){
                 System.out.println("Non ci sono recensioni");
-                JLabel noReviewLabel = new JLabel("There aren't assignment to review!");
+                JLabel noReviewLabel = new JLabel("There aren't assignments to review!");
                 setSize(WIDTH, 200);
                 panelOut.setLayout(new BorderLayout());
                 contentPanel.setBorder(BorderFactory.createEmptyBorder(60,100,10,30));
@@ -206,7 +206,7 @@ public class GUIListAssignments extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //proxy.removeReview((listAssignment.get(i)).getCode());
-                        int action = (JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Conferm Delete Review",JOptionPane.YES_NO_OPTION));
+                        int action = (JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Confirm Delete Review",JOptionPane.YES_NO_OPTION));
                         if (action == JOptionPane.YES_OPTION){
                             proxy.removeReview((listAssignment.get(i)).getCode()); //TODO controllare!!
                         }
