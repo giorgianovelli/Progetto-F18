@@ -273,7 +273,7 @@ public class GUICustomer extends GUIHome{
 
         if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
             //JButton pressedButton = (JButton) cae.getSource();
-            guiNewAssignment = new GUINewAssignment(todayDate, email);
+            guiNewAssignment = new GUINewAssignment(todayDate, email, this);
             guiNewAssignment.setVisible(true);
         }
     }

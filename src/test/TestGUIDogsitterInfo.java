@@ -12,8 +12,8 @@ public class TestGUIDogsitterInfo {
         String email = "MARCO.CARTA@GMAIL.COM";
 
 
-        GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(email);
-        guiDogsitterInfo.setVisible(true);
+       // GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(email);
+        //guiDogsitterInfo.setVisible(true);
 
 
     }

@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +18,7 @@ public class GUIConfirmAssignment extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private GUIConfirmAssignment guiConfirmAssignment;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelButtons = new JPanel();
@@ -67,13 +70,15 @@ public class GUIConfirmAssignment extends JFrame {
      * @param paymentMethod
      */
 
-    public GUIConfirmAssignment(String mailDogsitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> dogsSelected, Address meetingPoint, String emailCustomer, boolean paymentMethod) {
+    public GUIConfirmAssignment(String mailDogsitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> dogsSelected, Address meetingPoint, String emailCustomer, boolean paymentMethod, GUIChooseDogsitter guiChooseDogsitter) {
         setTitle("Assignment summary");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        guiConfirmAssignment = this;
 
         this.mailDogsitter = mailDogsitter;
         this.dateStartAssignment = dateStartAssignment;
@@ -83,6 +88,19 @@ public class GUIConfirmAssignment extends JFrame {
         this.emailCustomer = emailCustomer;
         this.paymentMethod = paymentMethod;
         customerProxy = new CustomerProxy(emailCustomer);
+
+        guiChooseDogsitter.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiChooseDogsitter.setEnabled(true);
+            }
+        });
+
+
+
 
         initComponents();
     }
@@ -162,10 +180,9 @@ public class GUIConfirmAssignment extends JFrame {
                 JOptionPane.showMessageDialog(success = new JFrame(), "Assignment successfully confirmed!", "Assignment information",
                         JOptionPane.INFORMATION_MESSAGE);
                 if (!success.isActive()) {
-                    GUICustomer.guiNewAssignment.dispose();
-                    GUINewAssignment.guiChooseDogsitter.dispose();
-                    dispose();
-
+                    GUICustomer.guiNewAssignment.dispatchEvent(new WindowEvent(GUICustomer.guiNewAssignment, WindowEvent.WINDOW_CLOSING));
+                    GUINewAssignment.guiChooseDogsitter.dispatchEvent(new WindowEvent(GUINewAssignment.guiChooseDogsitter, WindowEvent.WINDOW_CLOSING));
+                    guiConfirmAssignment.dispatchEvent(new WindowEvent(guiConfirmAssignment, WindowEvent.WINDOW_CLOSING));
                 }
             }
         };
@@ -173,7 +190,10 @@ public class GUIConfirmAssignment extends JFrame {
         ActionListener actionListener1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+
+                guiConfirmAssignment.dispatchEvent(new WindowEvent(guiConfirmAssignment, WindowEvent.WINDOW_CLOSING));
+
+
             }
         };
 
