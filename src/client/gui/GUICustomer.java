@@ -31,7 +31,7 @@ public class GUICustomer extends GUIHome{
 
     private CustomerProxy proxy;
     private String email;
-    private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
+    private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
     public GUICustomer(String email) throws ParseException {

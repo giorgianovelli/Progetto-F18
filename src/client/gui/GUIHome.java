@@ -64,7 +64,7 @@ public abstract class GUIHome extends JFrame{
     protected CalendarState calendarState = CalendarState.NORMAL;
 
     private String email;
-    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
+    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
     public GUIHome(String email) throws ParseException {

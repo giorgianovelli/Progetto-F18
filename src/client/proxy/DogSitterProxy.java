@@ -280,7 +280,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
      */
     public HashMap<Integer, Review> getReviewList() {
         String serverMsg = getReply("DOGSITTER#GETREVIEWLIST#" + email);
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        HashMap<Integer, Review> reviewList = new HashMap<>();
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         while (tokenMsg.hasMoreTokens()){
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -367,7 +367,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
      */
     public HashSet<DogSize> getListDogSize(){
         String serverMsg = getReply("DOGSITTER#LISTDOGSIZE#" + email);
-        HashSet<DogSize> listDogSize = new HashSet<DogSize>();
+        HashSet<DogSize> listDogSize = new HashSet<>();
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         while (tokenMsg.hasMoreTokens()){
             String strSize = tokenMsg.nextToken();

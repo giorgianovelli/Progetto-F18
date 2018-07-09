@@ -1,8 +1,5 @@
 package test;
 
-import client.gui.GUIDogsitterInfo;
-import client.proxy.DogSitterProxy;
-
 public class TestGUIDogsitterInfo {
 
 

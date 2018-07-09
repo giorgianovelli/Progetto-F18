@@ -9,7 +9,6 @@ import server.places.Area;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,7 +83,7 @@ public class Singleton {
             dbConnector.closeConnection();
 
             rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + dogSitterEmail + "'");
-            HashSet<DogSize> listDogSize = new HashSet<DogSize>();
+            HashSet<DogSize> listDogSize = new HashSet<>();
             rs.next();
             boolean small = rs.getBoolean("SMALL");
             if (small){
@@ -245,7 +244,7 @@ public class Singleton {
      * @return the HashSet of Dog related to the Assignment indicated with code.
      */
     public HashSet<Dog> getDogListFromDB(int code){
-        HashSet<Dog> dogList= new HashSet<Dog>();
+        HashSet<Dog> dogList= new HashSet<>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT DOG_ID FROM DOG_ASSIGNMENT WHERE CODE = '" + code + "'");
@@ -400,7 +399,7 @@ public class Singleton {
      * @throws SQLException
      */
     private HashMap<Integer, Assignment> getAssignmentList(ResultSet rs) throws SQLException {
-        HashMap<Integer, Assignment> assignmentList = new HashMap<Integer, Assignment>();
+        HashMap<Integer, Assignment> assignmentList = new HashMap<>();
         while (rs.next()){
             int code = rs.getInt("CODE");
             Boolean state;
@@ -430,7 +429,7 @@ public class Singleton {
      * @throws SQLException
      */
     private HashMap<Integer, Review> getReviewList(ResultSet rs) throws SQLException {
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        HashMap<Integer, Review> reviewList = new HashMap<>();
         while (rs.next()){
             int code = rs.getInt("ASSIGNMENT_CODE");
             Date date = rs.getDate("DATE");

@@ -323,7 +323,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
         String serverMsg = getReply(clientMsg);
 
         StringTokenizer tokenServer = new StringTokenizer(serverMsg, "#");
-        HashSet<String> dogSitterMailList = new HashSet<String>();
+        HashSet<String> dogSitterMailList = new HashSet<>();
         while (tokenServer.hasMoreTokens()){
             dogSitterMailList.add(tokenServer.nextToken());
         }
@@ -436,7 +436,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
      */
     public HashMap<Integer, Review> getReviewList() {
         String serverMsg = getReply("CUSTOMER#GETREVIEWLIST#" + email);
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        HashMap<Integer, Review> reviewList = new HashMap<>();
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
         while (tokenMsg.hasMoreTokens()){
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -629,7 +629,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
     public HashSet<String> getDogsBreedsList(){
         String serverMsg = getReply("CUSTOMER#GETDOGSBREEDSLIST#" + email);
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
-        HashSet<String> dogsBreedsList = new HashSet<String>();
+        HashSet<String> dogsBreedsList = new HashSet<>();
         while (tokenMsg.hasMoreTokens()){
             dogsBreedsList.add(tokenMsg.nextToken());
         }

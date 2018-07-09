@@ -20,7 +20,7 @@ public class Bank {
 
     public Bank() {
         nTransaction = countTransaction();
-        this.listUser = new HashMap<String,BankUser>();
+        this.listUser = new HashMap<>();
 
         DBConnector dbConnector = new DBConnector();
         try {

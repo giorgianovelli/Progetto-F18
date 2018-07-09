@@ -152,8 +152,7 @@ public enum ExecDogSitterEnum {
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String dateOfBirth = dateFormat.format(dogSitter.getDateOfBirth());
-            return dateOfBirth;
+            return dateFormat.format(dogSitter.getDateOfBirth());
         }
 
     },

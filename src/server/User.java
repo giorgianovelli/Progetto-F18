@@ -27,8 +27,8 @@ public abstract class User {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.paymentMethod = paymentMethod;
-        this.assignmentList = new HashMap<Integer, Assignment>();
-        this.reviewList = new HashMap<Integer, Review>();
+        this.assignmentList = new HashMap<>();
+        this.reviewList = new HashMap<>();
     }
 
     public String getEmail() {

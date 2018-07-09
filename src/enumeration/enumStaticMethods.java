@@ -61,7 +61,7 @@ public class enumStaticMethods {
     }
 
     protected static HashSet<DogSize> createDogSizeList(boolean small, boolean medium, boolean big, boolean giant){
-        HashSet<DogSize> dogSizeList = new HashSet<DogSize>();
+        HashSet<DogSize> dogSizeList = new HashSet<>();
         if (small){
             dogSizeList.add(DogSize.SMALL);
         }

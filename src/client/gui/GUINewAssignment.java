@@ -16,7 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.HashSet;
 
 
@@ -66,7 +65,7 @@ public class GUINewAssignment extends JFrame{
     private JButton buttonSearch = new JButton("Search");
 
     NewAssignmentBox newAssignmentBox;
-    ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<NewAssignmentCheckBox>();
+    ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<>();
 
     NewAssignmentText country = new NewAssignmentText("Country: ");
     NewAssignmentText city = new NewAssignmentText("City: ");
@@ -392,8 +391,7 @@ public class GUINewAssignment extends JFrame{
 
     public String dateToString(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String string = simpleDateFormat.format(date);
-        return string;
+        return simpleDateFormat.format(date);
     }
 }
 

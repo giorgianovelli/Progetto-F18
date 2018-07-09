@@ -26,7 +26,7 @@ public class TestSignUp {
         area.addPlace("PAVIA");
         area.addPlace("CORTEOLONA");
         area.addPlace("PIEVE PORTO MORONE");
-        HashSet<DogSize> dogSizes = new HashSet<DogSize>();
+        HashSet<DogSize> dogSizes = new HashSet<>();
         dogSizes.add(DogSize.BIG);
         dogSizes.add(DogSize.MEDIUM);
 

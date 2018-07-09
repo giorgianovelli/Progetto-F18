@@ -126,7 +126,7 @@ public abstract class Proxy {
 
     protected HashMap<Integer, Assignment> decodeAssignmentList(String serverMsg){
         StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
-        HashMap<Integer, Assignment> assignmentList = new HashMap<Integer, Assignment>();
+        HashMap<Integer, Assignment> assignmentList = new HashMap<>();
         while (tokenMsg.hasMoreTokens()) {
             int code = Integer.parseInt(tokenMsg.nextToken());
             HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());
@@ -164,7 +164,7 @@ public abstract class Proxy {
      */
     protected HashSet<Dog> decodeDogList(String msg) {
         StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
-        HashSet<Dog> dogList = new HashSet<Dog>();
+        HashSet<Dog> dogList = new HashSet<>();
         int ID;
         while (tokenMsg.hasMoreTokens()) {
             StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
