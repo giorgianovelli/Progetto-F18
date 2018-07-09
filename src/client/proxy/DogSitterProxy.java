@@ -65,60 +65,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
      */
     public HashMap<Integer, Assignment> getAssignmentList() {
         String serverMsg = getReply("DOGSITTER#GETLISTASSIGNMENT#" + email);
-        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
-        HashMap<Integer, Assignment> customerListAssignment = new HashMap<Integer, Assignment>();
-        while (tokenMsg.hasMoreTokens()) {
-            int code = Integer.parseInt(tokenMsg.nextToken());
-            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            Date dateStart = new Date();
-            Date dateEnd = new Date();
-            try {
-                dateStart = dateFormat.parse(tokenMsg.nextToken());
-                dateEnd = dateFormat.parse(tokenMsg.nextToken());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Boolean state;
-            String strState = tokenMsg.nextToken();
-            if (strState.equals("true")) {
-                state = true;
-            } else if (strState.equals("false")) {
-                state = false;
-            } else {
-                state = null;
-            }
-            Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
-            Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
-            customerListAssignment.put(code, a);
-        }
-        return customerListAssignment;
-    }
-
-    /**
-     * Decode a String corresponding to an HashSet of dogs.
-     * @param msg the message (or the fragment of a message) received from the server.
-     * @return an HashMap of dogs.
-     */
-    private HashSet<Dog> decodeDogList(String msg) {
-        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
-        HashSet<Dog> dogList = new HashSet<Dog>();
-        int ID;
-        while (tokenMsg.hasMoreTokens()) {
-            StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
-            String strID = tokenDog.nextToken();
-            ID = Integer.parseInt(strID);
-            String name = tokenDog.nextToken();
-            String breed = tokenDog.nextToken();
-            DogSize size = DogSize.valueOf(tokenDog.nextToken());
-            int age = Integer.parseInt(tokenDog.nextToken());
-            double weight = Double.parseDouble(tokenDog.nextToken());
-            boolean isEnabled;
-            isEnabled = tokenDog.nextToken().equals("true");
-            Dog d = new Dog(name, breed, size, age, weight, ID, isEnabled);
-            dogList.add(d);
-        }
-        return dogList;
+        return decodeAssignmentList(serverMsg);
     }
 
 

@@ -6,6 +6,8 @@
 package client.proxy;
 
 import server.Assignment;
+import server.Dog;
+import server.DogSize;
 import server.bank.PaymentMethod;
 import server.places.Address;
 
@@ -17,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 public abstract class Proxy {
@@ -120,4 +123,67 @@ public abstract class Proxy {
     }
 
     public abstract HashMap<Integer, Assignment> getAssignmentList();
+
+    protected HashMap<Integer, Assignment> decodeAssignmentList(String serverMsg){
+        StringTokenizer tokenMsg = new StringTokenizer(serverMsg, "#");
+        HashMap<Integer, Assignment> assignmentList = new HashMap<Integer, Assignment>();
+        while (tokenMsg.hasMoreTokens()) {
+            int code = Integer.parseInt(tokenMsg.nextToken());
+            HashSet<Dog> dogList = decodeDogList(tokenMsg.nextToken());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date dateStart = new Date();
+            Date dateEnd = new Date();
+            try {
+                dateStart = dateFormat.parse(tokenMsg.nextToken());
+                dateEnd = dateFormat.parse(tokenMsg.nextToken());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Boolean state;
+            String strState = tokenMsg.nextToken();
+            if (strState.equals("true")) {
+                state = true;
+            } else if (strState.equals("false")) {
+                state = false;
+            } else {
+                state = null;
+            }
+            Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
+            Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
+            assignmentList.put(code, a);
+        }
+
+        return assignmentList;
+    }
+
+
+    /**
+     * Decode the list of dogs.
+     * @param msg the fragment of the message received from the server containing dogs' ID.
+     * @return the HashSet of Dogs.
+     */
+    protected HashSet<Dog> decodeDogList(String msg) {
+        StringTokenizer tokenMsg = new StringTokenizer(msg, "*");
+        HashSet<Dog> dogList = new HashSet<Dog>();
+        int ID;
+        while (tokenMsg.hasMoreTokens()) {
+            StringTokenizer tokenDog = new StringTokenizer(tokenMsg.nextToken(), "&");
+            String strID = tokenDog.nextToken();
+            ID = Integer.parseInt(strID);
+            String name = tokenDog.nextToken();
+            String breed = tokenDog.nextToken();
+            DogSize size = DogSize.valueOf(tokenDog.nextToken());
+            int age = Integer.parseInt(tokenDog.nextToken());
+            double weight = Double.parseDouble(tokenDog.nextToken());
+            boolean isEnabled;
+            if (tokenDog.nextToken().equals("true")){
+                isEnabled = true;
+            } else {
+                isEnabled = false;
+            }
+            Dog d = new Dog(name, breed, size, age, weight, ID, isEnabled);
+            dogList.add(d);
+        }
+        return dogList;
+    }
 }
