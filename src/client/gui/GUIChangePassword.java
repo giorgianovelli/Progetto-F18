@@ -1,7 +1,6 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
-import server.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,8 +26,8 @@ public class GUIChangePassword extends JFrame {
 
     // String strCurrentPassword = proxy.getPassword();
     //private String currentPassword = new String();
-    private String newPassword = new String();
-    private String confirmPassword = new String();
+    private String newPassword;
+    private String confirmPassword;
 
 
     private JButton buttonConfirm = new JButton("Confirm");

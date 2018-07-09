@@ -51,14 +51,14 @@ public class Customer extends User implements InterfaceCustomer{
      */
     public Customer(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod) {
         super(email, name, surname, password, phoneNumber, dateOfBirth, address, paymentMethod);
-        dogList = new HashSet<Dog>(3);
-        assignmentList = new HashMap<Integer, Assignment>();
-        reviewList = new HashMap<Integer, Review>();
+        dogList = new HashSet<>(3);
+        assignmentList = new HashMap<>();
+        reviewList = new HashMap<>();
         Singleton singleton = new Singleton();
         assignmentList = getAssignmentList();
         reviewList = singleton.getCustomerReviewList(this);
         dogList = getDogListFromDB(email);
-        dogSitterSearchList = new HashSet<DogSitter>();
+        dogSitterSearchList = new HashSet<>();
     }
 
 
@@ -378,7 +378,7 @@ public class Customer extends User implements InterfaceCustomer{
         }
 
 
-        HashSet<String> dogSitterMailList = new HashSet<String>();
+        HashSet<String> dogSitterMailList = new HashSet<>();
         for (DogSitter ds : dogSitterSearchList) {
             dogSitterMailList.add(ds.getEmail());
         }
@@ -393,7 +393,7 @@ public class Customer extends User implements InterfaceCustomer{
      */
     private void searchMeetingPoint(Address meetingPoint){
         //funzione che filtra i dog sitter in base al meeting point
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         for (DogSitter ds : dogSitterSearchList) {
             Area dogSitterArea = ds.getArea();
             if (!(dogSitterArea.contains(meetingPoint.getCity()))){
@@ -416,7 +416,7 @@ public class Customer extends User implements InterfaceCustomer{
     private void searchDayOfWork(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //rimuove i dogsitter che non lavorano nei giorni richiesti dal cliente
         int i;
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         for (DogSitter ds : dogSitterSearchList) {
             WorkingTime availability[] = ds.getDateTimeAvailability().getArrayDays();
             for (i = nStartDay - 1; i < nEndDay; i++){
@@ -441,7 +441,7 @@ public class Customer extends User implements InterfaceCustomer{
     private void searchTimeOfWork(Date dateStart, Date dateEnd, int nStartDay, int nEndDay){
         //esclude i dog sitter che non lavorano negli orari di lavoro impostati dal cliente
         int i;
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         Time timeStart = new Time(dateStart.getTime());
         Time timeEnd = new Time(dateEnd.getTime());
         for (DogSitter ds : dogSitterSearchList) {
@@ -468,7 +468,7 @@ public class Customer extends User implements InterfaceCustomer{
     private void searchDogsNumber(HashSet<Dog> dogList){
         //funzione che escude i dogsitter che non danno disponibilità
         //per il numero di cani richiesto dall'utente
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         for (DogSitter ds : dogSitterSearchList) {
             if (ds.getDogsNumber() < dogList.size()){
                 toRemove.add(ds);
@@ -487,7 +487,7 @@ public class Customer extends User implements InterfaceCustomer{
     private void searchDogSize(HashSet<Dog> dogList){
         //funzione che esclude i dogsitter che non danno dispobilità
         //per le taglie indicate dal cliente
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         for (DogSitter ds : dogSitterSearchList) {
             HashSet<DogSize> listDogSize = ds.getListDogSize();
             for (Dog dog : dogList) {
@@ -509,7 +509,7 @@ public class Customer extends User implements InterfaceCustomer{
      */
     private void searchAvailable(Date dateStart, Date dateEnd){
         //funzione che esclude i dog sitter che hanno già altri impegni nel periodo impostato dal cliente
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         for (DogSitter ds : dogSitterSearchList) {
             HashMap<Integer, Assignment> listAssignment = ds.getAssignmentList();
             for (Integer key : listAssignment.keySet()) {
@@ -541,7 +541,7 @@ public class Customer extends User implements InterfaceCustomer{
     private void searchPaymentMethod(boolean cash){
         //nel caso in cui il cliente vuole pagare in contanti,
         //esclude i dog sitter che accettano il pagamento solo con carta di credito
-        HashSet<DogSitter> toRemove = new HashSet<DogSitter>();
+        HashSet<DogSitter> toRemove = new HashSet<>();
         if (cash){
             for (DogSitter ds : dogSitterSearchList) {
                 if(ds.isAcceptingCash() == false){
@@ -565,8 +565,8 @@ public class Customer extends User implements InterfaceCustomer{
     //TODO refactor
     public double estimatePriceAssignment(HashSet<Dog> dogList, Date dateStart, Date dateEnd){
         DBConnector dbConnector = new DBConnector();
-        HashMap<DogSize, Double> priceMap = new HashMap<DogSize, Double>(4);
-        HashMap<Integer, Double> hRange = new HashMap<Integer, Double>(4);
+        HashMap<DogSize, Double> priceMap = new HashMap<>(4);
+        HashMap<Integer, Double> hRange = new HashMap<>(4);
 
         try {
             ResultSet rs = dbConnector.askDB("SELECT H_RANGE, PERC FROM PERC_PRICE");
@@ -617,7 +617,7 @@ public class Customer extends User implements InterfaceCustomer{
             price = price + (priceMap.get(d.getSize()) * hRange.get(3) * partialHours);
             //System.out.println("ph1: " + price);
 
-            double minutes = (int)workTime.getMinutes();
+            double minutes = workTime.getMinutes();
             double minutesHourRatio = minutes / 60;
             //System.out.println("ratio: " + minutesHourRatio);
             price = price + (priceMap.get(d.getSize()) * hRange.get(3) * minutesHourRatio);
@@ -1026,7 +1026,7 @@ public class Customer extends User implements InterfaceCustomer{
      */
     public HashSet<String> getDogsBreedsList(){
         DBConnector dbConnector = new DBConnector();
-        HashSet<String> dogsBreedsList = new HashSet<String>();
+        HashSet<String> dogsBreedsList = new HashSet<>();
         try {
             ResultSet rs = dbConnector.askDB("SELECT NAME FROM BREEDS");
             while (rs.next()) {

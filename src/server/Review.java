@@ -57,14 +57,12 @@ public class Review {
 
     private String dateStringConverter(Date dateToConvert) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String reportDate = sdf.format(dateToConvert);
-        return reportDate;
+        return sdf.format(dateToConvert);
     }
 
     private String timeStringConverter(Date dateToConvert) throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        String reportDate = sdf.format(dateToConvert);
-        return reportDate;
+        return sdf.format(dateToConvert);
     }
 
     public int getCode() {

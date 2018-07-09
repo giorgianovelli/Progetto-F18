@@ -1,11 +1,9 @@
 package enumeration;
 
-import database.DBConnector;
 import server.*;
 import server.bank.PaymentMethod;
 import server.places.Address;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,20 +56,7 @@ public enum ExecCustomerEnum {
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
-
-            DBConnector dbConnector = new DBConnector();
-            String emailDogSitter = null;
-            DogSitter dogSitter = null;
-            try {
-                ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
-                rs.next();
-                emailDogSitter = rs.getString("DOGSITTER");
-                Singleton singleton = new Singleton();
-                dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
-                dbConnector.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DogSitter dogSitter = getDogSitterOfAssignment(code);
             return dogSitter.getName();
         }
 
@@ -82,20 +67,7 @@ public enum ExecCustomerEnum {
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
-
-            DBConnector dbConnector = new DBConnector();
-            String emailDogSitter = null;
-            DogSitter dogSitter = null;
-            try {
-                ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
-                rs.next();
-                emailDogSitter = rs.getString("DOGSITTER");
-                Singleton singleton = new Singleton();
-                dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
-                dbConnector.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DogSitter dogSitter = getDogSitterOfAssignment(code);
             return dogSitter.getSurname();
         }
 
@@ -175,8 +147,7 @@ public enum ExecCustomerEnum {
             Singleton singleton = new Singleton();
             Customer customer = singleton.createCustomerFromDB(email);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String dateOfBirth = dateFormat.format(customer.getDateOfBirth());
-            return dateOfBirth;
+            return dateFormat.format(customer.getDateOfBirth());
         }
 
     },
@@ -388,7 +359,7 @@ public enum ExecCustomerEnum {
             cash = strCash.equals("true");
 
             StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
-            HashSet<Dog> dogList = new HashSet<Dog>();
+            HashSet<Dog> dogList = new HashSet<>();
             while (tokenDogList.hasMoreTokens()){
                 Dog d = singleton.createDogFromDB(Integer.parseInt(tokenDogList.nextToken()));
                 dogList.add(d);
@@ -424,7 +395,7 @@ public enum ExecCustomerEnum {
             Singleton singleton = new Singleton();
             Customer customer = singleton.createCustomerFromDB(email);
             StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
-            HashSet<Dog> dogList = new HashSet<Dog>();
+            HashSet<Dog> dogList = new HashSet<>();
             while (tokenDogList.hasMoreTokens()) {
                 Dog d = singleton.createDogFromDB(Integer.parseInt(tokenDogList.nextToken()));
                 dogList.add(d);
@@ -463,7 +434,7 @@ public enum ExecCustomerEnum {
             Customer customer = singleton.createCustomerFromDB(email);
 
             StringTokenizer tokenDogList = new StringTokenizer(strDogList, "*");
-            HashSet<Dog> dogList = new HashSet<Dog>();
+            HashSet<Dog> dogList = new HashSet<>();
             while (tokenDogList.hasMoreTokens()){
                 Dog d = singleton.createDogFromDB(Integer.parseInt(tokenDogList.nextToken()));
                 dogList.add(d);

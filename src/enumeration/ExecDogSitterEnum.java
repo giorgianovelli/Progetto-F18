@@ -62,20 +62,7 @@ public enum ExecDogSitterEnum {
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
-
-            DBConnector dbConnector = new DBConnector();
-            String emailCustomer = null;
-            Customer customer = null;
-            try {
-                ResultSet rs = dbConnector.askDB("SELECT CUSTOMER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
-                rs.next();
-                emailCustomer = rs.getString("CUSTOMER");
-                Singleton singleton = new Singleton();
-                customer = singleton.createCustomerFromDB(emailCustomer);
-                dbConnector.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Customer customer = getCustomerOfAssignment(code);
             return customer.getName();
         }
 
@@ -86,20 +73,7 @@ public enum ExecDogSitterEnum {
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
-
-            DBConnector dbConnector = new DBConnector();
-            String emailCustomer = null;
-            Customer customer = null;
-            try {
-                ResultSet rs = dbConnector.askDB("SELECT CUSTOMER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
-                rs.next();
-                emailCustomer = rs.getString("CUSTOMER");
-                Singleton singleton = new Singleton();
-                customer = singleton.createCustomerFromDB(emailCustomer);
-                dbConnector.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Customer customer = getCustomerOfAssignment(code);
             return customer.getSurname();
         }
 
@@ -178,8 +152,7 @@ public enum ExecDogSitterEnum {
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String dateOfBirth = dateFormat.format(dogSitter.getDateOfBirth());
-            return dateOfBirth;
+            return dateFormat.format(dogSitter.getDateOfBirth());
         }
 
     },

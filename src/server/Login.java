@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Login{
-    private String user = new String();
-    private String password = new String();
+    private String user;
+    private String password;
     private TypeUser typeUser;
 
     public boolean customerAccessDataVerifier(String inputUser, String inputPasword) throws SQLException {

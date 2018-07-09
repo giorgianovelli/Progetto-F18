@@ -6,12 +6,12 @@ import server.dateTime.WeekDays;
 public class Availability {
 
     private WorkingTime arrayDays[];
-    private final int NWEEKDAYS = 7;
 
     public Availability() {
         arrayDays = new WorkingTime[7];
         int i;
-        for (i = 0; i < NWEEKDAYS; i++){
+        int nWeekDays = 7;
+        for (i = 0; i < nWeekDays; i++){
             arrayDays[i] = null;
         }
     }

@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static client.Calendar.getNDayofMonth;
+import static client.Calendar.getNDayOfMonth;
 
 public abstract class GUIHome extends JFrame{
     final int WIDTH = 1024;
@@ -64,7 +64,7 @@ public abstract class GUIHome extends JFrame{
     protected CalendarState calendarState = CalendarState.NORMAL;
 
     private String email;
-    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
+    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
     public GUIHome(String email) throws ParseException {
@@ -306,7 +306,7 @@ public abstract class GUIHome extends JFrame{
         }
 
         i = 0;
-        int nd = getNDayofMonth(monthNumber, currentDate);
+        int nd = getNDayOfMonth(monthNumber, currentDate);
 
         for (i = 0; i < nd; i++){
             panelGridCalendar.add(buttonDay[i]);
@@ -571,6 +571,33 @@ public abstract class GUIHome extends JFrame{
         cmd = cmd.replace(" ", "");
         MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
         execMenuBarAction.execute(this);
+    }
+
+    protected HashSet<Integer> getCodeFirstFiveAssignments(int nShownAssignments, HashMap<Integer, Assignment> assignmentList){
+        int i = 0;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+
+        HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
+
+        for (Integer key : assignmentList.keySet()) {
+            Assignment a = assignmentList.get(key);
+            String strDateStart = date.format(a.getDateStart());
+            String strDateEnd = date.format(a.getDateEnd());
+            String strTodayDate = date.format(todayDate);
+            try {
+                Date dayStart = date.parse(strDateStart);
+                Date dayEnd = date.parse(strDateEnd);
+                Date today = date.parse(strTodayDate);
+                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
+                    codeFirstFiveAssignmentsList.add(key);
+                    i++;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return codeFirstFiveAssignmentsList;
     }
 
 }
