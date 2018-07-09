@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 public class GUIDogInfo extends JFrame {
 
-    final int WIDTH = 512;
+    final int WIDTH = 600;
     final int HEIGHT = 300;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 

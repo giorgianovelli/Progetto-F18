@@ -17,37 +17,36 @@ import java.util.HashMap;
 
 public class GUIListAssignments extends JFrame{
 
-    private int assignmentNumber, reviewNumber;
+    protected int assignmentNumber, reviewNumber;
 
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     //TODO refresh della finestra?
-    private GridLayout gridLayout = new GridLayout(1,1);
+    protected GridLayout gridLayout = new GridLayout(1,1);
 
-    private JPanel contentPanel = new JPanel(); //pannello esterno
-    private JPanel panelOut = new JPanel();
-    private JScrollPane scrollPanel = new JScrollPane(panelOut);
+    protected JPanel contentPanel = new JPanel(); //pannello esterno
+    protected JPanel panelOut = new JPanel();
+    protected JScrollPane scrollPanel = new JScrollPane(panelOut);
 
 
-    private JLabel labelState[];
+    protected JLabel labelState[];
 
-    private JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
-    private JButton[] buttonAction;
-    private JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
-    private JPanel panelLabel;
-    private JPanel panelButtons;
+    protected JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
+    protected JButton[] buttonAction;
+    protected JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
+    protected JPanel panelLabel;
+    protected JPanel panelButtons;
 
-    private HashMap<Integer, Assignment> listAssignment;
+    protected HashMap<Integer, Assignment> listAssignment;
     private HashMap<Integer, Review> listReview;
     private CustomerProxy proxy;
-    private String email;
+    protected String email;
 
     /**
      *
      * @param cs ??
-     * @param listAssignment lista degli appuntamenti dell'utente
      * @param email riferimento all'utente
      * @param guiCustomer
      */
@@ -59,9 +58,10 @@ public class GUIListAssignments extends JFrame{
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-        this.listAssignment = listAssignment;
+
         this.email = email;
         this.proxy = new CustomerProxy(email);
+        this.listAssignment = listAssignment;
         listReview = proxy.getReviewList();
 
 
@@ -74,7 +74,7 @@ public class GUIListAssignments extends JFrame{
      * @param guiCustomer
      */
 
-    private void initComponents(CalendarState cs, GUIHome guiCustomer){
+    protected void initComponents(CalendarState cs, GUIHome guiCustomer){
 
         UIManager.put("OptionPane.noButtonText", "No");
         UIManager.put("OptionPane.yesButtonText", "Yes");
@@ -173,7 +173,7 @@ public class GUIListAssignments extends JFrame{
 
             if(review == newListAssignment.size()){
                 System.out.println("Non ci sono recensioni");
-                JLabel noReviewLabel = new JLabel("There aren't assignment to review!");
+                JLabel noReviewLabel = new JLabel("There aren't assignments to review!");
                 setSize(WIDTH, 200);
                 panelOut.setLayout(new BorderLayout());
                 contentPanel.setBorder(BorderFactory.createEmptyBorder(60,100,10,30));
@@ -206,7 +206,7 @@ public class GUIListAssignments extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //proxy.removeReview((listAssignment.get(i)).getCode());
-                        int action = (JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Conferm Delete Review",JOptionPane.YES_NO_OPTION));
+                        int action = (JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Confirm Delete Review",JOptionPane.YES_NO_OPTION));
                         if (action == JOptionPane.YES_OPTION){
                             proxy.removeReview((listAssignment.get(i)).getCode()); //TODO controllare!!
                         }
@@ -321,7 +321,7 @@ public class GUIListAssignments extends JFrame{
      * @param a riferimento all'appuntamento per creare la label dello stato
      * @param i indice del JPanel
      */
-    private void createPanelAssignment(Assignment a, int i){
+    protected void createPanelAssignment(Assignment a, int i){
         infoPanel[i] = new JPanel();
         panelLabel = new JPanel();
 
@@ -344,6 +344,7 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
         infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        infoPanel[i].setBorder(BorderFactory.createLineBorder(new Color(0,0,0)));
 
         contentPanel.add(infoPanel[i]);
 
@@ -371,6 +372,7 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
         infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        infoPanel[i].setBorder(BorderFactory.createLineBorder(new Color(0,0,0)));
 
         contentPanel.add(infoPanel[i]);
     }
@@ -384,7 +386,7 @@ public class GUIListAssignments extends JFrame{
      *          giallo: da confermare
      *          grigio: già passato
      */
-    private JLabel createLabelState(Assignment a){
+    protected JLabel createLabelState(Assignment a){
         //da controllare il funzionamento
 
         JLabel label;
@@ -419,7 +421,7 @@ public class GUIListAssignments extends JFrame{
      * @return icona modificata in altezza e larghezza
      */
 
-    private ImageIcon transformImage(ImageIcon icon, int width, int height){
+    protected ImageIcon transformImage(ImageIcon icon, int width, int height){
         Image imageTransform = icon.getImage();
         Image newImage = imageTransform.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newImage);
@@ -428,7 +430,7 @@ public class GUIListAssignments extends JFrame{
     }
 
 
-    private boolean dateBeforeToday(Date date){
+    protected boolean dateBeforeToday(Date date){
         Date todayDate = new Date(System.currentTimeMillis());
 
         if(date.before(todayDate)){
