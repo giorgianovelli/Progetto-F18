@@ -254,7 +254,7 @@ public class GUISettings extends JFrame {
             e.printStackTrace();
         }
 
-        String expiration_Days = Integer.toString(Calendar.getNDayofMonth(Integer.parseInt(expiration_Months), exYear));
+        String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
 
         /**
          * stampa il giorno sulla label nell'interfaccia

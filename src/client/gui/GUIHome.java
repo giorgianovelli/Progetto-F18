@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static client.Calendar.getNDayofMonth;
+import static client.Calendar.getNDayOfMonth;
 
 public abstract class GUIHome extends JFrame{
     final int WIDTH = 1024;
@@ -306,7 +306,7 @@ public abstract class GUIHome extends JFrame{
         }
 
         i = 0;
-        int nd = getNDayofMonth(monthNumber, currentDate);
+        int nd = getNDayOfMonth(monthNumber, currentDate);
 
         for (i = 0; i < nd; i++){
             panelGridCalendar.add(buttonDay[i]);
