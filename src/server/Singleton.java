@@ -317,20 +317,9 @@ public class Singleton {
     public HashMap<Integer, Review> getCustomerReviewList(Customer customer){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
         try {
             rs = dbConnector.askDB("SELECT R.ASSIGNMENT_CODE, R.DATE, R.RATING, R.TITLE, R.DESCRIPTION, R.REPLY FROM REVIEW AS R jOIN ASSIGNMENT AS A ON R.ASSIGNMENT_CODE = A.CODE WHERE A.CUSTOMER = '" + customer.email + "'");
-            while (rs.next()){
-                int code = rs.getInt("ASSIGNMENT_CODE");
-                Date date = rs.getDate("DATE");
-                int rating = rs.getInt("RATING");
-                String title = rs.getString("TITLE");
-                String description = rs.getString("DESCRIPTION");
-                String reply = rs.getString("REPLY");
-                Review r = new Review(code, date, rating, title, description, reply);
-                reviewList.put(code, r);
-            }
-
+            HashMap<Integer, Review> reviewList = getReviewList(rs);
             dbConnector.closeConnection();
             return reviewList;
         } catch (SQLException e) {
@@ -347,20 +336,9 @@ public class Singleton {
     public HashMap<Integer, Review> getDogSitterReviewList(DogSitter dogSitter){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
         try {
             rs = dbConnector.askDB("SELECT R.ASSIGNMENT_CODE, R.DATE, R.RATING, R.TITLE, R.DESCRIPTION, R.REPLY FROM REVIEW AS R jOIN ASSIGNMENT AS A ON R.ASSIGNMENT_CODE = A.CODE WHERE A.DOGSITTER = '" + dogSitter.email + "'");
-            while (rs.next()){
-                int code = rs.getInt("ASSIGNMENT_CODE");
-                Date date = rs.getDate("DATE");
-                int rating = rs.getInt("RATING");
-                String title = rs.getString("TITLE");
-                String description = rs.getString("DESCRIPTION");
-                String reply = rs.getString("REPLY");
-                Review r = new Review(code, date, rating, title, description, reply);
-                reviewList.put(code, r);
-            }
-
+            HashMap<Integer, Review> reviewList = getReviewList(rs);
             dbConnector.closeConnection();
             return reviewList;
         } catch (SQLException e) {
@@ -413,6 +391,12 @@ public class Singleton {
     }
 
 
+    /**
+     * Read the list of assignments from a ResultSet object.
+     * @param rs the result of query.
+     * @return the HashMap of assignments.
+     * @throws SQLException
+     */
     private HashMap<Integer, Assignment> getAssignmentList(ResultSet rs) throws SQLException {
         HashMap<Integer, Assignment> assignmentList = new HashMap<Integer, Assignment>();
         while (rs.next()){
@@ -434,5 +418,27 @@ public class Singleton {
             assignmentList.put(code, assignment);
         }
         return assignmentList;
+    }
+
+
+    /**
+     * Read the list of reviews from a ResultSet object.
+     * @param rs the result of query.
+     * @return the HashMap of reviews.
+     * @throws SQLException
+     */
+    private HashMap<Integer, Review> getReviewList(ResultSet rs) throws SQLException {
+        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
+        while (rs.next()){
+            int code = rs.getInt("ASSIGNMENT_CODE");
+            Date date = rs.getDate("DATE");
+            int rating = rs.getInt("RATING");
+            String title = rs.getString("TITLE");
+            String description = rs.getString("DESCRIPTION");
+            String reply = rs.getString("REPLY");
+            Review r = new Review(code, date, rating, title, description, reply);
+            reviewList.put(code, r);
+        }
+        return reviewList;
     }
 }
