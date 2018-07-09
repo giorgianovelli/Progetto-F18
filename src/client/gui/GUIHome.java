@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static client.Calendar.getNDayofMonth;
+import static client.Calendar.getNDayOfMonth;
 
 public abstract class GUIHome extends JFrame{
     final int WIDTH = 1024;
@@ -56,10 +56,6 @@ public abstract class GUIHome extends JFrame{
     protected JLabel labelDay[];
     protected JButton buttonDay[];
     protected JLabel labelEmpty[];
-    /*protected JButton buttonPreviousYear = new JButton("<<");
-    protected JButton buttonPreviousMonth = new JButton("<");
-    protected JButton buttonNextYear = new JButton(">>");
-    protected JButton buttonNextMonth = new JButton(">");*/
     protected JButton buttonPreviousYear = new JButton("Previous year");
     protected JButton buttonPreviousMonth = new JButton("Previous month");
     protected JButton buttonNextYear = new JButton("Next year");
@@ -68,16 +64,27 @@ public abstract class GUIHome extends JFrame{
     protected CalendarState calendarState = CalendarState.NORMAL;
 
     private String email;
-    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
+    protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
     public GUIHome(String email) throws ParseException {
         setTitle("CaniBau");
-        setSize(WIDTH, HEIGHT);
+        //setSize(WIDTH, HEIGHT);
+        int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.9);
+        int height = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
+        setSize(width, height);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        panelToday.setBackground(new Color(224, 224, 235));
+        panelGridCalendar.setBackground(new Color(236, 242, 249));
+        panelDateCalendar.setBackground(new Color(236, 242, 249));
+
+        panelGridCalendar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 
         this.email = email;
     }
@@ -299,7 +306,7 @@ public abstract class GUIHome extends JFrame{
         }
 
         i = 0;
-        int nd = getNDayofMonth(monthNumber, currentDate);
+        int nd = getNDayOfMonth(monthNumber, currentDate);
 
         for (i = 0; i < nd; i++){
             panelGridCalendar.add(buttonDay[i]);
@@ -564,6 +571,33 @@ public abstract class GUIHome extends JFrame{
         cmd = cmd.replace(" ", "");
         MenuBarAction execMenuBarAction = MenuBarAction.valueOf(cmd);
         execMenuBarAction.execute(this);
+    }
+
+    protected HashSet<Integer> getCodeFirstFiveAssignments(int nShownAssignments, HashMap<Integer, Assignment> assignmentList){
+        int i = 0;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+
+        HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
+
+        for (Integer key : assignmentList.keySet()) {
+            Assignment a = assignmentList.get(key);
+            String strDateStart = date.format(a.getDateStart());
+            String strDateEnd = date.format(a.getDateEnd());
+            String strTodayDate = date.format(todayDate);
+            try {
+                Date dayStart = date.parse(strDateStart);
+                Date dayEnd = date.parse(strDateEnd);
+                Date today = date.parse(strTodayDate);
+                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
+                    codeFirstFiveAssignmentsList.add(key);
+                    i++;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return codeFirstFiveAssignmentsList;
     }
 
 }

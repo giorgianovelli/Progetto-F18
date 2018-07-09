@@ -9,10 +9,11 @@ import server.places.Area;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import static server.tools.dateTime.DateTimeTools.getAge;
 
 /**
  * This class implements Singleton Pattern for the creation of some different types of objects.
@@ -82,7 +83,7 @@ public class Singleton {
             dbConnector.closeConnection();
 
             rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + dogSitterEmail + "'");
-            HashSet<DogSize> listDogSize = new HashSet<DogSize>();
+            HashSet<DogSize> listDogSize = new HashSet<>();
             rs.next();
             boolean small = rs.getBoolean("SMALL");
             if (small){
@@ -181,30 +182,13 @@ public class Singleton {
      * @return the HashMap of Assignment related to dogSitter. The key indicates the assignment's code.
      */
     public HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(String dogSitter){
-        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
+        //HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE DOGSITTER = '" + dogSitter + "'");
-            while (rs.next()){
-                int code = rs.getInt("CODE");
-                Boolean state;
-                String strState = rs.getString("CONFIRMATION");
-                if (strState.equals("TRUE")){
-                    state = true;
-                } else if (strState.equals("FALSE")){
-                    state = false;
-                } else {
-                    state = null;
-                }
-                Date dateStart = rs.getTimestamp("DATE_START");
-                Date dateEnd = rs.getTimestamp("DATE_END");
-                Address meetingPoint = getMeetingPointFromDB(code);
-                HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
-                listAssignment.put(code, assignment);
-            }
+            HashMap<Integer, Assignment> assignmentList = getAssignmentList(rs);
             dbConnector.closeConnection();
-            return listAssignment;
+            return assignmentList;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -217,33 +201,17 @@ public class Singleton {
      * @return the HashMap of Assignment related to customer. The key indicates the assignment's code.
      */
     public HashMap<Integer, Assignment> getCustomerListAssignmentFromDB(String customer){
-        HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
+        //HashMap<Integer, Assignment> listAssignment = new HashMap<Integer, Assignment>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT CODE, CONFIRMATION, DATE_START, DATE_END FROM ASSIGNMENT WHERE CUSTOMER = '" + customer + "'");
-            while (rs.next()){
-                int code = rs.getInt("CODE");
-                Boolean state;
-                String strState = rs.getString("CONFIRMATION");
-                if (strState.equals("TRUE")){
-                   state = true;
-                } else if (strState.equals("FALSE")){
-                    state = false;
-                } else {
-                    state = null;
-                }
-                Date dateStart = rs.getTimestamp("DATE_START");
-                Date dateEnd = rs.getTimestamp("DATE_END");
-                Address meetingPoint = getMeetingPointFromDB(code);
-                HashSet dogList = getDogListFromDB(code);
-                Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
-                listAssignment.put(code, assignment);
-            }
+            HashMap<Integer, Assignment> assignmentList = getAssignmentList(rs);
             dbConnector.closeConnection();
+            return assignmentList;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return listAssignment;
     }
 
     /**
@@ -276,7 +244,7 @@ public class Singleton {
      * @return the HashSet of Dog related to the Assignment indicated with code.
      */
     public HashSet<Dog> getDogListFromDB(int code){
-        HashSet<Dog> dogList= new HashSet<Dog>();
+        HashSet<Dog> dogList= new HashSet<>();
         DBConnector dbConnector = new DBConnector();
         try {
             ResultSet rs = dbConnector.askDB("SELECT DOG_ID FROM DOG_ASSIGNMENT WHERE CODE = '" + code + "'");
@@ -350,20 +318,9 @@ public class Singleton {
     public HashMap<Integer, Review> getCustomerReviewList(Customer customer){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
         try {
             rs = dbConnector.askDB("SELECT R.ASSIGNMENT_CODE, R.DATE, R.RATING, R.TITLE, R.DESCRIPTION, R.REPLY FROM REVIEW AS R jOIN ASSIGNMENT AS A ON R.ASSIGNMENT_CODE = A.CODE WHERE A.CUSTOMER = '" + customer.email + "'");
-            while (rs.next()){
-                int code = rs.getInt("ASSIGNMENT_CODE");
-                Date date = rs.getDate("DATE");
-                int rating = rs.getInt("RATING");
-                String title = rs.getString("TITLE");
-                String description = rs.getString("DESCRIPTION");
-                String reply = rs.getString("REPLY");
-                Review r = new Review(code, date, rating, title, description, reply);
-                reviewList.put(code, r);
-            }
-
+            HashMap<Integer, Review> reviewList = getReviewList(rs);
             dbConnector.closeConnection();
             return reviewList;
         } catch (SQLException e) {
@@ -380,20 +337,9 @@ public class Singleton {
     public HashMap<Integer, Review> getDogSitterReviewList(DogSitter dogSitter){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs = null;
-        HashMap<Integer, Review> reviewList = new HashMap<Integer, Review>();
         try {
             rs = dbConnector.askDB("SELECT R.ASSIGNMENT_CODE, R.DATE, R.RATING, R.TITLE, R.DESCRIPTION, R.REPLY FROM REVIEW AS R jOIN ASSIGNMENT AS A ON R.ASSIGNMENT_CODE = A.CODE WHERE A.DOGSITTER = '" + dogSitter.email + "'");
-            while (rs.next()){
-                int code = rs.getInt("ASSIGNMENT_CODE");
-                Date date = rs.getDate("DATE");
-                int rating = rs.getInt("RATING");
-                String title = rs.getString("TITLE");
-                String description = rs.getString("DESCRIPTION");
-                String reply = rs.getString("REPLY");
-                Review r = new Review(code, date, rating, title, description, reply);
-                reviewList.put(code, r);
-            }
-
+            HashMap<Integer, Review> reviewList = getReviewList(rs);
             dbConnector.closeConnection();
             return reviewList;
         } catch (SQLException e) {
@@ -435,7 +381,7 @@ public class Singleton {
      * @param dateOfBirth
      * @return the age (int) of the dog
      */
-    public int getAge(Date dateOfBirth){
+    /*public int getAge(Date dateOfBirth){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
         String strBirth = dateFormat.format(dateOfBirth);
         int birth = Integer.parseInt(strBirth);
@@ -443,5 +389,57 @@ public class Singleton {
         String strNow = dateFormat.format(nowDate);
         int now = Integer.parseInt(strNow);
         return now - birth;
+    }*/
+
+
+    /**
+     * Read the list of assignments from a ResultSet object.
+     * @param rs the result of query.
+     * @return the HashMap of assignments.
+     * @throws SQLException
+     */
+    private HashMap<Integer, Assignment> getAssignmentList(ResultSet rs) throws SQLException {
+        HashMap<Integer, Assignment> assignmentList = new HashMap<>();
+        while (rs.next()){
+            int code = rs.getInt("CODE");
+            Boolean state;
+            String strState = rs.getString("CONFIRMATION");
+            if (strState.equals("TRUE")){
+                state = true;
+            } else if (strState.equals("FALSE")){
+                state = false;
+            } else {
+                state = null;
+            }
+            Date dateStart = rs.getTimestamp("DATE_START");
+            Date dateEnd = rs.getTimestamp("DATE_END");
+            Address meetingPoint = getMeetingPointFromDB(code);
+            HashSet dogList = getDogListFromDB(code);
+            Assignment assignment = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
+            assignmentList.put(code, assignment);
+        }
+        return assignmentList;
+    }
+
+
+    /**
+     * Read the list of reviews from a ResultSet object.
+     * @param rs the result of query.
+     * @return the HashMap of reviews.
+     * @throws SQLException
+     */
+    private HashMap<Integer, Review> getReviewList(ResultSet rs) throws SQLException {
+        HashMap<Integer, Review> reviewList = new HashMap<>();
+        while (rs.next()){
+            int code = rs.getInt("ASSIGNMENT_CODE");
+            Date date = rs.getDate("DATE");
+            int rating = rs.getInt("RATING");
+            String title = rs.getString("TITLE");
+            String description = rs.getString("DESCRIPTION");
+            String reply = rs.getString("REPLY");
+            Review r = new Review(code, date, rating, title, description, reply);
+            reviewList.put(code, r);
+        }
+        return reviewList;
     }
 }

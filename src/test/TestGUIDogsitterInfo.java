@@ -1,8 +1,5 @@
 package test;
 
-import client.gui.GUIDogsitterInfo;
-import client.proxy.DogSitterProxy;
-
 public class TestGUIDogsitterInfo {
 
 
@@ -12,8 +9,8 @@ public class TestGUIDogsitterInfo {
         String email = "MARCO.CARTA@GMAIL.COM";
 
 
-        GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(email);
-        guiDogsitterInfo.setVisible(true);
+       // GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(email);
+        //guiDogsitterInfo.setVisible(true);
 
 
     }

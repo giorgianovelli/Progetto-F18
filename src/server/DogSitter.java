@@ -590,7 +590,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
 
             if (isUpdated) {
                 System.out.println("The list of dogs accepted is now up to date!");
-                HashSet<DogSize> newDogSizeList = new HashSet<DogSize>();
+                HashSet<DogSize> newDogSizeList = new HashSet<>();
                 if (small){
                     newDogSizeList.add(DogSize.SMALL);
                 }

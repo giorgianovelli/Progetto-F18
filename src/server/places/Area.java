@@ -7,7 +7,7 @@ public class Area {
     HashSet<String> places;
 
     public Area() {
-        this.places = new HashSet<String>();
+        this.places = new HashSet<>();
     }
 
     public HashSet<String> addPlace(String city){

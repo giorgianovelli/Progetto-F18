@@ -84,7 +84,7 @@ class Connect extends Thread {
             client.close();
         }
         catch(Exception e) {
-
+            System.err.println("Error in client-server connection!");
         }
     }
 
