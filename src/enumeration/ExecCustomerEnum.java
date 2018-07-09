@@ -58,20 +58,7 @@ public enum ExecCustomerEnum {
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
-
-            DBConnector dbConnector = new DBConnector();
-            String emailDogSitter = null;
-            DogSitter dogSitter = null;
-            try {
-                ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
-                rs.next();
-                emailDogSitter = rs.getString("DOGSITTER");
-                Singleton singleton = new Singleton();
-                dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
-                dbConnector.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DogSitter dogSitter = getDogSitterOfAssignment(code);
             return dogSitter.getName();
         }
 
@@ -82,20 +69,7 @@ public enum ExecCustomerEnum {
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
-
-            DBConnector dbConnector = new DBConnector();
-            String emailDogSitter = null;
-            DogSitter dogSitter = null;
-            try {
-                ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
-                rs.next();
-                emailDogSitter = rs.getString("DOGSITTER");
-                Singleton singleton = new Singleton();
-                dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
-                dbConnector.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DogSitter dogSitter = getDogSitterOfAssignment(code);
             return dogSitter.getSurname();
         }
 

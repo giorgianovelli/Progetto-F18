@@ -1,9 +1,12 @@
 package enumeration;
 
+import database.DBConnector;
 import server.*;
 import server.places.Address;
 import server.places.Area;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,5 +75,39 @@ public class enumStaticMethods {
             dogSizeList.add(DogSize.GIANT);
         }
         return dogSizeList;
+    }
+
+    protected static DogSitter getDogSitterOfAssignment(int code) {
+        DBConnector dbConnector = new DBConnector();
+        String emailDogSitter;
+        DogSitter dogSitter = null;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT DOGSITTER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
+            rs.next();
+            emailDogSitter = rs.getString("DOGSITTER");
+            Singleton singleton = new Singleton();
+            dogSitter = singleton.createDogSitterFromDB(emailDogSitter);
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dogSitter;
+    }
+
+    protected static Customer getCustomerOfAssignment(int code){
+        DBConnector dbConnector = new DBConnector();
+        String emailCustomer;
+        Customer customer = null;
+        try {
+            ResultSet rs = dbConnector.askDB("SELECT CUSTOMER FROM ASSIGNMENT WHERE CODE = '" + code + "'");
+            rs.next();
+            emailCustomer = rs.getString("CUSTOMER");
+            Singleton singleton = new Singleton();
+            customer = singleton.createCustomerFromDB(emailCustomer);
+            dbConnector.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
     }
 }
