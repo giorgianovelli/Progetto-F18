@@ -45,7 +45,7 @@ public class GUINewAssignment extends JFrame{
     private String email;
     HashSet<Dog> dogList;
     HashSet<String> dogsittersMailList;
-    private boolean paymentMethod;
+    private boolean paymentMethod = true;
     CustomerProxy customerProxy;
 
     //Others
@@ -160,6 +160,7 @@ public class GUINewAssignment extends JFrame{
                     }
                 }
 
+
                 if (radioButtonCash.isSelected()) {
                     paymentMethod = true;
                 } else if (radioButtonCreditCard.isSelected()) {
@@ -175,11 +176,6 @@ public class GUINewAssignment extends JFrame{
                 } else if (dogsSelected.size() == 0) {
                     JOptionPane.showMessageDialog(new JFrame(), "No dogs selected!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
-
-                } else if (!radioButtonCash.isSelected() && !radioButtonCreditCard.isSelected()) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No payment method selected!", "Assignment error",
-                            JOptionPane.ERROR_MESSAGE);
-
 
                 } else switch (month){
 
@@ -235,7 +231,7 @@ public class GUINewAssignment extends JFrame{
 
                         default: {
                             dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
-                            
+
                             if (dogsittersMailList.isEmpty()) {
                                 JOptionPane.showMessageDialog(new JFrame(), "Sorry, we couldn't find any dogsitter!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
@@ -254,7 +250,7 @@ public class GUINewAssignment extends JFrame{
         ActionListener actionListener1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                guiNewAssignment.dispatchEvent(new WindowEvent(guiNewAssignment, WindowEvent.WINDOW_CLOSING));
             }
         };
 
@@ -364,6 +360,7 @@ public class GUINewAssignment extends JFrame{
         ButtonGroup group = new ButtonGroup();
         group.add(radioButtonCash);
         group.add(radioButtonCreditCard);
+        radioButtonCreditCard.setSelected(true);
 
         // Labels
 

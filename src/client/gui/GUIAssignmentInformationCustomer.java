@@ -3,13 +3,17 @@ package client.gui;
 import client.proxy.CustomerProxy;
 import server.Assignment;
 import server.Dog;
+import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 
 public class GUIAssignmentInformationCustomer extends JFrame {
@@ -17,13 +21,18 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     final int HEIGHT = 550;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+    private GUIAssignmentInformationCustomer guiAssignmentInformationCustomer;
+
 
     private GridLayout gridLayout = new GridLayout(1, 2);
     private GridLayout gridLayout2 = new GridLayout(1,1);
     private JPanel panelOut = new JPanel(new BorderLayout());
+    private JPanel panelContents = new JPanel(new BorderLayout());
     private JPanel panelAssignmentData = new JPanel(new GridLayout(7,1));
     private JPanel panelDogs = new JPanel(gridLayout2);
+    private JPanel panelReview = new JPanel(new BorderLayout());
     private JPanel panelClose = new JPanel(new BorderLayout());
+    private JPanel panelButtonReview = new JPanel();
 
     private JPanel panelCode = new JPanel(gridLayout);
     private JPanel panelStartDate = new JPanel(gridLayout);
@@ -45,8 +54,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ");
     private JLabel labelAmount1 = new JLabel("Amount: ");
     private JLabel labelPaymentMethod1 = new JLabel("Paymenth Method: ");
-    private JLabel labelDogs1 = new JLabel("Dogs: ");
-    private JLabel labelEmpty = new JLabel("\t");
+
 
     private JLabel labelCode2 = new JLabel();
     private JLabel labelStartDate2 = new JLabel();
@@ -55,6 +63,9 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JLabel labelMeetingPoint2 = new JLabel();
     private JLabel labelAmount2 = new JLabel();
     private JLabel labelPaymentMethod2 = new JLabel();
+
+    private JLabel labelReview = new JLabel();
+    private JButton buttonReview = new JButton("Show more");
 
     private JButton buttonClose = new JButton("Close");
 
@@ -75,6 +86,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         setLayout(new BorderLayout());
 
         this.email = email;
+        guiAssignmentInformationCustomer = this;
 
 
         initComponents(a);
@@ -87,12 +99,17 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
     private void initComponents(Assignment a){
 
-        panelOut.add(panelAssignmentData, BorderLayout.NORTH);
-        panelOut.add(panelDogs, BorderLayout.CENTER);
-        panelOut.add(panelClose, BorderLayout.SOUTH);
+        panelOut.add(panelContents, BorderLayout.NORTH);
+        panelOut.add(panelClose, BorderLayout.CENTER);
+
+        panelContents.add(panelAssignmentData, BorderLayout.NORTH);
+        panelContents.add(panelDogs, BorderLayout.CENTER);
+        panelContents.add(panelReview, BorderLayout.SOUTH);
 
         panelAssignmentData.setBorder(BorderFactory.createTitledBorder("Summary: "));
         panelDogs.setBorder(BorderFactory.createTitledBorder("Dogs: "));
+        panelReview.setBorder(BorderFactory.createTitledBorder("Review: "));
+        panelButtonReview.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
 
         panelAssignmentData.add(panelCode);
         panelAssignmentData.add(panelStartDate);
@@ -117,6 +134,14 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelPaymentMethod.add(labelPaymentMethod1);
         panelPaymentMethod.add(labelPaymentMethod2);
 
+
+
+        panelButtonReview.add(buttonReview);
+        panelReview.add(labelReview, BorderLayout.WEST);
+        panelReview.add(panelButtonReview, BorderLayout.EAST);
+
+
+
         //Pannello bottone Close e Action Listener
 
         panelClose.add(buttonClose);
@@ -125,8 +150,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                dispose();
+                
+                guiAssignmentInformationCustomer.dispatchEvent(new WindowEvent(guiAssignmentInformationCustomer, WindowEvent.WINDOW_CLOSING));
             }
         };
         buttonClose.addActionListener(actionListener);
@@ -147,16 +172,42 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         String strDateStart = dateFormat.format(a.getDateStart());
         String strEndDate = dateFormat.format(a.getDateEnd());
 
+        HashMap<Integer, Review> listReview = customerProxy.getReviewList();
+
         String strDogsitter = customerProxy.getDogSitterNameOfAssignment(intCode) + " " + customerProxy.getDogSitterSurnameOfAssignment(intCode);
         HashSet<Dog> dogList = a.getDogList();
-        String strDogs = a.printDogNames();
-        String[] strDogsSplitted = strDogs.split("\n");
         String strMeetingPoint = a.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
         String amount = String.format("%.2f", doubleAmount).replace(",",".");
         String strPayment = customerProxy.getPaymentMethod().getNumber();
+        if (customerProxy.isInCashPaymentMethodOfAssignment(a.getCode())) {
+            strPayment = "Cash";
+        }
 
         //Passaggio delle variabili alle Jlabel che contengono i dati
+
+
+        for (Map.Entry<Integer, Review> entry: listReview.entrySet()) {
+            if (a.getCode() == entry.getKey()) {
+                String title = entry.getValue().getTitle();
+                String date = dateFormat.format(entry.getValue().getDate());
+                String vote = entry.getValue().starsRating();
+                labelReview.setText("<html>" + title + "<br>" + date + "<br>" + vote + "<br/>");
+                ActionListener actionListener1 = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GUIShowReview guiShowReview = new GUIShowReview(entry.getValue());
+                        guiShowReview.setVisible(true);
+                    }
+                };
+                buttonReview.addActionListener(actionListener1);
+            }
+        }
+
+        if (labelReview.getText().equals("")) {
+                labelReview.setText("No review");
+                buttonReview.setEnabled(false);
+        }
 
         labelCode2.setText(intCode.toString());
         labelStartDate2.setText(strDateStart);
