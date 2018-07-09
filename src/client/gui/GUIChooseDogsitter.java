@@ -27,10 +27,12 @@ public class GUIChooseDogsitter extends JFrame {
     private JPanel panelLabel;
     private JPanel panelButtons;
     private JPanel panelContainer;
-    private GridLayout gridLayout = new GridLayout(1,1);
+    private JPanel panelClose = new JPanel(new BorderLayout());
+    private GridLayout gridLayout = new GridLayout(1,1,5,0);
     private JScrollPane panelScroll = new JScrollPane(panelOut);
     private JButton buttonInfo;
     private JButton buttonSelect;
+    private JButton buttonClose = new JButton("Close");
     private JLabel labelDogsitter;
 
     private HashSet<String> dogsitterList;
@@ -98,9 +100,16 @@ public class GUIChooseDogsitter extends JFrame {
     public void initComponents() {
         panelOut.setLayout(new BorderLayout());
         panelContainer = new JPanel(gridLayout);
+        panelClose.setBorder(BorderFactory.createEmptyBorder(20,320,20,320));
+
+
+
 
         GUIChooseDogsitter guiChooseDogsitter = this;
 
+        panelOut.add(panelContainer, BorderLayout.NORTH);
+        panelOut.add(panelClose, BorderLayout.SOUTH);
+        panelClose.add(buttonClose, BorderLayout.CENTER);
 
 
 
@@ -112,12 +121,12 @@ public class GUIChooseDogsitter extends JFrame {
             labelDogsitter = new JLabel("<html><br>" + dogSitterProxy.getName() + " " + dogSitterProxy.getSurname() + "<br/>" + mailDogsitter, SwingConstants.LEFT);
 
             panelLabel = new JPanel();
-            panelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,0, 0));
+            panelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,20, 0));
             panelLabel.add(labelDogsitter);
 
             panelButtons = new JPanel();
             panelButtons.setLayout(new GridLayout(1,2,10,0));
-            panelButtons.setBorder(BorderFactory.createEmptyBorder(15,0,15, 40));
+            panelButtons.setBorder(BorderFactory.createEmptyBorder(30,0,30, 40));
 
             buttonInfo = new JButton("Info");
             buttonSelect = new JButton("Select");
@@ -126,6 +135,7 @@ public class GUIChooseDogsitter extends JFrame {
 
             panelDogsitter = new JPanel();
             panelDogsitter.setLayout(new BorderLayout());
+            panelDogsitter.setBorder(BorderFactory.createTitledBorder(""));
             panelDogsitter.add(panelLabel, BorderLayout.WEST);
             panelDogsitter.add(panelButtons, BorderLayout.EAST);
             panelContainer.add(panelDogsitter);
@@ -151,13 +161,23 @@ public class GUIChooseDogsitter extends JFrame {
 
 
 
+
+
             buttonSelect.addActionListener(actionListener);
             buttonInfo.addActionListener(actionListener1);
 
         }
 
-        panelOut.add(panelContainer, BorderLayout.NORTH);
-        System.out.println(dogsitterList.toString());
+
+
+        ActionListener actionListener2 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guiChooseDogsitter.dispatchEvent(new WindowEvent(guiChooseDogsitter, WindowEvent.WINDOW_CLOSING));
+            }
+        };
+
+        buttonClose.addActionListener(actionListener2);
 
 
 

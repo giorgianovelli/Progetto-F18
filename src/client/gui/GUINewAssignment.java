@@ -236,6 +236,7 @@ public class GUINewAssignment extends JFrame{
 
                         default: {
                             dogsittersMailList = customerProxy.search(dateStart, dateEnd, meetingPoint, dogsSelected, paymentMethod);
+                            
                             if (dogsittersMailList.isEmpty()) {
                                 JOptionPane.showMessageDialog(new JFrame(), "Sorry, we couldn't find any dogsitter!", "Assignment error",
                                         JOptionPane.ERROR_MESSAGE);
