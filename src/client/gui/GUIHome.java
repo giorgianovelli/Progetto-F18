@@ -56,10 +56,6 @@ public abstract class GUIHome extends JFrame{
     protected JLabel labelDay[];
     protected JButton buttonDay[];
     protected JLabel labelEmpty[];
-    /*protected JButton buttonPreviousYear = new JButton("<<");
-    protected JButton buttonPreviousMonth = new JButton("<");
-    protected JButton buttonNextYear = new JButton(">>");
-    protected JButton buttonNextMonth = new JButton(">");*/
     protected JButton buttonPreviousYear = new JButton("Previous year");
     protected JButton buttonPreviousMonth = new JButton("Previous month");
     protected JButton buttonNextYear = new JButton("Next year");
@@ -73,11 +69,22 @@ public abstract class GUIHome extends JFrame{
 
     public GUIHome(String email) throws ParseException {
         setTitle("CaniBau");
-        setSize(WIDTH, HEIGHT);
+        //setSize(WIDTH, HEIGHT);
+        int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.9);
+        int height = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
+        setSize(width, height);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        panelToday.setBackground(new Color(224, 224, 235));
+        panelGridCalendar.setBackground(new Color(236, 242, 249));
+        panelDateCalendar.setBackground(new Color(236, 242, 249));
+
+        panelGridCalendar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 
         this.email = email;
     }

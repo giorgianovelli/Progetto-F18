@@ -37,7 +37,7 @@ public class GUICustomer extends GUIHome{
     public GUICustomer(String email) throws ParseException {
         super(email);
         setTitle("CaniBau (Customer)");
-        setSize(WIDTH, HEIGHT);
+        //setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
