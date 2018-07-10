@@ -28,6 +28,7 @@ public class GUICustomer extends GUIHome{
     protected JMenuItem menuItemCancel = new JMenuItem("Cancel");
 
     public static GUINewAssignment guiNewAssignment;
+    public GUICustomer guiCustomer;
 
     private CustomerProxy proxy;
     private String email;
@@ -45,7 +46,7 @@ public class GUICustomer extends GUIHome{
 
         this.email = email;
         this.proxy = new CustomerProxy(email);
-
+        guiCustomer = this;
         initComponents();
     }
 
@@ -95,7 +96,7 @@ public class GUICustomer extends GUIHome{
                         }
                         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
                         Assignment a = listAssignment.get(pressedButton.getDisplayedMnemonicIndex());
-                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email);
+                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email, guiCustomer);
                         guiAssignment.setVisible(true);
                     }
                 }

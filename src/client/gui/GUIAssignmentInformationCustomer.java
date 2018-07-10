@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -73,11 +74,12 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
 
     /**
-     *
+     * Constructor using GUIListAssignments
      * @param a
+     * @param email
+     * @param guiListAssignments
      */
-
-    public GUIAssignmentInformationCustomer(Assignment a, String email){
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIListAssignments guiListAssignments){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -85,6 +87,108 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
 
+        guiListAssignments.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiListAssignments.setEnabled(true);
+            }
+        });
+        this.email = email;
+        guiAssignmentInformationCustomer = this;
+
+
+        initComponents(a);
+    }
+
+
+    /**
+     * Constructor using GUIShowDogsitterAssignment
+     * @param a
+     * @param email
+     * @param guiListAssignments
+     */
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIShowDogsitterAssignment guiListAssignments){
+        setTitle("Assignment information");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLayout(new BorderLayout());
+
+        guiListAssignments.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiListAssignments.setEnabled(true);
+            }
+        });
+        this.email = email;
+        guiAssignmentInformationCustomer = this;
+
+
+        initComponents(a);
+    }
+
+    /**
+     *
+     * @param a
+     * @param email
+     * @param guiListAssignments
+     */
+
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUICustomer guiListAssignments){
+        setTitle("Assignment information");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLayout(new BorderLayout());
+
+        guiListAssignments.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiListAssignments.setEnabled(true);
+            }
+        });
+        this.email = email;
+        guiAssignmentInformationCustomer = this;
+
+
+        initComponents(a);
+    }
+
+    /**
+     * Constructor using GUIDailyAssignments
+     * @param a
+     * @param email
+     * @param guiDailyAssignments
+     */
+
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIDailyAssignments guiDailyAssignments){
+        setTitle("Assignment information");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLayout(new BorderLayout());
+
+        guiDailyAssignments.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiDailyAssignments.setEnabled(true);
+            }
+        });
         this.email = email;
         guiAssignmentInformationCustomer = this;
 
@@ -150,7 +254,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 guiAssignmentInformationCustomer.dispatchEvent(new WindowEvent(guiAssignmentInformationCustomer, WindowEvent.WINDOW_CLOSING));
             }
         };
