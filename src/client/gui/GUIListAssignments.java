@@ -40,7 +40,7 @@ public class GUIListAssignments extends JFrame{
     protected JPanel panelButtons;
 
     protected HashMap<Integer, Assignment> listAssignment;
-    private HashMap<Integer, Review> listReview;
+    protected HashMap<Integer, Review> listReview;
     private CustomerProxy proxy;
     protected String email;
 

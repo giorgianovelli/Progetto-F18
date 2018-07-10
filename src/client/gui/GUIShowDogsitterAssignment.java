@@ -4,6 +4,7 @@ import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 import enumeration.CalendarState;
 import server.Assignment;
+import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,9 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
     public GUIShowDogsitterAssignment(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiDogsitter){
         super(cs,listAssignment, email, guiDogsitter);
         guiShowDogsitterAssignment = this;
+
         initComponents(cs, guiDogsitter);
+
 
 
     }
@@ -31,6 +34,8 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
 
         dogSitterProxy = new DogSitterProxy(email);
+        listReview = new HashMap<Integer, Review>();
+        //listReview = dogSitterProxy.getReviewList(); //TODO se aggiungo questa riga si blocca
 
 
         gridLayout = new GridLayout(1,1);
@@ -49,41 +54,44 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
         contentPanel.setLayout(gridLayout);
         panelOut.setLayout(new BorderLayout());
 
-        System.out.println(dogSitterProxy.toString());
-        int j = 0;
+        if(cs.equals(CalendarState.NORMAL)){
+            int j = 0;
 
-        for(Integer i : listAssignment.keySet()){
-            Assignment a = null;
+            for(Integer i : listAssignment.keySet()){
+                Assignment a = null;
 
-            a = listAssignment.get(i);
+                a = listAssignment.get(i);
 
-            String nameCustomer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
-            String surnameCustomer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
+                String nameCustomer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
+                String surnameCustomer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
 
-            ActionListener showInfo = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+                ActionListener showInfo = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
 
-                    GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiShowDogsitterAssignment);
-                    assignmentInfo.setVisible(true);
+                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiShowDogsitterAssignment);
+                        assignmentInfo.setVisible(true);
 
-                }
-            };
-
-
+                    }
+                };
 
 
-            labelDescription[j]= new JLabel("Assignment with " + nameCustomer + " " + surnameCustomer);
-            buttonAction[j]= new JButton("Info");
-            buttonAction[j].addActionListener(showInfo);
 
 
-            createPanelAssignment(a,j);
+                labelDescription[j]= new JLabel("Assignment with " + nameCustomer + " " + surnameCustomer);
+                buttonAction[j]= new JButton("Info");
+                buttonAction[j].addActionListener(showInfo);
 
-            gridLayout.setRows(gridLayout.getRows() + 1);
-            j++;
 
+                createPanelAssignment(a,j);
+
+                gridLayout.setRows(gridLayout.getRows() + 1);
+                j++;
+
+            }
         }
+
+
 
 
 
