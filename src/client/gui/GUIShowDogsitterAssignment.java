@@ -14,11 +14,12 @@ import java.util.HashMap;
 public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
     private DogSitterProxy dogSitterProxy;
+    public  GUIShowDogsitterAssignment guiShowDogsitterAssignment; // serve per disattivare la finestra madre @Riccardo
 
 
     public GUIShowDogsitterAssignment(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiDogsitter){
         super(cs,listAssignment, email, guiDogsitter);
-
+        guiShowDogsitterAssignment = this;
         initComponents(cs, guiDogsitter);
 
 
@@ -63,7 +64,7 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email);
+                    GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiShowDogsitterAssignment);
                     assignmentInfo.setVisible(true);
 
                 }

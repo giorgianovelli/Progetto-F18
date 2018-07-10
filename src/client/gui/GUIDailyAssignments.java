@@ -34,6 +34,7 @@ public class GUIDailyAssignments extends JFrame {
     private CustomerProxy proxy;
     private String email;
     private Date todayDate;
+    public GUIDailyAssignments guiDailyAssignments;
 
 
     public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {
@@ -52,8 +53,9 @@ public class GUIDailyAssignments extends JFrame {
         this.listAssigment = proxy.getAssignmentList();
         this.todayDate = todayDate;
         initComponents(cs);
-
+        guiDailyAssignments = this;
     }
+
 
 
     private void initComponents(CalendarState cs) {
@@ -151,7 +153,7 @@ public class GUIDailyAssignments extends JFrame {
                             @Override
                             public void actionPerformed(ActionEvent e) {
 
-                                GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(todayAssigment.get(i), email);
+                                GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(todayAssigment.get(i), email, guiDailyAssignments);
                                 assignmentInfo.setVisible(true);
 
                             }
@@ -209,7 +211,7 @@ public class GUIDailyAssignments extends JFrame {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
 
-                                    GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(todayAssigment.get(i), email);
+                                    GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(todayAssigment.get(i), email, guiDailyAssignments);
                                     assignmentInfo.setVisible(true);
 
                                 }

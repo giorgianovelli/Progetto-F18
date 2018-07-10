@@ -44,6 +44,8 @@ public class GUIListAssignments extends JFrame{
     private CustomerProxy proxy;
     protected String email;
 
+    private GUIListAssignments guiListAssignments; // necessario per disattivazione @Riccardo
+
     /**
      *
      * @param cs ??
@@ -58,6 +60,7 @@ public class GUIListAssignments extends JFrame{
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+        guiListAssignments = this;
 
         this.email = email;
         this.proxy = new CustomerProxy(email);
@@ -272,7 +275,7 @@ public class GUIListAssignments extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email);
+                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiListAssignments);
                         assignmentInfo.setVisible(true);
 
                     }
