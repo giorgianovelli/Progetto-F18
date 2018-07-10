@@ -175,7 +175,6 @@ public class GUIChangePassword extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
-
     /**
      * verifica la validità della password immessa
      * @param inputPass2  password da verificare
