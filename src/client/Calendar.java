@@ -41,7 +41,7 @@ public class Calendar {
      * @param year year is useful for leap check.
      * @return the number of days of a month.
      */
-    public static int getNDayofMonth(int monthNumber, Date year){
+    public static int getNDayOfMonth(int monthNumber, Date year){
         int nd;
         switch (monthNumber){
             case 4:

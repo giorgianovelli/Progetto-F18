@@ -28,16 +28,17 @@ public class GUICustomer extends GUIHome{
     protected JMenuItem menuItemCancel = new JMenuItem("Cancel");
 
     public static GUINewAssignment guiNewAssignment;
+    public GUICustomer guiCustomer;
 
     private CustomerProxy proxy;
     private String email;
-    private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<Integer>();
+    private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
     public GUICustomer(String email) throws ParseException {
         super(email);
         setTitle("CaniBau (Customer)");
-        setSize(WIDTH, HEIGHT);
+        //setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -45,7 +46,7 @@ public class GUICustomer extends GUIHome{
 
         this.email = email;
         this.proxy = new CustomerProxy(email);
-
+        guiCustomer = this;
         initComponents();
     }
 
@@ -95,7 +96,7 @@ public class GUICustomer extends GUIHome{
                         }
                         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
                         Assignment a = listAssignment.get(pressedButton.getDisplayedMnemonicIndex());
-                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email);
+                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email, guiCustomer);
                         guiAssignment.setVisible(true);
                     }
                 }
@@ -187,33 +188,12 @@ public class GUICustomer extends GUIHome{
             nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
 
-        int i = 0;
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        Date todayDate = new Date();
-
-        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
-
-        for (Integer key : listAssignment.keySet()) {
-            Assignment a = listAssignment.get(key);
-            String strDateStart = date.format(a.getDateStart());
-            String strDateEnd = date.format(a.getDateEnd());
-            String strTodayDate = date.format(todayDate);
-            try {
-                Date dayStart = date.parse(strDateStart);
-                Date dayEnd = date.parse(strDateEnd);
-                Date today = date.parse(strTodayDate);
-                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
-                    codeFirstFiveAssignmentsList.add(key);
-                    i++;
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        HashMap<Integer, Assignment> assignmentList = proxy.getAssignmentList();
+        codeFirstFiveAssignmentsList = getCodeFirstFiveAssignments(nShownAssignments, assignmentList);
 
         int n = 0;
         for (Integer key : codeFirstFiveAssignmentsList) {
-            Assignment a = listAssignment.get(key);
+            Assignment a = assignmentList.get(key);
             String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
             String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
             buttonTodayAssignment[n].setText("Assignment with " + capitalizeFirstLetter(nameDogSitter) + " " + capitalizeFirstLetter(surnameDogSitter));
@@ -273,7 +253,7 @@ public class GUICustomer extends GUIHome{
 
         if ((!(cae.getActionCommand().equals(""))) && (calendarState.equals(CalendarState.ADDING))){
             //JButton pressedButton = (JButton) cae.getSource();
-            guiNewAssignment = new GUINewAssignment(todayDate, email);
+            guiNewAssignment = new GUINewAssignment(todayDate, email, this);
             guiNewAssignment.setVisible(true);
         }
     }

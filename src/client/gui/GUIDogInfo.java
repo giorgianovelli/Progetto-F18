@@ -12,12 +12,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class GUIDogInfo extends JFrame {
 
-    final int WIDTH = 512;
+    final int WIDTH = 600;
     final int HEIGHT = 300;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
@@ -55,7 +54,7 @@ public class GUIDogInfo extends JFrame {
 
     private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private ArrayList<String> years_tmp = new ArrayList<String>();
+    private ArrayList<String> years_tmp = new ArrayList<>();
 
 
 

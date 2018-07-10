@@ -1,9 +1,6 @@
 package test;
 
 import client.proxy.DogSitterProxy;
-import server.Assignment;
-
-import java.util.HashMap;
 
 public class TestDogSitterProxy {
     public static void main(String[] args) {

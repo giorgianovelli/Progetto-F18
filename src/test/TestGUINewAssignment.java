@@ -1,13 +1,9 @@
 package test;
-import client.gui.GUINewAssignment;
-import client.gui.GUISettings;
 
 
-import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.StringTokenizer;
 
 public class TestGUINewAssignment {
 
@@ -21,8 +17,10 @@ public class TestGUINewAssignment {
             e.printStackTrace();
         }
 
+        /*
         GUINewAssignment guiNewAssignment = new GUINewAssignment(date, "RICCARDOGIURA@GMAIL.COM");
         guiNewAssignment.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         guiNewAssignment.setVisible(true);
+        */
     }
 }
