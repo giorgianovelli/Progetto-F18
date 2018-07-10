@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class GUIChangePassword extends JFrame {
     final int WIDTH = 400;
     final int HEIGHT = 300;
@@ -24,12 +25,14 @@ public class GUIChangePassword extends JFrame {
     private JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
     private JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
     private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
+    private JPasswordField textOldPassword = new JPasswordField();
 
-    // String strCurrentPassword = proxy.getPassword();
-    //private String currentPassword = new String();
-    private String newPassword = new String();
-    private String confirmPassword = new String();
+    private String newPassword;
+    private String confirmPassword;
+    private String pass2; //= new String();
+    private String currentPassword; // = new String();
 
+    private String inputPass = new String();
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
@@ -38,10 +41,12 @@ public class GUIChangePassword extends JFrame {
     private CustomerProxy proxy;
     private String email;
 
+
 //______________________________________________________________________________________________________________________________________________________________
 
     /**
      * Constructor
+     *
      * @param email: reference to the user
      */
 
@@ -55,6 +60,7 @@ public class GUIChangePassword extends JFrame {
         setLayout(new BorderLayout());
         this.email = email;
         this.proxy = new CustomerProxy(email);
+
 
         initComponents();
 
@@ -85,14 +91,8 @@ public class GUIChangePassword extends JFrame {
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-        // String strCurrentPassword = proxy.getPassword();
-      /*  textCurrentPassword.setText(strCurrentPassword);
-        textCurrentPassword.setEditable(true);
-        labelCurrentPassword.setLabelFor(textCurrentPassword);
 
-        textPasswordConf.setText("");
-        textPasswordConf.setEditable(true);
-        labelPasswordConf.setLabelFor(textPasswordConf);*/
+
 
         //-----------------------------------------------------------------------------------
 
@@ -105,7 +105,14 @@ public class GUIChangePassword extends JFrame {
             public void actionPerformed(ActionEvent passwordAe) {
 
                 if (passwordAe.getActionCommand().equals("Confirm")) {
-                    changePasswordFields();
+                    //se inserisco password corretta e lascio gli altri campi vuoti si impalla DA SISTEMARE
+
+                    boolean matchPass = controlloPassword(inputPass);
+                    if ((matchPass)) {
+                        changePasswordFields();
+                        // dispose();
+                    }
+
 
                 }
                 if (passwordAe.getActionCommand().equals("Cancel")) {
@@ -124,55 +131,90 @@ public class GUIChangePassword extends JFrame {
 //______________________________________________________________________________________________________________________________________________________________
 
     /**
-     * metodo per controllare se le nuova password inserita nel campo "NewPassword" corrisponda  al campo "ConfirmPassword"
-     * inoltre gestisce l'errore in caso le due password non corrispondano
+     * controllo se le nuova password inserita nel campo "NewPassword" corrisponda  al campo "ConfirmPassword"
      */
-    //TODO MANCA CONTROLLO SULLA PASSWORD INSERITA DALL'UTENTE
 
     public boolean changePasswordFields() {
         boolean updatePassword;
-        String oldPassword = "";   //acquisisce vecchia password dall'utente
-        String strCurrentPassword = proxy.getPassword();
         char[] strNewPassword = textNewPassword.getPassword();
         char[] strConfirmPassword = textPasswordConf.getPassword();
 
-
-        //  if (oldPassword.equals(strCurrentPassword)) {
-
-
-        // }
-        if(strNewPassword.length == strConfirmPassword.length) {
+        if (strNewPassword.length == strConfirmPassword.length) {
             for (int i = 0; i < strNewPassword.length; i++) {
                 newPassword += strNewPassword[i];
                 confirmPassword += strConfirmPassword[i];
             }
         }
-            /*else {
-            JOptionPane.showMessageDialog(new JFrame(), "Incorrect password!", "Password error", JOptionPane.ERROR_MESSAGE);
-            //updatePassword = false;
 
-        }*/
+        String newPassword = new String(textNewPassword.getPassword());
+        String confirmPassword = new String(textPasswordConf.getPassword());
 
         if (newPassword.equals(confirmPassword)) {
             proxy.updatePassword(newPassword);
             JOptionPane.showMessageDialog(new JFrame(), "you have changed password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+
+           /* System.out.println("la nuova password inserita è: " + newPassword);
+            System.out.println("la conferma password corrente è:" + confirmPassword);*/
             updatePassword = true;
 
 
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "Incorrect password!", "Password error", JOptionPane.ERROR_MESSAGE);
-            updatePassword = false;
+            JOptionPane.showMessageDialog(new JFrame(), "New Password and Confirm Password do not match!", "Password error", JOptionPane.ERROR_MESSAGE);
+
             textNewPassword.setText("");
             textPasswordConf.setText("");
+            updatePassword = false;
         }
-
-
 
 
         return updatePassword;
 
+
+    }
+
+
+//______________________________________________________________________________________________________________________________________________________________
+
+
+    /**
+     * verifica la validità della password immessa
+     * @param inputPass2  password da verificare
+     * @return true se corretta, false se errata
+     */
+
+    public boolean controlloPassword(String inputPass2) {
+        boolean matchPassword;
+
+        char[] pass = textOldPassword.getPassword();
+        char[] strCurrentPassword = textCurrentPassword.getPassword();
+
+
+        if (pass.length == strCurrentPassword.length) {
+            for (int i = 0; i < pass.length; i++) {
+                pass2 += pass[i];
+                currentPassword += strCurrentPassword[i];
+            }
+        }
+
+
+        String currentPassword = proxy.getPassword();
+        String pass2 = new String(textCurrentPassword.getPassword());
+
+        if (pass2.equals(currentPassword)) {
+
+            JOptionPane.showMessageDialog(new JFrame(), "old password match currentpassword", "", JOptionPane.INFORMATION_MESSAGE);
+
+
+            matchPassword = true;
+
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Current Password is not correct!", "Password error", JOptionPane.ERROR_MESSAGE);
+            matchPassword = false;
+        }
+
+
+        return matchPassword;
+
     }
 
 }
-
-
