@@ -347,7 +347,7 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
         infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        infoPanel[i].setBorder(BorderFactory.createLineBorder(new Color(0,0,0)));
+        infoPanel[i].setBorder(BorderFactory.createTitledBorder(""));
 
         contentPanel.add(infoPanel[i]);
 
@@ -375,7 +375,7 @@ public class GUIListAssignments extends JFrame{
         infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
         infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        infoPanel[i].setBorder(BorderFactory.createLineBorder(new Color(0,0,0)));
+        infoPanel[i].setBorder(BorderFactory.createTitledBorder(""));
 
         contentPanel.add(infoPanel[i]);
     }
@@ -432,6 +432,12 @@ public class GUIListAssignments extends JFrame{
         return icon;
     }
 
+
+    /**
+     *
+     * @param date data da confrontare
+     * @return restituisce true se il paramentro passato è una data inferiore a quella di oggi
+     */
 
     protected boolean dateBeforeToday(Date date){
         Date todayDate = new Date(System.currentTimeMillis());

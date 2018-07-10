@@ -56,14 +56,20 @@ public class GUIAddDog extends JFrame {
     private ArrayList<String> years_tmp = new ArrayList<>();
 
 
-
-
+    /**
+     * costruttore
+     * @param email identifica il proprietario del cane
+     */
     public GUIAddDog(String email){
         this.email = email;
         proxy = new CustomerProxy(email);
         initComponent();
     }
 
+
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
     private void initComponent() {
         setTitle("Dog info");
         setSize(WIDTH, HEIGHT);
@@ -154,6 +160,10 @@ public class GUIAddDog extends JFrame {
 
     }
 
+    /**
+     * aggiunge un nuovo cane al database, in base ai parametri inseriti dall'utente
+     * @return restituisce true se la procedura è avvenuta correttamente
+     */
     private boolean addNewDog(){
         Date dateOfBirth = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

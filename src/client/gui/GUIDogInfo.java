@@ -57,8 +57,11 @@ public class GUIDogInfo extends JFrame {
     private ArrayList<String> years_tmp = new ArrayList<>();
 
 
-
-
+    /**
+     * costruttore
+     * @param dog oggetto di cui si vogliono visualizzare le informazioni
+     * @param email
+     */
     public GUIDogInfo(Dog dog, String email){
         this.dog = dog;
         this.email = email;
@@ -66,6 +69,9 @@ public class GUIDogInfo extends JFrame {
         initComponent();
     }
 
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
     private void initComponent() {
         setTitle("Dog info");
         setSize(WIDTH, HEIGHT);
@@ -171,6 +177,11 @@ public class GUIDogInfo extends JFrame {
 
     }
 
+
+    /**
+     * legge i parametri modificati dall'utente e aggiorna il database
+     * @return restiuisce true se la procedura è avvenuta correttamente
+     */
     private boolean setNewValues(){
         boolean update = false;
         int dogID = dog.getID();

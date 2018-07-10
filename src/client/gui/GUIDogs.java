@@ -30,7 +30,10 @@ public class GUIDogs extends JFrame {
     private GridLayout gridLayout = new GridLayout(1,1);
 
 
-
+    /**
+     * costruttore
+     * @param email identifica il proprietario del cane
+     */
     public GUIDogs(String email){
         setTitle("Your dogs");
         setSize(WIDTH, HEIGHT);
@@ -51,6 +54,9 @@ public class GUIDogs extends JFrame {
 
     }
 
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
     private void initComponents(){
         int i = 0;
         //Dog d = null;
@@ -124,7 +130,9 @@ public class GUIDogs extends JFrame {
     }
 }
 
-
+/**
+ * classe che contiene le componenti standard per la visualizzazione di un pannello
+ */
 class DogBox extends JPanel{
 
     private JLabel nameLabel;
@@ -136,8 +144,12 @@ class DogBox extends JPanel{
     private JPanel panelButton;
 
 
-
-
+    /**
+     * costruttore
+     * @param name
+     * @param button1
+     * @param button2
+     */
     public DogBox(String name, String button1, String button2 ){
         nameLabel = new JLabel(name);
         infoButton = new JButton(button1);
