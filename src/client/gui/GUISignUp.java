@@ -296,8 +296,8 @@ public class GUISignUp extends JFrame{
                     //   addDogSitterValues();
 
                     //  as Dogsitter: apre un altro frame solo con le label dogsitter
-                    GUIDogSitterLabel guiDogSitterLabel = new GUIDogSitterLabel(email);
-                    guiDogSitterLabel.setVisible(true);
+                   // GUIDogSitterLabel guiDogSitterLabel = new GUIDogSitterLabel(email);
+                  //  guiDogSitterLabel.setVisible(true);
 
 
 
