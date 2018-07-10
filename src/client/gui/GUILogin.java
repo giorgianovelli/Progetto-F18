@@ -78,7 +78,7 @@ public class GUILogin extends JFrame {
         setLocation(screenWidth / 4, screenHeight / 4);
 
 
-        Image img = getToolkit().getImage("new-logo.jpg");
+        Image img = getToolkit().getImage("new_logo.jpg");
         setIconImage(img);
 
         ImagePanel panel = new ImagePanel();
@@ -166,7 +166,7 @@ public class GUILogin extends JFrame {
             public ImagePanel() {
 
                 //acquisisco l'immagine
-                image = Toolkit.getDefaultToolkit().getImage("images/new-logo.jpg");
+                image = Toolkit.getDefaultToolkit().getImage("images/new_logo.jpg");
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(image, 0);
                 try {
