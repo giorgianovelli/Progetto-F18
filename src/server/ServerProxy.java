@@ -1,29 +1,32 @@
+/**
+ * This is the server
+ */
+
 package server;
-import database.DBConnector;
 import enumeration.ExecCustomerEnum;
 import enumeration.ExecDogSitterEnum;
 import enumeration.TypeUser;
-import server.bank.PaymentMethod;
-import server.places.Address;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class ServerProxy extends Thread
-{
+
+public class ServerProxy extends Thread {
+
+    /**
+     * The server's socket.
+     */
     private ServerSocket Server;
 
+
+    /**
+     * Launch the server.
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             new ServerProxy();
@@ -32,12 +35,21 @@ public class ServerProxy extends Thread
         }
     }
 
+
+    /**
+     * Create a new Server object.
+     * @throws Exception
+     */
     public ServerProxy() throws Exception{
         Server = new ServerSocket(4000);
         System.out.println("The Server is waiting on port 4000...");
         this.start();
     }
 
+
+    /**
+     * Run a new server's thread.
+     */
     public void run(){
         while(true) {
             try{
@@ -52,11 +64,34 @@ public class ServerProxy extends Thread
     }
 }
 
+
+
+
+/**
+ * This class establish a new client-server connection.
+ */
 class Connect extends Thread {
+
+    /**
+     * The client's socket.
+     */
     private Socket client = null;
+
+    /**
+     * The buffer that receives the message sended by the client.
+     */
     private BufferedReader msgIn = null;
+
+    /**
+     * The message to be sended to the client.
+     */
     private PrintStream msgOut = null;
 
+
+    /**
+     * Create a new connection with a new client.
+     * @param clientSocket the client's socket.
+     */
     public Connect(Socket clientSocket){
         client = clientSocket;
         try{
@@ -74,6 +109,10 @@ class Connect extends Thread {
         this.start();
     }
 
+
+    /**
+     * Establish a new client-server connection.
+     */
     public void run(){
         try{
             msgOut.println(executeClientCmd());
@@ -88,6 +127,11 @@ class Connect extends Thread {
         }
     }
 
+
+    /**
+     * Execute the client's request.
+     * @return a message to the client.
+     */
     private String executeClientCmd(){
         String serverMsg = null;
         StringTokenizer tokenMsg = null;
