@@ -14,10 +14,21 @@ import static server.tools.DoubleTools.round2Decimal;
 
 public class Bank {
 
-
+    /**
+     * The list of users.
+     */
     private HashMap<String, BankUser> listUser;
+
+    /**
+     * The number of transactions done.
+     */
     private long nTransaction;
 
+
+    /**
+     * Create a new Bank.
+     */
+    //TODO refactor
     public Bank() {
         nTransaction = countTransaction();
         this.listUser = new HashMap<>();
@@ -51,10 +62,15 @@ public class Bank {
     }
 
 
-    public long getnTransaction() {
-        return nTransaction;
-    }
-
+    /**
+     * Make a bank transaction.
+     * @param emailCustomer the customer's email.
+     * @param emailDogsitter the dog sitter's email.
+     * @param code the assignment's code.
+     * @param amount the price for the assignment.
+     * @return true if transection is successfully completed.
+     */
+    //TODO refactor of code
     public boolean makeBankTransaction(String emailCustomer, String emailDogsitter, int code, double amount) {
         BankUser customer = listUser.get(emailCustomer);
         BankUser dogsitter = listUser.get(emailDogsitter);
@@ -100,12 +116,10 @@ public class Bank {
     }
 
 
-    public void printBankUsers() {
-        for (String key: listUser.keySet()) {
-            System.out.println(listUser.get(key));
-        }
-    }
-
+    /**
+     * Get the number of transactions done.
+     * @return the number of transactions done.
+     */
     private int countTransaction(){
         DBConnector dbConnector = new DBConnector();
         try {
@@ -120,6 +134,13 @@ public class Bank {
         }
     }
 
+
+    /**
+     * Verify if transaction is possible.
+     * @param emailCustomer the customer's email.
+     * @param amount the price for the assignment.
+     * @return true if the transaction is possible.
+     */
     public boolean isTransactionPossible(String emailCustomer, double amount){
         BankUser customer = listUser.get(emailCustomer);
         PaymentMethod pmCustomer = customer.getPaymentMethod();
@@ -131,6 +152,13 @@ public class Bank {
         }
     }
 
+
+    /**
+     * Refund the customer in case of cancellation of assignment.
+     * @param code the assignment's code.
+     * @return true if the customer is successfully refunded.
+     */
+    //TODO refactor of code
     public boolean refundCustomer(int code){
         DBConnector dbConnector = new DBConnector();
         String emailCustomer = "";
@@ -194,4 +222,6 @@ public class Bank {
         return true;
     }
 }
+
+//TODO verificare la validità della carta.
 
