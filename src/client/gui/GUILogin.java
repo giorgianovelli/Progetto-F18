@@ -8,6 +8,7 @@ import java.text.ParseException;
 
 import client.proxy.CustomerProxy;
 
+
 public class GUILogin extends JFrame {
     //final int WIDTH = 600;
     //final int HEIGHT = 150;
@@ -23,6 +24,7 @@ public class GUILogin extends JFrame {
     private JButton buttonNewAccount = new JButton("Create a new account");
     private JPanel cont1 = new JPanel();   //pannello contenitore
     private GridBagLayout layout = new GridBagLayout();
+    private GridBagConstraints lim = new GridBagConstraints();
 
     private CustomerProxy proxy = new CustomerProxy();
 
@@ -43,12 +45,14 @@ public class GUILogin extends JFrame {
 
     private void initComponents(){
 
-        cont1.setLayout(new GridLayout(2, 1, 100, 0)); // mi sposta il pannello dei dati tranne i bottoni
+        cont1.setLayout(new GridLayout(2, 1, 10, 0)); // mi sposta il pannello dei dati tranne i bottoni
         cont1.setBorder(BorderFactory.createTitledBorder(" Main Fields: "));
 
         //login automatico per velocizzare il debug
         textUser.setText("RICCARDOGIURA@GMAIL.COM");
         textPwd.setText("PROVAPROVA123");
+
+
 
         panelLoginData.setLayout(new GridLayout(2,2));
         panelLoginData.add(labelUser);
@@ -64,7 +68,8 @@ public class GUILogin extends JFrame {
         add(panelBottom, BorderLayout.SOUTH);
 
         cont1.add(panelLoginData);
-        cont1.add(panelBottom);
+        cont1.add(panelBottom );
+
 
 
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -78,18 +83,28 @@ public class GUILogin extends JFrame {
         setLocation(screenWidth / 4, screenHeight / 4);
 
 
-        Image img = getToolkit().getImage("new_logo.jpg");
+        Image img = getToolkit().getImage("logo.jpg");
         setIconImage(img);
 
         ImagePanel panel = new ImagePanel();
         panel.setBackground(SystemColor.window);
         Container contentPane = getContentPane();
         contentPane.add(panel);
-        panel.add(cont1);
         panel.setLayout(layout);
 
-        cont1.setOpaque(false);
 
+        // le dimensioni del pannello in larghezza e altezza
+
+        cont1.setPreferredSize(new Dimension(400, 165)); //H-150
+        cont1.setMinimumSize(new Dimension(400, 165)); //W-420
+
+       /* labelUser.setOpaque(isOpaque());
+        labelPwd.setOpaque(isOpaque());*/
+
+        panel.add(cont1);
+
+
+        cont1.setOpaque(false);
 
 
            ActionListener al = new ActionListener() {
@@ -166,7 +181,7 @@ public class GUILogin extends JFrame {
             public ImagePanel() {
 
                 //acquisisco l'immagine
-                image = Toolkit.getDefaultToolkit().getImage("images/new_logo.jpg");
+                image = Toolkit.getDefaultToolkit().getImage("images/logo.jpg");
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(image, 0);
                 try {
