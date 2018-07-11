@@ -12,14 +12,14 @@ public class GUIShowReview extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    private Review review;
+    protected Review review;
 
     private JPanel outPanel;
     private JPanel contentPanel;
     private JPanel panelReviewTop;
     private JPanel panelReviewDescription;
-    private JPanel panelReply;
-    private JPanel closePanel;
+    protected JPanel panelReply;
+    protected JPanel closePanel;
 
     private JLabel labelTitle;
     private JLabel labelDescription;
@@ -29,9 +29,9 @@ public class GUIShowReview extends JFrame {
 
     private JTextArea textTitle;
     private JTextArea textDescription;
-    private JTextArea textReply;
+    protected JTextArea textReply;
 
-    private JButton closeButton;
+    protected JButton closeButton;
     //private int numberRow;
 
     public GUIShowReview(Review review){
@@ -56,7 +56,7 @@ public class GUIShowReview extends JFrame {
         panelReply = new JPanel();
         closePanel = new JPanel();
 
-        contentPanel.setBorder(BorderFactory.createTitledBorder("Your Review: "));
+        contentPanel.setBorder(BorderFactory.createTitledBorder("Review fields: "));
 
         labelTitle = new JLabel("Title: ", SwingConstants.LEFT);
         labelVote = new JLabel("Vote: " , SwingConstants.LEFT);
@@ -93,8 +93,26 @@ public class GUIShowReview extends JFrame {
         contentPanel.add(panelReviewTop);
         contentPanel.add(panelReviewDescription);
 
+        showReply();
+
+        //outPanel.setLayout(new BoxLayout(outPanel, BoxLayout.Y_AXIS));
+        outPanel.setLayout(new GridLayout(3,1));
+        //contentPanel.setPreferredSize(new Dimension(WIDTH-10, (HEIGHT/2)-30));
+        //closePanel.setBorder(BorderFactory.createEmptyBorder(20,40,5,30));
+        outPanel.add(contentPanel);
+        outPanel.add(panelReply);
+        outPanel.add(closePanel);
+        outPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        add(outPanel);
 
 
+
+
+
+
+    }
+
+    protected void showReply(){
         if(!(review.getReply().equals("null"))){
             panelReply.setBorder(BorderFactory.createTitledBorder("Dogsitter Reply: "));
             textReply.setLineWrap(true);
@@ -103,6 +121,8 @@ public class GUIShowReview extends JFrame {
             panelReply.setLayout(new GridLayout(2,1));
             //panelReply.add(labelReply);
             panelReply.add(textReply);
+
+
 
         }
         ActionListener close = new ActionListener() {
@@ -117,15 +137,7 @@ public class GUIShowReview extends JFrame {
         closeButton.addActionListener(close);
 
         closePanel.add(closeButton);
-        //outPanel.setLayout(new BoxLayout(outPanel, BoxLayout.Y_AXIS));
-        outPanel.setLayout(new GridLayout(3,1));
-        //contentPanel.setPreferredSize(new Dimension(WIDTH-10, (HEIGHT/2)-30));
-        //closePanel.setBorder(BorderFactory.createEmptyBorder(20,40,5,30));
-        outPanel.add(contentPanel);
-        outPanel.add(panelReply);
-        outPanel.add(closePanel);
-        outPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-        add(outPanel);
+
 
     }
 

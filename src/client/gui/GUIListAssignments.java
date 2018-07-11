@@ -53,7 +53,7 @@ public class GUIListAssignments extends JFrame{
      * @param guiCustomer
      */
 
-    public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiCustomer){
+    public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment,  String email, GUIHome guiCustomer){
         setTitle("Your assignments");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -62,12 +62,10 @@ public class GUIListAssignments extends JFrame{
         setLayout(new BorderLayout());
         guiListAssignments = this;
 
+        this.listAssignment = listAssignment;
         this.email = email;
         this.proxy = new CustomerProxy(email);
-        this.listAssignment = listAssignment;
-        listReview = proxy.getReviewList();
-
-
+        this.listReview = proxy.getReviewList();
         initComponents(cs, guiCustomer);
     }
 
@@ -81,6 +79,10 @@ public class GUIListAssignments extends JFrame{
 
         UIManager.put("OptionPane.noButtonText", "No");
         UIManager.put("OptionPane.yesButtonText", "Yes");
+
+
+
+
 
         assignmentNumber = listAssignment.size();
         reviewNumber = listReview.size();
@@ -357,7 +359,7 @@ public class GUIListAssignments extends JFrame{
      * crea un JPanel con la descrizione degli appuntamenti per la visualizzazione delle recensioni
      * @param i indice del JPanel
      */
-    private void createPanelReview (int i){
+    protected void createPanelReview (int i){
         infoPanel[i] = new JPanel();
         panelLabel = new JPanel();
 

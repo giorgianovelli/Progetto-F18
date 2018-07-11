@@ -1,17 +1,16 @@
 package test;
 
-import client.gui.GUIDogSitter;
-import client.gui.GUIHome;
-import client.gui.GUIShowDogsitterAssignment;
+import client.gui.*;
 import client.proxy.CustomerProxy;
-import client.gui.GUIWriteReview;
 import client.proxy.DogSitterProxy;
 import server.Assignment;
+import server.Review;
 
 import java.text.ParseException;
 import java.util.HashMap;
 
 import static enumeration.CalendarState.NORMAL;
+import static enumeration.CalendarState.SHOW_REVIEWS;
 
 public class TestGUIShowDogsitterAssignment {
     public static void main(String[] args) {
@@ -21,19 +20,18 @@ public class TestGUIShowDogsitterAssignment {
 
         DogSitterProxy proxy = new DogSitterProxy(email1);
 
-        /*
 
-        HashMap<Integer, Assignment> list = proxy.getAssignmentList();
 
-        System.out.println(list.size());
-        */
+
+        //System.out.println(list.size());
+
 
         /*
         CustomerProxy proxy1 = new CustomerProxy(email2);
         HashMap<Integer, Assignment> list2 = proxy1.getAssignmentList();
         System.out.println((list2.size()));*/
 
-
+/*
         GUIDogSitter guiDogSitter = null;
         try {
             guiDogSitter = new GUIDogSitter("MARCO.CARTA@GMAIL.COM");
@@ -42,11 +40,17 @@ public class TestGUIShowDogsitterAssignment {
             System.out.println("Errore");
         }
 
+        HashMap<Integer, Review> list = proxy.getReviewList();
 
-        GUIShowDogsitterAssignment guiShowDogsitterAssignment = new GUIShowDogsitterAssignment(NORMAL, proxy.getAssignmentList(), email2, guiDogSitter );
-        guiShowDogsitterAssignment.setVisible(true);
+        GUIShowDogsitterAssignment guiShowDogsitterAssignment = new GUIShowDogsitterAssignment(NORMAL, proxy.getAssignmentList(), email2, guiDogSitter);
+        guiShowDogsitterAssignment.setVisible(true);*/
 
-        System.out.println(proxy.getCustomerNameOfAssignment(1));
+
+
+        GUIShowDogsitterReview guiShowDogsitterReview = new GUIShowDogsitterReview(proxy.getReview(1), email1);
+        guiShowDogsitterReview.setVisible(true);
+
+        //System.out.println(proxy.getCustomerNameOfAssignment(1));
 
 
 
