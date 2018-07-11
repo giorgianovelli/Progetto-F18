@@ -73,12 +73,28 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private String email;
 
 
+
+    public GUIAssignmentInformationCustomer(Assignment a, String email){
+        setTitle("Assignment information");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLayout(new BorderLayout());
+
+
+        initComponents(a);
+    }
+
+
     /**
      * Constructor using GUIListAssignments
      * @param a
      * @param email
      * @param guiListAssignments
+     *
      */
+
     public GUIAssignmentInformationCustomer(Assignment a, String email, GUIListAssignments guiListAssignments){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
