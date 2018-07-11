@@ -44,11 +44,6 @@ public class GUIChooseDogsitter extends JFrame {
     private String paymentMethod;
     private String emailCustomer;
 
-
-
-
-    // Costruttore
-
     /**
      *
      * @param dogsitterList
@@ -94,7 +89,7 @@ public class GUIChooseDogsitter extends JFrame {
 
 
     /**
-     *
+     * This method implements graphic objects
      */
 
     public void initComponents() {
@@ -102,16 +97,11 @@ public class GUIChooseDogsitter extends JFrame {
         panelContainer = new JPanel(gridLayout);
         panelClose.setBorder(BorderFactory.createEmptyBorder(20,320,20,320));
 
-
-
-
         GUIChooseDogsitter guiChooseDogsitter = this;
 
         panelOut.add(panelContainer, BorderLayout.NORTH);
         panelOut.add(panelClose, BorderLayout.SOUTH);
         panelClose.add(buttonClose, BorderLayout.CENTER);
-
-
 
         for (String mailDogsitter: dogsitterList){
 
@@ -142,7 +132,6 @@ public class GUIChooseDogsitter extends JFrame {
 
             gridLayout.setRows(gridLayout.getRows() + 1);
 
-
             ActionListener actionListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -158,9 +147,6 @@ public class GUIChooseDogsitter extends JFrame {
                     guiDogsitterInfo.setVisible(true);
                 }
             };
-
-
-
 
 
             buttonSelect.addActionListener(actionListener);

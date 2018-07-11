@@ -73,15 +73,12 @@ public class GUINewAssignment extends JFrame{
     NewAssignmentText cap = new NewAssignmentText("Postal Code: ");
     NewAssignmentText number = new NewAssignmentText("Number: ");
 
-
-
-    //Costruttore
-
     /**
-     *
+     * Constructor of the class GUINewAssignment
      * @param date
      * @param email
      */
+
 
     public GUINewAssignment(Date date, String email, GUICustomer guiCustomer) {
         setTitle("New Assignment");
@@ -114,7 +111,16 @@ public class GUINewAssignment extends JFrame{
 
         initComponents(newAssignmentBox);
 
-        // Action Listener del pulsante Search
+        /*
+
+        Action Listener del pulsante Search:
+
+        Controlla che non ci siano errori nella compilazione dei campi,
+        dopodichè attraverso il metodo search, restituisce i dogsitter disponibili rispettando
+        i campi compilati
+
+        */
+
 
         ActionListener actionListener = new ActionListener() {
             @Override
@@ -264,7 +270,7 @@ public class GUINewAssignment extends JFrame{
 
 
     /**
-     *
+     * Method that initalizes graphic components of the GUI
      * @param newAssignmentBox
      */
 
@@ -372,6 +378,8 @@ public class GUINewAssignment extends JFrame{
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
         add(scrollPane);
 
 
@@ -382,7 +390,7 @@ public class GUINewAssignment extends JFrame{
 
 
     /**
-     *
+     * Method for converting object Date to String
      * @param date
      * @return
      */
@@ -394,11 +402,10 @@ public class GUINewAssignment extends JFrame{
 }
 
 
-
-
-
-
-
+/**
+ * Class NewAssignmentBox is a graphic class that contains JComboBox-es and JLabels for
+ * selecting date and hour of the Assignment
+ */
 
 class NewAssignmentBox extends JPanel{
 
@@ -437,7 +444,7 @@ class NewAssignmentBox extends JPanel{
     // Costruttore NewAssignmentBox
 
     /**
-     *
+     * Constructor for NewAssignmentBox
      * @param selectedDay
      */
 
@@ -519,10 +526,10 @@ class NewAssignmentBox extends JPanel{
 
     }
 
-//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-
-
-    // Getter
+    /**
+     * Getter methods of class NewAssignmentBox
+     * @return
+     */
 
     public JLabel getFromDayLabel() {
         return fromDayLabel;
@@ -566,6 +573,12 @@ class NewAssignmentBox extends JPanel{
 }
 
 
+/**
+ * Class NewAssignmentText contains a JLabel and a TextField.
+ * It is used for the Meeting Point form that needs to be compiled
+ * in order to look for a dogsitter.
+ */
+
 
 class NewAssignmentText extends JPanel{
     JLabel label;
@@ -573,10 +586,9 @@ class NewAssignmentText extends JPanel{
 
 
 
-    // Costruttore
 
     /**
-     *
+     * Constructor of NewAssignmentText
      * @param text
      */
 
@@ -598,18 +610,18 @@ class NewAssignmentText extends JPanel{
 }
 
 
+/**
+ * Class NewAssignmentCheckBox is used in the dogs form to generate
+ * the list of dogs owned by the customer.
+ * The names of the dogs are near a checkbox that is used to select them.
+ */
 
 class NewAssignmentCheckBox extends JPanel {
 
     JCheckBox checkBox;
 
-
-
-
-    //Costruttore
-
     /**
-     *
+     * Constructor of the class NewAssignmentCheckBox
      * @param text
      */
 
@@ -623,13 +635,18 @@ class NewAssignmentCheckBox extends JPanel {
 
     }
 
+    /**
+     * Getter method
+     * @return
+     */
+
     public JCheckBox getCheckBox() {
         return checkBox;
     }
 
 
     /**
-     *
+     * Method for getting Dog object from a checkBox
      * @param name
      * @param dogList
      * @return
