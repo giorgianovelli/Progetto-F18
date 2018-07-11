@@ -79,6 +79,6 @@ public class TestCustomerExecEnum {
         //proxy.getDogList();
         //System.out.println(proxy.getReview(1).getComment());
         //proxy.getDogDateOfBirth(3);
-        System.out.println(proxy.getDogsBreedsList().size());
+        proxy.getReview(4);
     }
 }

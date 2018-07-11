@@ -51,6 +51,7 @@ public class Singleton {
         }
     }
 
+
     /**
      *
      * @param dogSitterEmail
@@ -146,6 +147,7 @@ public class Singleton {
         }
     }
 
+
     /**
      *
      * @param dogID
@@ -176,6 +178,7 @@ public class Singleton {
         return dog;
     }
 
+
     /**
      *
      * @param dogSitter
@@ -194,6 +197,7 @@ public class Singleton {
             return null;
         }
     }
+
 
     /**
      *
@@ -238,6 +242,7 @@ public class Singleton {
         return address;
     }
 
+
     /**
      *
      * @param code
@@ -259,6 +264,7 @@ public class Singleton {
         }
         return dogList;
     }
+
 
     /**
      *
@@ -285,6 +291,7 @@ public class Singleton {
         }
     }
 
+
     /**
      *
      * @param payment
@@ -310,6 +317,7 @@ public class Singleton {
         }
     }
 
+
     /**
      *
      * @param customer
@@ -328,6 +336,7 @@ public class Singleton {
             return null;
         }
     }
+
 
     /**
      *
@@ -348,6 +357,7 @@ public class Singleton {
         }
     }
 
+
     /**
      *
      * @param code
@@ -360,7 +370,7 @@ public class Singleton {
         try {
             rs = dbConnector.askDB("SELECT DATE, RATING, TITLE, DESCRIPTION, REPLY FROM REVIEW WHERE ASSIGNMENT_CODE = '" + code + "'");
             while (rs.next()){
-                Date date = rs.getDate("DATE");
+                Date date = rs.getTimestamp("DATE");
                 int rating = rs.getInt("RATING");
                 String title = rs.getString("TITLE");
                 String description = rs.getString("DESCRIPTION");
@@ -375,21 +385,6 @@ public class Singleton {
             return null;
         }
     }
-
-    /**
-     *
-     * @param dateOfBirth
-     * @return the age (int) of the dog
-     */
-    /*public int getAge(Date dateOfBirth){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
-        String strBirth = dateFormat.format(dateOfBirth);
-        int birth = Integer.parseInt(strBirth);
-        Date nowDate = new Date();
-        String strNow = dateFormat.format(nowDate);
-        int now = Integer.parseInt(strNow);
-        return now - birth;
-    }*/
 
 
     /**
@@ -432,7 +427,7 @@ public class Singleton {
         HashMap<Integer, Review> reviewList = new HashMap<>();
         while (rs.next()){
             int code = rs.getInt("ASSIGNMENT_CODE");
-            Date date = rs.getDate("DATE");
+            Date date = rs.getTimestamp("DATE");
             int rating = rs.getInt("RATING");
             String title = rs.getString("TITLE");
             String description = rs.getString("DESCRIPTION");
