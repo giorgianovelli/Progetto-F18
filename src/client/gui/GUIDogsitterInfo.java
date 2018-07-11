@@ -96,7 +96,7 @@ public class GUIDogsitterInfo extends JFrame {
 
 
     /**
-     * This method implements graphics objects
+     * This method implements graphic objects
      */
 
     public void initComponents() {

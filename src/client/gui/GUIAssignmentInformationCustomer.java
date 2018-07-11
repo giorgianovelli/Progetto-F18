@@ -108,9 +108,10 @@ public class GUIAssignmentInformationCustomer extends JFrame {
      * Constructor using GUIShowDogsitterAssignment
      * @param a
      * @param email
-     * @param guiListAssignments
+     * @param guiShowDogsitterAssignment
      */
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIShowDogsitterAssignment guiListAssignments){
+
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -118,13 +119,13 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
 
-        guiListAssignments.setEnabled(false);
+        guiShowDogsitterAssignment.setEnabled(false);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                guiListAssignments.setEnabled(true);
+                guiShowDogsitterAssignment.setEnabled(true);
             }
         });
         this.email = email;
@@ -135,13 +136,13 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     }
 
     /**
-     *
+     * Constructor using guiCustomer
      * @param a
      * @param email
-     * @param guiListAssignments
+     * @param guiCustomer
      */
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUICustomer guiListAssignments){
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUICustomer guiCustomer){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -149,13 +150,13 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
 
-        guiListAssignments.setEnabled(false);
+        guiCustomer.setEnabled(false);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                guiListAssignments.setEnabled(true);
+                guiCustomer.setEnabled(true);
             }
         });
         this.email = email;
@@ -197,7 +198,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     }
 
     /**
-     *
+     * Method that initalizes graphic components of the GUI
      * @param a
      */
 
