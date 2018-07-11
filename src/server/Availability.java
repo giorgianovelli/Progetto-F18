@@ -1,3 +1,7 @@
+/**
+ * The dog sitter's availability.
+ */
+
 package server;
 
 import server.dateTime.WorkingTime;
@@ -5,8 +9,14 @@ import server.dateTime.WeekDays;
 
 public class Availability {
 
+    /**
+     * The array of dog sitter's working time.
+     */
     private WorkingTime arrayDays[];
 
+    /**
+     * Create a new Availability object,
+     */
     public Availability() {
         arrayDays = new WorkingTime[7];
         int i;
@@ -16,6 +26,12 @@ public class Availability {
         }
     }
 
+
+    /**
+     * Set the dog sitter's availability in the specified day.
+     * @param workingTime the dog sitter's working time in the specified day.
+     * @param weekDay the specified day.
+     */
     public void setDayAvailability(WorkingTime workingTime, WeekDays weekDay){
         switch (weekDay){
             case MON:
@@ -42,6 +58,11 @@ public class Availability {
         }
     }
 
+
+    /**
+     * Get the array of the dog sitter's working time.
+     * @return the array of the dog's siiter working time.
+     */
     public WorkingTime[] getArrayDays() {
         return arrayDays;
     }
