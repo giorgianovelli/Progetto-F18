@@ -8,9 +8,22 @@ import java.util.Date;
 
 public class BankUser {
 
+    /**
+     * The user's email address.
+     */
     private String email;
+
+    /**
+     * The user's payment method.
+     */
     private PaymentMethod paymentMethod;
 
+
+    /**
+     * Create a new bank user.
+     * @param email the user's email.
+     * @param typeUser the user's type.
+     */
     public BankUser(String email, TypeUser typeUser) {
         this.email = email;
         DBConnector dbConnector = new DBConnector();
@@ -41,22 +54,47 @@ public class BankUser {
         }
     }
 
+
+    /**
+     * Get a string of information for a bank user.
+     * @return a string of information for a bank user.
+     */
     public String toString() {
         return "email: " + email + "\ncard number: " + paymentMethod.getNumber() + "\nowner surname: " + paymentMethod.getSurname() + "\nowner name: " + paymentMethod.getSurname() + "\nCVV: " + paymentMethod.getCvv() + "\nexpiration date: " + paymentMethod.getExpirationDate() + "\nAmount: " + paymentMethod.getAmount();
     }
 
+
+    /**
+     * Get the user's email address.
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+
+    /**
+     * Set the user's email address.
+     * @param email the user's email address.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+
+    /**
+     * Get the user's payment method.
+     * @return the user's payment method.
+     */
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
+
+    /**
+     * Set the user's payment method.
+     * @param paymentMethod the user's payment method.
+     */
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
