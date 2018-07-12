@@ -1,46 +1,75 @@
 package client.gui;
 
+import client.Calendar;
+import client.proxy.CustomerProxy;
+import server.Dog;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 
 public class GUICustomerLabel extends JFrame {
-    final int WIDTH = 500;
-    final int HEIGHT = 500;
+    final int WIDTH = 600;
+    final int HEIGHT = 400;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
     private JPanel panelButton = new JPanel();
+    private JPanel panelDate = new JPanel();
 
-    private JLabel labelIDDogs = new JLabel("ID of the dog:", SwingConstants.LEFT);
     private JLabel labelDogsName = new JLabel("Name of the dog:", SwingConstants.LEFT);
     private JLabel labelDogBreed = new JLabel("Dog breed:", SwingConstants.LEFT);
     private JLabel labelDogsWeight = new JLabel("Dog's weight:", SwingConstants.LEFT);
     private JLabel labelDogsAge = new JLabel("Age of the dog:", SwingConstants.LEFT);
 
-    private JTextField textIDDogs = new JTextField();
     private JTextField textDogsName = new JTextField();
-    private JTextField textDogBreed = new JTextField();
     private JTextField textDogsWeight = new JTextField();
-    private JTextField textDogsAge = new JTextField();
+
+    private JComboBox<String> breedList;
+    private String[] breed;
+
+    //jcombobox per data di nascita
+    private JComboBox<String> dayList;
+    private JComboBox<String> monthList;
+    private JComboBox<String> yearList;
+
+    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    private ArrayList<String> years_tmp = new ArrayList<String>();
 
 
-    private JButton buttonContinue = new JButton("Next >>");
-    private JButton buttonBack = new JButton("<< Back");
+    private JButton buttonConfirm = new JButton("Confirm");
+    private JButton buttonBack = new JButton("Back");
+
+    // attributi per client-server
+    private CustomerProxy proxy;
+    private String email;
 
 //______________________________________________________________________________________________________________________________________________________________________________
 
     /**
      * Constructor
+     * @param email
+     *
      */
 
-    public GUICustomerLabel() {
+    public GUICustomerLabel(String email) {
         setTitle("CaniBau (Sign up)");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        this.email = email;
+        this.proxy = new CustomerProxy(email);
 
         initComponents();
     }
@@ -50,10 +79,10 @@ public class GUICustomerLabel extends JFrame {
     private void initComponents()  {
 
         /**
-         * Panels da sistemare
+         * Panels
          */
 
-        panelData.setLayout(new GridLayout(5, 1, 70, 30));
+        panelData.setLayout(new GridLayout(4, 1, 70, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("SECOND STEP_Customer Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
@@ -61,31 +90,112 @@ public class GUICustomerLabel extends JFrame {
         panelButton.setLayout(new GridLayout(1, 2,5,5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonBack, BorderLayout.SOUTH);
-        panelButton.add(buttonContinue, BorderLayout.SOUTH);
+        panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
+        //-----------------------------------------------------------------------------------
 
-        panelData.add(labelIDDogs);
-        panelData.add(textIDDogs);
+        /**
+         * JCOMBOBOX di DATE OF BIRTH
+         */
+        for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
+            years_tmp.add(years + "");
+        }
+
+        dayList = new JComboBox<>(day);
+        monthList = new JComboBox<>(month);
+        yearList = new JComboBox(years_tmp.toArray());
+
+        //-----------------------------------------------------------------------------------
+        /**
+         * JCOMBOBOX per la razza dei cani
+         */
+
+        HashSet<String> breedSet = proxy.getDogsBreedsList();
+        breed = new String[breedSet.size()];
+
+        int i = 0;
+        for (String breedStr : breedSet){
+            breed[i] = breedStr;
+            i++;
+        }
+
+        breedList = new JComboBox<>(breed);
+
+       //-----------------------------------------------------------------------------------
+
         panelData.add(labelDogsName);
         panelData.add(textDogsName);
         panelData.add(labelDogBreed);
-        panelData.add(textDogBreed);
+        panelData.add(breedList);
         panelData.add(labelDogsWeight);
         panelData.add(textDogsWeight);
         panelData.add(labelDogsAge);
-        panelData.add(textDogsAge);
 
+        panelDate.setLayout(new GridLayout(1, 3, 5, 5));
+        panelDate.add(dayList);
+        panelDate.add(monthList);
+        panelDate.add(yearList);
+        panelData.add(panelDate);
 
         add(panelOut);
 
-        /*textIDDogs.setText("");
-        textIDDogs.setEditable(true);
-        labelIDDogs.setLabelFor(textIDDogs);*/
+        //-----------------------------------------------------------------------------------
+
+        ActionListener registration = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent registrationAe) {
+
+                if (registrationAe.getActionCommand().equals("Confirm")) {
+                    if (textDogsName.getText().equals("") || textDogsWeight.getText().equals("") ) {
+                        JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
+
+                    } else{
+
+                        boolean add = newDog();
+
+                        if(add){
+                            JOptionPane.showMessageDialog(new JFrame(), "Thanks for your registration!", "", JOptionPane.INFORMATION_MESSAGE);
+                             GUILogin guiLogin = new GUILogin();
+                             guiLogin.setVisible(true);
+                        }
+                    }
+
+                }
+
+                if (registrationAe.getActionCommand().equals("Back")) {
+                    dispose();
+
+                }
+            }
+        };
+        buttonBack.addActionListener(registration);
+        buttonConfirm.addActionListener(registration);
+
 
 
     }
 
+//______________________________________________________________________________________________________________________________________________________________________________
 
+    /**
+     * aggiunge un nuovo cane al database, in base ai parametri inseriti dall'utente
+     * @return restituisce true se la procedura è avvenuta correttamente
+     */
+    private boolean newDog(){
+        Date dateOfBirth = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+
+        String strDateOfBirth = dayList.getSelectedItem().toString() + "/" + monthList.getSelectedItem().toString() + "/" + yearList.getSelectedItem().toString();
+        try {
+            dateOfBirth = dateFormat.parse(strDateOfBirth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return proxy.addDog(email,textDogsName.getText().toUpperCase(), breedList.getSelectedItem().toString(), dateOfBirth, Double.parseDouble(textDogsWeight.getText()));
+
+    }
 
 
 

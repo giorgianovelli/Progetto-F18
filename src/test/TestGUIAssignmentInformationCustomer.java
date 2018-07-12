@@ -2,6 +2,7 @@ package test;
 
 
 import client.gui.GUIAssignmentInformationCustomer;
+import client.gui.GUIAssignmentInformationDogsitter;
 import server.Assignment;
 import server.Dog;
 import server.Singleton;
@@ -48,11 +49,11 @@ public class TestGUIAssignmentInformationCustomer {
         Address address1 = singleton.getAddressFromDB("RICCARDOGIURA@GMAIL.COM");
         Assignment assingment = new Assignment(1, dogList, startDate, endDate, address1);
 
-        /*
-        GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment, "RICCARDOGIURA@GMAIL.COM"); //passaggio assignment
+
+        GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM"); //passaggio assignment
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
-        */
+
     }
 }
 
