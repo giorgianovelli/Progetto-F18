@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.StringTokenizer;
 
 import static client.Calendar.getNDayOfMonth;
 
@@ -598,6 +599,36 @@ public abstract class GUIHome extends JFrame{
             }
         }
         return codeFirstFiveAssignmentsList;
+    }
+
+    protected void clickOnTodayAssignment(ActionEvent todayAssignmentAe, Proxy proxy, GUIHome guiHome){
+        if (!(todayAssignmentAe.getActionCommand().equals(""))){
+            JButton pressedButton = (JButton) todayAssignmentAe.getSource();
+            StringTokenizer cmdToken = new StringTokenizer(buttonTodayAssignment[0].getText(), " ");
+            String cmd = cmdToken.nextToken();
+            if (cmd.equals("Assignment")){
+                calendarState = CalendarState.NORMAL;
+                //cancel();
+                SimpleDateFormat dateMonth = new SimpleDateFormat("M");
+                Date date = new Date();
+                String strMonthNumber = dateMonth.format(date);
+                int monthNumber = Integer.parseInt(strMonthNumber);
+                try {
+                    updateCalendar(monthNumber, proxy);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
+                Assignment a = listAssignment.get(pressedButton.getDisplayedMnemonicIndex());
+                if (guiHome instanceof GUICustomer){
+                    GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email, (GUICustomer) guiHome);
+                    guiAssignment.setVisible(true);
+                } else {
+                    GUIAssignmentInformationDogsitter guiAssignment = new GUIAssignmentInformationDogsitter(a, email);
+                    guiAssignment.setVisible(true);
+                }
+            }
+        }
     }
 
 }
