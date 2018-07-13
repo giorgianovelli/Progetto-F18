@@ -3,6 +3,7 @@ package test;
 
 import client.gui.GUIAssignmentInformationCustomer;
 import client.gui.GUIAssignmentInformationDogsitter;
+import client.gui.GUIDogSitter;
 import server.Assignment;
 import server.Dog;
 import server.Singleton;
@@ -25,6 +26,8 @@ public class TestGUIAssignmentInformationCustomer {
         d = singleton.createDogFromDB(4);
         dogList.add(d);
 
+        GUIDogSitter guiDogSitter = null;
+
         /*
         for (int i = 0; i < 30; i++) {
             Dog dog = new Dog("Pluto", "Random", DogSize.MEDIUM, 5, 3.5, 2222);
@@ -32,6 +35,12 @@ public class TestGUIAssignmentInformationCustomer {
         }
 
        */
+
+        try {
+             guiDogSitter = new GUIDogSitter("MARCO.CARTA@FGMAIL.COM");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -50,7 +59,7 @@ public class TestGUIAssignmentInformationCustomer {
         Assignment assingment = new Assignment(1, dogList, startDate, endDate, address1);
 
 
-        GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM"); //passaggio assignment
+        GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter); //passaggio assignment
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
 

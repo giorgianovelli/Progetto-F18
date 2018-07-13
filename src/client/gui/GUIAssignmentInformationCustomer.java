@@ -60,7 +60,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JLabel labelCode2 = new JLabel();
     private JLabel labelStartDate2 = new JLabel();
     private JLabel labelEndDate2 = new JLabel();
-    private JLabel labelDogsitter2= new JLabel();
+    private JLabel labelDogsitter2 = new JLabel();
     private JLabel labelMeetingPoint2 = new JLabel();
     private JLabel labelAmount2 = new JLabel();
     private JLabel labelPaymentMethod2 = new JLabel();
@@ -71,16 +71,36 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JButton buttonClose = new JButton("Close");
 
     private String email;
+    private CustomerProxy customerProxy;
 
 
+    /**
+     * Constructor using GUIDogsitter
+     * @param a
+     * @param email
+     * @param guiDogSitter
+     */
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email){
+
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIDogSitter guiDogSitter){
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+        guiDogSitter.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiDogSitter.setEnabled(true);
+            }
+        });
+        this.email = email;
+        guiAssignmentInformationCustomer = this;
 
 
         initComponents(a);
@@ -213,12 +233,13 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         initComponents(a);
     }
 
+
     /**
      * Method that initalizes graphic components of the GUI
      * @param a
      */
 
-    private void initComponents(Assignment a){
+    public void initComponents(Assignment a){
 
         panelOut.add(panelContents, BorderLayout.NORTH);
         panelOut.add(panelClose, BorderLayout.CENTER);
@@ -286,7 +307,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         // Dichiarazione variabili che andranno nelle JLabel
 
 
-        CustomerProxy customerProxy = new CustomerProxy(email);
+        customerProxy = new CustomerProxy(email);
         Integer intCode = a.getCode();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -353,4 +374,43 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         }
 
     }
+
+
+    /**
+     * Getter and Setter
+     * @return
+     */
+
+    public JLabel getLabelPaymentMethod2() {
+        return labelPaymentMethod2;
+    }
+
+    public void setLabelPaymentMethod2(JLabel labelPaymentMethod2) {
+        this.labelPaymentMethod2 = labelPaymentMethod2;
+    }
+
+    public JLabel getLabelDogsitter1() {
+        return labelDogsitter1;
+    }
+
+    public void setLabelDogsitter1(JLabel labelDogsitter1) {
+        this.labelDogsitter1 = labelDogsitter1;
+    }
+
+    public JLabel getLabelDogsitter2() {
+        return labelDogsitter2;
+    }
+
+    public void setLabelDogsitter2(JLabel labelDogsitter2) {
+        this.labelDogsitter2 = labelDogsitter2;
+    }
+
+    public CustomerProxy getCustomerProxy() {
+        return customerProxy;
+    }
+
+    public void setCustomerProxy(CustomerProxy customerProxy) {
+        this.customerProxy = customerProxy;
+    }
+
 }
