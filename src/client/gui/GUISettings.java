@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import server.bank.PaymentMethod;
 
+
 public class GUISettings extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 600;
