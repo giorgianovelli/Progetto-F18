@@ -70,26 +70,7 @@ public class GUIDogSitter extends GUIHome{
         ActionListener todayAssignmentsAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent todayAssignmentAe) {
-                if (!(todayAssignmentAe.getActionCommand().equals(""))){
-                    JButton pressedButton = (JButton) todayAssignmentAe.getSource();
-                    StringTokenizer cmdToken = new StringTokenizer(buttonTodayAssignment[0].getText(), " ");
-                    String cmd = cmdToken.nextToken();
-                    if (cmd.equals("Assignment")){
-                        calendarState = CalendarState.NORMAL;
-                        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
-                        Date date = new Date();
-                        String strMonthNumber = dateMonth.format(date);
-                        int monthNumber = Integer.parseInt(strMonthNumber);
-                        try {
-                            updateCalendar(monthNumber, proxy);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
-                        Assignment a = listAssignment.get(pressedButton.getDisplayedMnemonicIndex());
-                        //TODO da implementare
-                    }
-                }
+                callClickOnTodayAssignment(todayAssignmentAe);
             }
         };
 
@@ -199,6 +180,10 @@ public class GUIDogSitter extends GUIHome{
     public void replyToReview(){
         //TODO da implementare
         System.out.println("Test reply");
+    }
+
+    private void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
+        clickOnTodayAssignment(todayAssignmentAe, proxy, this);
     }
 
 }

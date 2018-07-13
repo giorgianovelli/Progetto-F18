@@ -78,28 +78,8 @@ public class GUICustomer extends GUIHome{
         ActionListener todayAssignmentsAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent todayAssignmentAe) {
-                if (!(todayAssignmentAe.getActionCommand().equals(""))){
-                    JButton pressedButton = (JButton) todayAssignmentAe.getSource();
-                    StringTokenizer cmdToken = new StringTokenizer(buttonTodayAssignment[0].getText(), " ");
-                    String cmd = cmdToken.nextToken();
-                    if (cmd.equals("Assignment")){
-                        calendarState = CalendarState.NORMAL;
-                        cancel();
-                        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
-                        Date date = new Date();
-                        String strMonthNumber = dateMonth.format(date);
-                        int monthNumber = Integer.parseInt(strMonthNumber);
-                        try {
-                            updateCalendar(monthNumber, proxy);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
-                        Assignment a = listAssignment.get(pressedButton.getDisplayedMnemonicIndex());
-                        GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email, guiCustomer);
-                        guiAssignment.setVisible(true);
-                    }
-                }
+                callClickOnTodayAssignment(todayAssignmentAe);
+                cancel();
             }
         };
 
@@ -290,5 +270,9 @@ public class GUICustomer extends GUIHome{
     public void dogsSettings(){
         GUIDogs guiDogs = new GUIDogs(email);
         guiDogs.setVisible(true);
+    }
+
+    private void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
+        clickOnTodayAssignment(todayAssignmentAe, proxy, this);
     }
 }
