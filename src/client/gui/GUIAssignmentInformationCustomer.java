@@ -380,7 +380,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
     /**
      * Getter
-     * 
+     *
      */
 
     JLabel getLabelPaymentMethod2() {

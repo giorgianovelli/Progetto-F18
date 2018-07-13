@@ -624,7 +624,7 @@ public abstract class GUIHome extends JFrame{
                     GUIAssignmentInformationCustomer guiAssignment = new GUIAssignmentInformationCustomer(a, email, (GUICustomer) guiHome);
                     guiAssignment.setVisible(true);
                 } else {
-                    GUIAssignmentInformationDogsitter guiAssignment = new GUIAssignmentInformationDogsitter(a, email);
+                    GUIAssignmentInformationDogsitter guiAssignment = new GUIAssignmentInformationDogsitter(a, email, (GUIDogSitter) guiHome);
                     guiAssignment.setVisible(true);
                 }
             }
