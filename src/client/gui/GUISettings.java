@@ -29,10 +29,9 @@ public class GUISettings extends JFrame {
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
     private JPanel panelButton = new JPanel();
-    private JPanel panelRadioButton = new JPanel();
     private JPanel panelDate = new JPanel();
     private JPanel panelAddress = new JPanel();
-    private JPanel panelPayment = new JPanel(); //da eliminare
+    private JPanel panelPayment = new JPanel();
     private JPanel panelExpiration = new JPanel();
 
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
@@ -45,7 +44,6 @@ public class GUISettings extends JFrame {
     private JLabel labelNumber = new JLabel();
     private JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
     private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
-    private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT); //da eliminare
 
     //TODO label per titolare carta di credito
     private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
@@ -68,15 +66,14 @@ public class GUISettings extends JFrame {
     private JTextField textSecurityCode = new JTextField();
 
     //todo textfiel aggiunti per rispettare parametri metodo "updatePaymentMethod" in CUSTOMERPROXY
+    private JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
     private JTextField textCreditCardOwneSurname = new JTextField();
-    private Date dateExpiration = new Date();
+    // private Date dateExpiration = new Date();
+    private JTextField textAmount = new JTextField();
+    private JLabel labelAmount = new JLabel("Amount:", SwingConstants.LEFT);
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
-
-
-   /* private JRadioButton cash = new JRadioButton("Cash");
-    private JRadioButton creditCard = new JRadioButton("Credit Card");*/
 
     private JComboBox<String> dayList;
     private JComboBox<String> monthList;
@@ -85,13 +82,10 @@ public class GUISettings extends JFrame {
     private JComboBox<String> expirationMonth;
     private JComboBox<String> expirationYear;
 
-
     private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private ArrayList<String> years_tmp = new ArrayList<>();
 
-
-    //  private String[] expirationDays = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
     private JTextField textExpirationDays = new JTextField();
@@ -103,11 +97,11 @@ public class GUISettings extends JFrame {
     private User user;    //todo controllare tutte le variabili inutilizzate ed eliminarle
 
 
-
 //______________________________________________________________________________________________________________________________________________________________
 
     /**
      * Constructor
+     *
      * @param email: reference to the user
      */
 
@@ -119,11 +113,9 @@ public class GUISettings extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-        // this.user = user;
         this.email = email;
         this.proxy = new CustomerProxy(email);
 
-        //todo METODO
         setValues();
 
         initComponents();
@@ -132,18 +124,15 @@ public class GUISettings extends JFrame {
 //______________________________________________________________________________________________________________________________________________________________
 
 
-
-
     private void initComponents() {
         /**
          * Panel
          */
-        panelData.setLayout(new GridLayout(13, 1, 20, 10));
+        panelData.setLayout(new GridLayout(14, 1, 20, 10));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelButton, BorderLayout.SOUTH);
-        panelOut.add(panelRadioButton);
 
         panelData.add(labelName);
         panelData.add(textName);
@@ -207,13 +196,11 @@ public class GUISettings extends JFrame {
 
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
-       /* panelData.add(labelPaymentMethod);
-
-        panelRadioButton.setLayout(new GridLayout(1, 0));
-        panelData.add(panelRadioButton);*/
 
         panelData.add(labelCreditCardOwnerName);
         panelData.add(textCreditCardOwnerName);
+        panelData.add(labelCrediCardOwnerSurname);
+        panelData.add(textCreditCardOwneSurname);
         panelData.add(labelCreditCardNumber);
         panelData.add(textCreditCardNumber);
         panelData.add(labelExpirationDate);
@@ -248,9 +235,9 @@ public class GUISettings extends JFrame {
 
         Date exYear = new Date();
 
-        try{
+        try {
             exYear = expirationDateFormatyyyy.parse(expiration_Years); //prende come data solo l'anno
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -261,9 +248,8 @@ public class GUISettings extends JFrame {
          */
 
         textExpirationDays.setText(expiration_Days);
-        textExpirationDays.setEditable(false);
+        textExpirationDays.setEditable(false); //TODO
         labelExpirationDate.setLabelFor(textExpirationDays);
-
 
 
         //-----------------------------------------------------------------------------------
@@ -275,7 +261,6 @@ public class GUISettings extends JFrame {
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
 
-        // panelExpiration.add(exDate());
         panelExpiration.add(textExpirationDays);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
@@ -283,6 +268,9 @@ public class GUISettings extends JFrame {
 
         panelData.add(labelSecurityCode);
         panelData.add(textSecurityCode);
+       // panelData.add(labelAmount);
+      //  panelData.add(textAmount);
+
         // panelData.add(panelPayment);
         add(panelOut);
         panelButton.setLayout(new GridLayout(1, 2, 5, 5));
@@ -302,23 +290,18 @@ public class GUISettings extends JFrame {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
 
-                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("")|| textCreditCardOwnerName.getText().equals("")|| textCreditCardNumber.getText().equals("")|| textSecurityCode.getText().equals("")) {
+
+                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("") || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
-                    }
 
-                    //todo da ELIMINARE  se metodo di pagamento non è selezionato
-                    //  if (cash.isSelected() == false && creditCard.isSelected() == false) {
-                    //     JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment method is not selected", "", JOptionPane.ERROR_MESSAGE);
-
-                    // }
-                    else {
+                    } else {
                         setNewValues();
                         JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-
                         dispose();
 
                     }
+
 
                 }
 
@@ -336,7 +319,7 @@ public class GUISettings extends JFrame {
 //______________________________________________________________________________________________________________________________________________________________________________
 
     /**
-     *  METODO PER INSERIRE I VALORI CONTENUTI NEL DATABASE
+     * METODO PER INSERIRE I VALORI CONTENUTI NEL DATABASE
      */
 
     private void setValues() {
@@ -382,15 +365,23 @@ public class GUISettings extends JFrame {
         textCreditCardOwnerName.setEditable(true);
         labelCreditCardOwnerName.setLabelFor(textCreditCardOwnerName);
 
+        //todo aggiunta
+        textCreditCardOwneSurname.setText(strPaymentmethod.getSurname());
+        textCreditCardOwneSurname.setEditable(true);
+        labelCrediCardOwnerSurname.setLabelFor(textCreditCardOwneSurname);
+
         textCreditCardNumber.setText(strPaymentmethod.getNumber());
         textCreditCardNumber.setEditable(true);
         labelCreditCardNumber.setLabelFor(textCreditCardNumber);
 
 
         textSecurityCode.setText(strPaymentmethod.getCvv());
-        textSecurityCode.setEditable(true);
+        textSecurityCode.setEditable(true); //todo
         labelSecurityCode.setLabelFor(textSecurityCode);
 
+       /* textAmount.setText(strPaymentmethod.getAmount());
+        textAmount.setEditable(true);
+        labelAmount.setLabelFor(textAmount);*/
 
 
     }
@@ -400,7 +391,7 @@ public class GUISettings extends JFrame {
 
 
     /**
-     *  METODO PER  AGGIORNARE IL DATABASE (per cambiare i valori aggiornati dall'utente nel database)
+     * METODO PER  AGGIORNARE IL DATABASE (per cambiare i valori aggiornati dall'utente nel database)
      */
 
     private void setNewValues() {
@@ -412,7 +403,10 @@ public class GUISettings extends JFrame {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        //aggiorna la data di nascita
+        /**
+         * aggiorna la data di nascita
+         */
+
         Date dateOfBirth = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -425,7 +419,7 @@ public class GUISettings extends JFrame {
 
         boolean updateDate = proxy.updateDateOfBirth(dateOfBirth);
 
-        if(!(updateDate)){
+        if (!(updateDate)) {
             System.out.println("Error in updating the date of birth");
         }
 
@@ -445,8 +439,46 @@ public class GUISettings extends JFrame {
         textPhoneNumber.setEditable(true);
         labelPhoneNumber.setLabelFor(textPhoneNumber);
 
+        // aggiorna la data di scadenza
+        PaymentMethod strExpirationDate = proxy.getPaymentMethod();
+        SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
+        String expiration_Months = expirationDateFormatmm.format(strExpirationDate.getExpirationDate());
+
+        Date updateExpiration = new Date();
+        SimpleDateFormat expirationdateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date yearExpiration = new Date();
+
+
+        String strDateExpiration = Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), yearExpiration) + "/" + expirationMonth.getSelectedItem().toString() + "/" + expirationYear.getSelectedItem().toString();
+        try {
+            updateExpiration = expirationdateFormat.parse(strDateExpiration);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), updateExpiration, textSecurityCode.getText());
+        textCreditCardNumber.setEditable(true);
+        labelCreditCardNumber.setLabelFor(textCreditCardNumber);
+        textCreditCardOwnerName.setEditable(true);
+        labelCreditCardOwnerName.setLabelFor(textCreditCardOwnerName);
+        textCreditCardOwneSurname.setEditable(true);
+        labelCrediCardOwnerSurname.setLabelFor(textCreditCardOwneSurname);
+        textExpirationDays.setEditable(true);
+        expirationMonth.setEnabled(true);
+        expirationYear.setEnabled(true);
+        textSecurityCode.setEditable(true);
+        labelSecurityCode.setLabelFor(textSecurityCode);
+       /* textAmount.setEditable(true);
+        labelAmount.setLabelFor(textAmount);*/
+
+        if (!(upPaymentMethod)) {
+            System.out.println("Error in updating PaymentMethod");
+        }
+
 
     }
+
 
 
 }
