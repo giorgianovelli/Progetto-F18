@@ -7,12 +7,11 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import client.proxy.CustomerProxy;
+import client.proxy.DogSitterProxy;
 
 
 public class GUILogin extends JFrame {
-    //final int WIDTH = 600;
-    //final int HEIGHT = 150;
-   // private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+
     private JPanel panelLoginData = new JPanel();
     private JPanel panelBottom = new JPanel();
     private JLabel labelUser = new JLabel("Email", SwingConstants.LEFT);
@@ -27,16 +26,13 @@ public class GUILogin extends JFrame {
     private GridBagConstraints lim = new GridBagConstraints();
 
     private CustomerProxy proxy = new CustomerProxy();
+    private DogSitterProxy dogSitterProxy = new DogSitterProxy();
 
     public GUILogin() {
+
         setTitle("Login");
-        //setSize(WIDTH, HEIGHT);
-        //setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //setResizable(false);
         setLayout(new BorderLayout());
-        //ImageIcon img = new ImageIcon("/Users/nicolas/Desktop/logo.png");
-        //setIconImage(img.getImage());
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
@@ -49,8 +45,8 @@ public class GUILogin extends JFrame {
         cont1.setBorder(BorderFactory.createTitledBorder(" Main Fields: "));
 
         //login automatico per velocizzare il debug
-        textUser.setText("RICCARDOGIURA@GMAIL.COM");
-        textPwd.setText("PROVAPROVA123");
+        //textUser.setText("RICCARDOGIURA@GMAIL.COM");
+        //textPwd.setText("PROVAPROVA123");
 
 
 
@@ -138,7 +134,7 @@ public class GUILogin extends JFrame {
                     }
                 }*/
 
-                if (ae.getActionCommand().equals("Login as Costumer") && !(textUser.equals("")) && !(textPwd.equals(""))){
+                if (ae.getActionCommand().equals("Login as Costumer") && !(textUser.equals("RICCARDOGIURA@GMAIL.COM")) && !(textPwd.equals("PROVAPROVA123"))){
                     //String clientMsg = textUser.getText() + new String(textPwd.getPassword());
                     //proxy.getReply(clientMsg);
                     if (proxy.customerAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
@@ -161,6 +157,35 @@ public class GUILogin extends JFrame {
                     }
                 }
 
+                if (ae.getActionCommand().equals("Login as Dogsitter") && !(textUser.equals("MARCO.CARTA@GMAIL.COM")) && !(textPwd.equals("PROGETTO123"))) {
+
+                    if (dogSitterProxy.dogSitterAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
+                        GUIDogSitter guiDogSitter = null;
+
+                        try {
+                            guiDogSitter = new GUIDogSitter(textUser.getText());
+
+                        } catch (ParseException e) {
+
+                            System.out.println("Error in parsing data");
+                        }
+
+                        guiDogSitter.setVisible(true);
+
+                        setVisible(false);
+
+                    } else {
+                        //show error message
+
+                        JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
+                                JOptionPane.ERROR_MESSAGE);
+
+                        textUser.setText("");
+                        textPwd.setText("");
+                    }
+
+                }
+
                 if (ae.getActionCommand().equals("Create a new account")){
                     GUISignUp guiSignUp = new GUISignUp();
                     guiSignUp.setVisible(true);
@@ -168,8 +193,11 @@ public class GUILogin extends JFrame {
                 }
             }
         };
+
         buttonLogin.addActionListener(al);
         buttonNewAccount.addActionListener(al);
+        buttonLoginSitter.addActionListener(al);
+
     }
 
 
@@ -184,9 +212,11 @@ public class GUILogin extends JFrame {
                 image = Toolkit.getDefaultToolkit().getImage("images/logo.jpg");
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(image, 0);
+
                 try {
                     tracker.waitForID(0);
                 } catch (InterruptedException exception) {
+
                 }
 
             }
@@ -210,8 +240,5 @@ public class GUILogin extends JFrame {
 
 
             }
-
-
-
+        }
     }
-}
