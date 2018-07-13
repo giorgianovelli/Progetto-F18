@@ -26,10 +26,10 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
 
     private GridLayout gridLayout = new GridLayout(1, 2);
-    private GridLayout gridLayout2 = new GridLayout(1,1);
+    private GridLayout gridLayout2 = new GridLayout(1, 1);
     private JPanel panelOut = new JPanel(new BorderLayout());
     private JPanel panelContents = new JPanel(new BorderLayout());
-    private JPanel panelAssignmentData = new JPanel(new GridLayout(7,1));
+    private JPanel panelAssignmentData = new JPanel(new GridLayout(7, 1));
     private JPanel panelDogs = new JPanel(gridLayout2);
     private JPanel panelReview = new JPanel(new BorderLayout());
     private JPanel panelClose = new JPanel(new BorderLayout());
@@ -44,8 +44,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JPanel panelPaymentMethod = new JPanel(gridLayout);
 
     private JScrollPane scrollPane = new JScrollPane(panelOut);
-
-
 
 
     private JLabel labelCode1 = new JLabel("Code: ");
@@ -76,13 +74,14 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
     /**
      * Constructor using GUIDogsitter
-     * @param a
-     * @param email
-     * @param guiDogSitter
+     *
+     * @param a            Assignment
+     * @param email        of the customer
+     * @param guiDogSitter GUI from which is launched
      */
 
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIDogSitter guiDogSitter){
+    GUIAssignmentInformationCustomer(Assignment a, String email, GUIDogSitter guiDogSitter) {
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -109,13 +108,13 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
     /**
      * Constructor using GUIListAssignments
-     * @param a
-     * @param email
-     * @param guiListAssignments
      *
+     * @param a                  Assignment
+     * @param email              of the customer
+     * @param guiListAssignments GUI from which is launched
      */
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIListAssignments guiListAssignments){
+    GUIAssignmentInformationCustomer(Assignment a, String email, GUIListAssignments guiListAssignments) {
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -139,15 +138,15 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         initComponents(a);
     }
 
-
     /**
-     * Constructor using GUIShowDogsitterAssignment
-     * @param a
-     * @param email
-     * @param guiShowDogsitterAssignment
+     * Constructor using guiShowDogsitterAssignment
+     *
+     * @param a                          Assignment
+     * @param email                      of the customer
+     * @param guiShowDogsitterAssignment GUI from which is launched
      */
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment){
+    GUIAssignmentInformationCustomer(Assignment a, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment) {
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -172,13 +171,15 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     }
 
     /**
-     * Constructor using guiCustomer
-     * @param a
-     * @param email
-     * @param guiCustomer
+     * Constructor using GUICustomer
+     *
+     * @param a           Assignment
+     * @param email       of the customer
+     * @param guiCustomer GUI from which is launched
      */
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUICustomer guiCustomer){
+
+    GUIAssignmentInformationCustomer(Assignment a, String email, GUICustomer guiCustomer) {
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -203,13 +204,15 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     }
 
     /**
-     * Constructor using GUIDailyAssignments
-     * @param a
-     * @param email
-     * @param guiDailyAssignments
+     * Constructor using GUIAssignmentInformationCustomer
+     *
+     * @param a                   Assignment
+     * @param email               of the customer
+     * @param guiDailyAssignments GUI from which is launched
      */
 
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIDailyAssignments guiDailyAssignments){
+
+    GUIAssignmentInformationCustomer(Assignment a, String email, GUIDailyAssignments guiDailyAssignments) {
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -236,10 +239,11 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
     /**
      * Method that initalizes graphic components of the GUI
-     * @param a
+     *
+     * @param a Assignment
      */
 
-    public void initComponents(Assignment a){
+    public void initComponents(Assignment a) {
 
         panelOut.add(panelContents, BorderLayout.NORTH);
         panelOut.add(panelClose, BorderLayout.CENTER);
@@ -251,7 +255,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelAssignmentData.setBorder(BorderFactory.createTitledBorder("Summary: "));
         panelDogs.setBorder(BorderFactory.createTitledBorder("Dogs: "));
         panelReview.setBorder(BorderFactory.createTitledBorder("Review: "));
-        panelButtonReview.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
+        panelButtonReview.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
 
         panelAssignmentData.add(panelCode);
         panelAssignmentData.add(panelStartDate);
@@ -277,11 +281,9 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelPaymentMethod.add(labelPaymentMethod2);
 
 
-
         panelButtonReview.add(buttonReview);
         panelReview.add(labelReview, BorderLayout.WEST);
         panelReview.add(panelButtonReview, BorderLayout.EAST);
-
 
 
         //Pannello bottone Close e Action Listener
@@ -320,7 +322,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         HashSet<Dog> dogList = a.getDogList();
         String strMeetingPoint = a.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
-        String amount = String.format("%.2f", doubleAmount).replace(",",".");
+        String amount = String.format("%.2f", doubleAmount).replace(",", ".");
         String strPayment = customerProxy.getPaymentMethod().getNumber();
         if (customerProxy.isInCashPaymentMethodOfAssignment(a.getCode())) {
             strPayment = "Cash";
@@ -329,7 +331,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         //Passaggio delle variabili alle Jlabel che contengono i dati
 
 
-        for (Map.Entry<Integer, Review> entry: listReview.entrySet()) {
+        for (Map.Entry<Integer, Review> entry : listReview.entrySet()) {
             if (a.getCode() == entry.getKey()) {
                 String title = entry.getValue().getTitle();
                 String date = dateFormat.format(entry.getValue().getDate());
@@ -347,8 +349,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         }
 
         if (labelReview.getText().equals("")) {
-                labelReview.setText("No review");
-                buttonReview.setEnabled(false);
+            labelReview.setText("No review");
+            buttonReview.setEnabled(false);
         }
 
         labelCode2.setText(intCode.toString());
@@ -363,54 +365,37 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
 
         int i = 1;
-        for (Dog dog: dogList) {
+        for (Dog dog : dogList) {
 
-                JPanel panelDog = new JPanel(new GridLayout(1,1));
-                JLabel tmplabel = new JLabel(i + ".     " + dog.getName());
-                panelDog.add(tmplabel);
-                panelDogs.add(panelDog);
-                gridLayout2.setRows(gridLayout.getRows() + 1);
-                i++;
+            JPanel panelDog = new JPanel(new GridLayout(1, 1));
+            JLabel tmplabel = new JLabel(i + ".     " + dog.getName());
+            panelDog.add(tmplabel);
+            panelDogs.add(panelDog);
+            gridLayout2.setRows(gridLayout.getRows() + 1);
+            i++;
         }
 
     }
 
 
     /**
-     * Getter and Setter
-     * @return
+     * Getter
+     * 
      */
 
-    public JLabel getLabelPaymentMethod2() {
+    JLabel getLabelPaymentMethod2() {
         return labelPaymentMethod2;
     }
 
-    public void setLabelPaymentMethod2(JLabel labelPaymentMethod2) {
-        this.labelPaymentMethod2 = labelPaymentMethod2;
-    }
-
-    public JLabel getLabelDogsitter1() {
+    JLabel getLabelDogsitter1() {
         return labelDogsitter1;
     }
 
-    public void setLabelDogsitter1(JLabel labelDogsitter1) {
-        this.labelDogsitter1 = labelDogsitter1;
-    }
-
-    public JLabel getLabelDogsitter2() {
+    JLabel getLabelDogsitter2() {
         return labelDogsitter2;
     }
 
-    public void setLabelDogsitter2(JLabel labelDogsitter2) {
-        this.labelDogsitter2 = labelDogsitter2;
-    }
-
-    public CustomerProxy getCustomerProxy() {
+    CustomerProxy getCustomerProxy() {
         return customerProxy;
     }
-
-    public void setCustomerProxy(CustomerProxy customerProxy) {
-        this.customerProxy = customerProxy;
-    }
-
 }

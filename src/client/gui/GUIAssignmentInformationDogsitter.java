@@ -4,9 +4,12 @@ import server.Assignment;
 
 public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationCustomer{
 
-
-    private GUIDogSitter guiDogSitter;
-
+    /**
+     * Constuctor of the class
+     * @param assignment
+     * @param email
+     * @param guiDogSitter
+     */
     public GUIAssignmentInformationDogsitter(Assignment assignment, String email, GUIDogSitter guiDogSitter)  {
         super(assignment, email, guiDogSitter);
 
@@ -15,6 +18,9 @@ public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationC
     }
 
 
+    /**
+     * Method that initalizes graphic components of the GUI
+     */
     public void initComponents() {
 
         getLabelDogsitter1().setText("Customer: ");
