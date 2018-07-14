@@ -21,11 +21,10 @@ import java.util.HashSet;
 
 public class GUINewAssignment extends JFrame{
 
-    //TODO javadoc; controllo su validità indirizzo;
+    //TODO controllo su validità indirizzo;
 
     final int WIDTH = 800;
     final int HEIGHT = 600;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     //Panels
 
@@ -40,17 +39,14 @@ public class GUINewAssignment extends JFrame{
     private JPanel panelDogs = new JPanel();
     private JPanel panelPayment = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(panelOut);
-    private Date date;
-    private String strDate;
-    private String email;
-    HashSet<Dog> dogList;
-    HashSet<String> dogsittersMailList;
+    private HashSet<Dog> dogList;
+    private HashSet<String> dogsittersMailList;
     private boolean paymentMethod = true;
-    CustomerProxy customerProxy;
+    private CustomerProxy customerProxy;
 
     //Others
 
-    public static GUIChooseDogsitter guiChooseDogsitter;
+    static GUIChooseDogsitter guiChooseDogsitter;
 
     private GridLayout gridLayout = new GridLayout(1,1);
 
@@ -64,25 +60,26 @@ public class GUINewAssignment extends JFrame{
     private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonSearch = new JButton("Search");
 
-    NewAssignmentBox newAssignmentBox;
-    ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<>();
+    private NewAssignmentBox newAssignmentBox;
+    private ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<>();
 
-    NewAssignmentText country = new NewAssignmentText("Country: ");
-    NewAssignmentText city = new NewAssignmentText("City: ");
-    NewAssignmentText address = new NewAssignmentText("Address: ");
-    NewAssignmentText cap = new NewAssignmentText("Postal Code: ");
-    NewAssignmentText number = new NewAssignmentText("Number: ");
+    private NewAssignmentText country = new NewAssignmentText("Country: ");
+    private NewAssignmentText city = new NewAssignmentText("City: ");
+    private NewAssignmentText address = new NewAssignmentText("Address: ");
+    private NewAssignmentText cap = new NewAssignmentText("Postal Code: ");
+    private NewAssignmentText number = new NewAssignmentText("Number: ");
 
     /**
      * Constructor of the class GUINewAssignment
-     * @param date
-     * @param email
+     * @param date Selected date for the new assignment
+     * @param email of the customer
      */
 
 
-    public GUINewAssignment(Date date, String email, GUICustomer guiCustomer) {
+     GUINewAssignment(Date date, String email, GUICustomer guiCustomer) {
         setTitle("New Assignment");
         setSize(WIDTH, HEIGHT);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -99,9 +96,8 @@ public class GUINewAssignment extends JFrame{
             }
         });
 
-        this.date = date;
-        this.email = email;
-        strDate = dateToString(date);
+
+        String strDate = dateToString(date);
 
         newAssignmentBox = new NewAssignmentBox(strDate);
 
@@ -253,14 +249,7 @@ public class GUINewAssignment extends JFrame{
                 }
         };
 
-        ActionListener actionListener1 = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiNewAssignment.dispatchEvent(new WindowEvent(guiNewAssignment, WindowEvent.WINDOW_CLOSING));
-            }
-        };
-
-        buttonCancel.addActionListener(actionListener1);
+        buttonCancel.addActionListener(e -> guiNewAssignment.dispatchEvent(new WindowEvent(guiNewAssignment, WindowEvent.WINDOW_CLOSING)));
         buttonSearch.addActionListener(actionListener);
 
 
@@ -271,7 +260,7 @@ public class GUINewAssignment extends JFrame{
 
     /**
      * Method that initalizes graphic components of the GUI
-     * @param newAssignmentBox
+     * @param newAssignmentBox Box for selecting dates
      */
 
 
@@ -391,11 +380,11 @@ public class GUINewAssignment extends JFrame{
 
     /**
      * Method for converting object Date to String
-     * @param date
-     * @return
+     * @param date to be converted
+     * @return String converted
      */
 
-    public String dateToString(Date date) {
+    private String dateToString(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return simpleDateFormat.format(date);
     }
@@ -410,55 +399,37 @@ public class GUINewAssignment extends JFrame{
 class NewAssignmentBox extends JPanel{
 
 
-    Date dateEnd;
-    JComboBox<String> tdayList;
-    JComboBox<String> tmonthList;
-    JComboBox<String> fyearList, tyearList;
-    JComboBox<String> fhourList, thourList;
-    JComboBox<String> fminuteList, tminuteList;
-    JLabel fromLabel = new JLabel("From:");
-    JLabel toLabel = new JLabel("To:");
-    JLabel blanckLabel = new JLabel("");
-    JLabel daysLabel = new JLabel("Day:");
-    JLabel monthsLabel = new JLabel("Month:");
-    JLabel yearsLabel = new JLabel("Year:");
-    JLabel hoursLabel = new JLabel("Hour:");
-    JLabel minutesLabel = new JLabel("Minute:");
+
+    private JComboBox<String> tdayList;
+    private JComboBox<String> tmonthList;
+    private JComboBox<String> tyearList;
+    private JComboBox<String> fhourList, thourList;
+    private JComboBox<String> fminuteList, tminuteList;
 
 
-    JLabel fromDayLabel = new JLabel("");
-    JLabel fromMonthLabel = new JLabel("");
-    JLabel fromYearLabel = new JLabel("");
+    private JLabel fromDayLabel = new JLabel("");
+    private JLabel fromMonthLabel = new JLabel("");
+    private JLabel fromYearLabel = new JLabel("");
 
-
-    String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25","26","27","28","29","30","31"};
-    String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    String[] year = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
-    String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
-    String[] minute = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"};
-
-
-//__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-
-
-    // Costruttore NewAssignmentBox
 
     /**
      * Constructor for NewAssignmentBox
-     * @param selectedDay
+     * @param selectedDay String which rapresents selected day in the GUICustomer
      */
 
-    public NewAssignmentBox(String selectedDay){
+     NewAssignmentBox(String selectedDay){
 
 
-
-
-
-        fhourList = new JComboBox<>(hour);
-        fminuteList = new JComboBox<>(minute);
-        tdayList = new JComboBox<>(day);
-        tmonthList = new JComboBox<>(month);
-        tyearList = new JComboBox<>(year);
+         String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+         fhourList = new JComboBox<>(hour);
+         String[] minute = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"};
+         fminuteList = new JComboBox<>(minute);
+         String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+         tdayList = new JComboBox<>(day);
+         String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+         tmonthList = new JComboBox<>(month);
+         String[] year = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+         tyearList = new JComboBox<>(year);
         thourList = new JComboBox<>(hour);
         tminuteList = new JComboBox<>(minute);
 
@@ -503,13 +474,20 @@ class NewAssignmentBox extends JPanel{
 
         setLayout(new GridLayout(3, 6, 10, 10));
 
+        JLabel blanckLabel = new JLabel("");
         add(blanckLabel);
+        JLabel daysLabel = new JLabel("Day:");
         add(daysLabel);
+        JLabel monthsLabel = new JLabel("Month:");
         add(monthsLabel);
+        JLabel yearsLabel = new JLabel("Year:");
         add(yearsLabel);
+        JLabel hoursLabel = new JLabel("Hour:");
         add(hoursLabel);
+        JLabel minutesLabel = new JLabel("Minute:");
         add(minutesLabel);
 
+        JLabel fromLabel = new JLabel("From:");
         add(fromLabel);
         add(fromDayLabel);
         add(fromMonthLabel);
@@ -517,6 +495,7 @@ class NewAssignmentBox extends JPanel{
         add(fhourList);
         add(fminuteList);
 
+        JLabel toLabel = new JLabel("To:");
         add(toLabel);
         add(tdayList);
         add(tmonthList);
@@ -528,46 +507,46 @@ class NewAssignmentBox extends JPanel{
 
     /**
      * Getter methods of class NewAssignmentBox
-     * @return
+     * @return the object
      */
 
-    public JLabel getFromDayLabel() {
+    JLabel getFromDayLabel() {
         return fromDayLabel;
     }
 
-    public JLabel getFromMonthLabel() {
+    JLabel getFromMonthLabel() {
         return fromMonthLabel;
     }
 
-    public JLabel getFromYearLabel() {
+    JLabel getFromYearLabel() {
         return fromYearLabel;
     }
 
-    public JComboBox<String> getTdayList() {
+    JComboBox<String> getTdayList() {
         return tdayList;
     }
 
-    public JComboBox<String> getTmonthList() {
+    JComboBox<String> getTmonthList() {
         return tmonthList;
     }
 
-    public JComboBox<String> getTyearList() {
+    JComboBox<String> getTyearList() {
         return tyearList;
     }
 
-    public JComboBox<String> getFhourList() {
+    JComboBox<String> getFhourList() {
         return fhourList;
     }
 
-    public JComboBox<String> getThourList() {
+    JComboBox<String> getThourList() {
         return thourList;
     }
 
-    public JComboBox<String> getFminuteList() {
+    JComboBox<String> getFminuteList() {
         return fminuteList;
     }
 
-    public JComboBox<String> getTminuteList() {
+    JComboBox<String> getTminuteList() {
         return tminuteList;
     }
 }
@@ -581,30 +560,29 @@ class NewAssignmentBox extends JPanel{
 
 
 class NewAssignmentText extends JPanel{
-    JLabel label;
-    TextField field;
+    private TextField field;
 
 
 
 
     /**
      * Constructor of NewAssignmentText
-     * @param text
+     * @param text to be setted in TextField
      */
 
 
-    public NewAssignmentText(String text){
+    NewAssignmentText(String text){
 
         setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        label = new JLabel(text);
+        JLabel label = new JLabel(text);
         field = new TextField("",48);
         add(label, gridBagConstraints);
         add(field, gridBagConstraints);
     }
 
-    public TextField getField() {
+    TextField getField() {
         return field;
     }
 }
@@ -618,15 +596,15 @@ class NewAssignmentText extends JPanel{
 
 class NewAssignmentCheckBox extends JPanel {
 
-    JCheckBox checkBox;
+    private JCheckBox checkBox;
 
     /**
      * Constructor of the class NewAssignmentCheckBox
-     * @param text
+     * @param text to be setted in the checkbox
      */
 
 
-    public NewAssignmentCheckBox(String text) {
+    NewAssignmentCheckBox(String text) {
 
         setLayout(new GridLayout(1,1));
         checkBox = new JCheckBox();
@@ -637,22 +615,22 @@ class NewAssignmentCheckBox extends JPanel {
 
     /**
      * Getter method
-     * @return
+     * @return checkbox
      */
 
-    public JCheckBox getCheckBox() {
+    JCheckBox getCheckBox() {
         return checkBox;
     }
 
 
     /**
      * Method for getting Dog object from a checkBox
-     * @param name
-     * @param dogList
-     * @return
+     * @param name String checked in for each
+     * @param dogList Hashset controlled to get the correct Dog object
+     * @return the Dog object
      */
 
-    public Dog getDogFromJCheckBox(String name, HashSet<Dog> dogList) {
+    Dog getDogFromJCheckBox(String name, HashSet<Dog> dogList) {
         for (Dog dog: dogList) {
             if (dog.getName().equals(name)) {
                 return dog;

@@ -1,14 +1,12 @@
 package client.gui;
 
-import client.proxy.CustomerProxy;
+
 import client.proxy.DogSitterProxy;
 import server.Dog;
 import server.places.Address;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
@@ -17,23 +15,15 @@ import java.util.HashSet;
 public class GUIChooseDogsitter extends JFrame {
     final int WIDTH = 800;
     final int HEIGHT = 600;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    CustomerProxy customerProxy;
+
 
 
     private JPanel panelOut = new JPanel();
-    private JPanel panelDogsitter;
-    private JPanel panelLabel;
-    private JPanel panelButtons;
-    private JPanel panelContainer;
     private JPanel panelClose = new JPanel(new BorderLayout());
     private GridLayout gridLayout = new GridLayout(1,1,5,0);
     private JScrollPane panelScroll = new JScrollPane(panelOut);
-    private JButton buttonInfo;
-    private JButton buttonSelect;
     private JButton buttonClose = new JButton("Close");
-    private JLabel labelDogsitter;
 
     private HashSet<String> dogsitterList;
     private Date dateStartAssignment;
@@ -41,23 +31,23 @@ public class GUIChooseDogsitter extends JFrame {
     private HashSet<Dog> selectedDogs;
     private Address meetingPoint;
     private boolean paymentInCash;
-    private String paymentMethod;
     private String emailCustomer;
 
     /**
-     *
-     * @param dogsitterList
-     * @param dateStartAssignment
-     * @param dateEndAssignment
-     * @param selectedDogs
-     * @param meetingPoint
-     * @param paymentInCash
-     * @param emailCustomer
+     * Constructor of the class GUIChooseDogsitter
+     * @param dogsitterList HashSet that contains the list of the dogsitters
+     * @param dateStartAssignment Assignment tarting date
+     * @param dateEndAssignment Assignment ending Date
+     * @param selectedDogs HashSet of dogs selected for the Assignment
+     * @param meetingPoint Address where Customer and Dogsitter will meet
+     * @param paymentInCash Boolean for PaymentMethod
+     * @param emailCustomer String email of the Customer
      */
 
-    public GUIChooseDogsitter(HashSet<String> dogsitterList, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash, String emailCustomer, GUINewAssignment guiNewAssignment) {
-        setTitle("Choose the dogsitter");       // TODO Da cambiare??
+    GUIChooseDogsitter(HashSet<String> dogsitterList, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash, String emailCustomer, GUINewAssignment guiNewAssignment) {
+        setTitle("Choose the dogsitter");
         setSize(WIDTH, HEIGHT);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -71,7 +61,6 @@ public class GUIChooseDogsitter extends JFrame {
         this.meetingPoint = meetingPoint;
         this.paymentInCash = paymentInCash;
         this.emailCustomer = emailCustomer;
-        customerProxy = new CustomerProxy(emailCustomer);
 
         guiNewAssignment.setEnabled(false);
 
@@ -94,7 +83,7 @@ public class GUIChooseDogsitter extends JFrame {
 
     public void initComponents() {
         panelOut.setLayout(new BorderLayout());
-        panelContainer = new JPanel(gridLayout);
+        JPanel panelContainer = new JPanel(gridLayout);
         panelClose.setBorder(BorderFactory.createEmptyBorder(20,320,20,320));
 
         GUIChooseDogsitter guiChooseDogsitter = this;
@@ -108,22 +97,22 @@ public class GUIChooseDogsitter extends JFrame {
             DogSitterProxy dogSitterProxy = new DogSitterProxy(mailDogsitter);
 
 
-            labelDogsitter = new JLabel("<html><br>" + dogSitterProxy.getName() + " " + dogSitterProxy.getSurname() + "<br/>" + mailDogsitter, SwingConstants.LEFT);
+            JLabel labelDogsitter = new JLabel("<html><br>" + dogSitterProxy.getName() + " " + dogSitterProxy.getSurname() + "<br/>" + mailDogsitter, SwingConstants.LEFT);
 
-            panelLabel = new JPanel();
+            JPanel panelLabel = new JPanel();
             panelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,20, 0));
             panelLabel.add(labelDogsitter);
 
-            panelButtons = new JPanel();
+            JPanel panelButtons = new JPanel();
             panelButtons.setLayout(new GridLayout(1,2,10,0));
             panelButtons.setBorder(BorderFactory.createEmptyBorder(30,0,30, 40));
 
-            buttonInfo = new JButton("Info");
-            buttonSelect = new JButton("Select");
+            JButton buttonInfo = new JButton("Info");
+            JButton buttonSelect = new JButton("Select");
             panelButtons.add(buttonInfo);
             panelButtons.add(buttonSelect);
 
-            panelDogsitter = new JPanel();
+            JPanel panelDogsitter = new JPanel();
             panelDogsitter.setLayout(new BorderLayout());
             panelDogsitter.setBorder(BorderFactory.createTitledBorder(""));
             panelDogsitter.add(panelLabel, BorderLayout.WEST);
@@ -132,38 +121,13 @@ public class GUIChooseDogsitter extends JFrame {
 
             gridLayout.setRows(gridLayout.getRows() + 1);
 
-            ActionListener actionListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    GUIConfirmAssignment guiConfirmAssignment = new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer, paymentInCash, guiChooseDogsitter);
-                    guiConfirmAssignment.setVisible(true);
-                }
-            };
 
-            ActionListener actionListener1 = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    GUIDogsitterInfo guiDogsitterInfo = new GUIDogsitterInfo(mailDogsitter, guiChooseDogsitter );
-                    guiDogsitterInfo.setVisible(true);
-                }
-            };
-
-
-            buttonSelect.addActionListener(actionListener);
-            buttonInfo.addActionListener(actionListener1);
+            buttonSelect.addActionListener(e -> new GUIConfirmAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, selectedDogs, meetingPoint, emailCustomer, paymentInCash, guiChooseDogsitter).setVisible(true));
+            buttonInfo.addActionListener(e -> new GUIDogsitterInfo(mailDogsitter, guiChooseDogsitter).setVisible(true));
 
         }
 
-
-
-        ActionListener actionListener2 = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiChooseDogsitter.dispatchEvent(new WindowEvent(guiChooseDogsitter, WindowEvent.WINDOW_CLOSING));
-            }
-        };
-
-        buttonClose.addActionListener(actionListener2);
+        buttonClose.addActionListener(e -> guiChooseDogsitter.dispatchEvent(new WindowEvent(guiChooseDogsitter, WindowEvent.WINDOW_CLOSING)));
 
 
 

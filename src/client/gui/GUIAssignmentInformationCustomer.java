@@ -7,8 +7,6 @@ import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
@@ -291,14 +289,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelClose.add(buttonClose);
         panelClose.setBorder(BorderFactory.createEmptyBorder(20, 190, 20, 190));
 
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                guiAssignmentInformationCustomer.dispatchEvent(new WindowEvent(guiAssignmentInformationCustomer, WindowEvent.WINDOW_CLOSING));
-            }
-        };
-        buttonClose.addActionListener(actionListener);
+        buttonClose.addActionListener(e -> guiAssignmentInformationCustomer.dispatchEvent(new WindowEvent(guiAssignmentInformationCustomer, WindowEvent.WINDOW_CLOSING)));
 
         //Implementazione scrollbar
 
@@ -337,14 +329,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
                 String date = dateFormat.format(entry.getValue().getDate());
                 String vote = entry.getValue().starsRating();
                 labelReview.setText("<html>" + title + "<br>" + date + "<br>" + vote + "<br/>");
-                ActionListener actionListener1 = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        GUIShowReview guiShowReview = new GUIShowReview(entry.getValue());
-                        guiShowReview.setVisible(true);
-                    }
-                };
-                buttonReview.addActionListener(actionListener1);
+                buttonReview.addActionListener(e -> new GUIShowReview(entry.getValue()).setVisible(true));
             }
         }
 

@@ -6,9 +6,9 @@ public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationC
 
     /**
      * Constuctor of the class
-     * @param assignment
-     * @param email
-     * @param guiDogSitter
+     * @param assignment of which informations are displayed
+     * @param email of the customer
+     * @param guiDogSitter GUI from which is created
      */
     public GUIAssignmentInformationDogsitter(Assignment assignment, String email, GUIDogSitter guiDogSitter)  {
         super(assignment, email, guiDogSitter);
@@ -21,6 +21,7 @@ public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationC
     /**
      * Method that initalizes graphic components of the GUI
      */
+
     public void initComponents() {
 
         getLabelDogsitter1().setText("Customer: ");
