@@ -37,6 +37,10 @@ public class GUIShowReview extends JFrame {
     private GUIListAssignments guiListAssignments;
     //private int numberRow;
 
+    /**
+     * costruttore
+     * @param review recensione da visualizzare
+     */
     public GUIShowReview(Review review){
         setTitle("Show review");
         setSize(WIDTH, HEIGHT);
@@ -50,6 +54,11 @@ public class GUIShowReview extends JFrame {
 
     }
 
+    /**
+     * costruttore
+     * @param review recensione da visualizzare
+     * @param guiListAssignments interfaccia da cui è stata richiamata
+     */
     public GUIShowReview(Review review, GUIListAssignments guiListAssignments){
         setTitle("Show review");
         setSize(WIDTH, HEIGHT);
@@ -72,6 +81,9 @@ public class GUIShowReview extends JFrame {
 
     }
 
+    /**
+     * inizializza le componenti dell'interfaccia e ne permette la visualizzazione
+     */
     private void initComponent(){
         //TODO si potrebbe provare a usare GridBagLayout
         outPanel = new JPanel();
@@ -137,6 +149,9 @@ public class GUIShowReview extends JFrame {
 
     }
 
+    /**
+     * permette di visualizzare l'eventuale risposta del dogsitter alla recensione
+     */
     protected void showReply(){
         if(!(review.getReply().equals("null"))){
             panelReply.setBorder(BorderFactory.createTitledBorder("Dogsitter Reply: "));

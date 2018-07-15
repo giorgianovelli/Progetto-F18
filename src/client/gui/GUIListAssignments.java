@@ -48,10 +48,10 @@ public class GUIListAssignments extends JFrame{
     private GUIListAssignments guiListAssignments; // necessario per disattivazione @Riccardo
 
     /**
-     *
-     * @param cs ??
+     * costruttore
+     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
      * @param email riferimento all'utente
-     * @param guiCustomer
+     * @param guiCustomer identifica l'interfaccia da cui viene richiamata
      */
 
     public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment,  String email, GUIHome guiCustomer){
@@ -70,11 +70,10 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @param cs ??
-     * @param guiCustomer
+     * inzializza le componenti dell'interfaccia
+     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
+     * @param guiCustomer identifica l'interfaccia da cui viene richiamata
      */
-
     protected void initComponents(CalendarState cs, GUIHome guiCustomer){
 
         UIManager.put("OptionPane.noButtonText", "No");
@@ -210,9 +209,6 @@ public class GUIListAssignments extends JFrame{
 
                 }
             }
-
-
-
 
         } else {
             if(assignmentNumber == 0){
@@ -387,8 +383,8 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @param cs
+     * inizializza gli array delle componenti dell'interfaccia
+     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
      */
 
     protected void initArray(CalendarState cs){
@@ -407,8 +403,8 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @return
+     * confronta la data degli appuntamenti con quella di oggi
+     * @return lista di appuntamenti con data inferiore a quella di oggi
      */
 
     protected HashMap<Integer, Assignment> assignmentBeforeToday(){
@@ -427,9 +423,9 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @param number
-     * @param listAssignment
+     * controlla il caso particolare in cui non ci sono appuntamenti da recensire
+     * @param number numero di appuntamenti recensiti
+     * @param listAssignment lista degli appuntamenti
      */
     protected void noAssignmentToReview(int number, HashMap<Integer, Assignment> listAssignment){
         if(number == listAssignment.size()){
@@ -445,9 +441,9 @@ public class GUIListAssignments extends JFrame{
 
 
     /**
-     *
-     * @param a
-     * @param r
+     * inizializza la mappa di stringhe predefinite per le label di descrizione
+     * @param a appuntamento
+     * @param r rensione
      */
     protected void setLabelStringMap(Assignment a, Review r){
         strLabel = new HashMap<>();
@@ -480,11 +476,11 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @param calendarState
-     * @param a
-     * @param r
-     * @return
+     * seleziona la stinga dalla mappadi stringhe predefinite per la lebel di descrizione
+     * @param calendarState idenfica il menu da cui viene richiamata questa interfaccia
+     * @param a riferimento all'appuntamento
+     * @param r riferimento alla recensione
+     * @return stringa richiesta in base al CalendarState
      */
     protected String setLabelString(CalendarState calendarState, Assignment a, Review r){
         setLabelStringMap(a, r);
@@ -493,10 +489,10 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @param strLabel
-     * @param strButton
-     * @param i
+     * inizializza le componenti di ogni infoPanel
+     * @param strLabel stringa per la label di descrizione
+     * @param strButton stringa per il bottone
+     * @param i indice dell'elemento dell'array
      */
     protected void setComponents( String strLabel, String strButton, int i){
         labelDescription[i]= new JLabel(strLabel);
@@ -505,6 +501,10 @@ public class GUIListAssignments extends JFrame{
 
     }
 
+    /**
+     * crea una finestra con una stringa predefinita per il caso in cui non ci siano recensioni o appuntamenti
+     * @param stringLabel stringa predefinita per la finestra
+     */
     protected void createLabelInfo(String stringLabel){
         JLabel noReviewLabel = new JLabel(stringLabel);
         setSize(WIDTH, 200);

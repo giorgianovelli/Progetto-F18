@@ -12,12 +12,20 @@ public class GUIShowDogsitterReview extends GUIShowReview {
     private JButton replyButton;
     private String email;
 
+    /**
+     * costruttore
+     * @param review recensione da visualizzare
+     * @param email identifica l'utente
+     */
     public GUIShowDogsitterReview(Review review, String email){
         super(review);
         this.email = email;
 
     }
 
+    /**
+     * permette di visualizzare direttamente la risposta del dogsitter sotto la recensione o di aggiungerne una
+     */
     @Override
     protected void showReply() {
         GridLayout gridLayout = new GridLayout(1,1, 5, 5);

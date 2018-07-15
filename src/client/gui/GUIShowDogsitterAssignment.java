@@ -23,6 +23,12 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
     public  GUIShowDogsitterAssignment guiShowDogsitterAssignment; // serve per disattivare la finestra madre @Riccardo
 
 
+    /**
+     * costruttore
+     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
+     * @param email riferimento all'utente
+     * @param guiDogsitter identifica l'interfaccia da cui viene richiamata
+     */
     public GUIShowDogsitterAssignment(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiDogsitter){
         super(cs,listAssignment, email, guiDogsitter);
         guiShowDogsitterAssignment = this;
@@ -32,6 +38,11 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
     }
 
 
+    /**
+     * inizializza le componenti dell'interfaccia
+     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
+     * @param guiDogsitter
+     */
     @Override
     protected void initComponents(CalendarState cs, GUIHome guiDogsitter) {
 
@@ -142,6 +153,11 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
     }
 
+    /**
+     * inizializza la mappa di stringhe predefinite per le label di descrizione
+     * @param a appuntamento
+     * @param r rensione
+     */
     @Override
     protected void setLabelStringMap(Assignment a, Review r) {
         strLabel = new HashMap<>();
