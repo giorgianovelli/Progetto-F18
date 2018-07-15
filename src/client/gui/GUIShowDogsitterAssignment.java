@@ -54,62 +54,70 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
         panelOut.setLayout(new BorderLayout());
 
         if(cs.equals(CalendarState.NORMAL)){
-            int j = 0;
+            if(assignmentNumber == 0){
+                createLabelInfo("There aren't assignments to show!");
+            }
+            else {
+                int j = 0;
 
-            for(Integer i : listAssignment.keySet()){
-                Assignment a = null;
+                for (Integer i : listAssignment.keySet()) {
+                    Assignment a = null;
 
-                a = listAssignment.get(i);
+                    a = listAssignment.get(i);
 
-                ActionListener showInfo = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+                    ActionListener showInfo = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
 
                             //TODO aggiungere GUIAssignmentInformationDogsitter
 
 
-
-                    }
-                };
-
-
-                setComponents(setLabelString(cs, a, null), "Info", j);
-                buttonAction[j].addActionListener(showInfo);
+                        }
+                    };
 
 
-                createPanelAssignment(a,j);
+                    setComponents(setLabelString(cs, a, null), "Info", j);
+                    buttonAction[j].addActionListener(showInfo);
 
-                gridLayout.setRows(gridLayout.getRows() + 1);
-                j++;
 
+                    createPanelAssignment(a, j);
+
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+                    j++;
+
+                }
             }
         }
         else if(cs.equals(CalendarState.SHOW_REVIEWS)){
             setTitle("Your reviews");
+            if(reviewNumber == 0){
+                createLabelInfo("There aren't reviews to show!");
+            }
+            else {
+                int j = 0;
+                for (Integer i : listReview.keySet()) {
+                    Review r = null;
+                    r = listReview.get(i);
 
-            int j = 0;
-            for(Integer i: listReview.keySet()){
-                Review r = null;
-                r = listReview.get(i);
+                    setComponents(setLabelString(cs, null, r), "Show more", j);
+                    buttonAction[j].addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
 
-                setComponents(setLabelString(cs, null, r), "Show more", j);
-                buttonAction[j].addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                        GUIShowDogsitterReview guiShowDogsitterReview = new GUIShowDogsitterReview(listReview.get(i), email);
-                        guiShowDogsitterReview.setVisible(true);
-                        dispose();
+                            GUIShowDogsitterReview guiShowDogsitterReview = new GUIShowDogsitterReview(listReview.get(i), email);
+                            guiShowDogsitterReview.setVisible(true);
+                            dispose();
 
 
-                    }
+                        }
 
-                });
+                    });
 
-                createPanelReview(j);
-                gridLayout.setRows(gridLayout.getRows() + 1);
-                j++;
+                    createPanelReview(j);
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+                    j++;
 
+                }
             }
         }
 

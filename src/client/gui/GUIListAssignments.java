@@ -243,7 +243,7 @@ public class GUIListAssignments extends JFrame{
 
                 }
             }
-            
+
         }
 
         panelOut.add(contentPanel, BorderLayout.NORTH);
