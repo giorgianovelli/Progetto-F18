@@ -1,7 +1,7 @@
 package test;
 
 
-import client.gui.GUIAssignmentInformationCustomer;
+
 import client.gui.GUIAssignmentInformationDogsitter;
 import client.gui.GUIDogSitter;
 import server.Assignment;

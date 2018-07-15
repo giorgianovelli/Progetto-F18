@@ -117,7 +117,6 @@ public class GUINewAssignment extends JFrame{
 
         */
 
-
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -152,7 +151,6 @@ public class GUINewAssignment extends JFrame{
                 String addressText = String.valueOf(address.getField().getText().toUpperCase());
                 String numberText = String.valueOf(number.getField().getText().toUpperCase());
 
-
                 Address meetingPoint = new Address(countryText, cityText, addressText, numberText, capText);
                 HashSet<Dog> dogsSelected = new HashSet<>();
 
@@ -162,14 +160,11 @@ public class GUINewAssignment extends JFrame{
                     }
                 }
 
-
                 if (radioButtonCash.isSelected()) {
                     paymentMethod = true;
                 } else if (radioButtonCreditCard.isSelected()) {
                     paymentMethod = false;
                 }
-
-
 
                 if (dateStart.after(dateEnd) || strDateStart.equals(strDateEnd)) {
                     JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
@@ -241,8 +236,6 @@ public class GUINewAssignment extends JFrame{
 
                                 guiChooseDogsitter = new GUIChooseDogsitter(dogsittersMailList, dateStart, dateEnd, dogsSelected, meetingPoint, paymentMethod, email, guiNewAssignment);
                                 guiChooseDogsitter.setVisible(true);
-
-
                             }
                         }
                     }
@@ -252,11 +245,7 @@ public class GUINewAssignment extends JFrame{
         buttonCancel.addActionListener(e -> guiNewAssignment.dispatchEvent(new WindowEvent(guiNewAssignment, WindowEvent.WINDOW_CLOSING)));
         buttonSearch.addActionListener(actionListener);
 
-
     }
-
-
-
 
     /**
      * Method that initalizes graphic components of the GUI
@@ -315,23 +304,15 @@ public class GUINewAssignment extends JFrame{
             gridLayout.setRows(gridLayout.getRows() + 1);
         }
 
-
-
-
         // Secondo pannello
 
         panelPayment.add(labelPayment);
         panelButtons.add(buttonCancel);
         panelButtons.add(buttonSearch);
 
-
-
-
         // Pannello ComboBox
 
         panelCombo.add(newAssignmentBox);
-
-
 
         // Pannello barre testuali
 
@@ -359,7 +340,6 @@ public class GUINewAssignment extends JFrame{
 
         // Labels
 
-
         panelLabel.add(labelMeetingPoint, BorderLayout.LINE_START);
         panelLabel2.add(labelDogs, BorderLayout.LINE_START);
 
@@ -370,11 +350,6 @@ public class GUINewAssignment extends JFrame{
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         add(scrollPane);
-
-
-
-
-
     }
 
 
@@ -551,7 +526,6 @@ class NewAssignmentBox extends JPanel{
     }
 }
 
-
 /**
  * Class NewAssignmentText contains a JLabel and a TextField.
  * It is used for the Meeting Point form that needs to be compiled
@@ -562,14 +536,10 @@ class NewAssignmentBox extends JPanel{
 class NewAssignmentText extends JPanel{
     private TextField field;
 
-
-
-
     /**
      * Constructor of NewAssignmentText
      * @param text to be setted in TextField
      */
-
 
     NewAssignmentText(String text){
 
@@ -587,7 +557,6 @@ class NewAssignmentText extends JPanel{
     }
 }
 
-
 /**
  * Class NewAssignmentCheckBox is used in the dogs form to generate
  * the list of dogs owned by the customer.
@@ -602,7 +571,6 @@ class NewAssignmentCheckBox extends JPanel {
      * Constructor of the class NewAssignmentCheckBox
      * @param text to be setted in the checkbox
      */
-
 
     NewAssignmentCheckBox(String text) {
 
@@ -621,7 +589,6 @@ class NewAssignmentCheckBox extends JPanel {
     JCheckBox getCheckBox() {
         return checkBox;
     }
-
 
     /**
      * Method for getting Dog object from a checkBox
