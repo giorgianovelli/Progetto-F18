@@ -147,87 +147,103 @@ public class GUIListAssignments extends JFrame{
         else if (cs.equals(CalendarState.DELETING_REVIEW)){
             setTitle("Your reviews");
 
-            int j = 0;
-            for(Integer i: listReview.keySet()){
-                Review r = null;
-                r = listReview.get(i);
+            if(reviewNumber == 0){
+                createLabelInfo("There aren't reviews to show!");
+            }
+            else {
 
-                setComponents(setLabelString(cs, null, r), "Delete review", j);
-                buttonAction[j].addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        //proxy.removeReview((listAssignment.get(i)).getCode());
-                        int action = (JOptionPane.showConfirmDialog(null,"Are you sure you want to delete?","Confirm Delete Review",JOptionPane.YES_NO_OPTION));
-                        if (action == JOptionPane.YES_OPTION){
-                            proxy.removeReview((listAssignment.get(i)).getCode()); //TODO controllare!!
+                int j = 0;
+                for (Integer i : listReview.keySet()) {
+                    Review r = null;
+                    r = listReview.get(i);
+
+                    setComponents(setLabelString(cs, null, r), "Delete review", j);
+                    buttonAction[j].addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            //proxy.removeReview((listAssignment.get(i)).getCode());
+                            int action = (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Confirm Delete Review", JOptionPane.YES_NO_OPTION));
+                            if (action == JOptionPane.YES_OPTION) {
+                                proxy.removeReview((listAssignment.get(i)).getCode()); //TODO controllare!!
+                            }
+                            dispose();
+
                         }
-                        dispose();
 
-                    }
+                    });
 
-                });
+                    createPanelReview(j);
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+                    j++;
 
-                createPanelReview(j);
-                gridLayout.setRows(gridLayout.getRows() + 1);
-                j++;
-
+                }
             }
 
 
         }
         else if (cs.equals(CalendarState.SHOW_REVIEWS)){ //DA controllare!!!!!
             setTitle("Your reviews");
-
-            int j = 0;
-            for(Integer i: listReview.keySet()){
-                Review r = null;
-                r = listReview.get(i);
-
-                setComponents(setLabelString(cs, null, r), "Show more", j);
-
-                buttonAction[j].addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        GUIShowReview showReview = new GUIShowReview(listReview.get(i), guiListAssignments);
-                        showReview.setVisible(true);
-                    }
-
-                });
-
-                createPanelReview(j);
-                gridLayout.setRows(gridLayout.getRows() + 1);
-                j++;
-
+            if(reviewNumber == 0){
+                createLabelInfo("There aren't reviews to show!");
             }
+            else
+            {
+                int j = 0;
+                for(Integer i: listReview.keySet()){
+                    Review r = null;
+                    r = listReview.get(i);
+
+                    setComponents(setLabelString(cs, null, r), "Show more", j);
+
+                    buttonAction[j].addActionListener(new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            GUIShowReview showReview = new GUIShowReview(listReview.get(i), guiListAssignments);
+                            showReview.setVisible(true);
+                        }
+
+                    });
+
+                    createPanelReview(j);
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+                    j++;
+
+                }
+            }
+
+
 
 
         } else {
-            int j = 0;
-            for(Integer i : listAssignment.keySet()){
-                Assignment a = null;
-
-                a = listAssignment.get(i);
-
-                ActionListener showInfo = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiListAssignments);
-                        assignmentInfo.setVisible(true);
-
-                    }
-                };
-
-                setComponents(setLabelString(cs, a, null), "Info", j);
-                buttonAction[j].addActionListener(showInfo);
-                createPanelAssignment(a,j);
-                gridLayout.setRows(gridLayout.getRows() + 1);
-                j++;
-
+            if(assignmentNumber == 0){
+                createLabelInfo("There aren't assignments to show!");
             }
+            {
+                int j = 0;
+                for(Integer i : listAssignment.keySet()){
+                    Assignment a = null;
 
+                    a = listAssignment.get(i);
 
+                    ActionListener showInfo = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
 
+                            GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiListAssignments);
+                            assignmentInfo.setVisible(true);
+
+                        }
+                    };
+
+                    setComponents(setLabelString(cs, a, null), "Info", j);
+                    buttonAction[j].addActionListener(showInfo);
+                    createPanelAssignment(a,j);
+                    gridLayout.setRows(gridLayout.getRows() + 1);
+                    j++;
+
+                }
+            }
+            
         }
 
         panelOut.add(contentPanel, BorderLayout.NORTH);
@@ -486,6 +502,15 @@ public class GUIListAssignments extends JFrame{
         labelDescription[i]= new JLabel(strLabel);
         buttonAction[i]= new JButton(strButton);
 
+
+    }
+
+    protected void createLabelInfo(String stringLabel){
+        JLabel noReviewLabel = new JLabel(stringLabel);
+        setSize(WIDTH, 200);
+        panelOut.setLayout(new BorderLayout());
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(60,100,10,30));
+        contentPanel.add(noReviewLabel, BorderLayout.CENTER);
 
     }
 
