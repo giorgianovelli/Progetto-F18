@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.Calendar;
 import client.proxy.CustomerProxy;
 import server.Assignment;
 import server.Review;
@@ -23,7 +24,6 @@ public class GUIListAssignments extends JFrame{
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
-    //TODO refresh della finestra?
     protected GridLayout gridLayout = new GridLayout(1,1);
 
     protected JPanel contentPanel = new JPanel(); //pannello esterno
@@ -41,6 +41,7 @@ public class GUIListAssignments extends JFrame{
 
     protected HashMap<Integer, Assignment> listAssignment;
     protected HashMap<Integer, Review> listReview;
+    protected HashMap<CalendarState,String> strLabel;
     private CustomerProxy proxy;
     protected String email;
 
@@ -64,8 +65,7 @@ public class GUIListAssignments extends JFrame{
 
         this.listAssignment = listAssignment;
         this.email = email;
-        this.proxy = new CustomerProxy(email);
-        this.listReview = proxy.getReviewList();
+
         initComponents(cs, guiCustomer);
     }
 
@@ -80,42 +80,22 @@ public class GUIListAssignments extends JFrame{
         UIManager.put("OptionPane.noButtonText", "No");
         UIManager.put("OptionPane.yesButtonText", "Yes");
 
-
-
+        this.proxy = new CustomerProxy(email);
+        this.listReview = proxy.getReviewList();
 
 
         assignmentNumber = listAssignment.size();
         reviewNumber = listReview.size();
 
-        if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){
-            infoPanel = new JPanel[reviewNumber];
-            labelDescription = new JLabel[reviewNumber];
-            buttonAction = new JButton[reviewNumber];
+        initArray(cs);
 
-        } else {
-            infoPanel = new JPanel[assignmentNumber];
-            labelDescription = new JLabel[assignmentNumber];
-            buttonAction = new JButton[assignmentNumber];
-            labelState = new JLabel[assignmentNumber];
-        }
-
-        //contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setLayout(gridLayout);
         panelOut.setLayout(new BorderLayout());
 
         if (cs.equals(CalendarState.REVIEWING)){
             setTitle("Write a review");
 
-            HashMap<Integer, Assignment> newListAssignment = new HashMap<>(); //nuova lista degli appuntamente precedenti alla data attuale
-
-            for(Integer i : listAssignment.keySet()){
-                Assignment a = null;
-                a = listAssignment.get(i);
-                if(dateBeforeToday(a.getDateEnd())){
-                    newListAssignment.put(a.getCode(), a);
-                }
-
-            }
+            HashMap<Integer, Assignment> newListAssignment = assignmentBeforeToday(); //nuova lista degli appuntamente precedenti alla data attuale
 
             int j = 0;
             int review = 0;
@@ -123,7 +103,6 @@ public class GUIListAssignments extends JFrame{
 
             for(Integer i : newListAssignment.keySet()){
                 Assignment a = null;
-                String labelString = "";
 
                 a = listAssignment.get(i);
                 haveAReview = false;
@@ -139,17 +118,8 @@ public class GUIListAssignments extends JFrame{
 
                 if(!haveAReview){
 
-                    String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-                    String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-                    SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                    date.setLenient(false);
-                    Date startAssignment = a.getDateStart();
-                    String dateStringStartAssigment = date.format(startAssignment);
+                    setComponents(setLabelString(cs, a, null), "Write a review", j);
 
-                    labelString = "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + dateStringStartAssigment +  "</html>";
-
-                    labelDescription[j]= new JLabel(labelString);
-                    buttonAction[j]= new JButton("Write a review");
                     buttonAction[j].addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -161,9 +131,6 @@ public class GUIListAssignments extends JFrame{
 
                     });
 
-
-
-
                     createPanelReview(j);
                     gridLayout.setRows(gridLayout.getRows() + 1);
 
@@ -174,20 +141,7 @@ public class GUIListAssignments extends JFrame{
                 j++;
             }
 
-            System.out.println(review);
-
-            if(review == newListAssignment.size()){
-                System.out.println("Non ci sono recensioni");
-                JLabel noReviewLabel = new JLabel("There aren't assignments to review!");
-                setSize(WIDTH, 200);
-                panelOut.setLayout(new BorderLayout());
-                contentPanel.setBorder(BorderFactory.createEmptyBorder(60,100,10,30));
-                contentPanel.add(noReviewLabel, BorderLayout.CENTER);
-            }
-            /*if (haveAReview) {
-
-            }*/
-
+            noAssignmentToReview(review,newListAssignment);
 
         }
         else if (cs.equals(CalendarState.DELETING_REVIEW)){
@@ -196,17 +150,9 @@ public class GUIListAssignments extends JFrame{
             int j = 0;
             for(Integer i: listReview.keySet()){
                 Review r = null;
-                String labelString;
                 r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm ");
-                date.setLenient(false);
-                Date reviewDate = r.getDate();
-                String dateStringReview = date.format(reviewDate);
-
-                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>";
-                labelDescription[j]= new JLabel(labelString);
-                buttonAction[j]= new JButton("Delete review");
+                setComponents(setLabelString(cs, null, r), "Delete review", j);
                 buttonAction[j].addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -235,21 +181,14 @@ public class GUIListAssignments extends JFrame{
             int j = 0;
             for(Integer i: listReview.keySet()){
                 Review r = null;
-                String labelString;
                 r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                date.setLenient(false);
-                Date reviewDate = r.getDate();
-                String dateStringReview = date.format(reviewDate);
+                setComponents(setLabelString(cs, null, r), "Show more", j);
 
-                labelString = "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>";
-                labelDescription[j]= new JLabel(labelString);
-                buttonAction[j]= new JButton("Show more");
                 buttonAction[j].addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GUIShowReview showReview = new GUIShowReview(listReview.get(i));
+                        GUIShowReview showReview = new GUIShowReview(listReview.get(i), guiListAssignments);
                         showReview.setVisible(true);
                     }
 
@@ -264,14 +203,10 @@ public class GUIListAssignments extends JFrame{
 
         } else {
             int j = 0;
-
             for(Integer i : listAssignment.keySet()){
                 Assignment a = null;
 
                 a = listAssignment.get(i);
-
-                String nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
-                String surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
 
                 ActionListener showInfo = new ActionListener() {
                     @Override
@@ -283,16 +218,9 @@ public class GUIListAssignments extends JFrame{
                     }
                 };
 
-
-
-
-                labelDescription[j]= new JLabel("Assignment with " + nameDogSitter + " " + surnameDogSitter);
-                buttonAction[j]= new JButton("Info");
+                setComponents(setLabelString(cs, a, null), "Info", j);
                 buttonAction[j].addActionListener(showInfo);
-
-
                 createPanelAssignment(a,j);
-
                 gridLayout.setRows(gridLayout.getRows() + 1);
                 j++;
 
@@ -308,17 +236,12 @@ public class GUIListAssignments extends JFrame{
 
         add(scrollPanel);
 
-
-
-        //problema: se voglio vedere di nuovo la finestra di show all assignment dopo aver visto quella delle review, rimane quell delle review
-        //RISOLTO con questo pezzo di codice
         this.addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent we) {
                 guiCustomer.setCalendarState(CalendarState.NORMAL);
             }
          });
     }
-
 
 
     /**
@@ -335,12 +258,9 @@ public class GUIListAssignments extends JFrame{
         panelButtons.setBorder(BorderFactory.createEmptyBorder(10,0,15, 10));
 
         infoPanel[i].setLayout(new BorderLayout());
-        //infoPanel[i].setMinimumSize(new Dimension(450, 100));
-        //infoPanel[i].setPreferredSize(new Dimension(450, 100));
         infoPanel[i].setMaximumSize(new Dimension(450,100));
 
         labelState[i] = createLabelState(a);
-        //labelState[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         panelLabel.add(labelState[i], BorderLayout.WEST);
         panelLabel.add(labelDescription[i], BorderLayout.CENTER);
@@ -368,7 +288,6 @@ public class GUIListAssignments extends JFrame{
         panelButtons.setBorder(BorderFactory.createEmptyBorder(30,0,20, 10));
 
         infoPanel[i].setLayout(new BorderLayout());
-        //infoPanel[i].setMaximumSize(new Dimension(450,100));
         labelDescription[i].setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
 
         panelLabel.add(labelDescription[i], BorderLayout.CENTER);
@@ -451,9 +370,123 @@ public class GUIListAssignments extends JFrame{
         return false;
     }
 
+    /**
+     *
+     * @param cs
+     */
+
+    protected void initArray(CalendarState cs){
+        if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){
+            infoPanel = new JPanel[reviewNumber];
+            labelDescription = new JLabel[reviewNumber];
+            buttonAction = new JButton[reviewNumber];
+
+        } else {
+            infoPanel = new JPanel[assignmentNumber];
+            labelDescription = new JLabel[assignmentNumber];
+            buttonAction = new JButton[assignmentNumber];
+            labelState = new JLabel[assignmentNumber];
+        }
+
+    }
+
+    /**
+     *
+     * @return
+     */
+
+    protected HashMap<Integer, Assignment> assignmentBeforeToday(){
+        HashMap<Integer, Assignment> newListAssignment = new HashMap<>();
+        for(Integer i : listAssignment.keySet()){
+            Assignment a = null;
+            a = listAssignment.get(i);
+            if(dateBeforeToday(a.getDateEnd())){
+                newListAssignment.put(a.getCode(), a);
+            }
+
+        }
+
+        return newListAssignment;
+
+    }
+
+    /**
+     *
+     * @param number
+     * @param listAssignment
+     */
+    protected void noAssignmentToReview(int number, HashMap<Integer, Assignment> listAssignment){
+        if(number == listAssignment.size()){
+            //System.out.println("Non ci sono recensioni");
+            JLabel noReviewLabel = new JLabel("There aren't assignments to review!");
+            setSize(WIDTH, 200);
+            panelOut.setLayout(new BorderLayout());
+            contentPanel.setBorder(BorderFactory.createEmptyBorder(60,100,10,30));
+            contentPanel.add(noReviewLabel, BorderLayout.CENTER);
+        }
+
+    }
 
 
+    /**
+     *
+     * @param a
+     * @param r
+     */
+    protected void setLabelStringMap(Assignment a, Review r){
+        strLabel = new HashMap<>();
+
+        String nameDogSitter = "";
+        String surnameDogSitter = "";
+
+        String dateStringReview ="";
+        String dateStringStartAssigment = "";
+
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        date.setLenient(false);
+        if(r!=null){
+            Date reviewDate = r.getDate();
+            dateStringReview = date.format(reviewDate);
+            strLabel.put(CalendarState.SHOW_REVIEWS,"<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>" );
+            strLabel.put(CalendarState.DELETING_REVIEW, "<html>" + "Assignment with " + proxy.getDogSitterNameOfAssignment(r.getCode()) + " " + proxy.getDogSitterSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>");
+        }
 
 
+        if(a!=null){
+            Date startAssignment = a.getDateStart();
+            dateStringStartAssigment = date.format(startAssignment);
+            nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
+            surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
+            strLabel.put(CalendarState.NORMAL, "Assignment with " + nameDogSitter + " " + surnameDogSitter);
+            strLabel.put(CalendarState.REVIEWING, "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + dateStringStartAssigment +  "</html>");
+        }
+
+    }
+
+    /**
+     *
+     * @param calendarState
+     * @param a
+     * @param r
+     * @return
+     */
+    protected String setLabelString(CalendarState calendarState, Assignment a, Review r){
+        setLabelStringMap(a, r);
+        return strLabel.get(calendarState);
+
+    }
+
+    /**
+     *
+     * @param strLabel
+     * @param strButton
+     * @param i
+     */
+    protected void setComponents( String strLabel, String strButton, int i){
+        labelDescription[i]= new JLabel(strLabel);
+        buttonAction[i]= new JButton(strButton);
+
+
+    }
 
 }

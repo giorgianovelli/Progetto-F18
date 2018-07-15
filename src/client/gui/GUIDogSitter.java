@@ -157,14 +157,15 @@ public class GUIDogSitter extends GUIHome{
     }
 
     public void showAllAssignments(){
-        //TODO da implementare
-        //openListAssignment(proxy);
+        GUIShowDogsitterAssignment guiShowDogsitterAssignment = new GUIShowDogsitterAssignment(CalendarState.NORMAL, proxy.getAssignmentList(), email, this);
+        guiShowDogsitterAssignment.setVisible(true);
+
     }
 
     public void showAllReviews(){
-        //TODO da implementare
-        //calendarState = CalendarState.SHOW_REVIEWS;
-        //openListAssignment(proxy);
+        GUIShowDogsitterAssignment guiShowDogsitterAssignment = new GUIShowDogsitterAssignment(CalendarState.SHOW_REVIEWS, proxy.getAssignmentList(), email, this);
+        guiShowDogsitterAssignment.setVisible(true);
+
     }
 
     public void accountSettings(){

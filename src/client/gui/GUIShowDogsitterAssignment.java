@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +20,6 @@ import java.util.HashMap;
 public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
     private DogSitterProxy dogSitterProxy;
-    //public HashMap<Integer, Review> listReviewDogsitter;
     public  GUIShowDogsitterAssignment guiShowDogsitterAssignment; // serve per disattivare la finestra madre @Riccardo
 
 
@@ -26,14 +27,7 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
         super(cs,listAssignment, email, guiDogsitter);
         guiShowDogsitterAssignment = this;
 
-        dogSitterProxy = new DogSitterProxy(email);
-         //TODO non riesco ad aggiungere la lista delle recensioni
-        //System.out.println(this.listReviewDogsitter.size() + " a");
-
-
         initComponents(cs, guiDogsitter);
-
-
 
     }
 
@@ -43,22 +37,18 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
 
         dogSitterProxy = new DogSitterProxy(email);
-        gridLayout = new GridLayout(1,1);
-        if(cs.equals(CalendarState.NORMAL)){
-            assignmentNumber = listAssignment.size();
-            infoPanel = new JPanel[assignmentNumber];
-            labelDescription = new JLabel[assignmentNumber];
-            buttonAction = new JButton[assignmentNumber];
-            labelState = new JLabel[assignmentNumber];
-        }
+        listReview = dogSitterProxy.getReviewList();
+        assignmentNumber = listAssignment.size();
+        reviewNumber = listReview.size();
 
+        gridLayout = new GridLayout(1,1);
+
+        initArray(cs);
 
         gridLayout = new GridLayout(1,1);
         contentPanel = new JPanel();
         panelOut = new JPanel();
         scrollPanel = new JScrollPane(panelOut);
-
-
 
         contentPanel.setLayout(gridLayout);
         panelOut.setLayout(new BorderLayout());
@@ -71,24 +61,19 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
                 a = listAssignment.get(i);
 
-                String nameCustomer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
-                String surnameCustomer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
-
                 ActionListener showInfo = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        GUIAssignmentInformationCustomer assignmentInfo = new GUIAssignmentInformationCustomer(listAssignment.get(i), email, guiShowDogsitterAssignment);
-                        assignmentInfo.setVisible(true);
+                            //TODO aggiungere GUIAssignmentInformationDogsitter
+
+
 
                     }
                 };
 
 
-
-
-                labelDescription[j]= new JLabel("Assignment with " + nameCustomer + " " + surnameCustomer);
-                buttonAction[j]= new JButton("Info");
+                setComponents(setLabelString(cs, a, null), "Info", j);
                 buttonAction[j].addActionListener(showInfo);
 
 
@@ -99,28 +84,24 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
             }
         }
-        /*else if(cs.equals(CalendarState.SHOW_REVIEWS)){
+        else if(cs.equals(CalendarState.SHOW_REVIEWS)){
             setTitle("Your reviews");
 
             int j = 0;
-            for(Integer i: listReviewDogsitter.keySet()){
+            for(Integer i: listReview.keySet()){
                 Review r = null;
-                String labelString;
-                r = listReviewDogsitter.get(i);
+                r = listReview.get(i);
 
-                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                date.setLenient(false);
-                Date reviewDate = r.getDate();
-                String dateStringReview = date.format(reviewDate);
-
-                labelString = "<html>" + "Customer: " + dogSitterProxy.getCustomerNameOfAssignment(r.getCode()) + " " + dogSitterProxy.getCustomerSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>";
-                labelDescription[j]= new JLabel(labelString);
-                buttonAction[j]= new JButton("Show more");
+                setComponents(setLabelString(cs, null, r), "Show more", j);
                 buttonAction[j].addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GUIShowReview showReview = new GUIShowReview(listReviewDogsitter.get(i));
-                        showReview.setVisible(true);
+
+                        GUIShowDogsitterReview guiShowDogsitterReview = new GUIShowDogsitterReview(listReview.get(i), email);
+                        guiShowDogsitterReview.setVisible(true);
+                        dispose();
+
+
                     }
 
                 });
@@ -130,7 +111,7 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
                 j++;
 
             }
-        }*/
+        }
 
 
 
@@ -143,7 +124,42 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
         add(scrollPanel);
 
 
+        this.addWindowListener (new WindowAdapter() {
+            public void windowClosing (WindowEvent we) {
+                guiDogsitter.setCalendarState(CalendarState.NORMAL);
+            }
+        });
+
+
 
     }
+
+    @Override
+    protected void setLabelStringMap(Assignment a, Review r) {
+        strLabel = new HashMap<>();
+
+        String nameCustomer = "";
+        String surnameCustomer = "";
+
+        String dateStringReview ="";
+
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        date.setLenient(false);
+        if(r!=null){
+            Date reviewDate = r.getDate();
+            dateStringReview = date.format(reviewDate);
+
+            strLabel.put(CalendarState.SHOW_REVIEWS, "<html>" + "Customer: " + dogSitterProxy.getCustomerNameOfAssignment(r.getCode()) + " " + dogSitterProxy.getCustomerSurnameOfAssignment(r.getCode()) +"<br/>"+ dateStringReview +"<br/>" + r.getTitle() +"<br/>" + "Vote: " + r.starsRating() + "</html>");
+        }
+
+
+        if(a!=null){
+            nameCustomer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
+            surnameCustomer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
+            strLabel.put(CalendarState.NORMAL, "Assignment with " + nameCustomer + " " + surnameCustomer);
+        }
+    }
+
+
 
 }

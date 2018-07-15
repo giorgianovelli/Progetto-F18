@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUIShowReview extends JFrame {
 
@@ -32,6 +34,7 @@ public class GUIShowReview extends JFrame {
     protected JTextArea textReply;
 
     protected JButton closeButton;
+    private GUIListAssignments guiListAssignments;
     //private int numberRow;
 
     public GUIShowReview(Review review){
@@ -42,6 +45,28 @@ public class GUIShowReview extends JFrame {
         setResizable(false);
 
         this.review = review;
+
+        initComponent();
+
+    }
+
+    public GUIShowReview(Review review, GUIListAssignments guiListAssignments){
+        setTitle("Show review");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        this.review = review;
+        this.guiListAssignments = guiListAssignments;
+        guiListAssignments.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiListAssignments.setEnabled(true);
+            }
+        });
 
         initComponent();
 
