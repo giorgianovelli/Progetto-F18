@@ -35,14 +35,13 @@ public class GUILogin extends JFrame {
         setLayout(new BorderLayout());
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
         initComponents();
     }
 
     private void initComponents(){
 
         cont1.setLayout(new GridLayout(2, 1, 10, 0)); // mi sposta il pannello dei dati tranne i bottoni
-        cont1.setBorder(BorderFactory.createTitledBorder(" Main Fields: "));
+        cont1.setBorder(BorderFactory.createTitledBorder("Login"));
 
         //login automatico per velocizzare il debug
         textUser.setText("MARCO.CARTA@GMAIL.COM");
@@ -65,6 +64,11 @@ public class GUILogin extends JFrame {
 
         cont1.add(panelLoginData);
         cont1.add(panelBottom );
+
+        panelLoginData.setBackground(new Color(176, 144, 97));
+        panelBottom.setBackground(new Color(176, 144, 97));
+        textPwd.setBackground(new Color(241, 230, 218));
+        textUser.setBackground(new Color(241, 230, 218));
 
 
 
