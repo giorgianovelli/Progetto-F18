@@ -170,12 +170,13 @@ public class GUIDogSitter extends GUIHome{
 
     public void accountSettings(){
         //TODO da implementare
-        //GUISettings guiSettings = new GUISettings(email);
-        //guiSettings.setVisible(true);
+       // GUIDogSitterSettings guiDogSitterSettings = new GUIDogSitterSettings(email);
+      //  guiDogSitterSettings.setVisible(true);
     }
 
     public void changePassword(){
-        //TODO da implementare
+        GUIDogSitterChangePassword guiDogSitterChangePassword = new GUIDogSitterChangePassword(email);
+        guiDogSitterChangePassword.setVisible(true);
     }
 
     public void replyToReview(){
