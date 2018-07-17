@@ -70,42 +70,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private CustomerProxy customerProxy;
 
 
-
-
-    /**
-     * Constructor using GUIDogsitter
-     *
-     * @param a            Assignment
-     * @param email        of the customer
-     * @param guiDogSitter GUI from which is launched
-     */
-
-
-    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIDogSitter guiDogSitter) {
-        setTitle("Assignment information");
-        setSize(WIDTH, HEIGHT);
-        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        setLayout(new BorderLayout());
-
-        guiDogSitter.setEnabled(false);
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                guiDogSitter.setEnabled(true);
-            }
-        });
-        this.email = email;
-        guiAssignmentInformationCustomer = this;
-
-
-        initComponents(a);
-    }
-
-
     /**
      * Constructor using GUIListAssignments
      *
@@ -138,38 +102,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         initComponents(a);
     }
 
-    /**
-     * Constructor using guiShowDogsitterAssignment
-     *
-     * @param a                          Assignment
-     * @param email                      of the customer
-     * @param guiShowDogsitterAssignment GUI from which is launched
-     */
-
-    GUIAssignmentInformationCustomer(Assignment a, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment) {
-        setTitle("Assignment information");
-        setSize(WIDTH, HEIGHT);
-        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        setLayout(new BorderLayout());
-
-
-        guiShowDogsitterAssignment.setEnabled(false);
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                guiShowDogsitterAssignment.setEnabled(true);
-            }
-        });
-        this.email = email;
-        guiAssignmentInformationCustomer = this;
-
-
-        initComponents(a);
-    }
 
     /**
      * Constructor using GUICustomer

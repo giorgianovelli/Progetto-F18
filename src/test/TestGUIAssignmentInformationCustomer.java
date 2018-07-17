@@ -61,11 +61,11 @@ public class TestGUIAssignmentInformationCustomer {
 
 
 
-        GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "MARCO.CARTA@GMAIL.COM", guiDogSitter); //passaggio assignment
+        //GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "MARCO.CARTA@GMAIL.COM", guiDogSitter); //passaggio assignment
         //GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter); //passaggio assignment
         //GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter);
-        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gui.setVisible(true);
+        //gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //gui.setVisible(true);
 
 
     }

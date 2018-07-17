@@ -76,24 +76,9 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
                 for (Map.Entry<Integer, Assignment> entry: listAssignment.entrySet()) {
                     Assignment a = null;
 
-
-                    ActionListener showInfo = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-
-                            //TODO aggiungere GUIAssignmentInformationDogsitter
-
-
-
-                        }
-                    };
-
-
-
-
                     setComponents(setLabelString(cs, entry.getValue(), null), "Info", j);
 
-                    //buttonAction[j].addActionListener(e -> new GUIAssignmentInformationDogsitter(entry.getValue(), email, guiShowDogsitterAssignment).setVisible(true));
+                    buttonAction[j].addActionListener(e -> new GUIAssignmentInformationDogsitter(entry.getValue(), email, guiShowDogsitterAssignment).setVisible(true));
 
                     createPanelAssignment(entry.getValue(), j);
 
