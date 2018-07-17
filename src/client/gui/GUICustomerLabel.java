@@ -31,6 +31,7 @@ public class GUICustomerLabel extends JFrame {
 
     private JTextField textDogsName = new JTextField();
     private JTextField textDogsWeight = new JTextField();
+    private JTextField textEmail = new JTextField();
 
     private JComboBox<String> breedList;
     private String[] breed;
@@ -56,7 +57,7 @@ public class GUICustomerLabel extends JFrame {
 
     /**
      * Constructor
-     * @param email
+     * @param
      *
      */
 
@@ -67,9 +68,8 @@ public class GUICustomerLabel extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-
         this.email = email;
-        this.proxy = new CustomerProxy(email);
+        proxy = new CustomerProxy(email);
 
         initComponents();
     }
@@ -193,10 +193,9 @@ public class GUICustomerLabel extends JFrame {
             e.printStackTrace();
         }
 
-        return proxy.addDog(email,textDogsName.getText().toUpperCase(), breedList.getSelectedItem().toString(), dateOfBirth, Double.parseDouble(textDogsWeight.getText()));
+        return proxy.addDog(textEmail.getText(),textDogsName.getText().toUpperCase(), breedList.getSelectedItem().toString(), dateOfBirth, Double.parseDouble(textDogsWeight.getText()));
 
     }
-
 
 
 
