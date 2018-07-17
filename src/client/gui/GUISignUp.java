@@ -5,9 +5,12 @@ import client.Calendar;
 import client.proxy.CustomerProxy;
 //import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import client.proxy.DogSitterProxy;
+import server.Availability;
+import server.DogSize;
 import server.User;
 import server.bank.PaymentMethod;
 import server.places.Address;
+import server.places.Area;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,18 +19,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
 
 public class GUISignUp extends JFrame{
     final int WIDTH = 600;
     final int HEIGHT = 650;
+    final double MAX_AMOUNT =  500.0;
+    final double MIN_AMOUNT = 50.0;
+
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
     private JPanel panelButton = new JPanel();
-    private JPanel panelRadioButton = new JPanel();
     private JPanel panelDate = new JPanel();
     private JPanel panelAddress = new JPanel();
     private JPanel panelExpiration = new JPanel();
@@ -42,11 +48,8 @@ public class GUISignUp extends JFrame{
     private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
     private JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
     private JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
-    private JLabel labelStreet = new JLabel("Street:", SwingConstants.LEFT);
-    private JLabel labelNumber = new JLabel();
     private JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
     private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
-    private JLabel labelPaymentMethod = new JLabel("PaymentMethod:", SwingConstants.LEFT);
 
     private JTextField textName = new JTextField();
     private JTextField textSurname = new JTextField();
@@ -61,10 +64,9 @@ public class GUISignUp extends JFrame{
     private JTextField textPhoneNumber = new JTextField();
 
     private JButton buttonCustomerConfirm = new JButton("Next");
-   // private JButton buttonDogSitterConfirm = new JButton("Continue Registration as DogSitter");
     private JButton buttonCancel = new JButton("Cancel");
     //todo per Date of birth
-    private Date dateofBirth = new Date();
+   // private Date dateofBirth = new Date();
 
     private JComboBox<String> dayList;
     private JComboBox<String> monthList;
@@ -82,13 +84,12 @@ public class GUISignUp extends JFrame{
     private JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
     private JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
     private JTextField textCreditCardOwneSurname = new JTextField();
-    private JLabel labelAmount = new JLabel("Amount:", SwingConstants.LEFT);
-    private JTextField textAmount = new JTextField();
+
 
     private JTextField textPaymentMethod = new JTextField();
     private JTextField textCreditCardOwnerName = new JTextField();
     private JTextField textCreditCardNumber = new JTextField();
-    //private JComboBox<String> expirationDay;
+
     private JComboBox<String> expirationMonth;
     private JComboBox<String> expirationYear;
     private JTextField textSecurityCode = new JTextField();
@@ -99,9 +100,8 @@ public class GUISignUp extends JFrame{
 
 
     //TODO attributi per client-server
-  //  private String email;
+    private String email;
     private CustomerProxy proxy;
-    private DogSitterProxy dogSitterProxy;
 
 
 //______________________________________________________________________________________________________________________________________________________________________________
@@ -117,10 +117,7 @@ public class GUISignUp extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-
         proxy = new CustomerProxy(textEmail.getText());
-       // dogSitterProxy = new DogSitterProxy(textEmail.getText());
-
 
         initComponents();
     }
@@ -128,21 +125,20 @@ public class GUISignUp extends JFrame{
 //______________________________________________________________________________________________________________________________________________________________________________
 
 
-    private void initComponents()  {
+    private void initComponents() {
 
         /**
          * Panels
          */
 
-        panelData.setLayout(new GridLayout(11, 1,40,5));
+        panelData.setLayout(new GridLayout(11, 1, 40, 5));
         panelData.setBorder(BorderFactory.createTitledBorder("FIRST STEP_Customer Fields: "));
         panelPayment.setBorder(BorderFactory.createTitledBorder("Credit Card information: "));
-        panelPayment.setLayout(new GridLayout(5, 1,40,5));
+        panelPayment.setLayout(new GridLayout(5, 1, 40, 5));
 
         panelOut.add(panelData, BorderLayout.NORTH);
         panelOut.add(panelPayment, BorderLayout.CENTER);
         panelOut.add(panelButton, BorderLayout.SOUTH);
-       // panelOut.add(panelRadioButton);
 
 
         panelData.add(labelName);
@@ -157,8 +153,8 @@ public class GUISignUp extends JFrame{
          * JCOMBOBOX di DATE OF BIRTH
          */
 
-        for(int years = 1930; years<= Calendar.getCurrentYear() ; years++) {
-            years_tmp.add(years+"");
+        for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
+            years_tmp.add(years + "");
         }
 
         dayList = new JComboBox<>(day);
@@ -171,7 +167,7 @@ public class GUISignUp extends JFrame{
          * others panels
          */
 
-        panelDate.setLayout(new GridLayout(1,3,5,5));
+        panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
         panelDate.add(monthList);
         panelDate.add(yearList);
@@ -191,7 +187,7 @@ public class GUISignUp extends JFrame{
         panelData.add(textCap);
 
         panelData.add(labelAddress);
-        panelAddress.setLayout(new BoxLayout(panelAddress,BoxLayout.X_AXIS));
+        panelAddress.setLayout(new BoxLayout(panelAddress, BoxLayout.X_AXIS));
         panelAddress.add(textStreet);
         panelAddress.add(textNumber);
         panelData.add(panelAddress);
@@ -201,7 +197,7 @@ public class GUISignUp extends JFrame{
 
         //-----------------------------------------------------------------------------------
         /**
-         * TODO  PAYMENT METHOD
+         *   PAYMENT panels
          */
         panelPayment.add(labelCreditCardOwnerName);
         panelPayment.add(textCreditCardOwnerName);
@@ -219,6 +215,11 @@ public class GUISignUp extends JFrame{
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
+        textExpirationDays.setEditable(false);
+        labelExpirationDate.setLabelFor(textExpirationDays);
+
+        //-----------------------------------------------------------------------------------
+
 
         /**
          * PANEL DI EXPIRATION DATE per sistemare le jcombobox
@@ -230,33 +231,26 @@ public class GUISignUp extends JFrame{
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelPayment.add(panelExpiration);
-
         panelPayment.add(labelSecurityCode);
         panelPayment.add(textSecurityCode);
-       /* panelData.add(labelAmount);
-        panelData.add(textAmount);*/
-
         add(panelOut);
 
-
-        //TODO DA SISTEMARE I BOTTONI
-        panelButton.setLayout(new GridLayout(1, 2,5,5));
-        // panelButton.setLayout(new GridBagLayout());
+        /**
+         * Button panels
+         */
+        panelButton.setLayout(new GridLayout(1, 2, 5, 5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonCustomerConfirm, BorderLayout.SOUTH);
-       // panelButton.add(buttonDogSitterConfirm, BorderLayout.SOUTH);
 
-        // contentPanel.setLayout(new GridLayout(infoPanel.length,1, 5,5));
 
 
 
         //-----------------------------------------------------------------------------------
 
         /**
-         *  TODO METODO DELLA MODIFICA dei dati da SISTEMARE
+         *  TODO METODO DELLA MODIFICA dei dati
          */
-        // cotrollo se l'inserimento dati è andato a buon fine oppure no
 
         ActionListener registration = new ActionListener() {
             @Override
@@ -265,7 +259,7 @@ public class GUISignUp extends JFrame{
                 if (registrationAe.getActionCommand().equals("Next")) {
 
                     if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("")
-                            || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("") ) {
+                            || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
                     } else {
@@ -274,48 +268,44 @@ public class GUISignUp extends JFrame{
 
                         if (add) {
                             JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-                            dispose();
-                            //GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText());
-                           // guiCustomerLabel.setVisible(true);
+
+                             GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText());
+                             guiCustomerLabel.setVisible(true);
+
                         }
 
                     }
 
                 }
-                
 
-                if (registrationAe.getActionCommand().equals("Cancel")) {
-                    //JOptionPane.showMessageDialog(new JFrame(), "are you sure you want to leave the registration?", "", JOptionPane.YES_NO_OPTION);
+                        if (registrationAe.getActionCommand().equals("Cancel")) {
+                            System.exit(0);  //todo esco oppure torno alla schermata di login??
+                        }
 
-                    //dispose();
-                    System.exit(0);  //todo esco oppure torno alla schermata di login??
-                }
+                    }
 
-            }
+
+
+
         };
         buttonCancel.addActionListener(registration);
         buttonCustomerConfirm.addActionListener(registration);
-       // buttonDogSitterConfirm.addActionListener(registration);
-
 
     }
 
 //______________________________________________________________________________________________________________________________________________________________________________
 
     /**
-     *  metodi per inserire le tuple nel database
+     *  metodo per inserire le tuple nel database
      */
 
     private boolean addCustomerValues() {
         /**
          *  data di nascita
          */
-
         Date dateOfBirth2 = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
         String strDateOfBirth = dayList.getSelectedItem().toString() + "/" + monthList.getSelectedItem().toString() + "/" + yearList.getSelectedItem().toString();
-
 
         try {
             dateOfBirth2 = dateFormat.parse(strDateOfBirth);
@@ -325,73 +315,65 @@ public class GUISignUp extends JFrame{
             e.printStackTrace();
         }
 
-
-        /**
-         * DATA DI SCADENZA
-         */
-        //  Date dateOfExp = new Date();
-        //  Date payExpiration = new Date();
-        Date ex_Year = new Date();
-
-
-        PaymentMethod strExpirationDate = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), ex_Year, textSecurityCode.getText(), 0.0);
-
-        SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
-        String expiration_Months = expirationDateFormatmm.format(strExpirationDate.getExpirationDate());
-
-
-        /**
-         * TODO inserimento ultimo giorno del mese in modo automatico NON FUNZIONA PRENDE SOLO "31"
-         */
-        SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
-        String expiration_Years = expirationDateFormatyyyy.format(strExpirationDate.getExpirationDate());
-
-        try{
-            ex_Year = expirationDateFormatyyyy.parse(expiration_Years); //prende come data solo l'anno
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-
-        String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), ex_Year));
-        // String expiration_Days = Integer.toString(Calendar.getNDayofMonth(Integer.parseInt(expiration_Months), dateOfExp));
-
-
-        /**
-         * stampa ultimo giorno del mese
-         */
-        textExpirationDays.setText(expiration_Days);
-        labelExpirationDate.setLabelFor(textExpirationDays);
-
         /**
          * generazione casuale di amount
          */
-
-        Double max = 500.0;
-        Double min = 50.0;
+        Double max = MAX_AMOUNT;
+        Double min = MIN_AMOUNT;
         Random rand = new Random();
         Double amount = Math.round((min + (max - min) * rand.nextDouble()) * 100d) / 100d;
 
+        /**
+         *  TODO DATA DI SCADENZA
+         */
 
-        PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), ex_Year, textSecurityCode.getText(), amount);
-        Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
+        Date ex_Year = new Date();
+        PaymentMethod strExpirationDate = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), ex_Year, textSecurityCode.getText(), amount);
+
+
+        //TODO PER INSERIRE SOLO L'ULTIMO GIORNO DELL'ANNO
+        SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
+        String expiration_Months = expirationDateFormatmm.format(strExpirationDate.getExpirationDate());
+
+        SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
+        String expiration_Years = expirationDateFormatyyyy.format(strExpirationDate.getExpirationDate());
+
+        Date updateExpiration = new Date();
+
+        try {
+            updateExpiration = expirationDateFormatyyyy.parse(expiration_Years);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), updateExpiration));
+
+        /**
+         * stampa il giorno sulla label nell'interfaccia
+         */
+        textExpirationDays.setText(expiration_Days);
+
+        //todo aggiorna la data di scadenza
+        Date updateExpiration2 = new Date();
+        SimpleDateFormat expirationdateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date yearExpiration2 = new Date();
+
+        String strDateExpiration = Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), yearExpiration2) + "/" + expirationMonth.getSelectedItem().toString() + "/" + expirationYear.getSelectedItem().toString();
+        try {
+            updateExpiration2 = expirationdateFormat.parse(strDateExpiration);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         String strPassword = String.valueOf(textPassword.getPassword());
+        Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
+        PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), updateExpiration2 , textSecurityCode.getText(), amount);
 
         return proxy.customerSignUp(textEmail.getText(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
