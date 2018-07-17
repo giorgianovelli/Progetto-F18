@@ -21,19 +21,19 @@ public class GUIDailyAssignments extends JFrame {
     final int HEIGHT = 512;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private JPanel p = new JPanel();//pannello esterno
-    private JPanel panelButtons = new JPanel();
-    private GridLayout gridLayout = new GridLayout(1, 1);
-    private JButton button[] = new JButton[SwingConstants.RIGHT];
-    private JButton buttonInfo[] = new JButton[SwingConstants.RIGHT];
-    private JLabel[] labelDescription = new JLabel[SwingConstants.LEFT];
-    private JPanel[] infoPanel;
-    private JLabel lb = new JLabel();
-    private JScrollPane scroll = new JScrollPane(p);
-    private HashMap<Integer, Assignment> listAssigment;
-    private CustomerProxy proxy;
-    private String email;
-    private Date todayDate;
+    protected JPanel p = new JPanel();//pannello esterno
+    protected JPanel panelButtons = new JPanel();
+    protected GridLayout gridLayout = new GridLayout(1, 1);
+    protected JButton button[] = new JButton[SwingConstants.RIGHT];
+    protected JButton buttonInfo[] = new JButton[SwingConstants.RIGHT];
+    protected JLabel[] labelDescription = new JLabel[SwingConstants.LEFT];
+    protected JPanel[] infoPanel;
+    protected JLabel lb = new JLabel();
+    protected JScrollPane scroll = new JScrollPane(p);
+    protected HashMap<Integer, Assignment> listAssigment;
+    protected CustomerProxy proxy;
+    protected String email;
+    protected Date todayDate;
     public GUIDailyAssignments guiDailyAssignments;
 
 
@@ -49,16 +49,16 @@ public class GUIDailyAssignments extends JFrame {
         setLayout(new BorderLayout());
         setVisible(true);
         this.email = email;
+        this.todayDate = todayDate;
         proxy = new CustomerProxy(email);
         this.listAssigment = proxy.getAssignmentList();
-        this.todayDate = todayDate;
         initComponents(cs);
         guiDailyAssignments = this;
     }
 
 
 
-    private void initComponents(CalendarState cs) {
+    protected void initComponents(CalendarState cs) {
 
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setLayout(new GridLayout(9, 1, 20, 20));
@@ -68,7 +68,7 @@ public class GUIDailyAssignments extends JFrame {
 
             setTitle("Daily assignment");
 
-            HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
+            HashMap<Integer, Assignment>todayAssigment = new HashMap<>();
 
             int n = 0;
 
@@ -242,7 +242,7 @@ public class GUIDailyAssignments extends JFrame {
          * @param i indice del JPanel
          */
 
-        private void createPanelOrder ( int i){
+        protected void createPanelOrder ( int i){
 
             infoPanel[i] = new JPanel();
 
@@ -267,7 +267,7 @@ public class GUIDailyAssignments extends JFrame {
          */
 
 
-        private void createPanelOrderDelete(int i) {
+        protected void createPanelOrderDelete(int i) {
 
         infoPanel[i] = new JPanel();
         panelButtons = new JPanel();

@@ -10,11 +10,15 @@ public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationC
      * @param email of the customer
      * @param guiDogSitter GUI from which is created
      */
-    public GUIAssignmentInformationDogsitter(Assignment assignment, String email, GUIDogSitter guiDogSitter)  {
+    public GUIAssignmentInformationDogsitter(Assignment assignment, String email, GUIDailyAssignments guiDogSitter)  {
         super(assignment, email, guiDogSitter);
 
 
         initComponents();
+    }
+
+    public GUIAssignmentInformationDogsitter(Assignment a, String email, GUIDogSitter guiHome) {
+        super(a,email,guiHome);
     }
 
 
@@ -24,7 +28,7 @@ public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationC
         getLabelDogsitter2().setText(getCustomerProxy().getName() + " " + getCustomerProxy().getSurname());
 
         if (!getLabelPaymentMethod2().getText().equals("Cash"))
-        getLabelPaymentMethod2().setText("Credit card");
+            getLabelPaymentMethod2().setText("Credit card");
 
 
     }
