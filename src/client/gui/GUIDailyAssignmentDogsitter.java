@@ -11,11 +11,13 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
     private DogSitterProxy dogSitterProxy;
-    HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
+    private GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter;
+    private HashMap<Integer, Assignment> todayAssigment = new HashMap<>();
 
     public GUIDailyAssignmentDogsitter(CalendarState cs, String email, Date todayDate) {
         super(cs, email, todayDate);
@@ -24,6 +26,7 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
         this.todayDate = todayDate;
         dogSitterProxy = new DogSitterProxy(email);
         this.listAssigment = dogSitterProxy.getAssignmentList();
+        guiDailyAssignmentDogsitter = this;
         initComponents(cs);
 
 
@@ -74,10 +77,10 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
                 int j = 0;
 
-                for (Integer i : todayAssigment.keySet()) {
+                for (Map.Entry<Integer, Assignment> entry: todayAssigment.entrySet()) {
                     Assignment a = null;
                     String labelString = "";
-                    a = todayAssigment.get(i);
+                    a = entry.getValue();
                     String nameCostumer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
                     String surnameCostumer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
                     labelString = "<html>" + "Assignment with " + nameCostumer + " " + surnameCostumer + "</html>";
@@ -85,23 +88,9 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
                     labelDescription[j] = new JLabel(labelString);
                     button[j] = new JButton("More info");
-
-                    ActionListener showInfo = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-
-                            // TODO - interfaccia di Riccardo
-
-
-                            GUIAssignmentInformationDogsitter assignmentInfo = new GUIAssignmentInformationDogsitter(todayAssigment.get(i), email, guiDailyAssignments);
-                            assignmentInfo.setVisible(true);
-
-
-                        }
-                    };
-
-
-                    button[j].addActionListener(showInfo);
+                    System.out.println(entry.getValue());
+                    System.out.println(email);
+                    button[j].addActionListener(e -> new GUIAssignmentInformationDogsitter(entry.getValue(), email, guiDailyAssignmentDogsitter).setVisible(true));
 
 
                     createPanelOrder(j);
