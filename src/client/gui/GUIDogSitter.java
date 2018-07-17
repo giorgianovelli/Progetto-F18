@@ -150,10 +150,15 @@ public class GUIDogSitter extends GUIHome{
             e.printStackTrace();
         }
 
-        if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
+        /*if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
             GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
             guiDailyAssignments.setVisible(true);
+        }*/
+        if ((!(cae.getActionCommand().equals(""))) &&  ((calendarState.equals(CalendarState.NORMAL)))){
+            GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter = new GUIDailyAssignmentDogsitter(calendarState, email, todayDate);
+            guiDailyAssignmentDogsitter.setVisible(true);
         }
+
     }
 
     public void showAllAssignments(){
@@ -167,6 +172,7 @@ public class GUIDogSitter extends GUIHome{
         guiShowDogsitterAssignment.setVisible(true);
 
     }
+
 
     public void accountSettings(){
         //TODO da implementare
