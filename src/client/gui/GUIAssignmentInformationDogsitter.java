@@ -18,10 +18,6 @@ public class GUIAssignmentInformationDogsitter extends GUIAssignmentInformationC
     }
 
 
-    /**
-     * Method that initalizes graphic components of the GUI
-     */
-
     public void initComponents() {
 
         getLabelDogsitter1().setText("Customer: ");

@@ -2,6 +2,7 @@ package test;
 
 
 
+import client.gui.GUIAssignmentInformationCustomer;
 import client.gui.GUIAssignmentInformationDogsitter;
 import client.gui.GUIDogSitter;
 import server.Assignment;
@@ -59,9 +60,13 @@ public class TestGUIAssignmentInformationCustomer {
         Assignment assingment = new Assignment(1, dogList, startDate, endDate, address1);
 
 
-        GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter); //passaggio assignment
+
+        GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "MARCO.CARTA@GMAIL.COM", guiDogSitter); //passaggio assignment
+        //GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter); //passaggio assignment
+        //GUIAssignmentInformationCustomer gui = new GUIAssignmentInformationCustomer(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
+
 
     }
 }

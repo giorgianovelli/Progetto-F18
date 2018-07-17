@@ -16,11 +16,12 @@ import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
     private DogSitterProxy dogSitterProxy;
-    public  GUIShowDogsitterAssignment guiShowDogsitterAssignment; // serve per disattivare la finestra madre @Riccardo
+    public  GUIShowDogsitterAssignment guiShowDogsitterAssignment;
 
 
     /**
@@ -43,6 +44,7 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
      * @param cs idenfica il menu da cui viene richiamata questa interfaccia
      * @param guiDogsitter
      */
+
     @Override
     protected void initComponents(CalendarState cs, GUIHome guiDogsitter) {
 
@@ -71,10 +73,9 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
             else {
                 int j = 0;
 
-                for (Integer i : listAssignment.keySet()) {
+                for (Map.Entry<Integer, Assignment> entry: listAssignment.entrySet()) {
                     Assignment a = null;
 
-                    a = listAssignment.get(i);
 
                     ActionListener showInfo = new ActionListener() {
                         @Override
@@ -83,15 +84,18 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
                             //TODO aggiungere GUIAssignmentInformationDogsitter
 
 
+
                         }
                     };
 
 
-                    setComponents(setLabelString(cs, a, null), "Info", j);
-                    buttonAction[j].addActionListener(showInfo);
 
 
-                    createPanelAssignment(a, j);
+                    setComponents(setLabelString(cs, entry.getValue(), null), "Info", j);
+
+                    //buttonAction[j].addActionListener(e -> new GUIAssignmentInformationDogsitter(entry.getValue(), email, guiShowDogsitterAssignment).setVisible(true));
+
+                    createPanelAssignment(entry.getValue(), j);
 
                     gridLayout.setRows(gridLayout.getRows() + 1);
                     j++;

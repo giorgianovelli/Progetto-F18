@@ -70,6 +70,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private CustomerProxy customerProxy;
 
 
+
+
     /**
      * Constructor using GUIDogsitter
      *
@@ -79,7 +81,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
      */
 
 
-    GUIAssignmentInformationCustomer(Assignment a, String email, GUIDogSitter guiDogSitter) {
+    public GUIAssignmentInformationCustomer(Assignment a, String email, GUIDogSitter guiDogSitter) {
         setTitle("Assignment information");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -152,6 +154,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
 
+
         guiShowDogsitterAssignment.setEnabled(false);
 
         this.addWindowListener(new WindowAdapter() {
@@ -202,7 +205,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     }
 
     /**
-     * Constructor using GUIAssignmentInformationCustomer
+     * Constructor using GUIDailyAssignments
      *
      * @param a                   Assignment
      * @param email               of the customer
