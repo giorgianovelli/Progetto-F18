@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TestGUICustomerLabel {
     public static void main(String[] args) throws Exception {
 
-        String inputEmail;
+       /* String inputEmail;
 
         Scanner tastiera = new Scanner(System.in);
         System.out.println("Inserisci email utente già registrato :");
@@ -21,6 +21,6 @@ public class TestGUICustomerLabel {
         System.out.println("L'email inserita è: " + inputEmail);
 
         GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(inputEmail);
-        guiCustomerLabel.setVisible(true);
+        guiCustomerLabel.setVisible(true);*/
     }
 }

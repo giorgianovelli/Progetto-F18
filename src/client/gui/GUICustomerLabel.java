@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class GUICustomerLabel extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 400;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private GUICustomerLabel guiCustomerLabel;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
@@ -61,7 +64,7 @@ public class GUICustomerLabel extends JFrame {
      *
      */
 
-    public GUICustomerLabel(String email) {
+    public GUICustomerLabel(String email, GUISignUp guiSignUp) {
         setTitle("CaniBau (Sign up)");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -71,8 +74,23 @@ public class GUICustomerLabel extends JFrame {
         this.email = email;
         proxy = new CustomerProxy(email);
 
+        guiSignUp.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiSignUp.setEnabled(true);
+            }
+        });
+
+        guiCustomerLabel = this;
+
+
         initComponents();
     }
+
+
 //______________________________________________________________________________________________________________________________________________________________________________
 
 
@@ -155,15 +173,18 @@ public class GUICustomerLabel extends JFrame {
 
                         if(add){
                             JOptionPane.showMessageDialog(new JFrame(), "Thanks for your registration!", "", JOptionPane.INFORMATION_MESSAGE);
+                             dispose();
                              GUILogin guiLogin = new GUILogin();
                              guiLogin.setVisible(true);
+
                         }
                     }
 
                 }
 
                 if (registrationAe.getActionCommand().equals("Back")) {
-                    dispose();
+                   // GUISignUp guiSignUp = new GUISignUp();
+                   // guiSignUp.setVisible(true);
 
                 }
             }

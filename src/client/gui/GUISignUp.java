@@ -29,7 +29,7 @@ public class GUISignUp extends JFrame{
     final double MIN_AMOUNT = 50.0;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-
+    private GUISignUp guiSignUp;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
@@ -118,6 +118,9 @@ public class GUISignUp extends JFrame{
         setResizable(false);
         setLayout(new BorderLayout());
         proxy = new CustomerProxy(textEmail.getText());
+
+        guiSignUp = this;
+
 
         initComponents();
     }
@@ -268,8 +271,7 @@ public class GUISignUp extends JFrame{
 
                         if (add) {
                             JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-
-                             GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText());
+                             GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
                              guiCustomerLabel.setVisible(true);
 
                         }
