@@ -30,9 +30,17 @@ public class GUIAwards extends JFrame {
     private JLabel sam;
 
 
+    /**
+     * Constuctor of the class
+     */
+
     public GUIAwards(){
         initComponent();
     }
+
+    /**
+     * initialize the interface components
+     */
 
     private void initComponent(){
         setTitle("Credits");
