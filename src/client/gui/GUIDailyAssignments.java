@@ -37,9 +37,17 @@ public class GUIDailyAssignments extends JFrame {
     public GUIDailyAssignments guiDailyAssignments;
 
 
-    public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {
 
-        //TODO cambiare il costruttore: l'oggetto customer non sarà più accessibile
+    /**
+     * Constructor
+     *
+     * @param cs   identifies the menu from which this interface is called
+     * @param email       of the customer
+     * @param todayDate  identifies the days in the calendar
+
+     */
+
+    public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {
 
         setTitle("Daily assignments");
         setSize(WIDTH, HEIGHT);
@@ -55,7 +63,12 @@ public class GUIDailyAssignments extends JFrame {
 
     }
 
+    /**
+     * Method that initalizes graphic components of the GUI
+     *
+     * @param cs identifies the menu from which this interface is called
 
+     */
 
     protected void initComponents(CalendarState cs) {
         proxy = new CustomerProxy(email);
@@ -181,12 +194,7 @@ public class GUIDailyAssignments extends JFrame {
 
             else{
 
-                //if ((cs.equals((CalendarState.NORMAL))))
-
                 if (todayAssigment.isEmpty()) {
-
-                        //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-                        //lb.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 50));
 
                         lb = new JLabel(" There aren't assignments today ", SwingConstants.CENTER);
 
@@ -239,8 +247,9 @@ public class GUIDailyAssignments extends JFrame {
     }
 
         /**
-         * crea un JPanel che contiene le informazioni dell'appuntamento: stato, descrizione e il bottone - More info
-         * @param i indice del JPanel
+         * method who create a panel that contains the assignment information: status, description and  button
+         * @param i panel index
+
          */
 
         protected void createPanelOrder ( int i){
@@ -262,18 +271,17 @@ public class GUIDailyAssignments extends JFrame {
 
         }
 
-        /**
-         * crea un JPanel che contiene le informazioni dell'appuntamento da cancellare: stato, descrizione e i bottoni( Delete and More info)
-         * @param i indice del JPanel
-         */
+         /**
+         * method who create a panel that contains the assignment information: status, description and  button
+         * @param i panel index
 
+        */
 
         protected void createPanelOrderDelete(int i) {
 
         infoPanel[i] = new JPanel();
         panelButtons = new JPanel();
 
-        //panelButtons.setLayout(new GridLayout(1,1));
         panelButtons.setBorder(BorderFactory.createEmptyBorder(5,0,5, 150));
 
 
@@ -288,12 +296,12 @@ public class GUIDailyAssignments extends JFrame {
 
         infoPanel[i].add(panelButtons, BorderLayout.EAST);
 
-        infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,10,5,150)); //5,5,5,5
+        infoPanel[i].setBorder(BorderFactory.createEmptyBorder(5,10,5,150));
 
         p.add(infoPanel[i]);
         }
 
 
 }
-// 1. Migliorato il layout Delete Assignments
-// 2. Testato il metodo cancella - FUNZIONA!!
+
+

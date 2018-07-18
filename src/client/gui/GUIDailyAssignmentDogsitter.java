@@ -20,7 +20,18 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
     private GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter;
 
 
+    /**
+     * Constructor
+     *
+     * @param cs   identifies the menu from which this interface is called
+     * @param email       of the customer
+     * @param todayDate  identifies the days in the calendar
+
+     */
+
+
     public GUIDailyAssignmentDogsitter(CalendarState cs, String email, Date todayDate) {
+
         super(cs, email, todayDate);
 
         this.email = email;
@@ -31,20 +42,32 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
     }
 
+    /**
+     * Method that initalizes graphic components of the GUI
+     *
+     * @param cs identifies the menu from which this interface is called
+
+     */
+
     @Override
     protected void initComponents(CalendarState cs) {
         dogSitterProxy = new DogSitterProxy(email);
         listAssigment = dogSitterProxy.getAssignmentList();
-        HashMap<Integer, Assignment> todayAssigment = new HashMap<Integer, Assignment>();
-        gridLayout = new GridLayout(1, 1);
-        p = new JPanel();//pannello esterno
-        panelButtons = new JPanel();
 
+
+        HashMap<Integer, Assignment> todayAssigment = new HashMap<Integer, Assignment>();
+
+        gridLayout = new GridLayout(1, 1);
+
+        p = new JPanel();
         lb = new JLabel();
         scroll = new JScrollPane(p);
 
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setLayout(new GridLayout(9, 1, 20, 20));
 
         if (cs.equals(CalendarState.NORMAL)) {
+
             int n = 0;
 
             for (Integer i : listAssigment.keySet()) {
@@ -66,7 +89,7 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
                 if (dateString1.equals(dateString2) || (dateStringEnd1.equals(dateStringEnd2))) {
 
-                    todayAssigment.put(i, a);
+                    todayAssigment.put(n, a);
                 }
 
                 n++;
