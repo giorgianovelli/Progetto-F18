@@ -50,15 +50,16 @@ public class GUIDailyAssignments extends JFrame {
         setVisible(true);
         this.email = email;
         this.todayDate = todayDate;
-        proxy = new CustomerProxy(email);
-        this.listAssigment = proxy.getAssignmentList();
-        initComponents(cs);
         guiDailyAssignments = this;
+        initComponents(cs);
+
     }
 
 
 
     protected void initComponents(CalendarState cs) {
+        proxy = new CustomerProxy(email);
+        this.listAssigment = proxy.getAssignmentList();
 
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setLayout(new GridLayout(9, 1, 20, 20));
