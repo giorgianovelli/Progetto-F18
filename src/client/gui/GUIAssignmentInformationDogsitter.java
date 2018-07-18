@@ -3,7 +3,6 @@ package client.gui;
 import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 import server.Assignment;
-import server.Customer;
 import server.Dog;
 import server.Review;
 
@@ -63,8 +62,6 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
     private JButton buttonClose = new JButton("Close");
 
     private String email;
-    private DogSitterProxy dogSitterProxy;
-
 
 
     /**
@@ -215,7 +212,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
 
-        dogSitterProxy = new DogSitterProxy(email);
+        DogSitterProxy dogSitterProxy = new DogSitterProxy(email);
 
         Integer intCode = assignment.getCode();
 
@@ -230,7 +227,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         String strMeetingPoint = assignment.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(dogList, assignment.getDateStart(), assignment.getDateEnd());
         String amount = String.format("%.2f", doubleAmount).replace(",", ".");
-        String strPayment = "";
+        String strPayment;
 
         if (!customerProxy.isInCashPaymentMethodOfAssignment(assignment.getCode())) {
             strPayment = "Credit card";
@@ -271,10 +268,5 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             panelDog.add(tmplabel);
             i++;
         }
-
-
     }
-
-
-
 }

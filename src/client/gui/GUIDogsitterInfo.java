@@ -5,8 +5,6 @@ import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
@@ -17,10 +15,9 @@ public class GUIDogsitterInfo extends JFrame {
 
     final int WIDTH = 512;
     final int HEIGHT = 512;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    GUIChooseDogsitter guiChooseDogsitter;
-    GUIDogsitterInfo guiDogsitterInfo;
+
+    private GUIDogsitterInfo guiDogsitterInfo;
 
 
     private JPanel panelOut = new JPanel();
@@ -53,27 +50,25 @@ public class GUIDogsitterInfo extends JFrame {
     private JButton buttonClose = new JButton("Close");
 
 
-    private HashMap<Integer, Review> listReview;
     private DogSitterProxy dogSitterProxy;
-    private double average;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 
     /**
      * Constructor of GUIDogsitterInfo's class
      *
-     * @param mailDogsitter
+     * @param mailDogsitter mail of the dogsitter
      */
 
-    public GUIDogsitterInfo(String mailDogsitter, GUIChooseDogsitter guiChooseDogsitter) {
+     GUIDogsitterInfo(String mailDogsitter, GUIChooseDogsitter guiChooseDogsitter) {
         setTitle("Dogsitter Informations");
         setSize(WIDTH, HEIGHT);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-        this.guiChooseDogsitter = guiChooseDogsitter;
         guiDogsitterInfo = this;
 
         guiChooseDogsitter.setEnabled(false);
@@ -151,9 +146,9 @@ public class GUIDogsitterInfo extends JFrame {
         labelBirthToBeFilled.setText(strDate);
         textBiography.setText(biography.toUpperCase());
 
-        listReview = dogSitterProxy.getReviewList();
+        HashMap<Integer, Review> listReview = dogSitterProxy.getReviewList();
 
-        average = 0;
+        double average;
         int c = 0;
         double sum = 0;
 
@@ -196,16 +191,7 @@ public class GUIDogsitterInfo extends JFrame {
             panelReviews.add(panelReview);
             gridLayout.setRows(gridLayout.getRows() + 1);
 
-
-            ActionListener actionListener1 = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    GUIShowReview guiShowReview = new GUIShowReview(entry.getValue());
-                    guiShowReview.setVisible(true);
-                }
-            };
-
-            buttonShowMore.addActionListener(actionListener1);
+            buttonShowMore.addActionListener(e -> new GUIShowReview(entry.getValue()).setVisible(true));
 
         }
 
@@ -213,21 +199,7 @@ public class GUIDogsitterInfo extends JFrame {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
 
-
-        // Action Listener chiusura
-
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                guiDogsitterInfo.dispatchEvent(new WindowEvent(guiDogsitterInfo, WindowEvent.WINDOW_CLOSING));
-                guiChooseDogsitter.setEnabled(true);
-            }
-        };
-
-        buttonClose.addActionListener(actionListener);
-
-
+        buttonClose.addActionListener(e -> guiDogsitterInfo.dispatchEvent(new WindowEvent(guiDogsitterInfo, WindowEvent.WINDOW_CLOSING)));
     }
 
 

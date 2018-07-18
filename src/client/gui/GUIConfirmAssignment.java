@@ -15,15 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
-public class GUIConfirmAssignment extends JFrame {
+ class GUIConfirmAssignment extends JFrame {
     final int WIDTH = 512;
     final int HEIGHT = 512;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private GUIConfirmAssignment guiConfirmAssignment;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelButtons = new JPanel();
-    private GridLayout gridLayout2 = new GridLayout(1,1);
+    private GridLayout gridLayout2 = new GridLayout(1, 1);
     private GridLayout gridLayout = new GridLayout(1, 2);
     private JPanel panelDogs = new JPanel(gridLayout2);
     private GridLayout gridLayout3 = new GridLayout(6, 2, 0, 10);
@@ -48,7 +47,7 @@ public class GUIConfirmAssignment extends JFrame {
 
     private JLabel labelStartDate2 = new JLabel();
     private JLabel labelEndDate2 = new JLabel();
-    private JLabel labelDogsitter2= new JLabel();
+    private JLabel labelDogsitter2 = new JLabel();
     private JLabel labelMeetingPoint2 = new JLabel();
     private JLabel labelAmount2 = new JLabel();
     private JLabel labelPaymentMethod2 = new JLabel();
@@ -57,7 +56,7 @@ public class GUIConfirmAssignment extends JFrame {
     private JButton buttonConfirm = new JButton("Confirm");
 
 
-    public JFrame success = new JFrame();
+    private JFrame success = new JFrame();
 
     private String mailDogsitter;
     private Date dateStartAssignment;
@@ -66,25 +65,23 @@ public class GUIConfirmAssignment extends JFrame {
     private Address meetingPoint;
     private CustomerProxy customerProxy;
     private DogSitterProxy dogSitterProxy;
-    private String emailCustomer;
-    private Double doubleAmount;
     private boolean paymentMethod;
 
 
     /**
-     *
-     * @param mailDogsitter
-     * @param dateStartAssignment
-     * @param dateEndAssignment
-     * @param dogsSelected
-     * @param meetingPoint
-     * @param emailCustomer
-     * @param paymentMethod
+     * @param mailDogsitter       mail of the dogsitter
+     * @param dateStartAssignment starting date of the assignment
+     * @param dateEndAssignment   ending date of the assignment
+     * @param dogsSelected        dogs selected for the assignment
+     * @param meetingPoint        address where customer and dogsitter will meet
+     * @param emailCustomer       mail of the customer
+     * @param paymentMethod       used y the client
      */
 
-    public GUIConfirmAssignment(String mailDogsitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> dogsSelected, Address meetingPoint, String emailCustomer, boolean paymentMethod, GUIChooseDogsitter guiChooseDogsitter) {
+    GUIConfirmAssignment(String mailDogsitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> dogsSelected, Address meetingPoint, String emailCustomer, boolean paymentMethod, GUIChooseDogsitter guiChooseDogsitter) {
         setTitle("Assignment summary");
         setSize(WIDTH, HEIGHT);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -97,7 +94,6 @@ public class GUIConfirmAssignment extends JFrame {
         this.dateEndAssignment = dateEndAssignment;
         this.dogsSelected = dogsSelected;
         this.meetingPoint = meetingPoint;
-        this.emailCustomer = emailCustomer;
         this.paymentMethod = paymentMethod;
         customerProxy = new CustomerProxy(emailCustomer);
         dogSitterProxy = new DogSitterProxy(mailDogsitter);
@@ -113,13 +109,11 @@ public class GUIConfirmAssignment extends JFrame {
         });
 
 
-
-
         initComponents();
     }
 
     /**
-     *
+     * Method that initializes graphic objects
      */
 
     private void initComponents() {
@@ -165,10 +159,8 @@ public class GUIConfirmAssignment extends JFrame {
         String strDateStart = dateFormat.format(dateStartAssignment);
         String strEndDate = dateFormat.format(dateEndAssignment);
         String strMeetingPoint = printMeetingPoint();
-        String strDogs = printDogNames();
-        String[] strDogsSplitted = strDogs.split("\n");
         String strPaymentMethod;
-        doubleAmount = customerProxy.estimatePriceAssignment(dogsSelected, dateStartAssignment, dateEndAssignment);
+        Double doubleAmount = customerProxy.estimatePriceAssignment(dogsSelected, dateStartAssignment, dateEndAssignment);
 
         if (paymentMethod) {
             strPaymentMethod = "Cash";
@@ -185,9 +177,9 @@ public class GUIConfirmAssignment extends JFrame {
 
 
         int i = 1;
-        for (Dog dog: dogsSelected) {
+        for (Dog dog : dogsSelected) {
 
-            JPanel panelDog = new JPanel(new GridLayout(1,1));
+            JPanel panelDog = new JPanel(new GridLayout(1, 1));
             panelDogs.add(panelDog);
             JLabel label = new JLabel(i + ".     " + dog.getName());
             panelDog.add(label);
@@ -210,14 +202,7 @@ public class GUIConfirmAssignment extends JFrame {
             }
         };
 
-        ActionListener actionListener1 = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiConfirmAssignment.dispatchEvent(new WindowEvent(guiConfirmAssignment, WindowEvent.WINDOW_CLOSING));
-            }
-        };
-
-        buttonCancel.addActionListener(actionListener1);
+        buttonCancel.addActionListener(e -> guiConfirmAssignment.dispatchEvent(new WindowEvent(guiConfirmAssignment, WindowEvent.WINDOW_CLOSING)));
         buttonConfirm.addActionListener(actionListener);
 
 
@@ -228,39 +213,16 @@ public class GUIConfirmAssignment extends JFrame {
     }
 
     /**
-     *
-     * @return
+     * @return Address object as String
      */
 
-    public String printMeetingPoint() {
+    private String printMeetingPoint() {
         String toReturn = "";
-        for (String token: meetingPoint.toString().split(";")) {
+        for (String token : meetingPoint.toString().split(";")) {
             if (!token.isEmpty()) {
-                toReturn = toReturn + "<html><br>" +  token +  "<html/>" + "\n";
+                toReturn = toReturn + "<html><br>" + token + "<html/>" + "\n";
             }
         }
         return toReturn;
-    }
-
-    /**
-     *
-     * @return
-     */
-
-    public String printDogNames(){
-        String toReturn = "";
-        for (Dog d : dogsSelected) {
-            toReturn = toReturn + "<html><br>" + d.getName() + "<html/>" + "\n";
-        }
-        return toReturn;
-    }
-
-    /**
-     *
-     * @return
-     */
-
-    public JFrame getSuccess() {
-        return success;
     }
 }

@@ -67,7 +67,6 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JButton buttonClose = new JButton("Close");
 
     private String email;
-    private CustomerProxy customerProxy;
 
 
     /**
@@ -236,7 +235,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         // Dichiarazione variabili che andranno nelle JLabel
 
 
-        customerProxy = new CustomerProxy(email);
+        CustomerProxy customerProxy = new CustomerProxy(email);
         Integer intCode = a.getCode();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -297,25 +296,4 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
     }
 
-
-    /**
-     * Getter
-     *
-     */
-
-    JLabel getLabelPaymentMethod2() {
-        return labelPaymentMethod2;
-    }
-
-    JLabel getLabelDogsitter1() {
-        return labelDogsitter1;
-    }
-
-    JLabel getLabelDogsitter2() {
-        return labelDogsitter2;
-    }
-
-    CustomerProxy getCustomerProxy() {
-        return customerProxy;
-    }
 }

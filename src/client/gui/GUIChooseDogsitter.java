@@ -16,9 +16,6 @@ public class GUIChooseDogsitter extends JFrame {
     final int WIDTH = 800;
     final int HEIGHT = 600;
 
-
-
-
     private JPanel panelOut = new JPanel();
     private JPanel panelClose = new JPanel(new BorderLayout());
     private GridLayout gridLayout = new GridLayout(1,1,5,0);
