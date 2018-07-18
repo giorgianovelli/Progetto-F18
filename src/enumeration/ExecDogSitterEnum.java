@@ -726,10 +726,21 @@ public enum ExecDogSitterEnum {
             }
         }
 
+    },
+
+    GETCUSTOMEREMAILOFASSIGNMENT{
+
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            int code = Integer.parseInt(tokenMsg.nextToken());
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            return dogSitter.getCustomerEmailOfAssignment(code);
+        }
+
     };
-
-
-
 
     public abstract String execute(String clientMsg);
 }

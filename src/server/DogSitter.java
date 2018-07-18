@@ -10,6 +10,9 @@ import server.bank.PaymentMethod;
 import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
+
+import javax.print.attribute.standard.NumberUp;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -705,4 +708,21 @@ public class DogSitter extends User implements InterfaceDogSitter {
             return false;
         }
     }
+
+
+    public String getCustomerEmailOfAssignment(int code){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs;
+        String customerEmail;
+        try {
+            rs = dbConnector.askDB("SELECT CUSTOMER FROM ASSIGNMENT WHERE CODE = " + code);
+            rs.next();
+            customerEmail = rs.getString("CUSTOMER");
+            return customerEmail;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

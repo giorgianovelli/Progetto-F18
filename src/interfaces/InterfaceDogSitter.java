@@ -62,4 +62,6 @@ public interface InterfaceDogSitter {
     String getBiography();
 
     boolean replyToReview(int code, String dogSitterReply);
+
+    String getCustomerEmailOfAssignment(int code);
 }
