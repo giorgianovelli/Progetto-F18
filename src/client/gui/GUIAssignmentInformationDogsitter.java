@@ -1,7 +1,9 @@
 package client.gui;
 
+import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 import server.Assignment;
+import server.Customer;
 import server.Dog;
 import server.Review;
 
@@ -222,13 +224,19 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         String strEndDate = dateFormat.format(assignment.getDateEnd());
 
         HashMap<Integer, Review> listReview = dogSitterProxy.getReviewList();
-
+        CustomerProxy customerProxy = new CustomerProxy(dogSitterProxy.getCustomerEmailOfAssignment(assignment.getCode()));
         String strCustomer = dogSitterProxy.getCustomerNameOfAssignment(intCode) + " " + dogSitterProxy.getCustomerSurnameOfAssignment(intCode);
         HashSet<Dog> dogList = assignment.getDogList();
         String strMeetingPoint = assignment.printMeetingPoint();
-        String doubleAmount = "to be fixed @Nicolas need you";
+        Double doubleAmount = customerProxy.estimatePriceAssignment(dogList, assignment.getDateStart(), assignment.getDateEnd());
+        String amount = String.format("%.2f", doubleAmount).replace(",", ".");
+        String strPayment = "";
 
-        String strPayment = "to be fixed @Nicolas need you";
+        if (!customerProxy.isInCashPaymentMethodOfAssignment(assignment.getCode())) {
+            strPayment = "Credit card";
+        } else {
+            strPayment = "Cash";
+        }
 
         for (Map.Entry<Integer, Review> entry : listReview.entrySet()) {
             if (assignment.getCode() == entry.getKey()) {
@@ -249,8 +257,9 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         labelEndDate2.setText(strEndDate);
         labelMeetingPoint2.setText(strMeetingPoint);
         labelDogsitter2.setText(strCustomer);
-        labelAmount2.setText(doubleAmount);
+        labelAmount2.setText(amount);
         labelPaymentMethod2.setText(strPayment);
+
 
         int i = 1;
         for (Dog dog : dogList) {
