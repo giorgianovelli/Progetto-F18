@@ -16,10 +16,17 @@ public class GUIInfo extends JFrame {
     private JLabel version;
     private JLabel date;
 
+    /**
+     * Constuctor of the class
+     */
 
     public GUIInfo(){
         initComponent();
     }
+
+    /**
+     * initialize the interface components
+     */
 
     private void initComponent(){
         setTitle("Info");
