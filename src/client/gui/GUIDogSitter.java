@@ -62,7 +62,7 @@ public class GUIDogSitter extends GUIHome{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-                clickOnMenuBarButton(menuAe);
+                clickOnMenuBarItem(menuAe);
             }
         };
 

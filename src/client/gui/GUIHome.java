@@ -1,3 +1,7 @@
+/**
+ * The base class for the home of customer and dog sitter.
+ */
+
 package client.gui;
 
 import client.clientEnumerations.CalendarAction;
@@ -20,57 +24,216 @@ import java.util.StringTokenizer;
 import static client.Calendar.getNDayOfMonth;
 
 public abstract class GUIHome extends JFrame{
-    final int WIDTH = 1024;
-    final int HEIGHT = 600;
+
+    /**
+     * The max number of days in a month.
+     */
     final int NDAYMONTH = 31;
+
+    /**
+     * The number of days in a week.
+     */
     final int NDAYWEEK = 7;
+
+    /**
+     * The number of empty label to add to the calendar.
+     */
     final int NEMPTYLABEL = 11;
+
+    /**
+     * The number of empty label to add to the calendar.
+     */
     final int NCALENDARCELLS = 49;
+
+    /**
+     * The max number of assignment that can be shown in the today's assignments panel.
+     */
     final int MAXVISIBLETODAYASSIGNMENT = 5;
 
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+
+    /**
+     * The Menu bar.
+     */
     protected JMenuBar menuBar = new JMenuBar();
+
+    /**
+     * The menu item "Canibau".
+     */
     protected JMenu menuFile = new JMenu("Canibau");
+
+    /**
+     * The menu item "Quit".
+     */
     protected JMenuItem menuItemExit = new JMenuItem("Quit");
+
+    /**
+     * The menu item "Logout".
+     */
     protected JMenuItem menuItemLogout = new JMenuItem("Logout");
+
+    /**
+     * The menu item "Assignment".
+     */
     protected JMenu menuAssignment = new JMenu("Assignment");
+
+    /**
+     * The menu item "Show all assignments".
+     */
     protected JMenuItem menuItemShowAssignments = new JMenuItem("Show all assignments");
+
+    /**
+     * The menu item "Review".
+     */
     protected JMenu menuReview = new JMenu("Review");
+
+    /**
+     * The menu item "Show all reviews".
+     */
     protected JMenuItem menuItemShowReviews = new JMenuItem("Show all reviews");
+
+    /**
+     * The menu item "Settings".
+     */
     protected JMenu menuSettings = new JMenu("Settings");
+
+    /**
+     * The menu item "Account".
+     */
     protected JMenuItem menuItemAccount = new JMenuItem("Account");
+
+    /**
+     * The menu item "Change Password".
+     */
     protected JMenuItem menuItemChangePassword = new JMenuItem("Change Password");
+
+    /**
+     * The menu item "?"
+     */
     protected JMenu menuExtra = new JMenu("?");
+
+    /**
+     * The menu item "Info".
+     */
     protected JMenuItem menuItemInfo = new JMenuItem("Info");
+
+    /**
+     * The menu item "Credits".
+     */
     protected JMenuItem menuItemAwards = new JMenuItem("Credits");
 
+    /**
+     * The panel that contains the list of today's assignments.
+     */
     protected JPanel panelToday = new JPanel();
+
+    /**
+     * The label that show the caption "Today's assignments".
+     */
     protected JLabel labelTodayAssignments = new JLabel("Today's assignments");
+
+    /**
+     * The array of buttons for each assignment.
+     */
     protected JButton buttonTodayAssignment[];
+
+    /**
+     * The button that shows the complete list of today's assignments.
+     */
     protected JButton buttonShowMoreTodayAssignments = new JButton("Show more");
+
+    /**
+     * The array of empty label to add to the calendar.
+     */
     protected JLabel labelEmptyTodayAssignments[];
+
+    /**
+     * The number of today's assignments.
+     */
     protected int nTodayAssignments = 0;
 
+    /**
+     * The panel that contains panelDateCalendar and panelGridCalendar.
+     */
     protected JPanel calendar = new JPanel();
+
+    /**
+     * The panel that contains the buttons to control calendar and the selected month.
+     */
     protected JPanel panelDateCalendar = new JPanel();
+
+    /**
+     * The panel that contains all the buttons for each days of the month.
+     */
     protected JPanel panelGridCalendar = new JPanel();
+
+    /**
+     * The array of labels that show the days of the week.
+     */
     protected JLabel labelDay[];
+
+    /**
+     * The array of buttons for each day of the month.
+     */
     protected JButton buttonDay[];
+
+    /**
+     * The array of empty labels.
+     */
     protected JLabel labelEmpty[];
+
+    /**
+     * The button to go to the previous year.
+     */
     protected JButton buttonPreviousYear = new JButton("Previous year");
+
+    /**
+     * The button to go to the previous month.
+     */
     protected JButton buttonPreviousMonth = new JButton("Previous month");
+
+    /**
+     * The button to go to the next year.
+     */
     protected JButton buttonNextYear = new JButton("Next year");
-    protected JButton buttonNextMonth = new JButton("Next Month");
+
+    /**
+     * The button to go to the next month.
+     */
+    protected JButton buttonNextMonth = new JButton("Next month");
+
+    /**
+     * The label that shows the selected month and year.
+     */
     protected JLabel labelDateMonthYear = new JLabel("08/2019", SwingConstants.CENTER);
+
+    /**
+     * The calendar's state.
+     */
     protected CalendarState calendarState = CalendarState.NORMAL;
 
+    /**
+     * The user's email.
+     */
     private String email;
+
+    /**
+     * The HashSet that contains the code for the first five assignments of today.
+     */
     protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
+
+    /**
+     * Create a new home for the user specified by the email.
+     * @param email the user's email.
+     * @throws ParseException
+     */
     public GUIHome(String email) throws ParseException {
         setTitle("CaniBau");
-        //setSize(WIDTH, HEIGHT);
         int width = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.9);
         int height = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
         setSize(width, height);
@@ -79,17 +242,21 @@ public abstract class GUIHome extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-
         panelToday.setBackground(new Color(224, 224, 235));
         panelGridCalendar.setBackground(new Color(236, 242, 249));
         panelDateCalendar.setBackground(new Color(236, 242, 249));
-
         panelGridCalendar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-
         this.email = email;
     }
 
+
+    /**
+     * Start the calendar.
+     * @param cal the calendar's ActionListener.
+     * @param ctrlCal the calendar control buttons' ActionListener.
+     * @param proxy the client proxy.
+     * @throws ParseException
+     */
     protected void startCalendar(ActionListener cal, ActionListener ctrlCal, Proxy proxy) throws ParseException {
         calendar.setLayout(new BorderLayout());
         panelDateCalendar.setLayout(new GridLayout(1, 5));
@@ -132,6 +299,12 @@ public abstract class GUIHome extends JFrame{
         buttonNextYear.addActionListener(ctrlCal);
     }
 
+
+    /**
+     * Initialize the calendar with the current month and year.
+     * @param proxy the client proxy
+     * @throws ParseException
+     */
     protected void initializeCalendar(Proxy proxy) throws ParseException {
         SimpleDateFormat dateMonth = new SimpleDateFormat("MM");
         Date currentMonth = new Date();
@@ -142,6 +315,12 @@ public abstract class GUIHome extends JFrame{
         updateCalendar(monthNumber, proxy);
     }
 
+
+    /**
+     * Go to the previous month
+     * @param proxy the client proxy
+     * @throws ParseException
+     */
     protected void goBackMonthCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
@@ -174,6 +353,12 @@ public abstract class GUIHome extends JFrame{
         updateCalendar(monthNumber, proxy);
     }
 
+
+    /**
+     * Go to the previous year.
+     * @param proxy the client proxy.
+     * @throws ParseException
+     */
     protected void goBackYearCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
@@ -203,6 +388,12 @@ public abstract class GUIHome extends JFrame{
         updateCalendar(monthNumber, proxy);
     }
 
+
+    /**
+     * Go to the next month.
+     * @param proxy the client proxy.
+     * @throws ParseException
+     */
     protected void goForwardMonthCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
@@ -235,6 +426,12 @@ public abstract class GUIHome extends JFrame{
         updateCalendar(monthNumber, proxy);
     }
 
+
+    /**
+     * Go to the next year.
+     * @param proxy the client proxy
+     * @throws ParseException
+     */
     protected void goForwardYearCalendar(Proxy proxy) throws ParseException {
         panelGridCalendar.removeAll();
         panelGridCalendar.revalidate();
@@ -264,6 +461,8 @@ public abstract class GUIHome extends JFrame{
         updateCalendar(monthNumber, proxy);
     }
 
+
+    //TODO refactor!
     protected void updateCalendar(int monthNumber, Proxy proxy) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
@@ -345,20 +544,35 @@ public abstract class GUIHome extends JFrame{
         }
 
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
-            showAssignmentOnCalendar(email, proxy);
+            showAssignmentsOnCalendar(email, proxy);
         }
     }
 
+
+    /**
+     * Open the list of assignments.
+     * @param proxy the client proxy.
+     */
     protected void openListAssignment(Proxy proxy){
         GUIListAssignments guiListAssignments = new GUIListAssignments(calendarState, proxy.getAssignmentList(), email, this);
         guiListAssignments.setVisible(true);
 
     }
 
+
+    /**
+     * Set the calendar's state.
+     * @param cs the calendar's state.
+     */
     public void setCalendarState(CalendarState cs){
         calendarState = cs;
     }
 
+
+    /**
+     * Enable and disable buttons related to the days in the past.
+     * @throws ParseException
+     */
     protected void enableDisableDateButtonAssignment() throws ParseException {
         int i;
         String strDay;
@@ -383,7 +597,13 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
-    protected void showAssignmentOnCalendar(String email, Proxy proxy){
+
+    /**
+     * Show the assignments of the month on the calendar coloring the day's button where there is at least an assignment.
+     * @param email the user's email.
+     * @param proxy the client proxy.
+     */
+    protected void showAssignmentsOnCalendar(String email, Proxy proxy){
         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         boolean included = false;
         for (Integer key : listAssignment.keySet()) {
@@ -417,6 +637,12 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
+
+    /**
+     * Get the number of the today's assignments.
+     * @param proxy the client proxy.
+     * @return the number of today's assignments.
+     */
     protected int getNDailyAssignments(Proxy proxy){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         Date todayDate = new Date();
@@ -442,6 +668,11 @@ public abstract class GUIHome extends JFrame{
         return nAssignments;
     }
 
+
+    /**
+     * Dispose the today's assignments in the list.
+     * @return the number of today's assignments shown.
+     */
     protected int disposeTodayAssignmentList(){
         int i;
         int nShownTodayAssignments = 0;
@@ -477,6 +708,10 @@ public abstract class GUIHome extends JFrame{
     }
 
 
+    /**
+     * Dispose each button in the list of today's assignments.
+     * @param i the position of the today's assignment to be shown.
+     */
     private void disposeButtonsTodayAssignment(int i){
         buttonTodayAssignment[i] = new JButton(" ");
         buttonTodayAssignment[i].setBackground(new Color(179, 237, 255));
@@ -486,6 +721,12 @@ public abstract class GUIHome extends JFrame{
         panelToday.add(buttonTodayAssignment[i]);
     }
 
+
+    /**
+     * Execute the action of the calendar control button pressed.
+     * @param cmd the caption of the button pressed.
+     * @param proxy the client proxy.
+     */
     protected void execCalendarAction(String cmd, Proxy proxy){
         try {
             cmd = cmd.toUpperCase();
@@ -515,8 +756,18 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
+
+    /**
+     * Dispose the menu bar.
+     */
     protected abstract void disposeMenuBar();
 
+
+    /**
+     * Dispose the panel of today's assignments.
+     * @param proxy the client proxy
+     * @return the number of today's assigments shown.
+     */
     protected int disposeTodayPanel(Proxy proxy){
         panelToday.setLayout(new GridLayout(7, 1, 5, 5));
         panelToday.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -537,10 +788,26 @@ public abstract class GUIHome extends JFrame{
         return nShownTodayAssignments;
     }
 
+
+    /**
+     * Load in an HashMap the first five today's assignments to be shown.
+     * @param nShownTodayAssignments the number of today's assignments to be shown.
+     */
     protected abstract void loadTheFirstFiveAssignments(int nShownTodayAssignments);
 
+
+    /**
+     * Perform an action when a day's button is pressed.
+     * @param cae the day's button ActionEvent.
+     */
     protected abstract void clickOnCalendarButton(ActionEvent cae);
 
+
+    /**
+     * Perform an action when a calendar control button is pressed.
+     * @param ctrlAe the calendar control button's ActionEvent.
+     * @param proxy the client proxy.
+     */
     protected void clickOnCtrlCalendarButton(ActionEvent ctrlAe, Proxy proxy){
         if (!(ctrlAe.getActionCommand().equals(""))){
             JButton pressedButton = (JButton) ctrlAe.getSource();
@@ -548,25 +815,54 @@ public abstract class GUIHome extends JFrame{
         }
     }
 
+
+    /**
+     * Open a window that shows all user's assignments.
+     */
     public abstract void showAllAssignments();
 
+
+    /**
+     * Open a window that shows all user's reviews.
+     */
     public abstract void showAllReviews();
 
+
+    /**
+     * Open the account settings.
+     */
     public abstract void accountSettings();
 
+
+    /**
+     * Open a window that permits to the user to change his password.
+     */
     public abstract void changePassword();
 
+
+    /**
+     * Open a windows that shows the informations about the software.
+     */
     public void info(){
         GUIInfo info = new GUIInfo();
         info.setVisible(true);
     }
 
+
+    /**
+     * Open a windows that shows the software developer team.
+     */
     public void credits(){
         GUIAwards credits = new GUIAwards();
         credits.setVisible(true);
     }
 
-    protected void clickOnMenuBarButton(ActionEvent menuAe){
+
+    /**
+     * Perform an action when the user click on a menu bar item.
+     * @param menuAe the menu items' ActionEvent.
+     */
+    protected void clickOnMenuBarItem(ActionEvent menuAe){
         JMenuItem pressedItem = (JMenuItem) menuAe.getSource();
         String cmd = pressedItem.getText().toUpperCase();
         cmd = cmd.replace(" ", "");
@@ -574,6 +870,13 @@ public abstract class GUIHome extends JFrame{
         execMenuBarAction.execute(this);
     }
 
+
+    /**
+     * Get the HashSet of the codes of the first five today's assignments to be shown.
+     * @param nShownAssignments the number of today's assignments to be shown.
+     * @param assignmentList the user's list of assignment's.
+     * @return
+     */
     protected HashSet<Integer> getCodeFirstFiveAssignments(int nShownAssignments, HashMap<Integer, Assignment> assignmentList){
         int i = 0;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
@@ -601,6 +904,13 @@ public abstract class GUIHome extends JFrame{
         return codeFirstFiveAssignmentsList;
     }
 
+
+    /**
+     * Perform an action when the user's click on a today's assignment.
+     * @param todayAssignmentAe the today's assignments ActionEvent.
+     * @param proxy the client proxy.
+     * @param guiHome the GUIHome in use.
+     */
     protected void clickOnTodayAssignment(ActionEvent todayAssignmentAe, Proxy proxy, GUIHome guiHome){
         if (!(todayAssignmentAe.getActionCommand().equals(""))){
             JButton pressedButton = (JButton) todayAssignmentAe.getSource();
