@@ -36,8 +36,7 @@ public class GUIAddDog extends JFrame {
 
     private JTextField textName = new JTextField();
     private JTextField textWeight = new JTextField();
-    //private JTextField textBreed = new JTextField(); //può diventare una combobox?
-    //private JTextField textAge = new JTextField();
+
 
     private JComboBox<String> breedList;
     private String[] breed;
@@ -87,7 +86,6 @@ public class GUIAddDog extends JFrame {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
                     } else{
-                        //addDog(String customerEmail, String name, String breed, Date dateOfBirth, double weight)
                         boolean add = addNewDog();
 
                         if(add){

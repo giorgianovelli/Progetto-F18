@@ -27,7 +27,6 @@ public class GUIShowReview extends JFrame {
     private JLabel labelDescription;
     private JLabel labelVote;
     private JLabel labelGrade;
-    //private JLabel labelReply;
 
     private JTextArea textTitle;
     private JTextArea textDescription;
@@ -85,7 +84,7 @@ public class GUIShowReview extends JFrame {
      * inizializza le componenti dell'interfaccia e ne permette la visualizzazione
      */
     private void initComponent(){
-        //TODO si potrebbe provare a usare GridBagLayout
+
         outPanel = new JPanel();
         contentPanel = new JPanel();
         panelReviewTop = new JPanel();
@@ -100,7 +99,7 @@ public class GUIShowReview extends JFrame {
         labelDescription = new JLabel("Comment: ");
 
         labelGrade = new JLabel(review.starsRating());
-        //labelReply = new JLabel("Dogsitter reply: ");
+
 
         textTitle = new JTextArea(review.getTitle());
         textTitle.setEditable(false);
@@ -132,19 +131,14 @@ public class GUIShowReview extends JFrame {
 
         showReply();
 
-        //outPanel.setLayout(new BoxLayout(outPanel, BoxLayout.Y_AXIS));
+
         outPanel.setLayout(new GridLayout(3,1));
-        //contentPanel.setPreferredSize(new Dimension(WIDTH-10, (HEIGHT/2)-30));
-        //closePanel.setBorder(BorderFactory.createEmptyBorder(20,40,5,30));
+
         outPanel.add(contentPanel);
         outPanel.add(panelReply);
         outPanel.add(closePanel);
         outPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         add(outPanel);
-
-
-
-
 
 
     }
@@ -159,7 +153,6 @@ public class GUIShowReview extends JFrame {
             textReply.setEditable(false);
             textReply.setText(review.getReply());
             panelReply.setLayout(new GridLayout(2,1));
-            //panelReply.add(labelReply);
             panelReply.add(textReply);
 
 
@@ -168,7 +161,7 @@ public class GUIShowReview extends JFrame {
         ActionListener close = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                guiListAssignments.setEnabled(true);
                 dispose();
             }
         };
