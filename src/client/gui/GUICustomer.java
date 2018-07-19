@@ -71,7 +71,7 @@ public class GUICustomer extends GUIHome{
         ActionListener menuAl = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent menuAe) {
-                clickOnMenuBarButton(menuAe);
+                clickOnMenuBarItem(menuAe);
             }
         };
 
@@ -141,7 +141,7 @@ public class GUICustomer extends GUIHome{
         menuItemCancel.setVisible(false);
 
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
-            showAssignmentOnCalendar(email, proxy);
+            showAssignmentsOnCalendar(email, proxy);
         }
     }
 

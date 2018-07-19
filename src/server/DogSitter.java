@@ -710,6 +710,11 @@ public class DogSitter extends User implements InterfaceDogSitter {
     }
 
 
+    /**
+     * Get the customer's email of the assignment specified.
+     * @param code the code of the assignment specified.
+     * @return the customer's email of the assignment specified.
+     */
     public String getCustomerEmailOfAssignment(int code){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs;

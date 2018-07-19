@@ -587,6 +587,11 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
     }
 
 
+    /**
+     * Get the customer's email of the assignment specified.
+     * @param code the code of the assignment specified.
+     * @return the customer's email of the assignment specified.
+     */
     public String getCustomerEmailOfAssignment(int code){
         return getReply("DOGSITTER#GETCUSTOMEREMAILOFASSIGNMENT#" + email + "#" + code);
     }
