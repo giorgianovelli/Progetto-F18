@@ -22,9 +22,9 @@ public class GUIChangePassword extends JFrame {
     private JLabel labelNewPassword = new JLabel("New Password:", SwingConstants.LEFT);
     private JLabel labelPasswordConf = new JLabel("Confirm New Password:", SwingConstants.LEFT);
 
-    private JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
-    private JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
-    private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
+    protected JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
+    protected JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
+    protected JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
 
     private String newPassword;
     private String confirmPassword;
@@ -148,7 +148,7 @@ public class GUIChangePassword extends JFrame {
      * @return true se le due password coincidono false altrimenti
      */
 
-    public boolean changePasswordFields(String newPassword, String confirmPassword) {
+    protected boolean changePasswordFields(String newPassword, String confirmPassword) {
         boolean updatePassword;
 
         if (newPassword.equals(confirmPassword)) {
@@ -179,7 +179,7 @@ public class GUIChangePassword extends JFrame {
      * @return true se corretta, false se errata
      */
 
-    public boolean checkPassword(String currentPwd) {
+    protected boolean checkPassword(String currentPwd) {
         boolean matchPassword;
 
         String currentPwdProxy = proxy.getPassword();
