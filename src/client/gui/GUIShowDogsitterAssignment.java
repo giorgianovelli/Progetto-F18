@@ -104,9 +104,9 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
                         @Override
                         public void actionPerformed(ActionEvent e) {
 
-                            GUIShowDogsitterReview guiShowDogsitterReview = new GUIShowDogsitterReview(listReview.get(i), email);
+                            GUIShowDogsitterReview guiShowDogsitterReview = new GUIShowDogsitterReview(listReview.get(i), email, guiShowDogsitterAssignment);
                             guiShowDogsitterReview.setVisible(true);
-                            dispose();
+                            //dispose();
 
 
                         }

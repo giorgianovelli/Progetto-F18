@@ -120,9 +120,9 @@ public class GUIWriteReview extends JFrame {
         setResizable(false);
 
         outPanel = new JPanel();
-        contentPanel = new JPanel(); //contiene toPanel, bottomPanel
+        contentPanel = new JPanel();
 
-        topPanel = new JPanel(); //contiene il titolo
+        topPanel = new JPanel();
         votePanel = new JPanel();
         bottomPanel = new JPanel();
         buttonPanel = new JPanel(new GridLayout(1,2));
@@ -241,7 +241,7 @@ public class GUIWriteReview extends JFrame {
 
 
         contentPanel.setLayout(new GridLayout(3,1, 5, 5));
-        //contentPanel.setBorder(BorderFactory.createEmptyBorder(5,20,20,20));
+
         contentPanel.setBorder(BorderFactory.createTitledBorder("Review fields: "));
 
         contentPanel.add(topPanel);
@@ -284,7 +284,6 @@ public class GUIWriteReview extends JFrame {
     }
 
 
-    //ne posso fare solo uno o sono necessari entrambi?
 
     /**
      * aggiorna il conteggio di caratteri nel titolo
@@ -303,18 +302,7 @@ public class GUIWriteReview extends JFrame {
         return MAX_CHAR_COMMENT - docComment.getLength();
     }
 
-    /*
-    private void keyTyped(KeyEvent e, int maxChar, JTextArea text) {
-
-        if(text.getText().length() > maxChar+1) {
-            e.consume();
-            String shortened = text.getText().substring(0, maxChar);
-            text.setText(shortened);
-        }else if(text.getText().length() > maxChar) {
-            e.consume();
-        }
-    }
-    */
+    
 }
 
 
