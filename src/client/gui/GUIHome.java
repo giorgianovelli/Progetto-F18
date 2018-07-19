@@ -53,7 +53,7 @@ public abstract class GUIHome extends JFrame{
     /**
      * The screen's dimension.
      */
-    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    protected Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
     /**
      * The Menu bar.
@@ -218,7 +218,7 @@ public abstract class GUIHome extends JFrame{
     /**
      * The user's email.
      */
-    private String email;
+    protected String email;
 
     /**
      * The HashSet that contains the code for the first five assignments of today.
@@ -940,6 +940,13 @@ public abstract class GUIHome extends JFrame{
             }
         }
     }
+
+
+    /**
+     * Call clickOnTodayAssignment when the user clicks on a today's assignment.
+     * @param todayAssignmentAe the ActionEvent of today's assignments.
+     */
+    protected abstract void callClickOnTodayAssignment(ActionEvent todayAssignmentAe);
 
 }
 

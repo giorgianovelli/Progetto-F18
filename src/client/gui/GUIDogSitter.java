@@ -16,17 +16,12 @@ import java.util.HashMap;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class GUIDogSitter extends GUIHome{
-    final int WIDTH = 1024;
-    final int HEIGHT = 600;
-    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
-    private String email;
     private DogSitterProxy proxy;
 
     public GUIDogSitter(String email) throws ParseException  {
         super(email);
         setTitle("CaniBau (Dog sitter)");
-        //setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -110,6 +105,10 @@ public class GUIDogSitter extends GUIHome{
         }
     }
 
+
+    /**
+     * Dispose the menu bar.
+     */
     protected void disposeMenuBar(){
         //Crea il menù
         menuBar.add(menuFile);
@@ -180,7 +179,12 @@ public class GUIDogSitter extends GUIHome{
         guiDogSitterChangePassword.setVisible(true);
     }
 
-    private void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
+
+    /**
+     * Call clickOnTodayAssignment when the user clicks on a today's assignment.
+     * @param todayAssignmentAe the ActionEvent of today's assignments.
+     */
+    protected void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
         clickOnTodayAssignment(todayAssignmentAe, proxy, this);
     }
 
