@@ -127,15 +127,6 @@ public enum MenuBarAction {
             guiHome.credits();
         }
 
-    },
-
-    REPLYTOAREVIEW{
-
-        public void execute(GUIHome guiHome) {
-            GUIDogSitter guiDogSitter = (GUIDogSitter)guiHome;
-            guiDogSitter.replyToReview();
-        }
-
     };
 
     public abstract void execute(GUIHome guiHome);

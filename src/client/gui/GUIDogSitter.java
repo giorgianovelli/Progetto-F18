@@ -21,7 +21,6 @@ public class GUIDogSitter extends GUIHome{
     final int WIDTH = 1024;
     final int HEIGHT = 600;
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    private JMenuItem menuItemReplyToReview = new JMenuItem("Reply to a review");
 
     private String email;
     private DogSitterProxy proxy;
@@ -80,7 +79,6 @@ public class GUIDogSitter extends GUIHome{
         menuItemExit.addActionListener(menuAl);
         menuItemLogout.addActionListener(menuAl);
         menuItemShowAssignments.addActionListener(menuAl);
-        menuItemReplyToReview.addActionListener(menuAl);
         menuItemShowReviews.addActionListener(menuAl);
         menuItemAccount.addActionListener(menuAl);
         menuItemChangePassword.addActionListener(menuAl);
@@ -121,7 +119,6 @@ public class GUIDogSitter extends GUIHome{
         menuFile.add(menuItemExit);
         menuAssignment.add(menuItemShowAssignments);
         menuBar.add(menuAssignment);
-        menuReview.add(menuItemReplyToReview);
         menuReview.add(menuItemShowReviews);
         menuBar.add(menuReview);
         menuSettings.add(menuItemAccount);
@@ -183,11 +180,6 @@ public class GUIDogSitter extends GUIHome{
     public void changePassword(){
         GUIDogSitterChangePassword guiDogSitterChangePassword = new GUIDogSitterChangePassword(email);
         guiDogSitterChangePassword.setVisible(true);
-    }
-
-    public void replyToReview(){
-        //TODO da implementare
-        System.out.println("Test reply");
     }
 
     private void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
