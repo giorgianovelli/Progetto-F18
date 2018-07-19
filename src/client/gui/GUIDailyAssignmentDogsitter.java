@@ -2,13 +2,11 @@ package client.gui;
 
 
 import client.proxy.DogSitterProxy;
-import enumeration.CalendarState;
+import client.clientEnumerations.CalendarState;
 import server.Assignment;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;

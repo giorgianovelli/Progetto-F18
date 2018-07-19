@@ -1,9 +1,8 @@
 package client.gui;
 
-import client.clientEnumerations.MenuBarAction;
 import client.proxy.CustomerProxy;
 import server.Assignment;
-import enumeration.CalendarState;
+import client.clientEnumerations.CalendarState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.StringTokenizer;
 
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 

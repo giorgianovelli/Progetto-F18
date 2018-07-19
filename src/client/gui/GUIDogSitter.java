@@ -1,8 +1,7 @@
 package client.gui;
 
-import client.clientEnumerations.MenuBarAction;
 import client.proxy.DogSitterProxy;
-import enumeration.CalendarState;
+import client.clientEnumerations.CalendarState;
 import server.Assignment;
 
 import javax.swing.*;
@@ -13,7 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 

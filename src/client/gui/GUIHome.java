@@ -8,7 +8,7 @@ import client.clientEnumerations.CalendarAction;
 import client.clientEnumerations.MenuBarAction;
 import client.proxy.Proxy;
 import server.Assignment;
-import enumeration.CalendarState;
+import client.clientEnumerations.CalendarState;
 import server.dateTime.WeekDays;
 import javax.swing.*;
 import java.awt.*;

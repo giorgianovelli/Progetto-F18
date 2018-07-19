@@ -2,7 +2,7 @@ package client.gui;
 
 import client.proxy.CustomerProxy;
 import server.Assignment;
-import enumeration.CalendarState;
+import client.clientEnumerations.CalendarState;
 
 import javax.swing.*;
 import java.awt.*;
