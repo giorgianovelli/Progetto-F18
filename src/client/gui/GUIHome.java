@@ -641,7 +641,7 @@ public abstract class GUIHome extends JFrame{
     /**
      * Get the number of the today's assignments.
      * @param proxy the client proxy.
-     * @return
+     * @return the number of today's assignments.
      */
     protected int getNDailyAssignments(Proxy proxy){
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
