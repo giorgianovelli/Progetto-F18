@@ -1,6 +1,7 @@
 package test;
 
 import client.gui.GUICustomerLabel;
+import client.gui.GUISignUp;
 import client.proxy.CustomerProxy;
 import server.Dog;
 import server.bank.PaymentMethod;
@@ -11,16 +12,17 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class TestGUICustomerLabel {
-    public static void main(String[] args) throws Exception {
 
-       /* String inputEmail;
+    public static void main(String[] args) throws Exception {
+        GUISignUp guiSignUp = new GUISignUp();
+        String inputEmail;
 
         Scanner tastiera = new Scanner(System.in);
         System.out.println("Inserisci email utente già registrato :");
         inputEmail = tastiera.nextLine();
         System.out.println("L'email inserita è: " + inputEmail);
 
-        GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(inputEmail);
-        guiCustomerLabel.setVisible(true);*/
+        GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(inputEmail, guiSignUp);
+        guiCustomerLabel.setVisible(true);
     }
 }

@@ -50,7 +50,7 @@ public class GUICustomerLabel extends JFrame {
 
 
     private JButton buttonConfirm = new JButton("Confirm");
-    private JButton buttonBack = new JButton("Back");
+
 
     // attributi per client-server
     private CustomerProxy proxy;
@@ -59,9 +59,9 @@ public class GUICustomerLabel extends JFrame {
 //______________________________________________________________________________________________________________________________________________________________________________
 
     /**
-     * Constructor
-     * @param
-     *
+     * Costruttore
+     * @param email identifica il proprietario del cane
+     * @param guiSignUp interfaccia da cui è stata richiamata
      */
 
     public GUICustomerLabel(String email, GUISignUp guiSignUp) {
@@ -93,6 +93,9 @@ public class GUICustomerLabel extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________________________
 
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
 
     private void initComponents()  {
 
@@ -107,7 +110,6 @@ public class GUICustomerLabel extends JFrame {
         panelOut.add(panelButton, BorderLayout.SOUTH);
         panelButton.setLayout(new GridLayout(1, 2,5,5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
-        panelButton.add(buttonBack, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
         //-----------------------------------------------------------------------------------
@@ -176,20 +178,12 @@ public class GUICustomerLabel extends JFrame {
                              dispose();
                              GUILogin guiLogin = new GUILogin();
                              guiLogin.setVisible(true);
-
                         }
                     }
 
                 }
-
-                if (registrationAe.getActionCommand().equals("Back")) {
-                   // GUISignUp guiSignUp = new GUISignUp();
-                   // guiSignUp.setVisible(true);
-
-                }
             }
         };
-        buttonBack.addActionListener(registration);
         buttonConfirm.addActionListener(registration);
 
 

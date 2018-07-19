@@ -1,9 +1,8 @@
 package client.gui;
 
-//import com.sun.xml.internal.bind.v2.runtime.Name; //TODO da problemi
+
 import client.Calendar;
 import client.proxy.CustomerProxy;
-//import javafx.scene.layout.BorderRepeat; //TODO da problemi se non commentato
 import client.proxy.DogSitterProxy;
 import server.Availability;
 import server.DogSize;
@@ -22,13 +21,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
 
-public class GUISignUp extends JFrame{
+public class GUISignUp extends JFrame {
     final int WIDTH = 600;
     final int HEIGHT = 650;
-    final double MAX_AMOUNT =  500.0;
+    final double MAX_AMOUNT = 500.0;
     final double MIN_AMOUNT = 50.0;
 
-    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private GUISignUp guiSignUp;
 
     private JPanel panelOut = new JPanel();
@@ -63,30 +62,30 @@ public class GUISignUp extends JFrame{
     private JTextField textCap = new JTextField();
     private JTextField textPhoneNumber = new JTextField();
 
+    private String Password;
+    private String confirmPassword;
+
     private JButton buttonCustomerConfirm = new JButton("Next");
     private JButton buttonCancel = new JButton("Cancel");
-    //todo per Date of birth
-   // private Date dateofBirth = new Date();
+
 
     private JComboBox<String> dayList;
     private JComboBox<String> monthList;
     private JComboBox<String> yearList;
 
-    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13","14","15","16", "17", "18", "19", "20", "21", "22", "23", "24", "25","26", "27", "28", "29", "30", "31"};
+    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private ArrayList<String> years_tmp = new ArrayList<>();
 
-    //todo valori per payment method
+    // valori per payment method
 
     private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
     private JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
     private JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT);
     private JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
     private JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
+
     private JTextField textCreditCardOwneSurname = new JTextField();
-
-
-    private JTextField textPaymentMethod = new JTextField();
     private JTextField textCreditCardOwnerName = new JTextField();
     private JTextField textCreditCardNumber = new JTextField();
 
@@ -99,8 +98,7 @@ public class GUISignUp extends JFrame{
     private JTextField textExpirationDays = new JTextField();
 
 
-    //TODO attributi per client-server
-    private String email;
+    // attributo per client-server
     private CustomerProxy proxy;
 
 
@@ -127,6 +125,9 @@ public class GUISignUp extends JFrame{
 
 //______________________________________________________________________________________________________________________________________________________________________________
 
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
 
     private void initComponents() {
 
@@ -247,8 +248,6 @@ public class GUISignUp extends JFrame{
         panelButton.add(buttonCustomerConfirm, BorderLayout.SOUTH);
 
 
-
-
         //-----------------------------------------------------------------------------------
 
         /**
@@ -261,18 +260,26 @@ public class GUISignUp extends JFrame{
 
                 if (registrationAe.getActionCommand().equals("Next")) {
 
-                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("")
-                            || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
+                    Password = "";
+                    confirmPassword = "";
+
+                    Password = readPassword(textPassword.getPassword());
+                    confirmPassword = readPassword(textConfirmPassword.getPassword());
+
+
+                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
+                            Password == "" || confirmPassword == "" || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
                     } else {
-
+                        boolean inputPassword = changePasswordFields(Password, confirmPassword);
                         boolean add = addCustomerValues();
 
-                        if (add) {
+                        if (add && inputPassword) {
                             JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-                             GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
-                             guiCustomerLabel.setVisible(true);
+                            GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
+                            guiCustomerLabel.setVisible(true);
+                            dispose();
 
                         }
 
@@ -280,13 +287,11 @@ public class GUISignUp extends JFrame{
 
                 }
 
-                        if (registrationAe.getActionCommand().equals("Cancel")) {
-                            System.exit(0);  //todo esco oppure torno alla schermata di login??
-                        }
+                if (registrationAe.getActionCommand().equals("Cancel")) {
+                    System.exit(0);
+                }
 
-                    }
-
-
+            }
 
 
         };
@@ -298,7 +303,7 @@ public class GUISignUp extends JFrame{
 //______________________________________________________________________________________________________________________________________________________________________________
 
     /**
-     *  metodo per inserire le tuple nel database
+     * metodo per inserire le tuple nel database
      */
 
     private boolean addCustomerValues() {
@@ -326,55 +331,100 @@ public class GUISignUp extends JFrame{
         Double amount = Math.round((min + (max - min) * rand.nextDouble()) * 100d) / 100d;
 
         /**
-         *  TODO DATA DI SCADENZA
+         *  TODO DATA DI SCADENZA PROBLEMA
          */
 
         Date ex_Year = new Date();
-        PaymentMethod strExpirationDate = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), ex_Year, textSecurityCode.getText(), amount);
 
-
-        //TODO PER INSERIRE SOLO L'ULTIMO GIORNO DELL'ANNO
-        SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
-        String expiration_Months = expirationDateFormatmm.format(strExpirationDate.getExpirationDate());
-
+        Date inputDate;
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
-        String expiration_Years = expirationDateFormatyyyy.format(strExpirationDate.getExpirationDate());
 
-        Date updateExpiration = new Date();
-
+        //prendo solo l'anno dalle comboBox per calcolare l'ultimo giorno del mese
         try {
-            updateExpiration = expirationDateFormatyyyy.parse(expiration_Years);
+            ex_Year = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString()); //prende come data solo l'anno
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), updateExpiration));
+        //costruisco la data completa della nuova data di scadenza per la carta
+        inputDate = buildDate(Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), ex_Year)), expirationMonth.getSelectedItem().toString(), expirationYear.getSelectedItem().toString());
+
+        System.out.println(inputDate);
+
+        PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), inputDate, textSecurityCode.getText(), amount);
 
         /**
          * stampa il giorno sulla label nell'interfaccia
          */
+        String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), ex_Year));
         textExpirationDays.setText(expiration_Days);
 
-        //todo aggiorna la data di scadenza
-        Date updateExpiration2 = new Date();
-        SimpleDateFormat expirationdateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date yearExpiration2 = new Date();
 
-        String strDateExpiration = Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), yearExpiration2) + "/" + expirationMonth.getSelectedItem().toString() + "/" + expirationYear.getSelectedItem().toString();
-        try {
-            updateExpiration2 = expirationdateFormat.parse(strDateExpiration);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-        String strPassword = String.valueOf(textPassword.getPassword());
+        String strPassword = readPassword(textPassword.getPassword());
         Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
-        PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), updateExpiration2 , textSecurityCode.getText(), amount);
+
 
         return proxy.customerSignUp(textEmail.getText(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
 
 
+    }
+
+
+//______________________________________________________________________________________________________________________________________________________________
+
+
+    private String readPassword(char[] password) {
+        String pwd = "";
+        for (int i = 0; i < password.length; i++) {
+            pwd += password[i];
+        }
+        return pwd;
+    }
+
+
+//______________________________________________________________________________________________________________________________________________________________
+
+    /**
+     * controlla se la password inserita nel campo "Password" corrisponda al campo "confirmPassword"
+     */
+
+    public boolean changePasswordFields(String newPassword, String confirmPassword) {
+        boolean updatePassword;
+
+        if (newPassword.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+            updatePassword = true;
+
+
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "New Password and Confirm Password do not match!", "Password error", JOptionPane.ERROR_MESSAGE);
+            textPassword.setText("");
+            textConfirmPassword.setText("");
+            updatePassword = false;
+        }
+
+
+        return updatePassword;
+
+
+    }
+
+
+//______________________________________________________________________________________________________________________________________________________________
+
+    private Date buildDate(String day, String month, String year) {
+
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        String strDateOfBirth = day + "/" + month + "/" + year;
+        try {
+            date = dateFormat.parse(strDateOfBirth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
     }
 
 
