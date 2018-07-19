@@ -22,15 +22,13 @@ public class GUIChangePassword extends JFrame {
     private JLabel labelNewPassword = new JLabel("New Password:", SwingConstants.LEFT);
     private JLabel labelPasswordConf = new JLabel("Confirm New Password:", SwingConstants.LEFT);
 
-    private JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
-    private JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
-    private JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
+    protected JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
+    protected JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
+    protected JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
 
     private String newPassword;
     private String confirmPassword;
     private String currentPassword;
-
-    private String inputs;
 
     private JButton buttonConfirm = new JButton("Confirm");
     private JButton buttonCancel = new JButton("Cancel");
@@ -43,10 +41,11 @@ public class GUIChangePassword extends JFrame {
 //______________________________________________________________________________________________________________________________________________________________
 
     /**
-     * Constructor
+     * Costruttore
      *
-     * @param email: reference to the user
+     * @param email: riferimento all'utente
      */
+
 
 
     public GUIChangePassword(String email) {
@@ -66,11 +65,13 @@ public class GUIChangePassword extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
-
+    /**
+     * inizializza le componenti dell'interfaccia
+     */
     private void initComponents() {
 
         /**
-         * JPANEL
+         * Panels
          */
 
         panelData.setLayout(new GridLayout(3, 1, 20, 30));
@@ -106,27 +107,30 @@ public class GUIChangePassword extends JFrame {
                     newPassword = readPassword(textNewPassword.getPassword());
                     confirmPassword = readPassword(textPasswordConf.getPassword());
 
+
                     if (currentPassword == "" || newPassword == "" || confirmPassword == "") {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
                     }
 
                     else if (checkPassword(currentPassword)) {
+                        if(!(getSpecialCharacterCount(newPassword))){
+                            if (changePasswordFields(newPassword, confirmPassword)) {
+                                JOptionPane.showMessageDialog(new JFrame(), "you have changed password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+                                dispose();
 
-                        if (changePasswordFields(newPassword, confirmPassword)) {
-                            JOptionPane.showMessageDialog(new JFrame(), "you have changed password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
-                            dispose();
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(new JFrame(), " New Password is invalid!", "Password error", JOptionPane.ERROR_MESSAGE);
+
                         }
 
-
                     }
-
 
                 }
                 if (passwordAe.getActionCommand().equals("Cancel")) {
                     dispose();
                 }
-
-
             }
         };
         buttonCancel.addActionListener(changepassword);
@@ -136,11 +140,15 @@ public class GUIChangePassword extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
+
     /**
-     * controllo se le nuova password inserita nel campo "NewPassword" corrisponda  al campo "ConfirmPassword"
+     * controlla se la password inserita nel campo "newPassword" corrisponda al campo "confirmPassword"
+     * @param newPassword nuova password inserita dall'utente
+     * @param confirmPassword  controlla la password inserita
+     * @return true se le due password coincidono false altrimenti
      */
 
-    public boolean changePasswordFields(String newPassword, String confirmPassword) {
+    protected boolean changePasswordFields(String newPassword, String confirmPassword) {
         boolean updatePassword;
 
         if (newPassword.equals(confirmPassword)) {
@@ -164,13 +172,14 @@ public class GUIChangePassword extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
+
     /**
-     * verifica la validità della password immessa
-     *
+     * verifica se la password inserita dall'utente coincida con quella immessa in fase di registrazione
+     * @param currentPwd password inserita dall'utente da controllare
      * @return true se corretta, false se errata
      */
 
-    public boolean checkPassword(String currentPwd) {
+    protected boolean checkPassword(String currentPwd) {
         boolean matchPassword;
 
         String currentPwdProxy = proxy.getPassword();
@@ -193,7 +202,11 @@ public class GUIChangePassword extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
-
+    /**
+     * legge password inserita dall'utente
+     * @param password password inserita dall'utente
+     * @return stringa che contiene la password letta
+     */
     private String readPassword(char[] password) {
         String pwd = "";
         for (int i = 0; i < password.length; i++) {
@@ -203,12 +216,35 @@ public class GUIChangePassword extends JFrame {
     }
 
 
+//______________________________________________________________________________________________________________________________________________________________
+
+    /**
+     * controlla se la nuova password inserita dall'utente contenga caratteri speciali
+     * @param s password da controllare
+     * @return true se nella password ci sono caratteri speciali
+     */
+    public boolean getSpecialCharacterCount(String s) {
+
+        String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
+        if(s!=null || !(s.trim().isEmpty())) {
+            for (int i = 0; i < s.length(); i++) {
+               
+                if (specialChars.contains(s.substring(i, i + 1))) {
+                    return true;
+
+                }
+
+            }
+        }
+
+        return false;
+
+
+    }
+
 
 
 
 
 
 }
-
-
-
