@@ -250,10 +250,6 @@ public class GUISignUp extends JFrame {
 
         //-----------------------------------------------------------------------------------
 
-        /**
-         *  TODO METODO DELLA MODIFICA dei dati
-         */
-
         ActionListener registration = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
@@ -331,7 +327,7 @@ public class GUISignUp extends JFrame {
         Double amount = Math.round((min + (max - min) * rand.nextDouble()) * 100d) / 100d;
 
         /**
-         *  TODO DATA DI SCADENZA PROBLEMA
+         *  data di scadenza
          */
 
         Date ex_Year = new Date();
@@ -364,7 +360,7 @@ public class GUISignUp extends JFrame {
         Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
 
 
-        return proxy.customerSignUp(textEmail.getText(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
+        return proxy.customerSignUp(textEmail.getText().toUpperCase(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
 
 
     }
@@ -372,6 +368,11 @@ public class GUISignUp extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
+    /**
+     * legge password inserita dall'utente
+     * @param password password inserita dall'utente
+     * @return stringa che contiene la password letta
+     */
 
     private String readPassword(char[] password) {
         String pwd = "";
@@ -384,14 +385,18 @@ public class GUISignUp extends JFrame {
 
 //______________________________________________________________________________________________________________________________________________________________
 
+
     /**
      * controlla se la password inserita nel campo "Password" corrisponda al campo "confirmPassword"
+     * @param Password nuova password inserita dall'utente
+     * @param confirmPassword  controlla la password inserita
+     * @return true se le due password coincidono false altrimenti
      */
 
-    public boolean changePasswordFields(String newPassword, String confirmPassword) {
+    public boolean changePasswordFields(String Password, String confirmPassword) {
         boolean updatePassword;
 
-        if (newPassword.equals(confirmPassword)) {
+        if (Password.equals(confirmPassword)) {
             JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
             updatePassword = true;
 
@@ -411,6 +416,15 @@ public class GUISignUp extends JFrame {
 
 
 //______________________________________________________________________________________________________________________________________________________________
+
+    /**
+     *costruisce una data secondo il formato "dd/MM/yyyy"
+     * @param day stringa giorno
+     * @param month stringa mese
+     * @param year stringa anno
+     * @return data nel formato predefinito
+     */
+
 
     private Date buildDate(String day, String month, String year) {
 
