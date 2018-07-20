@@ -42,20 +42,80 @@ public class GUIAwards extends JFrame {
      * Riccardo's description
      */
     private JLabel riccardo;
+
+    /**
+     * Nicolas's profile image.
+     */
     ImageIcon iconNicolas;
+
+    /**
+     * The label that contains Nicolas's profile image.
+     */
     private JLabel labelN;
+
+    /**
+     * Nicolas's description
+     */
     private JLabel nicolas;
+
+    /**
+     * Giorgia's profile image.
+     */
     ImageIcon iconGiorgia;
+
+    /**
+     * The label that contains Giorgia's profile image.
+     */
     private JLabel labelG;
+
+    /**
+     * Giorgia's description
+     */
     private JLabel giorgia;
+
+    /**
+     * Camilla's profile image.
+     */
     ImageIcon iconCamilla;
+
+    /**
+     * The label that contains Camilla's profile image.
+     */
     private JLabel labelC;
+
+    /**
+     * Camilla's description
+     */
     private JLabel camilla;
+
+    /**
+     * Camelia's profile image.
+     */
     ImageIcon iconCamelia;
+
+    /**
+     * The label that contains Camelia's profile image.
+     */
     private JLabel labelCami;
+
+    /**
+     * Camelia's description
+     */
     private JLabel camelia;
+
+    /**
+     * Sam's profile image.
+     */
     ImageIcon iconSam;
+
+    /**
+     * The label that contains Sam's profile image.
+     */
     private JLabel labelS;
+
+    /**
+     * Sam's description
+     */
     private JLabel sam;
 
 
