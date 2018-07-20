@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GUISignUp extends JFrame {
     final int WIDTH = 600;
@@ -123,7 +125,7 @@ public class GUISignUp extends JFrame {
         initComponents();
     }
 
-//______________________________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * inizializza le componenti dell'interfaccia
@@ -258,24 +260,30 @@ public class GUISignUp extends JFrame {
 
                     Password = "";
                     confirmPassword = "";
-
                     Password = readPassword(textPassword.getPassword());
                     confirmPassword = readPassword(textConfirmPassword.getPassword());
+
 
 
                     if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
                             Password == "" || confirmPassword == "" || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
-                    } else {
+                    } else if (checkEmail(textEmail.getText())) {
                         boolean inputPassword = changePasswordFields(Password, confirmPassword);
-                        boolean add = addCustomerValues();
+                        if(inputPassword){
 
-                        if (add && inputPassword) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
-                            GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
-                            guiCustomerLabel.setVisible(true);
-                            dispose();
+
+                            boolean add = addCustomerValues();
+                            if (add) {
+                                JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
+                                GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
+                                guiCustomerLabel.setVisible(true);
+                                dispose();
+
+
+                        }
+
 
                         }
 
@@ -296,7 +304,6 @@ public class GUISignUp extends JFrame {
 
     }
 
-//______________________________________________________________________________________________________________________________________________________________________________
 
     /**
      * metodo per inserire le tuple nel database
@@ -366,7 +373,7 @@ public class GUISignUp extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * legge password inserita dall'utente
@@ -383,7 +390,7 @@ public class GUISignUp extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
+
 
 
     /**
@@ -415,7 +422,7 @@ public class GUISignUp extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
+
 
     /**
      *costruisce una data secondo il formato "dd/MM/yyyy"
@@ -440,6 +447,35 @@ public class GUISignUp extends JFrame {
 
         return date;
     }
+
+    /**
+     * Controlla se l'email inserita corrisponda al formato "email@gmail.com"
+     * @param email inserita dall'utente
+     * @return true se corretta false altrimenti
+     */
+
+    private boolean checkEmail (String email) {
+
+        String expression = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
+
+        Pattern p = Pattern.compile(expression);
+        Matcher m = p.matcher(email);
+
+        boolean matchFound = m.matches();
+
+        if (matchFound) {
+            JOptionPane.showMessageDialog(new JFrame(), "Email is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Email", "", JOptionPane.ERROR_MESSAGE);
+            textEmail.setText("");
+            return false;
+        }
+
+    }
+
+
+
 
 
 }
