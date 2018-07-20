@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,15 +55,27 @@ public class GUIAddDog extends JFrame {
     private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private ArrayList<String> years_tmp = new ArrayList<>();
+    private GUIAddDog guiAddDog;
+    private GUIDogs guiDogs;
 
 
     /**
      * costruttore
      * @param email identifica il proprietario del cane
      */
-    public GUIAddDog(String email){
+    public GUIAddDog(String email, GUIDogs guiDogs) {
         this.email = email;
         proxy = new CustomerProxy(email);
+        guiAddDog = this;
+        this.guiDogs = guiDogs;
+        guiDogs.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiDogs.setEnabled(true);
+            }
+        });
         initComponent();
     }
 
@@ -90,14 +104,15 @@ public class GUIAddDog extends JFrame {
 
                         if(add){
                             JOptionPane.showMessageDialog(new JFrame(), "Dog added!", "", JOptionPane.INFORMATION_MESSAGE);
-                            dispose();
+                            guiAddDog.dispatchEvent(new WindowEvent(guiAddDog, WindowEvent.WINDOW_CLOSING));
+                            guiDogs.dispatchEvent(new WindowEvent(guiDogs, WindowEvent.WINDOW_CLOSING));
                         }
                     }
 
                 }
 
                 if (registrationAe.getActionCommand().equals("Cancel")) {
-                    dispose();
+                    guiAddDog.dispatchEvent(new WindowEvent(guiAddDog, WindowEvent.WINDOW_CLOSING));
                 }
 
             }

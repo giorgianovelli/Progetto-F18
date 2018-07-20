@@ -355,7 +355,7 @@ public class GUICustomer extends GUIHome{
      * Open a window that permits to the customer to change his password.
      */
     public void changePassword(){
-        GUIChangePassword guiChangePassword = new GUIChangePassword(email);
+        GUIChangePassword guiChangePassword = new GUIChangePassword(email, guiCustomer);
         guiChangePassword.setVisible(true);
     }
 
@@ -364,7 +364,7 @@ public class GUICustomer extends GUIHome{
      * Open the windows for changing dogs' informations.
      */
     public void dogsSettings(){
-        GUIDogs guiDogs = new GUIDogs(email);
+        GUIDogs guiDogs = new GUIDogs(email, guiCustomer);
         guiDogs.setVisible(true);
     }
 

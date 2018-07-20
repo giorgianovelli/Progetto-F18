@@ -2,6 +2,8 @@ package client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class GUIAwards extends JFrame {
@@ -60,7 +62,15 @@ public class GUIAwards extends JFrame {
     /**
      * Create a new window that shows the developer team informations.
      */
-    public GUIAwards(){
+    public GUIAwards(GUIHome guiHome) {
+        guiHome.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiHome.setEnabled(true);
+            }
+        });
         initComponent();
     }
 

@@ -849,7 +849,7 @@ public abstract class GUIHome extends JFrame{
      * Open a windows that shows the informations about the software.
      */
     public void info(){
-        GUIInfo info = new GUIInfo();
+        GUIInfo info = new GUIInfo(guiHome);
         info.setVisible(true);
     }
 
@@ -858,7 +858,7 @@ public abstract class GUIHome extends JFrame{
      * Open a windows that shows the software developer team.
      */
     public void credits(){
-        GUIAwards credits = new GUIAwards();
+        GUIAwards credits = new GUIAwards(guiHome);
         credits.setVisible(true);
     }
 

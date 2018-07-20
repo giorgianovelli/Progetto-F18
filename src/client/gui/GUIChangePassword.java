@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class GUIChangePassword extends JFrame {
@@ -36,6 +38,7 @@ public class GUIChangePassword extends JFrame {
     //attributi per client-server
     private CustomerProxy proxy;
     private String email;
+    GUIChangePassword guiChangePassword;
 
 
     /**
@@ -46,7 +49,7 @@ public class GUIChangePassword extends JFrame {
 
 
 
-    public GUIChangePassword(String email) {
+    public GUIChangePassword(String email, GUIHome guiHome) {
         setTitle("Change Password");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -55,13 +58,22 @@ public class GUIChangePassword extends JFrame {
         setLayout(new BorderLayout());
         this.email = email;
         this.proxy = new CustomerProxy(email);
+        guiChangePassword = this;
+        guiHome.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiHome.setEnabled(true);
+            }
+        });
 
 
         initComponents();
 
     }
 
-//______________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * inizializza le componenti dell'interfaccia
@@ -89,9 +101,6 @@ public class GUIChangePassword extends JFrame {
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
 
-        //-----------------------------------------------------------------------------------
-
-
         ActionListener changepassword = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent passwordAe) {
@@ -114,8 +123,7 @@ public class GUIChangePassword extends JFrame {
                         if(!(getSpecialCharacterCount(newPassword))){
                             if (changePasswordFields(newPassword, confirmPassword)) {
                                 JOptionPane.showMessageDialog(new JFrame(), "you have changed password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
-                                dispose();
-
+                                guiChangePassword.dispatchEvent(new WindowEvent(guiChangePassword, WindowEvent.WINDOW_CLOSING));
                             }
                         }
                         else{
@@ -126,12 +134,9 @@ public class GUIChangePassword extends JFrame {
                     }
 
                 }
-                if (passwordAe.getActionCommand().equals("Cancel")) {
-                    dispose();
-                }
             }
         };
-        buttonCancel.addActionListener(changepassword);
+        buttonCancel.addActionListener(e -> guiChangePassword.dispatchEvent(new WindowEvent(guiChangePassword, WindowEvent.WINDOW_CLOSING)));
         buttonConfirm.addActionListener(changepassword);
     }
 

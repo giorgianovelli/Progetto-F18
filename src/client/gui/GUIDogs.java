@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashSet;
 
 public class GUIDogs extends JFrame {
@@ -26,6 +28,7 @@ public class GUIDogs extends JFrame {
     private JButton addDogButton;
 
     private DogBox [] dogBoxes;
+    private GUIDogs guiDogs;
 
     private GridLayout gridLayout = new GridLayout(1,1);
 
@@ -34,7 +37,7 @@ public class GUIDogs extends JFrame {
      * costruttore
      * @param email identifica il proprietario del cane
      */
-    public GUIDogs(String email){
+    public GUIDogs(String email, GUIHome guiHome){
         setTitle("Your dogs");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -42,6 +45,15 @@ public class GUIDogs extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
         setVisible(true);
+        guiDogs = this;
+        guiHome.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiHome.setEnabled(true);
+            }
+        });
 
 
         this.email = email;
@@ -71,10 +83,9 @@ public class GUIDogs extends JFrame {
         addDogButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUIAddDog guiAddDog = new GUIAddDog(email);
+                GUIAddDog guiAddDog = new GUIAddDog(email, guiDogs);
                 guiAddDog.setVisible(true);
 
-                dispose();
             }
         });
 
@@ -92,9 +103,8 @@ public class GUIDogs extends JFrame {
             dogBoxes[i].getInfoButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    GUIDogInfo dogInfo = new GUIDogInfo(dog, email);
+                    GUIDogInfo dogInfo = new GUIDogInfo(dog, email, guiDogs);
                     dogInfo.setVisible(true);
-                    dispose();
                 }
             });
 
@@ -103,7 +113,7 @@ public class GUIDogs extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     if(proxy.disableDog(dog.getID())){
                         JOptionPane.showMessageDialog(new Frame(), dog.getName()+" disabled!", "", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
+                        guiDogs.dispatchEvent(new WindowEvent(guiDogs, WindowEvent.WINDOW_CLOSING));
                     }
                 }
             });

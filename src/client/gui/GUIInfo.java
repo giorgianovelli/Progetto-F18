@@ -3,6 +3,8 @@ package client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUIInfo extends JFrame {
     final int WIDTH = 500;
@@ -20,7 +22,15 @@ public class GUIInfo extends JFrame {
      * Constuctor of the class
      */
 
-    public GUIInfo(){
+    public GUIInfo(GUIHome guiCustomer) {
+        guiCustomer.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiCustomer.setEnabled(true);
+            }
+        });
         initComponent();
     }
 

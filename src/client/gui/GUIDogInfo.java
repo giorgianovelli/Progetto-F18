@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,17 +57,26 @@ public class GUIDogInfo extends JFrame {
     private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private ArrayList<String> years_tmp = new ArrayList<>();
-
-
+    private GUIDogInfo guiDogInfo;
     /**
      * costruttore
      * @param dog oggetto di cui si vogliono visualizzare le informazioni
      * @param email
      */
-    public GUIDogInfo(Dog dog, String email){
+    public GUIDogInfo(Dog dog, String email, GUIDogs guiDogs){
         this.dog = dog;
         this.email = email;
         proxy = new CustomerProxy(this.email);
+        guiDogs.setEnabled(false);
+        guiDogInfo = this;
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiDogs.setEnabled(true);
+            }
+        });
         initComponent();
     }
 
@@ -113,16 +124,10 @@ public class GUIDogInfo extends JFrame {
                     {
                         if(setNewValues()){
                             JOptionPane.showMessageDialog(new JFrame(), "The data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-
-                            dispose();
+                            guiDogInfo.dispatchEvent(new WindowEvent(guiDogInfo, WindowEvent.WINDOW_CLOSING));
                         }
                     }
                 }
-
-                if (registrationAe.getActionCommand().equals("Cancel")) {
-                    dispose();
-                }
-
             }
         };
 
@@ -164,7 +169,7 @@ public class GUIDogInfo extends JFrame {
         panelButton.setLayout(new GridLayout(1,2, 5,5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(15, 90, 10, 90));
         buttonConfirm.addActionListener(registration);
-        buttonCancel.addActionListener(registration);
+        buttonCancel.addActionListener(e -> guiDogInfo.dispatchEvent(new WindowEvent(guiDogInfo, WindowEvent.WINDOW_CLOSING)));
         panelButton.add(buttonConfirm);
         panelButton.add(buttonCancel);
 

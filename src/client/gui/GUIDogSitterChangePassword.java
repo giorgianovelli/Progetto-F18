@@ -14,8 +14,8 @@ public class GUIDogSitterChangePassword extends GUIChangePassword {
      *
      * @param email : reference to the user
      */
-    public GUIDogSitterChangePassword(String email) {
-        super(email);
+    public GUIDogSitterChangePassword(String email, GUIHome guiHome) {
+        super(email, guiHome);
         dogSitterProxy = new DogSitterProxy(email);
 
     }

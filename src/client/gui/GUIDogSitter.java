@@ -207,7 +207,7 @@ public class GUIDogSitter extends GUIHome{
      * Open a window that permits to the dog sitter to change his password.
      */
     public void changePassword(){
-        GUIDogSitterChangePassword guiDogSitterChangePassword = new GUIDogSitterChangePassword(email);
+        GUIDogSitterChangePassword guiDogSitterChangePassword = new GUIDogSitterChangePassword(email, guiHome);
         guiDogSitterChangePassword.setVisible(true);
     }
 
