@@ -14,6 +14,8 @@ import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Date;
 
 public class GUIWriteReview extends JFrame {
@@ -56,6 +58,9 @@ public class GUIWriteReview extends JFrame {
 
     private DefaultStyledDocument docTitle;
     private DefaultStyledDocument docComment;
+    private GUIWriteReview guiWriteReview;
+    private GUIListAssignments guiListAssignments;
+    private JFrame success = new JFrame();
 
 
     /**
@@ -64,9 +69,20 @@ public class GUIWriteReview extends JFrame {
      * @param email riferimento all'utente
      */
 
-    public GUIWriteReview(Assignment a, String email)
+    public GUIWriteReview(Assignment a, String email, GUIListAssignments guiListAssignments)
     {
         assignmentToReview = a;
+        guiWriteReview = this;
+        this.guiListAssignments = guiListAssignments;
+        guiListAssignments.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiListAssignments.setEnabled(true);
+            }
+        });
+
         this.email = email;
         proxy = new CustomerProxy(this.email);
         docTitle = new DefaultStyledDocument();
@@ -219,21 +235,17 @@ public class GUIWriteReview extends JFrame {
                         titleField.setText("");
                         descriptionField.setText("");
                     } else if(proxy.addReview(code, email, rating ,title.toUpperCase() ,comment.toUpperCase())){
-                        JOptionPane.showMessageDialog(new JFrame(), "Review added!", "Review", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-
+                        JOptionPane.showMessageDialog(success = new JFrame(), "Review added!", "Review", JOptionPane.INFORMATION_MESSAGE);
+                        if (!success.isActive()) {
+                            guiWriteReview.dispatchEvent(new WindowEvent(guiWriteReview, WindowEvent.WINDOW_CLOSING));
+                            guiListAssignments.dispatchEvent(new WindowEvent(guiListAssignments, WindowEvent.WINDOW_CLOSING));
+                        }
                     }
-
                 }
-                if (registrationAe.getActionCommand().equals("Cancel")) {
-                    //System.exit(0);
-                    dispose();
-                }
-
             }
         };
         sendButton.addActionListener(post);
-        cancelButton.addActionListener(post);
+        cancelButton.addActionListener(e -> guiWriteReview.dispatchEvent(new WindowEvent(guiWriteReview, WindowEvent.WINDOW_CLOSING)));
         buttonPanel.setLayout(new GridLayout(1, 2,5,5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 90, 10, 90));
         buttonPanel.add(cancelButton, BorderLayout.SOUTH);

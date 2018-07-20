@@ -62,6 +62,10 @@ public class GUICustomer extends GUIHome{
      */
     private HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
+    /**
+     * This GUI object
+     */
+    private GUICustomer guiCustomer;
 
     /**
      * Create a new home for the customer specified by the email.
@@ -76,6 +80,7 @@ public class GUICustomer extends GUIHome{
         setResizable(false);
         setLayout(new BorderLayout());
 
+        guiCustomer = this;
         this.email = email;
         this.proxy = new CustomerProxy(email);
         initComponents();
@@ -290,7 +295,7 @@ public class GUICustomer extends GUIHome{
         }
 
         if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
-            GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
+            GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate, guiCustomer);
             guiDailyAssignments.setVisible(true);
         }
 
@@ -341,7 +346,7 @@ public class GUICustomer extends GUIHome{
      * Open the account settings.
      */
     public void accountSettings(){
-        GUISettings guiSettings = new GUISettings(email);
+        GUISettings guiSettings = new GUISettings(email, guiCustomer);
         guiSettings.setVisible(true);
     }
 

@@ -90,17 +90,19 @@ public class GUISettings extends JFrame {
     // attributi per client-server
     private CustomerProxy proxy;
     private String email;
+    private GUISettings guiSettings;
 
-//______________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * Costruttore
      *
      * @param email: riferimento all'utente
+     * @param guiHome interface where
      */
 
 
-    public GUISettings(String email) {
+    public GUISettings(String email, GUIHome guiHome) {
         setTitle("Account settings");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -109,13 +111,23 @@ public class GUISettings extends JFrame {
         setLayout(new BorderLayout());
         this.email = email;
         this.proxy = new CustomerProxy(email);
+        guiSettings = this;
+        guiHome.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiHome.setEnabled(true);
+            }
+        });
 
         setValues();
 
         initComponents();
     }
 
-//______________________________________________________________________________________________________________________________________________________________
+
     /**
      * inizializza le componenti dell'interfaccia
      */
@@ -140,7 +152,7 @@ public class GUISettings extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
-        //-----------------------------------------------------------------------------------
+
 
         /**
          * JCOMBOBOX di DATE OF BIRTH
@@ -170,7 +182,6 @@ public class GUISettings extends JFrame {
         monthList.setSelectedItem(month);
         yearList.setSelectedItem(year);
 
-        //-----------------------------------------------------------------------------------
 
         /**
          * others panel
@@ -205,8 +216,6 @@ public class GUISettings extends JFrame {
         panelPayment.add(textCreditCardNumber);
         panelPayment.add(labelExpirationDate);
 
-
-        //-----------------------------------------------------------------------------------
 
         /**
          * JCOMBOBOX di EXPIRATION DATE
@@ -251,8 +260,6 @@ public class GUISettings extends JFrame {
         labelExpirationDate.setLabelFor(textExpirationDays);
 
 
-        //-----------------------------------------------------------------------------------
-
         /**
          * PANEL DI EXPIRATION DATE per sistemare le jcombobox
          * e PANEL dei BOTTONI
@@ -274,8 +281,6 @@ public class GUISettings extends JFrame {
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-        //-----------------------------------------------------------------------------------
-
 
         ActionListener registration = new ActionListener() {
             @Override
@@ -291,29 +296,20 @@ public class GUISettings extends JFrame {
                     } else if (dateBeforeToday(inputDate)) {
 
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Expiry Date ", "", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
+
 
                     } else {
                         setNewValues();
                         JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-
+                        guiSettings.dispatchEvent(new WindowEvent(guiSettings, WindowEvent.WINDOW_CLOSING));
                     }
 
                 }
-
-                if (registrationAe.getActionCommand().equals("Cancel")) {
-                    dispose();
-                }
-
             }
         };
-        buttonCancel.addActionListener(registration);
+        buttonCancel.addActionListener(e -> guiSettings.dispatchEvent(new WindowEvent(guiSettings, WindowEvent.WINDOW_CLOSING)));
         buttonConfirm.addActionListener(registration);
     }
-
-
-//______________________________________________________________________________________________________________________________________________________________________________
 
     /**
      * METODO PER INSERIRE I VALORI CONTENUTI NEL DATABASE
@@ -378,9 +374,6 @@ public class GUISettings extends JFrame {
 
 
     }
-
-
-//____________________________________________________________________________________________________________________________________________________________________________
 
 
     /**
@@ -450,7 +443,6 @@ public class GUISettings extends JFrame {
 
     }
 
-//____________________________________________________________________________________________________________________________________________________________________________
 
     /**
      * controlla se la data di scadenza delle carte di credito inserita dall'utente nelle jcombobox è inferiore a quella odierna
@@ -467,8 +459,6 @@ public class GUISettings extends JFrame {
 
         return false;
     }
-
-//____________________________________________________________________________________________________________________________________________________________________________
 
     /**
      *implementa la data di scadenza della carta di credito
@@ -493,7 +483,6 @@ public class GUISettings extends JFrame {
 
     }
 
-//____________________________________________________________________________________________________________________________________________________________________________
 
     /**
      * costruisce una data secondo il formato "dd/MM/yyyy"
@@ -506,9 +495,9 @@ public class GUISettings extends JFrame {
     private Date buildDate(String day, String month, String year) {
 
         Date date = new Date();
+        String strDateOfBirth = day + "/" + month + "/" + year;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        String strDateOfBirth = day + "/" + month + "/" + year;
         try {
             date = dateFormat.parse(strDateOfBirth);
         } catch (ParseException e) {

@@ -102,7 +102,7 @@ public class GUISignUp extends JFrame {
     private CustomerProxy proxy;
 
 
-//______________________________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * Constructor
@@ -272,7 +272,7 @@ public class GUISignUp extends JFrame {
                         boolean add = addCustomerValues();
 
                         if (add && inputPassword) {
-                            JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
                             GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
                             guiCustomerLabel.setVisible(true);
                             dispose();

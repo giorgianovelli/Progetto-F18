@@ -62,6 +62,16 @@ public class GUIListAssignments extends JFrame{
         setLayout(new BorderLayout());
         guiListAssignments = this;
 
+        guiCustomer.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiCustomer.setEnabled(true);
+            }
+        });
+
         this.listAssignment = listAssignment;
         this.email = email;
 
@@ -118,17 +128,7 @@ public class GUIListAssignments extends JFrame{
 
                     setComponents(setLabelString(cs, a, null), "Write a review", j);
 
-                    buttonAction[j].addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            GUIWriteReview writeReview = new GUIWriteReview(listAssignment.get(i), email);
-                            writeReview.setVisible(true);
-                            dispose();
-
-                        }
-
-                    });
-
+                    buttonAction[j].addActionListener( e -> new GUIWriteReview(listAssignment.get(i), email, guiListAssignments).setVisible(true));
                     createPanelReview(j);
                     gridLayout.setRows(gridLayout.getRows() + 1);
 
@@ -162,10 +162,9 @@ public class GUIListAssignments extends JFrame{
                             //proxy.removeReview((listAssignment.get(i)).getCode());
                             int action = (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Confirm Delete Review", JOptionPane.YES_NO_OPTION));
                             if (action == JOptionPane.YES_OPTION) {
-                                proxy.removeReview((listAssignment.get(i)).getCode()); //TODO controllare!!
+                                proxy.removeReview((listAssignment.get(i)).getCode());//TODO controllare!!
+                                guiListAssignments.dispatchEvent(new WindowEvent(guiListAssignments, WindowEvent.WINDOW_CLOSING));
                             }
-                            dispose();
-
                         }
 
                     });
@@ -193,14 +192,7 @@ public class GUIListAssignments extends JFrame{
 
                     setComponents(setLabelString(cs, null, r), "Show more", j);
 
-                    buttonAction[j].addActionListener(new ActionListener(){
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            GUIShowReview showReview = new GUIShowReview(listReview.get(i), guiListAssignments);
-                            showReview.setVisible(true);
-                        }
-
-                    });
+                    buttonAction[j].addActionListener(e -> new GUIShowReview(listReview.get(i), guiListAssignments).setVisible(true));
 
                     createPanelReview(j);
                     gridLayout.setRows(gridLayout.getRows() + 1);

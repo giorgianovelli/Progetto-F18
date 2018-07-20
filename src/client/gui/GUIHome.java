@@ -226,6 +226,10 @@ public abstract class GUIHome extends JFrame{
     protected HashSet<Integer> codeFirstFiveAssignmentsList = new HashSet<>();
 
 
+    /**
+     * This GUI
+     */
+    protected GUIHome guiHome;
 
     /**
      * Create a new home for the user specified by the email.
@@ -247,6 +251,7 @@ public abstract class GUIHome extends JFrame{
         panelDateCalendar.setBackground(new Color(236, 242, 249));
         panelGridCalendar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         this.email = email;
+        guiHome = this;
     }
 
 
@@ -748,7 +753,7 @@ public abstract class GUIHome extends JFrame{
                 case SHOWMORE:
                     String strTodayDate;
                     Date todayDate = new Date();
-                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
+                    GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate, guiHome);
                     guiDailyAssignments.setVisible(true);
             }
         } catch (ParseException e) {

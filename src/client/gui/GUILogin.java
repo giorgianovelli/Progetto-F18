@@ -44,7 +44,8 @@ public class GUILogin extends JFrame {
         cont1.setBorder(BorderFactory.createTitledBorder("Login"));
 
         //login automatico per velocizzare il debug
-        textUser.setText("MARCO.CARTA@GMAIL.COM");
+        //textUser.setText("MARCO.CARTA@GMAIL.COM");
+        textUser.setText("riccardogiura@gmail.com");
         textPwd.setText("PROGETTO123");
 
 

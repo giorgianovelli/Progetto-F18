@@ -97,6 +97,7 @@ public class GUIShowReview extends JFrame {
 
         this.review = review;
         this.guiListAssignments = guiListAssignments;
+        guiShowReview = this;
         guiListAssignments.setEnabled(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -188,23 +189,10 @@ public class GUIShowReview extends JFrame {
 
 
         }
-        ActionListener close = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiListAssignments.setEnabled(true);
-                dispose();
-            }
-        };
 
         closeButton = new JButton("Close");
         closeButton.addActionListener(e -> guiShowReview.dispatchEvent(new WindowEvent(guiShowReview, WindowEvent.WINDOW_CLOSING)));
 
         closePanel.add(closeButton);
-
-
     }
-
-
-
-
 }
