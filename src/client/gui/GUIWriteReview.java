@@ -19,56 +19,166 @@ import java.awt.event.WindowEvent;
 import java.util.Date;
 
 public class GUIWriteReview extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 600;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 580;
 
+    /**
+     * Max number of char for the title of the review.
+     */
     final int MAX_CHAR_TITLE = 150;
+
+    /**
+     * Max number of char for the comment of the review.
+     */
     final int MAX_CHAR_COMMENT = 65535;
 
-
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
 
+    /**
+     * Out panel.
+     */
     private JPanel outPanel;
+
+    /**
+     * The panel contains topPanel, bottomPanel and descriptionPanel.
+     */
     private JPanel contentPanel;
+
+    /**
+     * The panel contains the title of the review.
+     */
     private JPanel topPanel;
+
+    /**
+     * The panel contains votePanel and the label of the comment.
+     */
     private JPanel bottomPanel;
+
+    /**
+     * The panel contains the vote of the review.
+     */
     private JPanel votePanel;
+
+    /**
+     * The panel contains sendButton and cancelButton
+     */
     private JPanel buttonPanel;
+
+    /**
+     * The panel contains the comment of the review.
+     */
     private JPanel descriptionPanel;
 
+    /**
+     * The Scroll pane allows to show the comment.
+     */
     private JScrollPane descriptionFieldScroll;
+
+    /**
+     * The Scroll pane allows to show the title.
+     */
     private JScrollPane titleFieldScroll;
 
+    /**
+     * Label for the title of the review.
+     */
     private JLabel labelTitle;
+
+    /**
+     * Label for the vote.
+     */
     private JLabel labelVote;
+
+    /**
+     * Label for the comment of the review.
+     */
     private JLabel labelDescription;
 
+    /**
+     * Text area for the title.
+     */
     private JTextArea titleField;
+
+    /**
+     * Text area for the description.
+     */
     private JTextArea descriptionField;
+
+    /**
+     * Buttons allow to add a new review or to close the frame.
+     */
     private JButton sendButton, cancelButton;
 
 
+    /**
+     * List of the grade.
+     */
     private JComboBox<String> voteBox;
+
+    /**
+     * Array of the grade.
+     */
     private String[] grade = new String[]{"★", "★★", "★★★", "★★★★", "★★★★★"};
 
+    /**
+     * Reference to the object Assignment.
+     */
     private Assignment assignmentToReview;
+
+    /**
+     * The user's email.
+     */
     private String email;
+
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
 
+    /**
+     * The object allows to count the char in the title.
+     */
     private DefaultStyledDocument docTitle;
+
+    /**
+     * The object allows to count the char in the comment.
+     */
     private DefaultStyledDocument docComment;
+
+    /**
+     * This GUI.
+     */
     private GUIWriteReview guiWriteReview;
+
+    /**
+     * GUI from where GUIWriteReview is invoked.
+     */
     private GUIListAssignments guiListAssignments;
+
+    /**
+     * Frame for the message of added review.
+     */
     private JFrame success = new JFrame();
 
 
     /**
-     *
-     * @param a appuntamento riferito alla recensione che devo scrivere
-     * @param email riferimento all'utente
+     * Constructor.
+     * @param a assignment to review
+     * @param email email the user's email.
+     * @param guiListAssignments GUI from where GUIWriteReview is invoked.
      */
-
     public GUIWriteReview(Assignment a, String email, GUIListAssignments guiListAssignments)
     {
         assignmentToReview = a;
@@ -126,7 +236,7 @@ public class GUIWriteReview extends JFrame {
 
 
     /**
-     * inizializza le componenti dell'interfaccia
+     * Initialize the GUI components.
      */
     private void initComponent(){
         setTitle("Write a review");
@@ -153,15 +263,9 @@ public class GUIWriteReview extends JFrame {
         titleField.setDocument(docTitle);
 
 
-        /* //secondo metodo, da provare
-        KeyEvent e = new KeyEvent(titleField, );
-        keyTyped(KeyEvent.KEY_TYPED , MAX_CHAR, titleField);
-        */
-
         if(updateCountTitle() > MAX_CHAR_TITLE){
             Toolkit.getDefaultToolkit().beep();
         }
-
 
 
         descriptionField = new JTextArea( 7,1);
@@ -185,7 +289,7 @@ public class GUIWriteReview extends JFrame {
         titleField.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         titleField.setLineWrap(true);
         titleField.setWrapStyleWord(true);
-        //titleField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
         topPanel.setBorder(BorderFactory.createEmptyBorder(5,5, 5,5));
         topPanel.add(titleFieldScroll);
 
@@ -274,9 +378,9 @@ public class GUIWriteReview extends JFrame {
 
 
     /**
-     *
-     * @param rating stringa che indica il voto della recensione
-     * @return rating della recensione convertito in int
+     * Convert the stars rating to an int.
+     * @param rating grade of the review(stars).
+     * @return vote of the review.
      */
     private int starsRating(String rating){
         switch (rating){
@@ -298,8 +402,8 @@ public class GUIWriteReview extends JFrame {
 
 
     /**
-     * aggiorna il conteggio di caratteri nel titolo
-     * @return numero di caratteri ancora ammessi
+     * update the character count in the title
+     * @return number of characters still allowed
      */
     private int updateCountTitle()
     {
@@ -307,8 +411,8 @@ public class GUIWriteReview extends JFrame {
     }
 
     /**
-     * aggiorna il conteggio di caratteri nel titolo
-     * @return numero di caratteri ancora ammessi
+     * update the character count in the comment
+     * @return number of characters still allowed
      */
     private int updateCountComment(){
         return MAX_CHAR_COMMENT - docComment.getLength();
@@ -319,40 +423,62 @@ public class GUIWriteReview extends JFrame {
 
 
 /**
- * classe predefinita per il conteggio di caratteri in un documento (JTextArea)
+ * Default class for counting characters in a document
  */
 
 class DocumentSizeFilter extends DocumentFilter {
+
+    /**
+     * Number of max char.
+     */
     int maxCharacters;
 
     //boolean DEBUG = false;
 
+    /**
+     * Constructor.
+     * @param maxChars Number of max char.
+     */
     public DocumentSizeFilter(int maxChars) {
         maxCharacters = maxChars;
     }
 
+
+    /**
+     * Rejects the entire insertion if it would make the contents too long.
+     * @param fb filter bypass
+     * @param offs number
+     * @param str string to insert
+     * @param a Attribute Set
+     * @throws BadLocationException
+     */
     public void insertString(FilterBypass fb, int offs, String str, AttributeSet a) throws BadLocationException {
 
         /* if (DEBUG) {
             System.out.println("in DocumentSizeFilter's insertString method");
         }*/
 
-
-        //This rejects the entire insertion if it would make the contents too long.
         if ((fb.getDocument().getLength() + str.length()) <= maxCharacters)
             super.insertString(fb, offs, str, a);
         else
             Toolkit.getDefaultToolkit().beep();
     }
 
+    /**
+     * Rejects the entire replacement if it would make the contents too long.
+     * @param fb filter bypass
+     * @param offs number
+     * @param length length
+     * @param str string to replace
+     * @param a Attribute set
+     * @throws BadLocationException
+     */
    public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a) throws BadLocationException {
 
         /*if (DEBUG) {
            System.out.println("in DocumentSizeFilter's replace method");
        }*/
 
-
-        //This rejects the entire replacement if it would make the contents too long.
         if ((fb.getDocument().getLength() + str.length() - length) <= maxCharacters)
             super.replace(fb, offs, length, str, a);
         else

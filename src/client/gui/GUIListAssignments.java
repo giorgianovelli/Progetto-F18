@@ -17,42 +17,119 @@ import java.util.HashMap;
 
 public class GUIListAssignments extends JFrame{
 
-    protected int assignmentNumber, reviewNumber;
+    /**
+     * Number of assignment.
+     */
+    protected int assignmentNumber;
 
+    /**
+     * Number of review.
+     */
+    protected int reviewNumber;
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 512;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 512;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    /**
+     * Grid Layout for contentPanel.
+     */
     protected GridLayout gridLayout = new GridLayout(1,1);
 
-    protected JPanel contentPanel = new JPanel(); //pannello esterno
+    /**
+     * The panel contains the array of infoPanel.
+     */
+    protected JPanel contentPanel = new JPanel();
+
+    /**
+     * Out panel.
+     */
     protected JPanel panelOut = new JPanel();
+
+    /**
+     * Scroll Panel allows to show the list of assignments or reviews.
+     */
     protected JScrollPane scrollPanel = new JScrollPane(panelOut);
 
 
+    /**
+     * Array of Label for the state of the assignment.
+     */
     protected JLabel labelState[];
 
-    protected JLabel[] labelDescription; //non va a capo, trovare un alternativa ok
-    protected JButton[] buttonAction;
-    protected JPanel[] infoPanel;  //infopanel[i] contiene una label e un bottone
-    protected JPanel panelLabel;
-    protected JPanel panelButtons;
-
-    protected HashMap<Integer, Assignment> listAssignment;
-    protected HashMap<Integer, Review> listReview;
-    protected HashMap<CalendarState,String> strLabel;
-    private CustomerProxy proxy;
-    protected String email;
-
-    private GUIListAssignments guiListAssignments; // necessario per disattivazione @Riccardo
+    /**
+     * Array of Label for the descripione of the assignment/review.
+     */
+    protected JLabel[] labelDescription;
 
     /**
-     * costruttore
-     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
-     * @param email riferimento all'utente
-     * @param guiCustomer identifica l'interfaccia da cui viene richiamata
+     * Array of buttons, it allows to show the information.
      */
+    protected JButton[] buttonAction;
 
+    /**
+     * Array of panels, it contains [labelState], labelDescription and buttonAction.
+     */
+    protected JPanel[] infoPanel;
+
+    /**
+     * The panel contains the label for the description.
+     */
+    protected JPanel panelLabel;
+
+    /**
+     * The panel contains buttonAction.
+     */
+    protected JPanel panelButtons;
+
+    /**
+     * List of Assignments.
+     */
+    protected HashMap<Integer, Assignment> listAssignment;
+
+    /**
+     * List of Reviews.
+     */
+    protected HashMap<Integer, Review> listReview;
+
+    /**
+     * Map of label for each CalendarState.
+     */
+    protected HashMap<CalendarState,String> strLabel;
+
+    /**
+     * The customer proxy.
+     */
+    private CustomerProxy proxy;
+
+    /**
+     * The user's email.
+     */
+    protected String email;
+
+    /**
+     * This GUI.
+     */
+    private GUIListAssignments guiListAssignments;
+
+    /**
+     * Constructor
+     * @param cs Calendar State
+     * @param listAssignment list of assignments.
+     * @param email the user's email.
+     * @param guiCustomer GUI from where GUIListAssignment is invoked.
+     */
     public GUIListAssignments(CalendarState cs, HashMap<Integer, Assignment> listAssignment,  String email, GUIHome guiCustomer){
         setTitle("Your assignments");
         setSize(WIDTH, HEIGHT);
@@ -79,9 +156,9 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * inzializza le componenti dell'interfaccia
-     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
-     * @param guiCustomer identifica l'interfaccia da cui viene richiamata
+     * Initialize the GUI components.
+     * @param cs Calendar State.
+     * @param guiCustomer GUI from where GUIListAssignment is invoked.
      */
     protected void initComponents(CalendarState cs, GUIHome guiCustomer){
 
@@ -248,9 +325,9 @@ public class GUIListAssignments extends JFrame{
 
 
     /**
-     * crea un JPanel che contiene le informazioni dell'appuntamento: stato, descrizione, bottone
-     * @param a riferimento all'appuntamento per creare la label dello stato
-     * @param i indice del JPanel
+     * Create a panel, which contains the assignment's information.
+     * @param a Reference to the object Assignment.
+     * @param i index of the panel.
      */
     protected void createPanelAssignment(Assignment a, int i){
         infoPanel[i] = new JPanel();
@@ -279,8 +356,8 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * crea un JPanel con la descrizione degli appuntamenti per la visualizzazione delle recensioni
-     * @param i indice del JPanel
+     * Create a panel, which contains the description of the assignment to review.
+     * @param i index of the panel.
      */
     protected void createPanelReview (int i){
         infoPanel[i] = new JPanel();
@@ -306,18 +383,16 @@ public class GUIListAssignments extends JFrame{
 
 
     /**
-     * metodo per settare il colore della labelState
-     * @param a riferimento all'appuntamento
-     * @return JLabel con il colore che indica lo stato dell'appuntamento
-     *          verde: confermato
-     *          giallo: da confermare
-     *          grigio: già passato
+     * Set the labelState color.
+     * @param a Reference to the object Assignment.
+     * @return JLabel Object with the proper color of the assignment.
+     *          green: confirmed.
+     *          yellow: to be confirmed.
+     *          grey: old assignment
      */
     protected JLabel createLabelState(Assignment a){
-        //da controllare il funzionamento
 
         JLabel label;
-
 
         ImageIcon green = transformImage(new ImageIcon("images/Green_square.svg.png"), 30,30);
         ImageIcon gray = transformImage(new ImageIcon("images/gray_square.png"), 30,30);
@@ -341,11 +416,11 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     *
-     * @param icon immagine da modificare
-     * @param width nuova larghezza
-     * @param height nuova altezza
-     * @return icona modificata in altezza e larghezza
+     * Set the icon with the right measures.
+     * @param icon icon to set.
+     * @param width new width.
+     * @param height new height.
+     * @return changed icon.
      */
 
     protected ImageIcon transformImage(ImageIcon icon, int width, int height){
@@ -358,9 +433,9 @@ public class GUIListAssignments extends JFrame{
 
 
     /**
-     *
-     * @param date data da confrontare
-     * @return restituisce true se il paramentro passato è una data inferiore a quella di oggi
+     * Check if the date is before today's date.
+     * @param date date to check.
+     * @return return the value "true" if the date is before today's date.
      */
 
     protected boolean dateBeforeToday(Date date){
@@ -374,10 +449,9 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * inizializza gli array delle componenti dell'interfaccia
-     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
+     * Initialize the arrays of the GUI components.
+     * @param cs Calendar state.
      */
-
     protected void initArray(CalendarState cs){
         if(cs.equals(CalendarState.DELETING_REVIEW)|| cs.equals(CalendarState.SHOW_REVIEWS)){
             infoPanel = new JPanel[reviewNumber];
@@ -394,8 +468,8 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * confronta la data degli appuntamenti con quella di oggi
-     * @return lista di appuntamenti con data inferiore a quella di oggi
+     * Check the assignments' date.
+     * @return list of assignments where the date is before today's date.
      */
 
     protected HashMap<Integer, Assignment> assignmentBeforeToday(){
@@ -414,13 +488,13 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * controlla il caso particolare in cui non ci sono appuntamenti da recensire
-     * @param number numero di appuntamenti recensiti
-     * @param listAssignment lista degli appuntamenti
+     * Set the frame for the case in which there aren't assignments to review.
+     * @param number number of assignments already reviewed.
+     * @param listAssignment list of assignments.
      */
     protected void noAssignmentToReview(int number, HashMap<Integer, Assignment> listAssignment){
         if(number == listAssignment.size()){
-            //System.out.println("Non ci sono recensioni");
+
             JLabel noReviewLabel = new JLabel("There aren't assignments to review!");
             setSize(WIDTH, 200);
             panelOut.setLayout(new BorderLayout());
@@ -432,9 +506,9 @@ public class GUIListAssignments extends JFrame{
 
 
     /**
-     * inizializza la mappa di stringhe predefinite per le label di descrizione
-     * @param a appuntamento
-     * @param r rensione
+     * Initialize the map of string for description label.
+     * @param a assignment.
+     * @param r review.
      */
     protected void setLabelStringMap(Assignment a, Review r){
         strLabel = new HashMap<>();
@@ -467,11 +541,11 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * seleziona la stinga dalla mappadi stringhe predefinite per la lebel di descrizione
-     * @param calendarState idenfica il menu da cui viene richiamata questa interfaccia
-     * @param a riferimento all'appuntamento
-     * @param r riferimento alla recensione
-     * @return stringa richiesta in base al CalendarState
+     * select the string from the map of predefined strings for description label
+     * @param calendarState Calendar State.
+     * @param a assignment.
+     * @param r review.
+     * @return requested string.
      */
     protected String setLabelString(CalendarState calendarState, Assignment a, Review r){
         setLabelStringMap(a, r);
@@ -480,10 +554,10 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * inizializza le componenti di ogni infoPanel
-     * @param strLabel stringa per la label di descrizione
-     * @param strButton stringa per il bottone
-     * @param i indice dell'elemento dell'array
+     * Initialize infoPanel components.
+     * @param strLabel labelDescription string.
+     * @param strButton buttonAction string.
+     * @param i index of the array.
      */
     protected void setComponents( String strLabel, String strButton, int i){
         labelDescription[i]= new JLabel(strLabel);
@@ -493,8 +567,8 @@ public class GUIListAssignments extends JFrame{
     }
 
     /**
-     * crea una finestra con una stringa predefinita per il caso in cui non ci siano recensioni o appuntamenti
-     * @param stringLabel stringa predefinita per la finestra
+     * Create a predefined frame for the case in which there aren't reviews or assignments.
+     * @param stringLabel string for the message in the frame.
      */
     protected void createLabelInfo(String stringLabel){
         JLabel noReviewLabel = new JLabel(stringLabel);

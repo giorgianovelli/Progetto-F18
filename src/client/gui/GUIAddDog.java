@@ -16,52 +16,150 @@ import java.util.Date;
 import java.util.HashSet;
 
 public class GUIAddDog extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 512;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 350;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
 
+    /**
+     * The user's email.
+     */
     private String email;
+
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
 
+    /**
+     * Out panel, it contains all the other panels.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * The panel contains dog's information (name, date of birth, breed and weight).
+     */
     private JPanel panelData = new JPanel();
+
+    /**
+     * The panel contains buttons to add the new dog and to close the frame.
+     */
     private JPanel panelButton = new JPanel();
+
+    /**
+     * The panel allows to enter the date of birth.
+     */
     private JPanel panelDate = new JPanel();
 
-
+    /**
+     * The label for the dog's name.
+     */
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
+
+    /**
+     * The label for the dog's date of birth.
+     */
     private JLabel labelDate = new JLabel("Date of birth: ", SwingConstants.LEFT);
+
+    /**
+     * The label of the dog's breed.
+     */
     private JLabel labelBreed = new JLabel("Breed:", SwingConstants.LEFT);
+
+    /**
+     * The label of the dog's weight.
+     */
     private JLabel labelWeight = new JLabel("Weight:", SwingConstants.LEFT);
 
-
+    /**
+     * Text field for the dog's name.
+     */
     private JTextField textName = new JTextField();
+
+    /**
+     * Text field for the dog's weight.
+     */
     private JTextField textWeight = new JTextField();
 
-
+    /**
+     * The combo box shows the list of the possible dog breeds.
+     */
     private JComboBox<String> breedList;
+
+    /**
+     * Array of the possible dog breeds.
+     */
     private String[] breed;
 
+    /**
+     * The button allows to add a new dog.
+     */
     private JButton buttonAdd = new JButton("Add");
+
+    /**
+     * The button allows to close the frame.
+     */
     private JButton buttonCancel = new JButton("Cancel");
 
 
+    /**
+     * The combo box allows to select the day of birth.
+     */
     private JComboBox<String> dayList;
+
+    /**
+     * The combo box allows to select the month of birth.
+     */
     private JComboBox<String> monthList;
+
+    /**
+     * The combo box allows to select the year of birth.
+     */
     private JComboBox<String> yearList;
 
 
+    /**
+     * Array for the day of birth.
+     */
     private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+
+    /**
+     * Array for the month of birth.
+     */
     private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+
+    /**
+     * Array for the year of birth.
+     */
     private ArrayList<String> years_tmp = new ArrayList<>();
+
+    /**
+     * This GUI.
+     */
     private GUIAddDog guiAddDog;
+
+    /**
+     * GUI from where GUIAddDog is invoked.
+     */
     private GUIDogs guiDogs;
 
 
     /**
-     * costruttore
-     * @param email identifica il proprietario del cane
+     * Constructor
+     * @param email the user's email.
+     * @param guiDogs GUI from where GUIAddDog is invoked.
      */
     public GUIAddDog(String email, GUIDogs guiDogs) {
         this.email = email;
@@ -81,7 +179,7 @@ public class GUIAddDog extends JFrame {
 
 
     /**
-     * inizializza le componenti dell'interfaccia
+     * Initialize the GUI components.
      */
     private void initComponent() {
         setTitle("Dog info");
@@ -174,8 +272,8 @@ public class GUIAddDog extends JFrame {
     }
 
     /**
-     * aggiunge un nuovo cane al database, in base ai parametri inseriti dall'utente
-     * @return restituisce true se la procedura è avvenuta correttamente
+     * Add the new dog in the database
+     * @return returns the value "true" if the procedure was successful
      */
     private boolean addNewDog(){
         Date dateOfBirth = new Date();

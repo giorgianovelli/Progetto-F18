@@ -11,35 +11,110 @@ import java.awt.event.WindowEvent;
 
 public class GUIShowReview extends JFrame {
 
+    /**
+     * Frame width.
+     */
     final int WIDTH = 512;
-    final int HEIGHT = 512;
-    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-    protected Review review;
-
-    private JPanel outPanel;
-    private JPanel contentPanel;
-    private JPanel panelReviewTop;
-    private JPanel panelReviewDescription;
-    protected JPanel panelReply;
-    protected JPanel closePanel;
-
-    private JLabel labelTitle;
-    private JLabel labelDescription;
-    private JLabel labelVote;
-    private JLabel labelGrade;
-
-    private JTextArea textTitle;
-    private JTextArea textDescription;
-    protected JTextArea textReply;
-
-    protected JButton closeButton;
-    private GUIListAssignments guiListAssignments;
-    private GUIShowReview guiShowReview;
-    //private int numberRow;
 
     /**
-     * costruttore
-     * @param review recensione da visualizzare
+     * Frame height.
+     */
+    final int HEIGHT = 512;
+
+    /**
+     * The screen's dimension.
+     */
+    private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+
+    /**
+     * Reference to the object Review, which contains the information to show.
+     */
+    protected Review review;
+
+    /**
+     * Out panel
+     */
+    private JPanel outPanel;
+
+    /**
+     * The panel contains panelReviewTop and panelReviewDescription.
+     */
+    private JPanel contentPanel;
+
+    /**
+     * The panel contains the title of the review and the vote.
+     */
+    private JPanel panelReviewTop;
+
+    /**
+     * The panel contains the comment of the review.
+     */
+    private JPanel panelReviewDescription;
+
+    /**
+     * The panel contains the reply of the dogsitter.
+     */
+    protected JPanel panelReply;
+
+    /**
+     * The panel contains the closeButton.
+     */
+    protected JPanel closePanel;
+
+    /**
+     * Label for the title of the review.
+     */
+    private JLabel labelTitle;
+
+    /**
+     * Label for the description of the review.
+     */
+    private JLabel labelDescription;
+
+    /**
+     * Label for the vote of the review.
+     */
+    private JLabel labelVote;
+
+    /**
+     * Label for the grade with stars of the review.
+     */
+    private JLabel labelGrade;
+
+    /**
+     * Text area for the title.
+     */
+    private JTextArea textTitle;
+
+    /**
+     * Text area for the description.
+     */
+    private JTextArea textDescription;
+
+    /**
+     * Text area for the reply.
+     */
+    protected JTextArea textReply;
+
+    /**
+     * The button allows to close tha frame.
+     */
+    protected JButton closeButton;
+
+    /**
+     * GUI from where GUIShowReview is invoked.
+     */
+    private GUIListAssignments guiListAssignments;
+
+    /**
+     * This GUI.
+     */
+    private GUIShowReview guiShowReview;
+
+
+    /**
+     * Constructor.
+     * @param review review.
      */
     public GUIShowReview(Review review){
         setTitle("Show review");
@@ -56,7 +131,11 @@ public class GUIShowReview extends JFrame {
 
     }
 
-
+    /**
+     * Constructor using guiAssignmentInformationCustomer.
+     * @param review review
+     * @param guiAssignmentInformationCustomer GUI from where GUIShowReview is invoked.
+     */
     public GUIShowReview(Review review, GUIAssignmentInformationCustomer guiAssignmentInformationCustomer){
         setTitle("Show review");
         setSize(WIDTH, HEIGHT);
@@ -84,9 +163,9 @@ public class GUIShowReview extends JFrame {
 
 
     /**
-     * costruttore
-     * @param review recensione da visualizzare
-     * @param guiListAssignments interfaccia da cui è stata richiamata
+     * Constructor using guiListAssignments.
+     * @param review review.
+     * @param guiListAssignments GUI from where GUIShowReview is invoked.
      */
     public GUIShowReview(Review review, GUIListAssignments guiListAssignments){
         setTitle("Show review");
@@ -112,7 +191,7 @@ public class GUIShowReview extends JFrame {
     }
 
     /**
-     * inizializza le componenti dell'interfaccia e ne permette la visualizzazione
+     * Initialize the GUI components.
      */
     private void initComponent(){
 
@@ -175,7 +254,7 @@ public class GUIShowReview extends JFrame {
     }
 
     /**
-     * permette di visualizzare l'eventuale risposta del dogsitter alla recensione
+     * Allows to show the dog sitter reply.
      */
     protected void showReply(){
         if(!(review.getReply().equals("null"))){

@@ -18,15 +18,23 @@ import java.util.Map;
 
 public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
+    /**
+     * The dog sitter proxy.
+     */
     private DogSitterProxy dogSitterProxy;
+
+    /**
+     * This GUI.
+     */
     public  GUIShowDogsitterAssignment guiShowDogsitterAssignment;
 
 
     /**
-     * costruttore
-     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
-     * @param email riferimento all'utente
-     * @param guiDogsitter identifica l'interfaccia da cui viene richiamata
+     * Constructor
+     * @param cs Calendar State
+     * @param listAssignment list of assignments.
+     * @param email the user's email.
+     * @param guiDogsitter GUI from where GUIShowDogsitterAssignment is invoked.
      */
     public GUIShowDogsitterAssignment(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiDogsitter){
         super(cs,listAssignment, email, guiDogsitter);
@@ -38,11 +46,10 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
 
     /**
-     * inizializza le componenti dell'interfaccia
-     * @param cs idenfica il menu da cui viene richiamata questa interfaccia
-     * @param guiDogsitter
+     * Initialize the GUI components.
+     * @param cs Calendar State.
+     * @param guiDogsitter GUI from where GUIShowDogsitterAssignment is invoked.
      */
-
     @Override
     protected void initComponents(CalendarState cs, GUIHome guiDogsitter) {
 
@@ -141,9 +148,9 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
     }
 
     /**
-     * inizializza la mappa di stringhe predefinite per le label di descrizione
-     * @param a appuntamento
-     * @param r rensione
+     * Initialize the map of string for description label.
+     * @param a assignment.
+     * @param r review.
      */
     @Override
     protected void setLabelStringMap(Assignment a, Review r) {

@@ -11,25 +11,46 @@ import java.awt.event.WindowEvent;
 
 public class GUIShowDogsitterReview extends GUIShowReview {
 
+    /**
+     * The button allows the user add a reply to the review.
+     */
     private JButton replyButton;
-    private String email;
-    GUIShowDogsitterAssignment guiShowDogsitterAssignment;
 
     /**
-     * costruttore
-     * @param review recensione da visualizzare
-     * @param email identifica l'utente
+     * The user's email.
+     */
+    private String email;
+
+    /**
+     * GUI from where GUIShowDogsitterReview is invoked.
+     */
+    GUIShowDogsitterAssignment guiShowDogsitterAssignment;
+
+    GUIShowDogsitterReview guiShowDogsitterReview;
+
+    /**
+     * Constructor
+     * @param review Review to show.
+     * @param email The user's email.
      */
     public GUIShowDogsitterReview(Review review, String email){
         super(review);
         this.email = email;
+        guiShowDogsitterReview = this;
 
     }
 
+    /**
+     * Constructor using GUIShowDogsitterAssignment.
+     * @param review Review.
+     * @param email The user's email.
+     * @param guiShowDogsitterAssignment GUI from which is launched.
+     */
     public GUIShowDogsitterReview(Review review, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment){
         super(review);
         this.email = email;
         this.guiShowDogsitterAssignment = guiShowDogsitterAssignment;
+        guiShowDogsitterReview = this;
         guiShowDogsitterAssignment.setEnabled(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -44,7 +65,7 @@ public class GUIShowDogsitterReview extends GUIShowReview {
     }
 
     /**
-     * permette di visualizzare direttamente la risposta del dogsitter sotto la recensione o di aggiungerne una
+     * Allows to show the dogsitter reply under the review, or to add a reply.
      */
     @Override
     protected void showReply() {
@@ -56,7 +77,7 @@ public class GUIShowDogsitterReview extends GUIShowReview {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guiShowDogsitterAssignment.setEnabled(true);
-                dispose();
+                guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING));
             }
         };
 
@@ -65,8 +86,7 @@ public class GUIShowDogsitterReview extends GUIShowReview {
             public void actionPerformed(ActionEvent e) {
                 GUIDogsitterReply guiDogsitterReply = new GUIDogsitterReply(review, email);
                 guiDogsitterReply.setVisible(true);
-                guiShowDogsitterAssignment.dispose();
-                dispose();
+
 
             }
         };

@@ -18,50 +18,147 @@ import java.util.HashSet;
 
 public class GUIDogInfo extends JFrame {
 
+    /**
+     * Frame width.
+     */
     final int WIDTH = 600;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 300;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    /**
+     * Reference to the object Dog, which contains the information to show.
+     */
     private Dog dog;
+
+    /**
+     * The user's email.
+     */
     private String email;
+
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
 
+    /**
+     * Out panel.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * The panel contains dog's information (name, date of birth, breed and weight).
+     */
     private JPanel panelData = new JPanel();
+
+    /**
+     * The panel contains buttons to save the dog's information and to close the frame.
+     */
     private JPanel panelButton = new JPanel();
+
+    /**
+     * The panel allows to enter the date of birth.
+     */
     private JPanel panelDate = new JPanel();
 
-
+    /**
+     * The label for the dog's name.
+     */
     private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
+
+    /**
+     * The label for the dog's date of birth.
+     */
     private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
+
+    /**
+     * The label of the dog's breed.
+     */
     private JLabel labelBreed = new JLabel("Breed:", SwingConstants.LEFT);
+
+    /**
+     * The label of the dog's weight.
+     */
     private JLabel labelWeight = new JLabel("Weight:", SwingConstants.LEFT);
 
-
+    /**
+     * Text field for the dog's name.
+     */
     private JTextField textName = new JTextField();
+
+    /**
+     * Text field for the dog's weight.
+     */
     private JTextField textWeight = new JTextField();
 
+    /**
+     * The combo box shows the list of the possible dog breeds.
+     */
     private JComboBox<String> breedList;
+
+    /**
+     * Array of the possible dog breeds.
+     */
     private String[] breed;
 
-
+    /**
+     * The button allows to save the changes for the dog's information.
+     */
     private JButton buttonConfirm = new JButton("Confirm");
+
+    /**
+     * The button allows to close the frame.
+     */
     private JButton buttonCancel = new JButton("Cancel");
 
-
+    /**
+     * The combo box allows to select the day of birth.
+     */
     private JComboBox<String> dayList;
+
+    /**
+     * The combo box allows to select the month of birth.
+     */
     private JComboBox<String> monthList;
+
+    /**
+     * The combo box allows to select the year of birth.
+     */
     private JComboBox<String> yearList;
 
-
-    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
-    private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private ArrayList<String> years_tmp = new ArrayList<>();
-    private GUIDogInfo guiDogInfo;
     /**
-     * costruttore
-     * @param dog oggetto di cui si vogliono visualizzare le informazioni
-     * @param email
+     * Array for the day of birth.
+     */
+    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+
+    /**
+     * Array for the month of birth.
+     */
+    private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+
+    /**
+     * Array for the year of birth.
+     */
+    private ArrayList<String> years_tmp = new ArrayList<>();
+
+    /**
+     * This GUI
+     */
+    private GUIDogInfo guiDogInfo;
+
+
+    /**
+     * Constructor
+     * @param dog Reference to the object Dog, which contains the information to show.
+     * @param email The user's email.
+     * @param guiDogs This GUI.
      */
     public GUIDogInfo(Dog dog, String email, GUIDogs guiDogs){
         this.dog = dog;
@@ -80,8 +177,9 @@ public class GUIDogInfo extends JFrame {
         initComponent();
     }
 
+
     /**
-     * inizializza le componenti dell'interfaccia
+     * Initialize the GUI components.
      */
     private void initComponent() {
         setTitle("Dog info");
@@ -184,8 +282,8 @@ public class GUIDogInfo extends JFrame {
 
 
     /**
-     * legge i parametri modificati dall'utente e aggiorna il database
-     * @return restiuisce true se la procedura è avvenuta correttamente
+     * Read the new values of the dog's information and update the database
+     * @return returns the value "true" if the procedure was successful
      */
     private boolean setNewValues(){
         boolean update = false;

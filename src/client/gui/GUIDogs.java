@@ -12,30 +12,82 @@ import java.awt.event.WindowEvent;
 import java.util.HashSet;
 
 public class GUIDogs extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 512;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 500;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
+
+    /**
+     * The user's email.
+     */
     private String email;
 
+    /**
+     * The list of the user's dogs.
+     */
     private HashSet<Dog> dogList;
+
+    /**
+     * The panel contains the dogBoxes.
+     */
     private JPanel panelContainer;
+
+    /**
+     * The panel contains the addDogButton.
+     */
     private JPanel panelButton;
+
+    /**
+     * Out panel.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * Scroll Panel allows to show the list of dogs.
+     */
     private JScrollPane dogScroll;
 
+    /**
+     * The button allows to add a new dog.
+     */
     private JButton addDogButton;
 
+    /**
+     * Array of DogBox.
+     */
     private DogBox [] dogBoxes;
+
+    /**
+     * This GUI.
+     */
     private GUIDogs guiDogs;
 
+    /**
+     * Grid Layout for panelContainer.
+     */
     private GridLayout gridLayout = new GridLayout(1,1);
 
 
     /**
-     * costruttore
-     * @param email identifica il proprietario del cane
+     * Constructor
+     * @param email the user's email.
+     * @param guiHome GUI from where GUIDogs is invoked.
      */
     public GUIDogs(String email, GUIHome guiHome){
         setTitle("Your dogs");
@@ -67,11 +119,11 @@ public class GUIDogs extends JFrame {
     }
 
     /**
-     * inizializza le componenti dell'interfaccia
+     * Initialize the GUI components.
      */
     private void initComponents(){
         int i = 0;
-        //Dog d = null;
+
         panelOut.setLayout(new BorderLayout());
         panelContainer = new JPanel();
 
@@ -141,24 +193,46 @@ public class GUIDogs extends JFrame {
 }
 
 /**
- * classe che contiene le componenti standard per la visualizzazione di un pannello
+ * The class contains the standard components to show a panel.
  */
 class DogBox extends JPanel{
 
+    /**
+     * Label for the dog's name.
+     */
     private JLabel nameLabel;
+
+    /**
+     * The button allows to show the dog's information.
+     */
     private JButton infoButton;
+
+    /**
+     * The button allows to disable the dog.
+     */
     private JButton disableButton;
 
+    /**
+     * Out panel.
+     */
     private JPanel panelDog;
+
+    /**
+     * The panel contains nameLabel.
+     */
     private JPanel panelLabel;
+
+    /**
+     * The panel contains buttons.
+     */
     private JPanel panelButton;
 
 
     /**
-     * costruttore
-     * @param name
-     * @param button1
-     * @param button2
+     * Constructor
+     * @param name string for the name label.
+     * @param button1 string for the information button.
+     * @param button2 string for the disable button.
      */
     public DogBox(String name, String button1, String button2 ){
         nameLabel = new JLabel(name);
@@ -195,10 +269,19 @@ class DogBox extends JPanel{
 
 
     }
+
+    /**
+     * Getter for the infoButton
+     * @return JButton Object
+     */
     public JButton getInfoButton() {
         return infoButton;
     }
 
+    /**
+     * Getter for the disableButton
+     * @return JButton Object
+     */
     public JButton getDisableButton() {
         return disableButton;
     }
