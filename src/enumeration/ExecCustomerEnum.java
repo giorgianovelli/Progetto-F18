@@ -3,7 +3,6 @@ package enumeration;
 import server.*;
 import server.bank.PaymentMethod;
 import server.places.Address;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,12 +10,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
-
 import static enumeration.enumStaticMethods.*;
 
+/**
+ * This enumeration documents all actions that a customer can do.
+ */
 public enum ExecCustomerEnum {
     ACCESSVERIFIER{
 
+        /**
+         * Verify user's access data.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String inputUser = tokenMsg.nextToken();
@@ -40,6 +46,11 @@ public enum ExecCustomerEnum {
 
     GETLISTASSIGNMENT{
 
+        /**
+         * Get the customer's list of assignments.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -53,6 +64,11 @@ public enum ExecCustomerEnum {
 
     GETDOGSITTERNAMEOFASSIGNMENT{
 
+        /**
+         * Get the dog sitter's name of a specified assignment.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -64,6 +80,11 @@ public enum ExecCustomerEnum {
 
     GETDOGSITTERSURNAMEOFASSIGNMENT{
 
+        /**
+         * Get the dog sitter's surname of a specified assignment.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -75,6 +96,11 @@ public enum ExecCustomerEnum {
 
     GETREVIEW{
 
+        /**
+         * Get a specified review.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             int code = Integer.parseInt(tokenMsg.nextToken());
@@ -87,6 +113,11 @@ public enum ExecCustomerEnum {
 
     GETNAME{
 
+        /**
+         * Get customer's name.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -100,6 +131,11 @@ public enum ExecCustomerEnum {
 
     GETSURNAME{
 
+        /**
+         * Get customer's surname.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -113,6 +149,11 @@ public enum ExecCustomerEnum {
 
     GETPASSWORD{
 
+        /**
+         * Get customer's password.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             System.out.println(clientMsg);
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
@@ -127,6 +168,11 @@ public enum ExecCustomerEnum {
 
     GETPHONENUMBER{
 
+        /**
+         * Get customer's phone number.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -140,6 +186,11 @@ public enum ExecCustomerEnum {
 
     GETDATEOFBIRTH{
 
+        /**
+         * Get customer's date of birth.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -154,6 +205,11 @@ public enum ExecCustomerEnum {
 
     GETADDRESS{
 
+        /**
+         * Get customer's address.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -168,6 +224,11 @@ public enum ExecCustomerEnum {
 
     GETPAYMENTMETHOD{
 
+        /**
+         * Get customer's payment method.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -184,6 +245,11 @@ public enum ExecCustomerEnum {
 
     UPDATENAME{
 
+        /**
+         * Update customer's name.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -202,6 +268,11 @@ public enum ExecCustomerEnum {
 
     UPDATESURNAME{
 
+        /**
+         * Update customer's surname.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -220,6 +291,11 @@ public enum ExecCustomerEnum {
 
     UPDATEPASSWORD{
 
+        /**
+         * Update customer's password.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -238,6 +314,11 @@ public enum ExecCustomerEnum {
 
     UPDATEPHONENUMBER{
 
+        /**
+         * Update customer's phone number.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -256,6 +337,11 @@ public enum ExecCustomerEnum {
 
     UPDATEDATEOFBIRTH{
 
+        /**
+         * Update customer's date of birth.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             SimpleDateFormat dateFormatDays = new SimpleDateFormat("dd/MM/yyyy");
@@ -281,6 +367,11 @@ public enum ExecCustomerEnum {
 
     UPDATEADDRESS{
 
+        /**
+         * Update customer's address.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -303,6 +394,11 @@ public enum ExecCustomerEnum {
 
     UPDATEPAYMENTMETHOD{
 
+        /**
+         * Update customer's payment method.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             SimpleDateFormat dateFormatDays = new SimpleDateFormat("dd/MM/yyyy");
@@ -331,6 +427,11 @@ public enum ExecCustomerEnum {
 
     SEARCH{
 
+        /**
+         * Perform a search for a dog sitter available for an assignment.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             SimpleDateFormat dateFormatMinutes = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -378,6 +479,11 @@ public enum ExecCustomerEnum {
 
     ESTIMATEPRICEASSIGNMENT{
 
+        /**
+         * Estimate the price for a specified assignment.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             SimpleDateFormat dateFormatMinutes = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -409,6 +515,11 @@ public enum ExecCustomerEnum {
 
     ADDASSIGNMENT{
 
+        /**
+         * Add a new assignment.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             SimpleDateFormat dateFormatMinutes = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -453,6 +564,11 @@ public enum ExecCustomerEnum {
 
     REMOVEASSIGNMENT{
 
+        /**
+         * Remove a specified assignment.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -471,6 +587,11 @@ public enum ExecCustomerEnum {
 
     ADDREVIEW{
 
+        /**
+         * Add a new review.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -493,6 +614,11 @@ public enum ExecCustomerEnum {
 
     REMOVEREVIEW{
 
+        /**
+         * Remove the specified review.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -511,6 +637,11 @@ public enum ExecCustomerEnum {
 
     GETREVIEWLIST{
 
+        /**
+         * Get the customer's list of review.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -531,6 +662,11 @@ public enum ExecCustomerEnum {
 
     ADDDOG{
 
+        /**
+         * Add a new dog for the customer.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -558,6 +694,11 @@ public enum ExecCustomerEnum {
 
     DISABLEDOG{
 
+        /**
+         * Disable the specified dog.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -576,6 +717,11 @@ public enum ExecCustomerEnum {
 
     GETDOGLIST{
 
+        /**
+         * Get the customer's list of dogs.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -595,6 +741,11 @@ public enum ExecCustomerEnum {
 
     SIGNUP{
 
+        /**
+         * Perform the registration for a new customer to Canibau.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -642,6 +793,11 @@ public enum ExecCustomerEnum {
 
     ISINCASHASSIGNMENT{
 
+        /**
+         * Check if customer will pay dog sitter in cash.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -662,6 +818,11 @@ public enum ExecCustomerEnum {
 
     UPDATEDOGNAME{
 
+        /**
+         * Update the name of the specified dog.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -681,6 +842,11 @@ public enum ExecCustomerEnum {
 
     UPDATEDOGAGE{
 
+        /**
+         * Update the age of the specified dog.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -706,6 +872,11 @@ public enum ExecCustomerEnum {
 
     UPDATEDOGWEIGHT{
 
+        /**
+         * Update the weight of the specified dog.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -725,6 +896,11 @@ public enum ExecCustomerEnum {
 
     UPDATEDOGBREED{
 
+        /**
+         * Update the breed of the specified dog.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -744,6 +920,11 @@ public enum ExecCustomerEnum {
 
     GETDOGDATEOFBIRTH{
 
+        /**
+         * Update the date of birth of the specified dog.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -760,6 +941,11 @@ public enum ExecCustomerEnum {
 
     GETDOGSBREEDSLIST{
 
+        /**
+         * Get the list of breeds.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
         public String execute(String clientMsg) {
             StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
             String email = tokenMsg.nextToken();
@@ -777,8 +963,11 @@ public enum ExecCustomerEnum {
     };
 
 
-
-
+    /**
+     * Perform an action based on the received message.
+     * @param clientMsg the message received from the client.
+     * @return the message for the client.
+     */
     public abstract String execute(String clientMsg);
 
 }
