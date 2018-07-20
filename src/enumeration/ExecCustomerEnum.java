@@ -19,7 +19,7 @@ public enum ExecCustomerEnum {
     ACCESSVERIFIER{
 
         /**
-         * Verify user's access data.
+         * Verify customer's access data.
          * @param clientMsg the message received from the client.
          * @return the message for the client.
          */
