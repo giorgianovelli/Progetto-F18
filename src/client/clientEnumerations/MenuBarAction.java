@@ -1,16 +1,20 @@
 package client.clientEnumerations;
 
 import client.gui.GUICustomer;
-import client.gui.GUIDogSitter;
 import client.gui.GUIHome;
 import client.gui.GUILogin;
 
-public enum MenuBarAction {
-    /*QUIT, LOGOUT, SHOWALLASSIGNMENTS, WRITEAREVIEW, DELETEREVIEW, SHOWALLREVIEWS, NEWASSIGNMENT, DELETEASSIGNMENT,
-    ACCOUNT, CHANGEPASSWORD, DOGS, CANCEL, INFO, CREDITS, REPLYTOAREVIEW*/
 
+/**
+ * This class documents all menu bar actions.
+ */
+public enum MenuBarAction {
     QUIT{
 
+        /**
+         * Close Canibau.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             System.exit(0);
         }
@@ -19,6 +23,10 @@ public enum MenuBarAction {
 
     LOGOUT{
 
+        /**
+         * Log out the user.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUILogin guiLogin = new GUILogin();
             guiLogin.setVisible(true);
@@ -29,6 +37,10 @@ public enum MenuBarAction {
 
     SHOWALLASSIGNMENTS{
 
+        /**
+         * Open the window that shows all user's assignments.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             guiHome.showAllAssignments();
         }
@@ -37,6 +49,10 @@ public enum MenuBarAction {
 
     WRITEAREVIEW{
 
+        /**
+         * Open a window for selecting the assignment to be reviewed.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUICustomer guiCustomer = (GUICustomer)guiHome;
             guiCustomer.writeReview();
@@ -46,6 +62,10 @@ public enum MenuBarAction {
 
     DELETEREVIEW{
 
+        /**
+         * Open a windows for selecting the review to be removed.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUICustomer guiCustomer = (GUICustomer)guiHome;
             guiCustomer.deleteReview();
@@ -55,14 +75,23 @@ public enum MenuBarAction {
 
     SHOWALLREVIEWS{
 
-            public void execute(GUIHome guiHome) {
-                guiHome.showAllReviews();
-            }
+        /**
+         * Open a windows that shows all user's reviews.
+         * @param guiHome the home screen in use.
+         */
+        public void execute(GUIHome guiHome) {
+            guiHome.showAllReviews();
+        }
 
     },
 
     NEWASSIGNMENT{
 
+        /**
+         * Put the home screen into adding mode. The day's button become green
+         * and on the menu bar remain only "Canibau" and "Cancel items.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUICustomer guiCustomer = (GUICustomer)guiHome;
             guiCustomer.newAssignment();
@@ -72,6 +101,11 @@ public enum MenuBarAction {
 
     DELETEASSIGNMENT{
 
+        /**
+         * Put the home screen into removing mode. The day's buttons become red
+         * and on the menu bar remain only "Canibau" and "Cancel items.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUICustomer guiCustomer = (GUICustomer)guiHome;
             guiCustomer.removeAssignment();
@@ -81,6 +115,10 @@ public enum MenuBarAction {
 
     ACCOUNT{
 
+        /**
+         * Open the account settings.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             guiHome.accountSettings();
         }
@@ -89,6 +127,10 @@ public enum MenuBarAction {
 
     CHANGEPASSWORD{
 
+        /**
+         * Open a window that permits to the user to change his password.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             guiHome.changePassword();
         }
@@ -97,6 +139,10 @@ public enum MenuBarAction {
 
     DOGS{
 
+        /**
+         * Open the windows for changing dogs' informations.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUICustomer guiCustomer = (GUICustomer)guiHome;
             guiCustomer.dogsSettings();
@@ -106,6 +152,10 @@ public enum MenuBarAction {
 
     CANCEL{
 
+        /**
+         * When the user presses the "Cancel" button the calendar come back into normal mode.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             GUICustomer guiCustomer = (GUICustomer)guiHome;
             guiCustomer.cancel();
@@ -115,6 +165,10 @@ public enum MenuBarAction {
 
     INFO{
 
+        /**
+         * Show software informations.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             guiHome.info();
         }
@@ -123,11 +177,20 @@ public enum MenuBarAction {
 
     CREDITS{
 
+        /**
+         * Show the software developer team.
+         * @param guiHome the home screen in use.
+         */
         public void execute(GUIHome guiHome) {
             guiHome.credits();
         }
 
     };
 
+
+    /**
+     * Perform an action that depends by the enumeration's item selected.
+     * @param guiHome the home screen in use.
+     */
     public abstract void execute(GUIHome guiHome);
 }
