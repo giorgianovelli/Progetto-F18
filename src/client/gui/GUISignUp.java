@@ -453,7 +453,7 @@ public class GUISignUp extends JFrame {
      * @param email inserita dall'utente
      * @return true se corretta false altrimenti
      */
-
+    
     private boolean checkEmail (String email) {
 
         String expression = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
