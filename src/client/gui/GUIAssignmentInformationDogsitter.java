@@ -226,7 +226,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         HashSet<Dog> dogList = assignment.getDogList();
         String strMeetingPoint = assignment.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(dogList, assignment.getDateStart(), assignment.getDateEnd());
-        String amount = String.format("%.2f", doubleAmount).replace(",", ".");
+        String amount = "€ " + String.format("%.2f", doubleAmount).replace(",", ".");
         String strPayment;
 
         if (!customerProxy.isInCashPaymentMethodOfAssignment(assignment.getCode())) {

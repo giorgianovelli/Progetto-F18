@@ -34,6 +34,7 @@ public class GUIShowReview extends JFrame {
 
     protected JButton closeButton;
     private GUIListAssignments guiListAssignments;
+    private GUIShowReview guiShowReview;
     //private int numberRow;
 
     /**
@@ -47,11 +48,40 @@ public class GUIShowReview extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        guiShowReview = this;
+
         this.review = review;
 
         initComponent();
 
     }
+
+
+    public GUIShowReview(Review review, GUIAssignmentInformationCustomer guiAssignmentInformationCustomer){
+        setTitle("Show review");
+        setSize(WIDTH, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        guiShowReview = this;
+        guiAssignmentInformationCustomer.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiAssignmentInformationCustomer.setEnabled(true);
+            }
+        });
+
+
+        this.review = review;
+
+        initComponent();
+
+    }
+
 
     /**
      * costruttore
@@ -167,7 +197,7 @@ public class GUIShowReview extends JFrame {
         };
 
         closeButton = new JButton("Close");
-        closeButton.addActionListener(close);
+        closeButton.addActionListener(e -> guiShowReview.dispatchEvent(new WindowEvent(guiShowReview, WindowEvent.WINDOW_CLOSING)));
 
         closePanel.add(closeButton);
 

@@ -172,7 +172,7 @@ import java.util.HashSet;
         labelEndDate2.setText(strEndDate);
         labelMeetingPoint2.setText(strMeetingPoint);
         labelDogsitter2.setText(dogSitterProxy.getName() + " " + dogSitterProxy.getSurname());
-        labelAmount2.setText(String.valueOf(doubleAmount));
+        labelAmount2.setText("€ " + String.valueOf(doubleAmount));
         labelPaymentMethod2.setText(strPaymentMethod);
 
 

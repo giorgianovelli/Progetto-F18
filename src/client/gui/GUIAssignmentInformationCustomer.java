@@ -248,7 +248,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         HashSet<Dog> dogList = a.getDogList();
         String strMeetingPoint = a.printMeetingPoint();
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
-        String amount = String.format("%.2f", doubleAmount).replace(",", ".");
+        String amount = "€ " + String.format("%.2f", doubleAmount).replace(",", ".");
         String strPayment = customerProxy.getPaymentMethod().getNumber();
         if (customerProxy.isInCashPaymentMethodOfAssignment(a.getCode())) {
             strPayment = "Cash";
@@ -263,7 +263,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
                 String date = dateFormat.format(entry.getValue().getDate());
                 String vote = entry.getValue().starsRating();
                 labelReview.setText("<html>" + title + "<br>" + date + "<br>" + vote + "<br/>");
-                buttonReview.addActionListener(e -> new GUIShowReview(entry.getValue()).setVisible(true));
+                buttonReview.addActionListener(e -> new GUIShowReview(entry.getValue(), guiAssignmentInformationCustomer).setVisible(true));
             }
         }
 
