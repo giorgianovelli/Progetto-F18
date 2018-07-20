@@ -1,9 +1,7 @@
 package client.gui;
 
-import client.Calendar;
-import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
-import enumeration.CalendarState;
+import client.clientEnumerations.CalendarState;
 import server.Assignment;
 import server.Review;
 

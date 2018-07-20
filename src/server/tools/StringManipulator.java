@@ -3,6 +3,11 @@ package server.tools;
 import java.util.StringTokenizer;
 
 public class StringManipulator {
+    /**
+     * Capitalize the first letter for each word in the string.
+     * @param strToCapitalize the string to be manipulated.
+     * @return the string manipulated.
+     */
     public static String capitalizeFirstLetter(String strToCapitalize){
         if (strToCapitalize.length() > 0){
             if (strToCapitalize.contains(" ")){
@@ -16,6 +21,12 @@ public class StringManipulator {
 
     }
 
+
+    /**
+     * Capitalize the first letter for each word in the string.
+     * @param strToCapitalize the string to be manipulated.
+     * @return the string manipulated.
+     */
     private static String capitalizeFirstLetterForEachWord(String strToCapitalize){
         strToCapitalize = strToCapitalize.toLowerCase();
         StringTokenizer strToken = new StringTokenizer(strToCapitalize, " ");

@@ -1,16 +1,7 @@
 package test;
 
 import client.gui.*;
-import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
-import server.Assignment;
-import server.Review;
-
-import java.text.ParseException;
-import java.util.HashMap;
-
-import static enumeration.CalendarState.NORMAL;
-import static enumeration.CalendarState.SHOW_REVIEWS;
 
 public class TestGUIShowDogsitterAssignment {
     public static void main(String[] args) {

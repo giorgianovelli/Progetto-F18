@@ -1,0 +1,14 @@
+client
+client.clientEnumerations
+client.gui
+client.proxy
+database
+enumeration
+interfaces
+server
+server.bank
+server.dateTime
+server.places
+server.tools
+server.tools.dateTime
+test

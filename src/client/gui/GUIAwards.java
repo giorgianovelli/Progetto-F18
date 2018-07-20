@@ -1,17 +1,44 @@
 package client.gui;
 
-        import javax.swing.*;
-        import java.awt.*;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class GUIAwards extends JFrame {
+
+    /**
+     * The window's width.
+     */
     final int WIDTH = 850;
+
+    /**
+     * The window's height.
+     */
     final int HEIGHT = 690;
+
+    /**
+     * The screen's size.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    /**
+     * The panel that contains all labels and images.
+     */
     private JPanel panel;
+
+    /**
+     * Riccardo's profile image.
+     */
     ImageIcon iconRiccardo;
+
+    /**
+     * The label that contains Riccardo's profile image.
+     */
     private JLabel labelR;
+
+    /**
+     * Riccardo's description
+     */
     private JLabel riccardo;
     ImageIcon iconNicolas;
     private JLabel labelN;
@@ -31,9 +58,8 @@ public class GUIAwards extends JFrame {
 
 
     /**
-     * Constuctor of the class
+     * Create a new window that shows the developer team informations.
      */
-
     public GUIAwards(){
         initComponent();
     }
@@ -41,7 +67,6 @@ public class GUIAwards extends JFrame {
     /**
      * initialize the interface components
      */
-
     private void initComponent(){
         setTitle("Credits");
         setSize(WIDTH, HEIGHT);
