@@ -11,41 +11,22 @@ import java.awt.event.WindowEvent;
 
 public class GUIShowDogsitterReview extends GUIShowReview {
 
-    /**
-     * The button allows the user add a reply to the review.
-     */
     private JButton replyButton;
-
-    /**
-     * The user's email.
-     */
     private String email;
+    private GUIShowDogsitterAssignment guiShowDogsitterAssignment;
+    private GUIShowDogsitterReview guiShowDogsitterReview;
 
     /**
-     * GUI from where GUIShowDogsitterReview is invoked.
-     */
-    GUIShowDogsitterAssignment guiShowDogsitterAssignment;
-
-    GUIShowDogsitterReview guiShowDogsitterReview;
-
-    /**
-     * Constructor
-     * @param review Review to show.
-     * @param email The user's email.
+     * costruttore
+     * @param review recensione da visualizzare
+     * @param email identifica l'utente
      */
     public GUIShowDogsitterReview(Review review, String email){
         super(review);
         this.email = email;
-        guiShowDogsitterReview = this;
 
     }
 
-    /**
-     * Constructor using GUIShowDogsitterAssignment.
-     * @param review Review.
-     * @param email The user's email.
-     * @param guiShowDogsitterAssignment GUI from which is launched.
-     */
     public GUIShowDogsitterReview(Review review, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment){
         super(review);
         this.email = email;
@@ -65,7 +46,7 @@ public class GUIShowDogsitterReview extends GUIShowReview {
     }
 
     /**
-     * Allows to show the dogsitter reply under the review, or to add a reply.
+     * permette di visualizzare direttamente la risposta del dogsitter sotto la recensione o di aggiungerne una
      */
     @Override
     protected void showReply() {
@@ -73,21 +54,11 @@ public class GUIShowDogsitterReview extends GUIShowReview {
         closeButton = new JButton("Close");
         replyButton = new JButton("Reply");
 
-        ActionListener close = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiShowDogsitterAssignment.setEnabled(true);
-                guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING));
-            }
-        };
-
         ActionListener reply = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUIDogsitterReply guiDogsitterReply = new GUIDogsitterReply(review, email);
+                GUIDogsitterReply guiDogsitterReply = new GUIDogsitterReply(review, email, guiShowDogsitterReview);
                 guiDogsitterReply.setVisible(true);
-
-
             }
         };
 
@@ -99,7 +70,7 @@ public class GUIShowDogsitterReview extends GUIShowReview {
             textReply.setText(review.getReply());
             panelReply.setLayout(new GridLayout(2,1));
             panelReply.add(textReply);
-            closeButton.addActionListener(close);
+            closeButton.addActionListener(e -> guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING)));
             closePanel.setBorder(BorderFactory.createEmptyBorder(70,20,20,20));
             closePanel.add(closeButton);
 
@@ -109,11 +80,15 @@ public class GUIShowDogsitterReview extends GUIShowReview {
             gridLayout.setColumns(2);
             closePanel.setLayout(gridLayout);
             closePanel.setBorder(BorderFactory.createEmptyBorder(100,20,20,20));
-            closeButton.addActionListener(close);
+            closeButton.addActionListener(e -> guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING)));
             replyButton.addActionListener(reply);
             closePanel.add(replyButton);
             closePanel.add(closeButton);
         }
 
+    }
+
+    public GUIShowDogsitterAssignment getGuiShowDogsitterAssignment() {
+        return guiShowDogsitterAssignment;
     }
 }

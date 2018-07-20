@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 import server.Review;
 
@@ -7,98 +8,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
 public class GUIDogsitterReply extends JFrame {
-
-    /**
-     * Frame width.
-     */
     final int WIDTH = 400;
-
-    /**
-     * Frame height.
-     */
     final int HEIGHT = 300;
 
-    /**
-     * The screen's dimension.
-     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
-
-    /**
-     * The user's email.
-     */
     private String email;
-
-    /**
-     * The dog sitter proxy.
-     */
     private DogSitterProxy proxy;
-
-    /**
-     * Reference to the object Review, which the dogsitter will reply.
-     */
     private Review review;
 
-    /**
-     * The panel contains the text area for the reply.
-     */
+
     private JPanel contentPanel;
-
-    /**
-     * The panel contains sendButton and cancelButton.
-     */
     private JPanel buttonPanel;
-
-    /**
-     * Out panel.
-     */
     private JPanel outPanel;
 
-    /**
-     * The Scroll Panel allows to show the reply.
-     */
     private JScrollPane textScroll;
 
-    /**
-     * The text area allows to write the reply.
-     */
     private JTextArea textReply;
 
-    /**
-     * The button allows to save the reply.
-     */
     private JButton sendButton;
-
-    /**
-     * The button allows to close the frame.
-     */
     private JButton cancelButton;
+    private GUIShowDogsitterReview guiShowDogsitterReview;
+    private GUIDogsitterReply guiDogsitterReply;
 
-    /**
-     * This GUI.
-     */
-    private GUIDogsitterReply guiDogSitterReply;
-
-    /**
-     * Constructor
-     * @param review Reference to the object Review, which the dogsitter will reply.
-     * @param email the user's email.
-     */
-    public GUIDogsitterReply(Review review, String email){
+    public GUIDogsitterReply(Review review, String email, GUIShowDogsitterReview guiShowDogsitterReview){
         this.review = review;
         this.email = email;
+        guiDogsitterReply = this;
         proxy = new DogSitterProxy(email);
-        guiDogSitterReply = this;
+        this.guiShowDogsitterReview = guiShowDogsitterReview;
+        guiShowDogsitterReview.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiShowDogsitterReview.setEnabled(true);
+            }
+        });
         initComponent();
+
     }
 
-
-    /**
-     * Initialize the GUI components.
-     */
     private void initComponent(){
         setTitle("Write a reply");
         setSize(WIDTH, HEIGHT);
@@ -141,9 +95,11 @@ public class GUIDogsitterReply extends JFrame {
                 if(strError){
                     JOptionPane.showMessageDialog(new JFrame(), error, "Error", JOptionPane.ERROR_MESSAGE);
 
-                } else if(proxy.replyToReview(review.getCode(), reply)){
+                } else if(proxy.replyToReview(review.getCode(), reply)){ //TODO da provare
                     JOptionPane.showMessageDialog(new JFrame(), "Reply added!", "Reply", JOptionPane.INFORMATION_MESSAGE);
-                    guiDogSitterReply.dispatchEvent(new WindowEvent(guiDogSitterReply, WindowEvent.WINDOW_CLOSING));
+                    guiShowDogsitterReview.getGuiShowDogsitterAssignment().dispatchEvent(new WindowEvent(guiShowDogsitterReview.getGuiShowDogsitterAssignment(), WindowEvent.WINDOW_CLOSING));
+                    guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING));
+                    guiDogsitterReply.dispatchEvent(new WindowEvent(guiDogsitterReply, WindowEvent.WINDOW_CLOSING));
 
                     }
 
@@ -157,12 +113,7 @@ public class GUIDogsitterReply extends JFrame {
         sendButton = new JButton("Send");
         sendButton.addActionListener(send);
         cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiDogSitterReply.dispatchEvent(new WindowEvent(guiDogSitterReply, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        cancelButton.addActionListener(e -> guiDogsitterReply.dispatchEvent(new WindowEvent(guiDogsitterReply, WindowEvent.WINDOW_CLOSING)));
         buttonPanel.setLayout(new GridLayout(1,2,5,5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20,15,5,15));
         buttonPanel.add(sendButton);
