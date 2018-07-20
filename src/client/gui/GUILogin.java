@@ -33,6 +33,7 @@ public class GUILogin extends JFrame {
         setTitle("Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setResizable(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         initComponents();
@@ -44,8 +45,8 @@ public class GUILogin extends JFrame {
         //cont1.setBorder(BorderFactory.createTitledBorder("Login"));
 
         //login automatico per velocizzare il debug
-        //textUser.setText("MARCO.CARTA@GMAIL.COM");
-        textUser.setText("riccardogiura@gmail.com");
+        textUser.setText("MARCO.CARTA@GMAIL.COM");
+        //textUser.setText("riccardogiura@gmail.com");
         textPwd.setText("PROGETTO123");
 
 
