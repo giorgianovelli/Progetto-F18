@@ -33,6 +33,7 @@ public class GUILogin extends JFrame {
         setTitle("Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setResizable(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         initComponents();
@@ -41,11 +42,11 @@ public class GUILogin extends JFrame {
     private void initComponents(){
 
         cont1.setLayout(new GridLayout(2, 1, 10, 0)); // mi sposta il pannello dei dati tranne i bottoni
-        cont1.setBorder(BorderFactory.createTitledBorder("Login"));
+        //cont1.setBorder(BorderFactory.createTitledBorder("Login"));
 
         //login automatico per velocizzare il debug
-        //textUser.setText("MARCO.CARTA@GMAIL.COM");
-        textUser.setText("riccardogiura@gmail.com");
+        textUser.setText("MARCO.CARTA@GMAIL.COM");
+        //textUser.setText("riccardogiura@gmail.com");
         textPwd.setText("PROGETTO123");
 
 
@@ -62,6 +63,7 @@ public class GUILogin extends JFrame {
         panelBottom.add(buttonLoginSitter);
         panelBottom.add(buttonNewAccount);
         add(panelBottom, BorderLayout.SOUTH);
+
 
         cont1.add(panelLoginData);
         cont1.add(panelBottom );
@@ -96,8 +98,8 @@ public class GUILogin extends JFrame {
 
         // le dimensioni del pannello in larghezza e altezza
 
-        cont1.setPreferredSize(new Dimension(400, 165)); //H-150
-        cont1.setMinimumSize(new Dimension(400, 165)); //W-420
+        cont1.setPreferredSize(new Dimension(325, 145)); //H-150
+        cont1.setMinimumSize(new Dimension(325, 145)); //W-420
 
        /* labelUser.setOpaque(isOpaque());
         labelPwd.setOpaque(isOpaque());*/

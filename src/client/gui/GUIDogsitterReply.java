@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Date;
 
 public class GUIDogsitterReply extends JFrame {
@@ -30,12 +32,25 @@ public class GUIDogsitterReply extends JFrame {
 
     private JButton sendButton;
     private JButton cancelButton;
+    private GUIShowDogsitterReview guiShowDogsitterReview;
+    private GUIDogsitterReply guiDogsitterReply;
 
-    public GUIDogsitterReply(Review review, String email){
+    public GUIDogsitterReply(Review review, String email, GUIShowDogsitterReview guiShowDogsitterReview){
         this.review = review;
         this.email = email;
+        guiDogsitterReply = this;
         proxy = new DogSitterProxy(email);
+        this.guiShowDogsitterReview = guiShowDogsitterReview;
+        guiShowDogsitterReview.setEnabled(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiShowDogsitterReview.setEnabled(true);
+            }
+        });
         initComponent();
+
     }
 
     private void initComponent(){
@@ -82,7 +97,9 @@ public class GUIDogsitterReply extends JFrame {
 
                 } else if(proxy.replyToReview(review.getCode(), reply)){ //TODO da provare
                     JOptionPane.showMessageDialog(new JFrame(), "Reply added!", "Reply", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    guiShowDogsitterReview.getGuiShowDogsitterAssignment().dispatchEvent(new WindowEvent(guiShowDogsitterReview.getGuiShowDogsitterAssignment(), WindowEvent.WINDOW_CLOSING));
+                    guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING));
+                    guiDogsitterReply.dispatchEvent(new WindowEvent(guiDogsitterReply, WindowEvent.WINDOW_CLOSING));
 
                     }
 
@@ -96,12 +113,7 @@ public class GUIDogsitterReply extends JFrame {
         sendButton = new JButton("Send");
         sendButton.addActionListener(send);
         cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        cancelButton.addActionListener(e -> guiDogsitterReply.dispatchEvent(new WindowEvent(guiDogsitterReply, WindowEvent.WINDOW_CLOSING)));
         buttonPanel.setLayout(new GridLayout(1,2,5,5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20,15,5,15));
         buttonPanel.add(sendButton);
