@@ -266,12 +266,12 @@ public class GUICustomer extends GUIHome{
 
     }
 
-    @Override
+
     /**
-     * Perform an action when a calendar control button is pressed.
-     * @param ctrlAe the calendar control button's ActionEvent.
-     * @param proxy the client proxy.
+     * Perform an action when a day's button is pressed.
+     * @param cae the day's button ActionEvent.
      */
+    @Override
     protected void clickOnCalendarButton(ActionEvent cae) {
         JButton pressedButton = (JButton) cae.getSource();
         String strTodayDate;
@@ -303,7 +303,7 @@ public class GUICustomer extends GUIHome{
 
 
     /**
-     * Open a window that shows all user's assignments.
+     * Open a window that shows all customer's assignments.
      */
     public void showAllAssignments(){
         openListAssignment(proxy);
@@ -329,7 +329,7 @@ public class GUICustomer extends GUIHome{
 
 
     /**
-     * Open a window that shows all user's reviews.
+     * Open a window that shows all customer's reviews.
      */
     public void showAllReviews(){
         calendarState = CalendarState.SHOW_REVIEWS;
@@ -347,7 +347,7 @@ public class GUICustomer extends GUIHome{
 
 
     /**
-     * Open a window that permits to the user to change his password.
+     * Open a window that permits to the customer to change his password.
      */
     public void changePassword(){
         GUIChangePassword guiChangePassword = new GUIChangePassword(email);

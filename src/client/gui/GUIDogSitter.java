@@ -3,7 +3,6 @@ package client.gui;
 import client.proxy.DogSitterProxy;
 import client.clientEnumerations.CalendarState;
 import server.Assignment;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,13 +11,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
 public class GUIDogSitter extends GUIHome{
-
+    /**
+     * The dog sitter proxy.
+     */
     private DogSitterProxy proxy;
 
+
+
+    /**
+     * Create a new home screen for the dog sitter specified by the email address.
+     * @param email the dog sitter's email address.
+     * @throws ParseException
+     */
     public GUIDogSitter(String email) throws ParseException  {
         super(email);
         setTitle("CaniBau (Dog sitter)");
@@ -33,6 +40,11 @@ public class GUIDogSitter extends GUIHome{
         initComponents();
     }
 
+
+    /**
+     * Dispose the graphical object onto the home screen.
+     * @throws ParseException
+     */
     private void initComponents() throws ParseException {
         disposeMenuBar();
         int nShownTodayAssignments = disposeTodayPanel(proxy);
@@ -66,7 +78,6 @@ public class GUIDogSitter extends GUIHome{
             }
         };
 
-        //prepara il calendario
         startCalendar(cal, ctrlCal, proxy);
 
         menuItemExit.addActionListener(menuAl);
@@ -86,13 +97,18 @@ public class GUIDogSitter extends GUIHome{
 
     }
 
-    protected void loadTheFirstFiveAssignments(int nShownAssignments){
-        if (nShownAssignments > MAXVISIBLETODAYASSIGNMENT){
-            nShownAssignments = MAXVISIBLETODAYASSIGNMENT;
+
+    /**
+     * Load in an HashMap the first five today's assignments to be shown.
+     * @param nShownTodayAssignments the number of today's assignments to be shown.
+     */
+    protected void loadTheFirstFiveAssignments(int nShownTodayAssignments){
+        if (nShownTodayAssignments > MAXVISIBLETODAYASSIGNMENT){
+            nShownTodayAssignments = MAXVISIBLETODAYASSIGNMENT;
         }
 
         HashMap<Integer, Assignment> assignmentList = proxy.getAssignmentList();
-        codeFirstFiveAssignmentsList = getCodeFirstFiveAssignments(nShownAssignments, assignmentList);
+        codeFirstFiveAssignmentsList = getCodeFirstFiveAssignments(nShownTodayAssignments, assignmentList);
 
         int n = 0;
         for (Integer key : codeFirstFiveAssignmentsList) {
@@ -127,6 +143,11 @@ public class GUIDogSitter extends GUIHome{
         add(menuBar, BorderLayout.NORTH);
     }
 
+
+    /**
+     * Perform an action when a day's button is pressed.
+     * @param cae the day's button ActionEvent.
+     */
     protected void clickOnCalendarButton(ActionEvent cae){
         JButton pressedButton = (JButton) cae.getSource();
         String strTodayDate;
@@ -144,10 +165,6 @@ public class GUIDogSitter extends GUIHome{
             e.printStackTrace();
         }
 
-        /*if ((!(cae.getActionCommand().equals(""))) && ((calendarState.equals(CalendarState.NORMAL)) || (calendarState.equals(CalendarState.REMOVING)))){
-            GUIDailyAssignments guiDailyAssignments = new GUIDailyAssignments(calendarState, email, todayDate);
-            guiDailyAssignments.setVisible(true);
-        }*/
         if ((!(cae.getActionCommand().equals(""))) &&  ((calendarState.equals(CalendarState.NORMAL)))){
             GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter = new GUIDailyAssignmentDogsitter(calendarState, email, todayDate);
             guiDailyAssignmentDogsitter.setVisible(true);
@@ -155,12 +172,20 @@ public class GUIDogSitter extends GUIHome{
 
     }
 
+
+    /**
+     * Open a window that shows all dog sitter's assignments.
+     */
     public void showAllAssignments(){
         GUIShowDogsitterAssignment guiShowDogsitterAssignment = new GUIShowDogsitterAssignment(CalendarState.NORMAL, proxy.getAssignmentList(), email, this);
         guiShowDogsitterAssignment.setVisible(true);
 
     }
 
+
+    /**
+     * Open a window that shows all dog sitter's reviews.
+     */
     public void showAllReviews(){
         GUIShowDogsitterAssignment guiShowDogsitterAssignment = new GUIShowDogsitterAssignment(CalendarState.SHOW_REVIEWS, proxy.getAssignmentList(), email, this);
         guiShowDogsitterAssignment.setVisible(true);
@@ -168,12 +193,19 @@ public class GUIDogSitter extends GUIHome{
     }
 
 
+    /**
+     * Open the account settings.
+     */
     public void accountSettings(){
         //TODO da implementare
-       // GUIDogSitterSettings guiDogSitterSettings = new GUIDogSitterSettings(email);
-      //  guiDogSitterSettings.setVisible(true);
+        //GUIDogSitterSettings guiDogSitterSettings = new GUIDogSitterSettings(email);
+        //guiDogSitterSettings.setVisible(true);
     }
 
+
+    /**
+     * Open a window that permits to the dog sitter to change his password.
+     */
     public void changePassword(){
         GUIDogSitterChangePassword guiDogSitterChangePassword = new GUIDogSitterChangePassword(email);
         guiDogSitterChangePassword.setVisible(true);
@@ -181,7 +213,7 @@ public class GUIDogSitter extends GUIHome{
 
 
     /**
-     * Call clickOnTodayAssignment when the user clicks on a today's assignment.
+     * Call clickOnTodayAssignment when the dog sitter clicks on a today's assignment.
      * @param todayAssignmentAe the ActionEvent of today's assignments.
      */
     protected void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
