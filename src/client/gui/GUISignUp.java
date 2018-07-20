@@ -360,7 +360,7 @@ public class GUISignUp extends JFrame {
         Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
 
 
-        return proxy.customerSignUp(textEmail.getText().toUpperCase(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
+        return proxy.customerSignUp(textEmail.getText(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
 
 
     }
