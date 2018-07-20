@@ -11,22 +11,44 @@ import java.awt.event.WindowEvent;
 
 public class GUIShowDogsitterReview extends GUIShowReview {
 
+    /**
+     * The button allows the dogsitter to add a reply
+     */
     private JButton replyButton;
+
+    /**
+     * The user's email.
+     */
     private String email;
+
+    /**
+     * GUI from where GUIShowDogsitterReview is invoked.
+     */
     private GUIShowDogsitterAssignment guiShowDogsitterAssignment;
+
+    /**
+     * This GUI.
+     */
     private GUIShowDogsitterReview guiShowDogsitterReview;
 
     /**
-     * costruttore
-     * @param review recensione da visualizzare
-     * @param email identifica l'utente
+     * Constructor.
+     * @param review review to show.
+     * @param email The user's email.
      */
     public GUIShowDogsitterReview(Review review, String email){
         super(review);
         this.email = email;
+        guiShowDogsitterReview = this;
 
     }
 
+    /**
+     * Constructor using GUIShowDogsitterAssignment.
+     * @param review review to show.
+     * @param email The user's email.
+     * @param guiShowDogsitterAssignment GUI from where GUIShowDogsitterReview is invoked.
+     */
     public GUIShowDogsitterReview(Review review, String email, GUIShowDogsitterAssignment guiShowDogsitterAssignment){
         super(review);
         this.email = email;
@@ -46,7 +68,7 @@ public class GUIShowDogsitterReview extends GUIShowReview {
     }
 
     /**
-     * permette di visualizzare direttamente la risposta del dogsitter sotto la recensione o di aggiungerne una
+     * Allows to show the dogsitter reply, or to add a reply.
      */
     @Override
     protected void showReply() {
@@ -88,6 +110,10 @@ public class GUIShowDogsitterReview extends GUIShowReview {
 
     }
 
+    /**
+     * Getter of the GUI from where GUIShowDogsitterReview is invoked.
+     * @return GUIShowDogsitterAssignment object
+     */
     public GUIShowDogsitterAssignment getGuiShowDogsitterAssignment() {
         return guiShowDogsitterAssignment;
     }

@@ -13,28 +13,89 @@ import java.awt.event.WindowEvent;
 import java.util.Date;
 
 public class GUIDogsitterReply extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 400;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 300;
 
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
+
+    /**
+     * The user's email.
+     */
     private String email;
+
+    /**
+     * The dogsitter proxy.
+     */
     private DogSitterProxy proxy;
+
+    /**
+     * Reference to the object Review, which contains the information to show.
+     */
     private Review review;
 
 
+    /**
+     * The Panel contains the text area for the reply.
+     */
     private JPanel contentPanel;
+
+    /**
+     * The panel contains sendButton and cancelButton.
+     */
     private JPanel buttonPanel;
+
+    /**
+     * Out panel.
+     */
     private JPanel outPanel;
 
+    /**
+     * The scroll pane allows to show the reply.
+     */
     private JScrollPane textScroll;
 
+    /**
+     * Text area for the reply
+     */
     private JTextArea textReply;
 
+    /**
+     * The button allows to add the reply.
+     */
     private JButton sendButton;
+
+    /**
+     * The button allows to close the frame.
+     */
     private JButton cancelButton;
+
+    /**
+     * GUI from where GUIDogsitterReply is invoked.
+     */
     private GUIShowDogsitterReview guiShowDogsitterReview;
+
+    /**
+     * This GUI.
+     */
     private GUIDogsitterReply guiDogsitterReply;
 
+    /**
+     * Constructor.
+     * @param review review.
+     * @param email The user's email.
+     * @param guiShowDogsitterReview GUI from where GUIDogsitterReply is invoked.
+     */
     public GUIDogsitterReply(Review review, String email, GUIShowDogsitterReview guiShowDogsitterReview){
         this.review = review;
         this.email = email;
@@ -53,6 +114,9 @@ public class GUIDogsitterReply extends JFrame {
 
     }
 
+    /**
+     * Initialize the GUI components.
+     */
     private void initComponent(){
         setTitle("Write a reply");
         setSize(WIDTH, HEIGHT);
