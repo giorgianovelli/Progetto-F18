@@ -277,7 +277,7 @@ public class GUISignUp extends JFrame {
                             boolean add = addCustomerValues();
                             if (add) {
                                 JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
-                                GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText(), guiSignUp);
+                                GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
                                 guiCustomerLabel.setVisible(true);
                                 dispose();
 
@@ -367,7 +367,7 @@ public class GUISignUp extends JFrame {
         Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
 
 
-        return proxy.customerSignUp(textEmail.getText(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
+        return proxy.customerSignUp(textEmail.getText().toUpperCase(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
 
 
     }
@@ -453,7 +453,7 @@ public class GUISignUp extends JFrame {
      * @param email inserita dall'utente
      * @return true se corretta false altrimenti
      */
-    
+
     private boolean checkEmail (String email) {
 
         String expression = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
