@@ -3,7 +3,7 @@ package client.gui;
 import client.Calendar;
 import client.proxy.CustomerProxy;
 import server.Dog;
-import sun.misc.FloatingDecimal;
+//import sun.misc.FloatingDecimal;
 
 import javax.swing.*;
 import java.awt.*;

@@ -82,26 +82,7 @@ public class Singleton {
             }
             dbConnector.closeConnection();
 
-            rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + dogSitterEmail + "'");
-            HashSet<DogSize> listDogSize = new HashSet<>();
-            rs.next();
-            boolean small = rs.getBoolean("SMALL");
-            if (small){
-                listDogSize.add(DogSize.SMALL);
-            }
-            boolean medium = rs.getBoolean("MEDIUM");
-            if (medium){
-                listDogSize.add(DogSize.MEDIUM);
-            }
-            boolean big = rs.getBoolean("BIG");
-            if (big){
-                listDogSize.add(DogSize.BIG);
-            }
-            boolean giant = rs.getBoolean("GIANT");
-            if (giant){
-                listDogSize.add(DogSize.GIANT);
-            }
-            dbConnector.closeConnection();
+            HashSet<DogSize> listDogSize = createListDogSize(dogSitterEmail);
 
             PaymentMethod paymentMethod = getPaymentMethodFromDB(payment);
 
@@ -140,6 +121,38 @@ public class Singleton {
 
             return new DogSitter(dogSitterEmail, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private HashSet<DogSize> createListDogSize(String dogSitterEmail){
+        ResultSet rs;
+        DBConnector dbConnector = new DBConnector();
+        HashSet<DogSize> listDogSize = new HashSet<>();
+        try {
+            rs = dbConnector.askDB("SELECT SMALL, MEDIUM, BIG, GIANT FROM DOGS_ACCEPTED WHERE DOGSITTER = '" + dogSitterEmail + "'");
+            rs.next();
+            boolean small = rs.getBoolean("SMALL");
+            if (small){
+                listDogSize.add(DogSize.SMALL);
+            }
+            boolean medium = rs.getBoolean("MEDIUM");
+            if (medium){
+                listDogSize.add(DogSize.MEDIUM);
+            }
+            boolean big = rs.getBoolean("BIG");
+            if (big){
+                listDogSize.add(DogSize.BIG);
+            }
+            boolean giant = rs.getBoolean("GIANT");
+            if (giant){
+                listDogSize.add(DogSize.GIANT);
+            }
+            dbConnector.closeConnection();
+            return listDogSize;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

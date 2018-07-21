@@ -35,7 +35,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
      * @param email
      */
     public DogSitterProxy(String email) {
-        this.email = email;
+        this.email = email.toUpperCase();
     }
 
     /**

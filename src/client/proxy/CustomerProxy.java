@@ -27,7 +27,7 @@ public class CustomerProxy extends Proxy implements InterfaceCustomer {
      * @param email the customer's email address.
      */
     public CustomerProxy(String email) {
-        this.email = email;
+        this.email = email.toUpperCase();
     }
 
 
