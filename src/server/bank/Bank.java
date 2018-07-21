@@ -73,12 +73,12 @@ public class Bank {
         pmCustomer.setAmount(round2Decimal(pmCustomer.getAmount() - amount));
         pmDogsitter.setAmount(round2Decimal(pmDogsitter.getAmount() + amount));
 
-        if (pmCustomer.getExpirationDate().after(new Date())){
+        if (pmCustomer.getExpirationDate().before(new Date())){
             System.out.println("Transaction failed: customer's credit cards is expired");
             return false;
         }
 
-        if (pmDogsitter.getExpirationDate().after(new Date())){
+        if (pmDogsitter.getExpirationDate().before(new Date())){
             System.out.println("Transaction failed: dog sitter's credit cards is expired");
             return false;
         }
@@ -148,12 +148,12 @@ public class Bank {
         PaymentMethod pmCustomer = customer.getPaymentMethod();
         PaymentMethod pmDogsitter = dogSitter.getPaymentMethod();
 
-        if (pmCustomer.getExpirationDate().after(new Date())){
+        if (pmCustomer.getExpirationDate().before(new Date())){
             System.out.println("Transaction failed: customer's credit cards is expired");
             return false;
         }
 
-        if (pmDogsitter.getExpirationDate().after(new Date())){
+        if (pmDogsitter.getExpirationDate().before(new Date())){
             System.out.println("Transaction failed: dog sitter's credit cards is expired");
             return false;
         }
@@ -201,12 +201,12 @@ public class Bank {
         pmCustomer.setAmount(round2Decimal(pmCustomer.getAmount() + amount));
         pmDogsitter.setAmount(round2Decimal(pmDogsitter.getAmount() - amount));
 
-        if (pmCustomer.getExpirationDate().after(new Date())){
+        if (pmCustomer.getExpirationDate().before(new Date())){
             System.out.println("Transaction failed: customer's credit cards is expired");
             return false;
         }
 
-        if (pmDogsitter.getExpirationDate().after(new Date())){
+        if (pmDogsitter.getExpirationDate().before(new Date())){
             System.out.println("Transaction failed: dog sitter's credit cards is expired");
             return false;
         }
