@@ -467,7 +467,12 @@ public abstract class GUIHome extends JFrame{
     }
 
 
-    //TODO refactor!
+    /**
+     * Update the calendar.
+     * @param monthNumber the number of the month.
+     * @param proxy the client proxy.
+     * @throws ParseException
+     */
     protected void updateCalendar(int monthNumber, Proxy proxy) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
@@ -476,77 +481,15 @@ public abstract class GUIHome extends JFrame{
         dateDayNumber.setLenient(false);
         String stringDayNumber = dateDayNumber.format(currentDate);
         int dayNumber = Integer.parseInt(stringDayNumber);
-        int i;
-        int ie;
-        int ne = 0;
-        int cc = NDAYWEEK;
         labelEmpty= new JLabel[NEMPTYLABEL];
-        switch (dayNumber){
-            case 1:
-                ne = 0;
-                break;
-            case 2:
-                ne = 1;
-                break;
-            case 3:
-                ne = 2;
-                break;
-            case 4:
-                ne = 3;
-                break;
-            case 5:
-                ne = 4;
-                break;
-            case 6:
-                ne = 5;
-                break;
-            case 7:
-                ne = 6;
-                break;
-        }
-        for (ie = 0; ie < ne; ie++){
-            labelEmpty[ie] = new JLabel();
-            panelGridCalendar.add(labelEmpty[ie]);
-            cc++;
-        }
 
-        i = 0;
-        int nd = getNDayOfMonth(monthNumber, currentDate);
-
-        for (i = 0; i < nd; i++){
-            panelGridCalendar.add(buttonDay[i]);
-            cc++;
-        }
-
-        while (cc < NCALENDARCELLS){
-            labelEmpty[ie] = new JLabel();
-            panelGridCalendar.add(labelEmpty[ie]);
-            cc++;
-        }
+        disposeEmptyLabel(dayNumber, monthNumber);
 
         if ((calendarState.equals(CalendarState.ADDING)) || (calendarState.equals(CalendarState.REMOVING))){
             enableDisableDateButtonAssignment();
         }
 
-        for (i = 0; i < NDAYMONTH; i++){
-            if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
-                buttonDay[i].setBackground(new Color(204, 230, 255));
-            }
-
-            String strCurrentDate = date.format(new Date());
-            String dateButton;
-            int nDay = Integer.parseInt(buttonDay[i].getText());
-            if (nDay < 10){
-                dateButton = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
-            } else {
-                dateButton = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
-            }
-            if (dateButton.equals(strCurrentDate)){
-                buttonDay[i].setForeground(new Color(255, 0, 0));
-            } else {
-                buttonDay[i].setForeground(new Color(0, 0, 0));
-            }
-        }
+        highlightCurrentDayButton();
 
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
             showAssignmentsOnCalendar(email, proxy);
@@ -952,6 +895,65 @@ public abstract class GUIHome extends JFrame{
      * @param todayAssignmentAe the ActionEvent of today's assignments.
      */
     protected abstract void callClickOnTodayAssignment(ActionEvent todayAssignmentAe);
+
+
+    /**
+     * Dispose empty label in the calendar.
+     * @param dayNumber the week day number of the first day of the month.
+     * @param monthNumber the month number.
+     */
+    private void disposeEmptyLabel(int dayNumber, int monthNumber){
+        int cc = NDAYWEEK;
+        int ie;
+        int i;
+        int ne = dayNumber - 1;
+        for (ie = 0; ie < ne; ie++){
+            labelEmpty[ie] = new JLabel();
+            panelGridCalendar.add(labelEmpty[ie]);
+            cc++;
+        }
+
+        int nd = getNDayOfMonth(monthNumber, new Date());
+
+        for (i = 0; i < nd; i++){
+            panelGridCalendar.add(buttonDay[i]);
+            cc++;
+        }
+
+        while (cc < NCALENDARCELLS){
+            labelEmpty[ie] = new JLabel();
+            panelGridCalendar.add(labelEmpty[ie]);
+            cc++;
+        }
+    }
+
+
+    /**
+     * Highlight the current day on the calendar.
+     */
+    private void highlightCurrentDayButton(){
+        int i;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        for (i = 0; i < NDAYMONTH; i++){
+            if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
+                buttonDay[i].setBackground(new Color(204, 230, 255));
+            }
+
+            String strCurrentDate = date.format(new Date());
+            String dateButton;
+            int nDay = Integer.parseInt(buttonDay[i].getText());
+            if (nDay < 10){
+                dateButton = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+            } else {
+                dateButton = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+            }
+            if (dateButton.equals(strCurrentDate)){
+                buttonDay[i].setForeground(new Color(255, 0, 0));
+            } else {
+                buttonDay[i].setForeground(new Color(0, 0, 0));
+            }
+        }
+    }
 
 }
 
