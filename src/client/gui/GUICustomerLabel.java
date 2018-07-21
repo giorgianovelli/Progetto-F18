@@ -219,7 +219,7 @@ public class GUICustomerLabel extends JFrame {
      * @return
      */
 
-    public static boolean checkNumber (String number){
+    private boolean checkNumber (String number){
         double n=0;
 
         try{
