@@ -98,7 +98,7 @@ public class Customer extends User implements InterfaceCustomer{
         Bank bank = new Bank();
         double price = estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
-        if ((bank.isTransactionPossible(email, price)) || (paymentInCash)) {
+        if ((bank.isTransactionPossible(email, emailDogSitter, price)) || (paymentInCash)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
