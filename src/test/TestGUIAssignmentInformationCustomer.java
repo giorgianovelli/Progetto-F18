@@ -60,6 +60,10 @@ public class TestGUIAssignmentInformationCustomer {
         Assignment assingment = new Assignment(1, dogList, startDate, endDate, address1);
 
 
+        Date dateToday = new Date();
+        System.out.println(dateToday.getTime());
+
+
 
         //GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "MARCO.CARTA@GMAIL.COM", guiDogSitter); //passaggio assignment
         //GUIAssignmentInformationDogsitter gui = new GUIAssignmentInformationDogsitter(assingment, "RICCARDOGIURA@GMAIL.COM", guiDogSitter); //passaggio assignment

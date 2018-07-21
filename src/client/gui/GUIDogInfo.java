@@ -149,9 +149,14 @@ public class GUIDogInfo extends JFrame {
     private ArrayList<String> years_tmp = new ArrayList<>();
 
     /**
-     * This GUI
+     * This GUI.
      */
     private GUIDogInfo guiDogInfo;
+
+    /**
+     * GUI from which this class is created.
+     */
+    private GUIDogs guiDogs;
 
 
     /**
@@ -164,6 +169,7 @@ public class GUIDogInfo extends JFrame {
         this.dog = dog;
         this.email = email;
         proxy = new CustomerProxy(this.email);
+        this.guiDogs = guiDogs;
         guiDogs.setEnabled(false);
         guiDogInfo = this;
 
@@ -223,6 +229,7 @@ public class GUIDogInfo extends JFrame {
                         if(setNewValues()){
                             JOptionPane.showMessageDialog(new JFrame(), "The data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
                             guiDogInfo.dispatchEvent(new WindowEvent(guiDogInfo, WindowEvent.WINDOW_CLOSING));
+                            guiDogs.dispatchEvent(new WindowEvent(guiDogs, WindowEvent.WINDOW_CLOSING));
                         }
                     }
                 }

@@ -28,7 +28,6 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
      */
     public  GUIShowDogsitterAssignment guiShowDogsitterAssignment;
 
-
     /**
      * Constructor
      * @param cs Calendar State
@@ -79,7 +78,7 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
                 int j = 0;
 
                 for (Map.Entry<Integer, Assignment> entry: listAssignment.entrySet()) {
-                    Assignment a = null;
+
 
                     setComponents(setLabelString(cs, entry.getValue(), null), "Info", j);
 
@@ -177,7 +176,5 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
             strLabel.put(CalendarState.NORMAL, "Assignment with " + nameCustomer + " " + surnameCustomer);
         }
     }
-
-
 
 }

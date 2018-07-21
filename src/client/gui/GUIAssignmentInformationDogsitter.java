@@ -8,9 +8,12 @@ import server.Review;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,7 +33,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
     private JPanel panelAssignmentData = new JPanel(new GridLayout(7, 1));
     private JPanel panelDogs = new JPanel(gridLayout2);
     private JPanel panelReview = new JPanel(new BorderLayout());
-    private JPanel panelClose = new JPanel(new BorderLayout());
+    private JPanel panelClose = new JPanel(new GridLayout(1,3,10,10));
     private JPanel panelButtonReview = new JPanel();
 
     private JPanel panelStartDate = new JPanel(gridLayout);
@@ -60,8 +63,11 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
     private JButton buttonReview = new JButton("Show more");
 
     private JButton buttonClose = new JButton("Close");
+    private JButton buttonConfirm = new JButton("Confirm");
+    private JButton buttonDelete = new JButton("Delete");
 
     private String email;
+    private GUIShowDogsitterAssignment guiShowDogsitterAssignment = null;
 
 
     /**
@@ -78,7 +84,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-
+        this.guiShowDogsitterAssignment = guiShowDogsitterAssignment;
         guiShowDogsitterAssignment.setEnabled(false);
 
         this.addWindowListener(new WindowAdapter() {
@@ -204,15 +210,55 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         panelReview.add(panelButtonReview, BorderLayout.EAST);
 
         panelClose.add(buttonClose);
-        panelClose.setBorder(BorderFactory.createEmptyBorder(20, 190, 20, 190));
+        panelClose.add(buttonConfirm);
+        panelClose.add(buttonDelete);
+        panelClose.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
 
         buttonClose.addActionListener(e -> guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING)));
+
+        DogSitterProxy dogSitterProxy = new DogSitterProxy(email);
+        UIManager.put("OptionPane.noButtonText", "No");
+        UIManager.put("OptionPane.yesButtonText", "Yes");
+        ActionListener actionListener1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int action = (JOptionPane.showConfirmDialog(null, "Confirm assignment?", "Confirm", JOptionPane.YES_NO_OPTION));
+                if (action == JOptionPane.YES_OPTION) {
+                    dogSitterProxy.updateAssignmentState(assignment.getCode(), true);
+                    guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+
+                }
+
+            }
+        };
+
+        ActionListener actionListener2 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int action = (JOptionPane.showConfirmDialog(null, "Delete assignment?","Delete",JOptionPane.YES_NO_OPTION));
+                if (action == JOptionPane.YES_OPTION) {
+                    dogSitterProxy.updateAssignmentState(assignment.getCode(), false);
+                    guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+
+                }
+            }
+        };
+
+        buttonConfirm.addActionListener(actionListener1);
+        buttonDelete.addActionListener(actionListener2);
+        if (assignment.getState() == null) {
+            buttonDelete.setEnabled(true);
+            buttonConfirm.setEnabled(true);
+        } else {
+            buttonDelete.setEnabled(false);
+            buttonConfirm.setEnabled(false);
+        }
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
 
-        DogSitterProxy dogSitterProxy = new DogSitterProxy(email);
+
 
         Integer intCode = assignment.getCode();
 
@@ -269,4 +315,16 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             i++;
         }
     }
+
+    /*
+    public boolean isInNext24Hours(Date dateStart) {
+        long ds = dateStart.getTime();
+        Date dateToday = new Date();
+        long dt = dateToday.getTime();
+       if ((ds - dt) < 86400000) {
+           return true;
+       }
+       return false;
+    }
+    */
 }
