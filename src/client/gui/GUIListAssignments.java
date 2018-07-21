@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import server.Assignment;
 import server.Review;
 import client.clientEnumerations.CalendarState;
@@ -392,17 +393,20 @@ public class GUIListAssignments extends JFrame{
      * @return JLabel Object with the proper color of the assignment.
      *          green: confirmed.
      *          yellow: to be confirmed.
-     *          grey: old assignment
+     *          grey: old assignment.
+     *          red: deleted.
      */
     protected JLabel createLabelState(Assignment a){
-
-        JLabel label;
 
         ImageIcon green = transformImage(new ImageIcon("images/Green_square.svg.png"), 30,30);
         ImageIcon gray = transformImage(new ImageIcon("images/gray_square.png"), 30,30);
         ImageIcon yellow = transformImage(new ImageIcon("images/yellow.jpg"), 30, 30);
+        ImageIcon red = transformImage(new ImageIcon("images/red-180x180.png"), 30, 30);
 
         Boolean state = a.getState();
+
+        JLabel label = new JLabel(yellow);
+
 
         if(dateBeforeToday(a.getDateEnd())){
             label = new JLabel(gray);
@@ -410,9 +414,10 @@ public class GUIListAssignments extends JFrame{
         }
         else if (state == Boolean.TRUE){
             label = new JLabel(green);
-        }
-        else {
-            label = new JLabel(yellow);
+
+        }else if (state == Boolean.FALSE){
+            label = new JLabel(red);
+
         }
 
         return label;
