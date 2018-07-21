@@ -1,7 +1,3 @@
-/**
- * This class contains some methods of the actions that a customer can do.
- */
-
 package server;
 
 import database.DBConnector;
@@ -24,6 +20,10 @@ import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 import static server.tools.dateTime.DateTimeTools.getAge;
 
 
+
+/**
+ * This class contains some methods of the actions that a customer can do.
+ */
 public class Customer extends User implements InterfaceCustomer{
 
     /**
