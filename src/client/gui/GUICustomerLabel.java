@@ -3,6 +3,7 @@ package client.gui;
 import client.Calendar;
 import client.proxy.CustomerProxy;
 import server.Dog;
+import sun.misc.FloatingDecimal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,7 @@ public class GUICustomerLabel extends JFrame {
     private CustomerProxy proxy;
     private String email;
 
-//______________________________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * Costruttore
@@ -91,7 +92,7 @@ public class GUICustomerLabel extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * inizializza le componenti dell'interfaccia
@@ -169,10 +170,9 @@ public class GUICustomerLabel extends JFrame {
                     if (textDogsName.getText().equals("") || textDogsWeight.getText().equals("") ) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
-                    } else{
+                    } else if (checkNumber(textDogsWeight.getText())) {
 
                         boolean add = newDog();
-
                         if(add){
                             JOptionPane.showMessageDialog(new JFrame(), "Thanks for your registration!", "", JOptionPane.INFORMATION_MESSAGE);
                              dispose();
@@ -190,7 +190,7 @@ public class GUICustomerLabel extends JFrame {
 
     }
 
-//______________________________________________________________________________________________________________________________________________________________________________
+
 
     /**
      * aggiunge un nuovo cane al database, in base ai parametri inseriti dall'utente
@@ -212,6 +212,30 @@ public class GUICustomerLabel extends JFrame {
 
     }
 
+
+    /**
+     * controlla se il peso del cane inserito è un numero
+     * @param number
+     * @return
+     */
+
+    public static boolean checkNumber (String number){
+        double n=0;
+
+        try{
+            n = Double.valueOf(number).doubleValue();
+
+        }catch(NumberFormatException e){}
+
+        if(n==0) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid dog's weight", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        }else{
+            return true;
+        }
+
+    }
 
 
 
