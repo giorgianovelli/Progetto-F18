@@ -209,31 +209,16 @@ public class GUIChangePassword extends JFrame {
 
 
     /**
-     * check if the password entered in the "newPassword" field matches the "confirmPassword" field
-     * @param newPassword new password entered by the user
-     * @param confirmPassword  check the password entered
-     * @return true if the two passwords coincide false otherwise
+     * reads the password entered by the user
+     * @param password password entered by the user
+     * @return string that contains the read password
      */
-
-    protected boolean changePasswordFields(String newPassword, String confirmPassword) {
-        boolean updatePassword;
-
-        if (newPassword.equals(confirmPassword)) {
-            proxy.updatePassword(newPassword);
-            updatePassword = true;
-
-
-        } else {
-            JOptionPane.showMessageDialog(new JFrame(), "New Password and Confirm Password do not match!", "Password error", JOptionPane.ERROR_MESSAGE);
-            textNewPassword.setText("");
-            textPasswordConf.setText("");
-            updatePassword = false;
+    private String readPassword(char[] password) {
+        String pwd = "";
+        for (int i = 0; i < password.length; i++) {
+            pwd += password[i];
         }
-
-
-        return updatePassword;
-
-
+        return pwd;
     }
 
 
@@ -265,20 +250,6 @@ public class GUIChangePassword extends JFrame {
 
 
     /**
-     * reads the password entered by the user
-     * @param password password entered by the user
-     * @return string that contains the read password
-     */
-    private String readPassword(char[] password) {
-        String pwd = "";
-        for (int i = 0; i < password.length; i++) {
-            pwd += password[i];
-        }
-        return pwd;
-    }
-
-
-    /**
      * check if the new password entered by the user contains special characters
      * @param s password to check
      * @return true if there are special characters in the password
@@ -288,7 +259,7 @@ public class GUIChangePassword extends JFrame {
         String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
         if(s!=null || !(s.trim().isEmpty())) {
             for (int i = 0; i < s.length(); i++) {
-               
+
                 if (specialChars.contains(s.substring(i, i + 1))) {
                     return true;
 
@@ -301,6 +272,41 @@ public class GUIChangePassword extends JFrame {
 
 
     }
+
+    
+    /**
+     * check if the password entered in the "newPassword" field matches the "confirmPassword" field
+     * @param newPassword new password entered by the user
+     * @param confirmPassword  check the password entered
+     * @return true if the two passwords coincide false otherwise
+     */
+
+    protected boolean changePasswordFields(String newPassword, String confirmPassword) {
+        boolean updatePassword;
+
+        if (newPassword.equals(confirmPassword)) {
+            proxy.updatePassword(newPassword);
+            updatePassword = true;
+
+
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "New Password and Confirm Password do not match!", "Password error", JOptionPane.ERROR_MESSAGE);
+            textNewPassword.setText("");
+            textPasswordConf.setText("");
+            updatePassword = false;
+        }
+
+
+        return updatePassword;
+
+
+    }
+
+
+
+
+
+
 
 
 
