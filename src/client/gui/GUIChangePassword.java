@@ -12,42 +12,110 @@ import java.awt.event.WindowEvent;
 
 
 public class GUIChangePassword extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 400;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 300;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+    /**
+     * Out panel, it contains all the other panels.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * The panel that contains password fields (Current Password, New Password, Confim New Passord).
+     */
     private JPanel panelData = new JPanel();
+
+    /**
+     * The panel contains buttons to confirm  the change of password or cancel it
+     */
     private JPanel panelButton = new JPanel();
 
+    /**
+     * The label for the Current Password
+     */
     private JLabel labelCurrentPassword = new JLabel("Current Password:", SwingConstants.LEFT);
+
+    /**
+     * The label for the New Password
+     */
     private JLabel labelNewPassword = new JLabel("New Password:", SwingConstants.LEFT);
+    /**
+     * The label for Confirm New Password
+     */
     private JLabel labelPasswordConf = new JLabel("Confirm New Password:", SwingConstants.LEFT);
 
+    /**
+     * The Password field of Current Password
+     */
     protected JPasswordField textCurrentPassword = new JPasswordField(SwingConstants.RIGHT);
+
+    /**
+     * The Password field of New Password
+     */
     protected JPasswordField textNewPassword = new JPasswordField(SwingConstants.RIGHT);
+
+    /**
+     * The Password field of Confirm New Password
+     */
     protected JPasswordField textPasswordConf = new JPasswordField(SwingConstants.RIGHT);
 
-    private String newPassword;
-    private String confirmPassword;
+    /**
+     *  The Current Password
+     */
     private String currentPassword;
 
+    /**
+     * The New Password
+     */
+    private String newPassword;
+    /**
+     * The Confirm New Password
+     */
+    private String confirmPassword;
+
+    /**
+     * The button that allows to confirm changes
+     */
     private JButton buttonConfirm = new JButton("Confirm");
+    /**
+     * The button that allows to cancel changes and close the frame
+     */
     private JButton buttonCancel = new JButton("Cancel");
 
-    //attributi per client-server
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
+
+    /**
+     * The user's email.
+     */
     private String email;
-    GUIChangePassword guiChangePassword;
+
+    /**
+     * This GUI.
+     */
+    private GUIChangePassword guiChangePassword;
 
 
     /**
-     * Costruttore
-     *
-     * @param email: riferimento all'utente
+     * Constructor
+     * @param email  the user's email.
+     * @param guiHome
      */
-
-
 
     public GUIChangePassword(String email, GUIHome guiHome) {
         setTitle("Change Password");
@@ -74,9 +142,8 @@ public class GUIChangePassword extends JFrame {
     }
 
 
-
     /**
-     * inizializza le componenti dell'interfaccia
+     * initialize the GUI components
      */
     private void initComponents() {
 
@@ -141,14 +208,11 @@ public class GUIChangePassword extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
-
-
     /**
-     * controlla se la password inserita nel campo "newPassword" corrisponda al campo "confirmPassword"
-     * @param newPassword nuova password inserita dall'utente
-     * @param confirmPassword  controlla la password inserita
-     * @return true se le due password coincidono false altrimenti
+     * check if the password entered in the "newPassword" field matches the "confirmPassword" field
+     * @param newPassword new password entered by the user
+     * @param confirmPassword  check the password entered
+     * @return true if the two passwords coincide false otherwise
      */
 
     protected boolean changePasswordFields(String newPassword, String confirmPassword) {
@@ -173,13 +237,10 @@ public class GUIChangePassword extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
-
-
     /**
-     * verifica se la password inserita dall'utente coincida con quella immessa in fase di registrazione
-     * @param currentPwd password inserita dall'utente da controllare
-     * @return true se corretta, false se errata
+     * check if the password entered by the user matches the one entered during registration
+     * @param currentPwd password entered by the user to be checked
+     * @return true if the password entered by the user is correct, false if it is incorrect
      */
 
     protected boolean checkPassword(String currentPwd) {
@@ -203,12 +264,10 @@ public class GUIChangePassword extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
-
     /**
-     * legge password inserita dall'utente
-     * @param password password inserita dall'utente
-     * @return stringa che contiene la password letta
+     * reads the password entered by the user
+     * @param password password entered by the user
+     * @return string that contains the read password
      */
     private String readPassword(char[] password) {
         String pwd = "";
@@ -219,12 +278,10 @@ public class GUIChangePassword extends JFrame {
     }
 
 
-//______________________________________________________________________________________________________________________________________________________________
-
     /**
-     * controlla se la nuova password inserita dall'utente contenga caratteri speciali
-     * @param s password da controllare
-     * @return true se nella password ci sono caratteri speciali
+     * check if the new password entered by the user contains special characters
+     * @param s password to check
+     * @return true if there are special characters in the password
      */
     public boolean getSpecialCharacterCount(String s) {
 
