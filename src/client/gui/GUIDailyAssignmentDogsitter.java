@@ -14,8 +14,16 @@ import java.util.Map;
 
 public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
+    /**
+     * The dog sitter proxy.
+     */
     private DogSitterProxy dogSitterProxy;
+
+    /**
+     * This GUI.
+     */
     private GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter;
+
 
 
     /**
@@ -24,10 +32,8 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
      * @param cs   identifies the menu from which this interface is called
      * @param email       of the customer
      * @param todayDate  identifies the days in the calendar
-
+     *
      */
-
-
     public GUIDailyAssignmentDogsitter(CalendarState cs, String email, Date todayDate) {
 
         super(cs, email, todayDate);
@@ -40,13 +46,13 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
     }
 
+
     /**
-     * Method that initalizes graphic components of the GUI
+     * Method that initializes graphic components of the GUI
      *
      * @param cs identifies the menu from which this interface is called
-
+     *
      */
-
     @Override
     protected void initComponents(CalendarState cs) {
         dogSitterProxy = new DogSitterProxy(email);
@@ -78,7 +84,6 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
                 SimpleDateFormat date1 = new SimpleDateFormat("dd/MM/yyyy");
                 String dateString1 = date1.format(dateStart);
                 String dateStringEnd1 = date1.format(dateEnd);
-                //SimpleDateFormat date2 = new SimpleDateFormat("dd/MM/yyyy");
                 String dateString2 = date1.format(todayDate);
                 String dateStringEnd2 = date1.format(todayDate);
                 dateString1.equals(dateString2);
@@ -139,6 +144,7 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
         }
 
     }
+
 }
 
 

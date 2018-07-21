@@ -16,26 +16,95 @@ import java.util.HashMap;
 import java.lang.*;
 
 
-
+/**
+ * This class show if there are assignments for each day
+ * and allows you to delete existing assignments.
+ */
 public class GUIDailyAssignments extends JFrame {
 
+    /**
+     * Frame width.
+     */
     final int WIDTH = 512;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 512;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    protected JPanel p = new JPanel();//pannello esterno
+    /**
+     * The external panel p  who contains the array of infoPanel.
+     */
+    protected JPanel p = new JPanel();
+
+    /**
+     * The panel who contains the array of button and buttonInfo.
+     */
     protected JPanel panelButtons = new JPanel();
+
+    /**
+     * Grid Layout for the panel p.
+     */
     protected GridLayout gridLayout = new GridLayout(1, 1);
+
+    /**
+     * Array of buttons, how allows to delete assignment.
+     */
     protected JButton button[] = new JButton[SwingConstants.RIGHT];
+
+    /**
+     * Array of buttons, it allows to show information.
+     */
     protected JButton buttonInfo[] = new JButton[SwingConstants.RIGHT];
+
+    /**
+     * Array of Label for the description of the assignment.
+     */
     protected JLabel[] labelDescription = new JLabel[SwingConstants.LEFT];
+
+    /**
+     * Array of panels, who contains labelDescription and panelButtons.
+     */
     protected JPanel[] infoPanel;
+
+    /**
+     * The label who show the message with no assignment for that day.
+     */
     protected JLabel lb = new JLabel();
+
+    /**
+     * The scroll panel of the windows
+     */
     protected JScrollPane scroll = new JScrollPane(p);
+
+    /**
+     * The list of Assignments.
+     */
     protected HashMap<Integer, Assignment> listAssigment;
+
+    /**
+     * The customer proxy.
+     */
     protected CustomerProxy proxy;
+
+    /**
+     * The costumer's email.
+     */
     protected String email;
+
+    /**
+     * The calendar days of the customer
+     */
     protected Date todayDate;
+
+    /**
+     * The gui attribute for this class.
+     */
     public GUIDailyAssignments guiDailyAssignments;
 
 
@@ -46,9 +115,9 @@ public class GUIDailyAssignments extends JFrame {
      * @param cs   identifies the menu from which this interface is called
      * @param email       of the customer
      * @param todayDate  identifies the days in the calendar
+     * @param guiHome    GUI from which is launched
 
      */
-
     public GUIDailyAssignments(CalendarState cs, String email, Date todayDate, GUIHome guiHome) {
 
         setTitle("Daily assignments");
@@ -75,6 +144,16 @@ public class GUIDailyAssignments extends JFrame {
 
     }
 
+
+    /**
+     * Constructor
+     *
+     * @param cs   identifies the menu from which this interface is called
+     * @param email       of the customer
+     * @param todayDate  identifies the days in the calendar
+     * @param guiCustomer GUI from where GUIDailyAssignment is invoked.
+
+     */
     public GUIDailyAssignments(CalendarState cs, String email, Date todayDate, GUICustomer guiCustomer) {
 
         setTitle("Daily assignments");
@@ -100,6 +179,15 @@ public class GUIDailyAssignments extends JFrame {
         });
     }
 
+
+    /**
+     * Constructor
+     *
+     * @param cs   identifies the menu from which this interface is called
+     * @param email       of the customer
+     * @param todayDate  identifies the days in the calendar
+
+     */
     public GUIDailyAssignments(CalendarState cs, String email, Date todayDate) {
 
         setTitle("Daily assignments");
@@ -116,13 +204,13 @@ public class GUIDailyAssignments extends JFrame {
 
     }
 
+
     /**
-     * Method that initalizes graphic components of the GUI
+     * Method that initializes graphic components of the GUI
      *
      * @param cs identifies the menu from which this interface is called
 
      */
-
     protected void initComponents(CalendarState cs) {
         proxy = new CustomerProxy(email);
         this.listAssigment = proxy.getAssignmentList();
@@ -166,7 +254,6 @@ public class GUIDailyAssignments extends JFrame {
             }
 
 
-            System.out.println(todayAssigment.size());
             labelDescription = new JLabel[todayAssigment.size()];
             button = new JButton[todayAssigment.size()];
             buttonInfo = new JButton[todayAssigment.size()];
@@ -299,12 +386,12 @@ public class GUIDailyAssignments extends JFrame {
         }
     }
 
+
         /**
          * method who create a panel that contains the assignment information: status, description and  button
          * @param i panel index
 
          */
-
         protected void createPanelOrder ( int i){
 
             infoPanel[i] = new JPanel();
@@ -324,12 +411,12 @@ public class GUIDailyAssignments extends JFrame {
 
         }
 
-         /**
-         * method who create a panel that contains the assignment information: status, description and  button
+
+        /**
+         * method who create a panel that contains the assignment information: status, description and  PanelButtons
          * @param i panel index
 
-        */
-
+         */
         protected void createPanelOrderDelete(int i) {
 
         infoPanel[i] = new JPanel();
