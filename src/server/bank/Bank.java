@@ -28,7 +28,6 @@ public class Bank {
     /**
      * Create a new Bank.
      */
-    //TODO refactor
     public Bank() {
         nTransaction = countTransaction();
         this.listUser = new HashMap<>();
@@ -44,11 +43,7 @@ public class Bank {
 
             dbConnector.closeConnection();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            ResultSet rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS");
+            rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS");
             while (rs.next()){
                 String email = rs.getString("EMAIL");
                 BankUser bu = new BankUser(email, TypeUser.DOGSITTER);
@@ -70,7 +65,6 @@ public class Bank {
      * @param amount the price for the assignment.
      * @return true if transection is successfully completed.
      */
-    //TODO refactor of code
     public boolean makeBankTransaction(String emailCustomer, String emailDogsitter, int code, double amount) {
         BankUser customer = listUser.get(emailCustomer);
         BankUser dogsitter = listUser.get(emailDogsitter);
@@ -79,6 +73,16 @@ public class Bank {
         pmCustomer.setAmount(round2Decimal(pmCustomer.getAmount() - amount));
         pmDogsitter.setAmount(round2Decimal(pmDogsitter.getAmount() + amount));
 
+        if (pmCustomer.getExpirationDate().before(new Date())){
+            System.out.println("Transaction failed: customer's credit cards is expired");
+            return false;
+        }
+
+        if (pmDogsitter.getExpirationDate().before(new Date())){
+            System.out.println("Transaction failed: dog sitter's credit cards is expired");
+            return false;
+        }
+
         if (pmCustomer.getAmount() < 0) {
             System.out.println("Transaction failed: insufficient credit");
             return false;
@@ -86,9 +90,7 @@ public class Bank {
         else {
             System.out.println(emailCustomer + ": €" + pmCustomer.getAmount());
             System.out.println(emailDogsitter + ": €" + pmDogsitter.getAmount());
-
             DBConnector dbConnector = new DBConnector();
-
             try {
                 boolean updateCustomer = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmCustomer.getAmount() + "WHERE NUM = '" + pmCustomer.getNumber() + "';");
                 boolean updateDogsitter = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmDogsitter.getAmount() + "WHERE NUM = '" + pmDogsitter.getNumber() + "';");
@@ -110,7 +112,6 @@ public class Bank {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         }
         return true;
     }
@@ -141,9 +142,21 @@ public class Bank {
      * @param amount the price for the assignment.
      * @return true if the transaction is possible.
      */
-    public boolean isTransactionPossible(String emailCustomer, double amount){
+    public boolean isTransactionPossible(String emailCustomer, String emailDogSitter, double amount){
         BankUser customer = listUser.get(emailCustomer);
+        BankUser dogSitter = listUser.get(emailDogSitter);
         PaymentMethod pmCustomer = customer.getPaymentMethod();
+        PaymentMethod pmDogsitter = dogSitter.getPaymentMethod();
+
+        if (pmCustomer.getExpirationDate().before(new Date())){
+            System.out.println("Transaction failed: customer's credit cards is expired");
+            return false;
+        }
+
+        if (pmDogsitter.getExpirationDate().before(new Date())){
+            System.out.println("Transaction failed: dog sitter's credit cards is expired");
+            return false;
+        }
         if (pmCustomer.getAmount() - amount < 0){
             System.out.println("The transaction can not be made: insufficient credit");
             return false;
@@ -158,13 +171,11 @@ public class Bank {
      * @param code the assignment's code.
      * @return true if the customer is successfully refunded.
      */
-    //TODO refactor of code
     public boolean refundCustomer(int code){
         DBConnector dbConnector = new DBConnector();
         String emailCustomer = "";
         String emailDogsitter = "";
         double amount = 0;
-
         try {
             ResultSet rs = dbConnector.askDB("SELECT CUSTOMER, DOGSITTER FROM ASSIGNMENT WHERE CODE = " + code);
             rs.next();
@@ -190,6 +201,16 @@ public class Bank {
         pmCustomer.setAmount(round2Decimal(pmCustomer.getAmount() + amount));
         pmDogsitter.setAmount(round2Decimal(pmDogsitter.getAmount() - amount));
 
+        if (pmCustomer.getExpirationDate().before(new Date())){
+            System.out.println("Transaction failed: customer's credit cards is expired");
+            return false;
+        }
+
+        if (pmDogsitter.getExpirationDate().before(new Date())){
+            System.out.println("Transaction failed: dog sitter's credit cards is expired");
+            return false;
+        }
+
         if (pmDogsitter.getAmount() < 0) {
             System.out.println("Refund failed: insufficient credit");
             return false;
@@ -197,9 +218,6 @@ public class Bank {
         else {
             System.out.println(emailCustomer + ": €" + pmCustomer.getAmount());
             System.out.println(emailDogsitter + ": €" + pmDogsitter.getAmount());
-
-
-
             try {
                 boolean updateCustomer = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmCustomer.getAmount() + "WHERE NUM = '" + pmCustomer.getNumber() + "';");
                 boolean updateDogsitter = dbConnector.updateDB("UPDATE CREDIT_CARDS SET AMOUNT = " + pmDogsitter.getAmount() + "WHERE NUM = '" + pmDogsitter.getNumber() + "';");
@@ -222,6 +240,4 @@ public class Bank {
         return true;
     }
 }
-
-//TODO verificare la validità della carta.
 

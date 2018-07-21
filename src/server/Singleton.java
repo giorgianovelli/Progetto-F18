@@ -50,10 +50,9 @@ public class Singleton {
     }
 
 
-    //TODO refactor!
     /**
-     *
-     * @param dogSitterEmail
+     * Create the dog sitter specified.
+     * @param dogSitterEmail the dog sitter's email address.
      * @return the object of type DogSitter related to dogSitterEmail.
      */
     public DogSitter createDogSitterFromDB(String dogSitterEmail){
@@ -81,11 +80,27 @@ public class Singleton {
                 listArea.addPlace(cityOp);
             }
             dbConnector.closeConnection();
-
             HashSet<DogSize> listDogSize = createListDogSize(dogSitterEmail);
-
             PaymentMethod paymentMethod = getPaymentMethodFromDB(payment);
+            Availability availability = createAvailability(dogSitterEmail);
+            return new DogSitter(dogSitterEmail, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    /**
+     * Create dog sitter availability
+     * @param dogSitterEmail the dog sitter's email address.
+     * @return the dog sitter's availability.
+     */
+    private Availability createAvailability(String dogSitterEmail){
+        ResultSet rs;
+        DBConnector dbConnector = new DBConnector();
+        try {
             rs = dbConnector.askDB("SELECT  MON_START, MON_END, TUE_START, TUE_END, WED_START, WED_END, THU_START, THU_END, FRI_START, FRI_END, SAT_START, SAT_END, SUN_START, SUN_END FROM AVAILABILITY WHERE DOGSITTER = '" + dogSitterEmail + "'");
             Availability availability = new Availability();
             rs.next();
@@ -118,16 +133,20 @@ public class Singleton {
             WorkingTime sun = new WorkingTime(sunStart, sunEnd);
             availability.setDayAvailability(sun, WeekDays.SUN);
             dbConnector.closeConnection();
-
-            return new DogSitter(dogSitterEmail, name, surname, password, phone, birthdate, address, paymentMethod, listArea, listDogSize, nDogs, biography, availability, cashFlag);
-
+            return availability;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+
     }
 
 
+    /**
+     * Create the list of dog size that the dog sitter's accepts.
+     * @param dogSitterEmail the dog sitter's email address.
+     * @return the list of dog size that the dog sitter's accepts.
+     */
     private HashSet<DogSize> createListDogSize(String dogSitterEmail){
         ResultSet rs;
         DBConnector dbConnector = new DBConnector();

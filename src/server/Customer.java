@@ -1,7 +1,3 @@
-/**
- * This class contains some methods of the actions that a customer can do.
- */
-
 package server;
 
 import database.DBConnector;
@@ -24,6 +20,10 @@ import static server.tools.dateTime.DateTimeTools.dateTimeDiff;
 import static server.tools.dateTime.DateTimeTools.getAge;
 
 
+
+/**
+ * This class contains some methods of the actions that a customer can do.
+ */
 public class Customer extends User implements InterfaceCustomer{
 
     /**
@@ -98,7 +98,7 @@ public class Customer extends User implements InterfaceCustomer{
         Bank bank = new Bank();
         double price = estimatePriceAssignment(selectedDogs, dateStartAssignment, dateEndAssignment);
 
-        if ((bank.isTransactionPossible(email, price)) || (paymentInCash)) {
+        if ((bank.isTransactionPossible(email, emailDogSitter, price)) || (paymentInCash)) {
 
             //crea un oggetto di tipo Assignment e lo aggiunge all'HashMap assignmentList
             //Assignment assignment = new Assignment(code, selectedDogs, dateStartAssignment, dateEndAssignment, meetingPoint);
