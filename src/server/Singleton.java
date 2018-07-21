@@ -12,18 +12,16 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import static server.tools.dateTime.DateTimeTools.getAge;
 
 /**
  * This class implements Singleton Pattern for the creation of some different types of objects.
  */
-
 public class Singleton {
 
     /**
-     *
-     * @param customerEmail
+     * Create the customer specified.
+     * @param customerEmail the customer's email address.
      * @return the object of type Customer related to customerEmail.
      */
     public Customer createCustomerFromDB(String customerEmail){
@@ -52,6 +50,7 @@ public class Singleton {
     }
 
 
+    //TODO refactor!
     /**
      *
      * @param dogSitterEmail
@@ -149,8 +148,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param dogID
+     * Create the dog specified.
+     * @param dogID the dog's ID.
      * @return the object of type Dog related to dogID.
      */
     public Dog createDogFromDB(int dogID){
@@ -180,8 +179,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param dogSitter
+     * Get the dog sitter's list of assignments.
+     * @param dogSitter the dog sitter's email address.
      * @return the HashMap of Assignment related to dogSitter. The key indicates the assignment's code.
      */
     public HashMap<Integer, Assignment> getDogSitterListAssignmentFromDB(String dogSitter){
@@ -200,8 +199,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param customer
+     * Get the customer's list of assignments.
+     * @param customer the customer's email address.
      * @return the HashMap of Assignment related to customer. The key indicates the assignment's code.
      */
     public HashMap<Integer, Assignment> getCustomerListAssignmentFromDB(String customer){
@@ -219,8 +218,8 @@ public class Singleton {
     }
 
     /**
-     *
-     * @param code
+     * Get the meeting point of the assignment specified.
+     * @param code the assignment's code.
      * @return the object of type Address related to code.
      */
     public Address getMeetingPointFromDB(int code){
@@ -244,8 +243,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param code
+     * Get the list of dog assigned in the specified assignment.
+     * @param code the assignment's code.
      * @return the HashSet of Dog related to the Assignment indicated with code.
      */
     public HashSet<Dog> getDogListFromDB(int code){
@@ -267,8 +266,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param email
+     * Get the user's address.
+     * @param email the user's email address.
      * @return the object Address related to email.
      */
     public Address getAddressFromDB(String email){
@@ -293,8 +292,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param payment
+     * Get the user's payment method.
+     * @param payment the card's number.
      * @return the object PaymentMethod related to the card's number 'payment'.
      */
     public PaymentMethod getPaymentMethodFromDB(String payment){
@@ -319,9 +318,9 @@ public class Singleton {
 
 
     /**
-     *
-     * @param customer
-     * @return the HashMap of Review related to customer. The key indicates the code of Assignment associated to Review.
+     * Get the list of customer's review.
+     * @param customer the customer.
+     * @return the HashMap of the customer's reviews.
      */
     public HashMap<Integer, Review> getCustomerReviewList(Customer customer){
         DBConnector dbConnector = new DBConnector();
@@ -339,9 +338,9 @@ public class Singleton {
 
 
     /**
-     *
-     * @param dogSitter
-     * @return the HashMap //TODO
+     * Get the list of dog sitter's reviews.
+     * @param dogSitter the dog sitter.
+     * @return the HashMap of the dog sitter's reviews.
      */
     public HashMap<Integer, Review> getDogSitterReviewList(DogSitter dogSitter){
         DBConnector dbConnector = new DBConnector();
@@ -359,8 +358,8 @@ public class Singleton {
 
 
     /**
-     *
-     * @param code
+     * Get the review specified with code.
+     * @param code the assignment's code related to the review.
      * @return the object of type Review related to code.
      */
     public Review getReview(int code){
