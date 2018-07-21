@@ -98,8 +98,8 @@ public class GUILogin extends JFrame {
 
         // le dimensioni del pannello in larghezza e altezza
 
-        cont1.setPreferredSize(new Dimension(325, 145)); //H-150
-        cont1.setMinimumSize(new Dimension(325, 145)); //W-420
+        cont1.setPreferredSize(new Dimension(525, 145)); //H-150
+        cont1.setMinimumSize(new Dimension(525, 145)); //W-420
 
        /* labelUser.setOpaque(isOpaque());
         labelPwd.setOpaque(isOpaque());*/
