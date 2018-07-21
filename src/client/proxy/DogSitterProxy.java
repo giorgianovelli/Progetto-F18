@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-
+/**
+ * This class create a new DogSitterProxy object with its components.
+ */
 public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
 
     /**

@@ -16,6 +16,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class show to the Dog Sitter information
+ * about his assignments and review.
+ */
 public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
     /**

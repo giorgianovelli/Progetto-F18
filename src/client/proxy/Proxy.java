@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
+/**
+ * This class show communication with the server.
+ */
 public abstract class Proxy {
     /**
      * The buffer containing message received from the server.

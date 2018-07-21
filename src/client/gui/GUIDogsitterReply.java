@@ -12,6 +12,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
+/**
+ * This class allow the Dog Sitter to reply to a review.
+ *
+ */
 public class GUIDogsitterReply extends JFrame {
 
     /**

@@ -7,7 +7,9 @@ package client;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/**
+ * This class shows the components of a calendar.
+ */
 public class Calendar {
 
     /**

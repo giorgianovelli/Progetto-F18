@@ -12,6 +12,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class show to the DogSitter
+ * if there are assignments for each day
+ * and extend GUIDailyAssignments.
+ */
 public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
     /**

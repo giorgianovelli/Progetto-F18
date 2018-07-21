@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * This class contains the items about a review.
+ */
 public class GUIShowReview extends JFrame {
 
     /**

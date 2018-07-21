@@ -23,6 +23,9 @@ import java.util.StringTokenizer;
 
 import static client.Calendar.getNDayOfMonth;
 
+/**
+ * This class shows the graphic components of the project.
+ */
 public abstract class GUIHome extends JFrame{
 
     /**

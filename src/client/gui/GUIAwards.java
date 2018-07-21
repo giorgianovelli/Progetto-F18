@@ -5,7 +5,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
+/**
+ * This class show information about
+ * the members of this project.
+ */
 public class GUIAwards extends JFrame {
 
     /**

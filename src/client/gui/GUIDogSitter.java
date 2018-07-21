@@ -13,6 +13,10 @@ import java.util.Date;
 import java.util.HashMap;
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
+/**
+ * This class show all the components
+ * that a DogSitter has and extend the class GUIHome.
+ */
 public class GUIDogSitter extends GUIHome{
     /**
      * The dog sitter proxy.

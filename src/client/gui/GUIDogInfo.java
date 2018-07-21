@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This class show to the Customer all the
+ * information about a dog .
+ */
 public class GUIDogInfo extends JFrame {
 
     /**

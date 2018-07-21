@@ -11,6 +11,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashSet;
 
+
+/**
+ * This class show the dog's information
+ * and allow to disable dogs.
+ */
 public class GUIDogs extends JFrame {
 
     /**

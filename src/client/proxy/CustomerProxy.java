@@ -14,6 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * This class create a new CustomerProxy object with its components.
+ */
 public class CustomerProxy extends Proxy implements InterfaceCustomer {
 
     /**

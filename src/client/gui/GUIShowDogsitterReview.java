@@ -9,6 +9,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * This class show to the Dog Sitter his reviews
+ * and allow to add an reply.
+ */
 public class GUIShowDogsitterReview extends GUIShowReview {
 
     /**

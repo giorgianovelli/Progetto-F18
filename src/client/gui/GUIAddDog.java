@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This class allows the Customer to add and choose
+ * all the features of dogs.
+ */
 public class GUIAddDog extends JFrame {
 
     /**

@@ -18,6 +18,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
+/**
+ * This class allow the Customer to write a review.
+ */
 public class GUIWriteReview extends JFrame {
 
     /**

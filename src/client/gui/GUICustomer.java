@@ -15,6 +15,10 @@ import java.util.HashSet;
 
 import static server.tools.StringManipulator.capitalizeFirstLetter;
 
+/**
+ * This class show all the components
+ * that a Customer has and extend the class GUIHome.
+ */
 public class GUICustomer extends GUIHome{
 
     /**
