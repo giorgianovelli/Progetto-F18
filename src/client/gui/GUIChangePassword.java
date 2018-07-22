@@ -113,8 +113,8 @@ public class GUIChangePassword extends JFrame {
 
     /**
      * Constructor
-     * @param email  the user's email.
-     * @param guiHome
+     * @param email   the user's email.
+     * @param guiHome interface from where GUIChangePassword is invoked
      */
 
     public GUIChangePassword(String email, GUIHome guiHome) {
@@ -273,7 +273,7 @@ public class GUIChangePassword extends JFrame {
 
     }
 
-    
+
     /**
      * check if the password entered in the "newPassword" field matches the "confirmPassword" field
      * @param newPassword new password entered by the user

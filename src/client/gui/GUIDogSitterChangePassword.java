@@ -14,8 +14,8 @@ public class GUIDogSitterChangePassword extends GUIChangePassword {
 
     /**
      *  Constructor
-     * @param email : reference to the user
-     * @param guiHome
+     * @param email   the user's email
+     * @param guiHome interface from where GUIDogSitterChangePassword is invoked
      */
     public GUIDogSitterChangePassword(String email, GUIHome guiHome) {
         super(email, guiHome);
