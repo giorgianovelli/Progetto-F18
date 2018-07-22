@@ -191,13 +191,18 @@ import java.util.HashSet;
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                customerProxy.addAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, dogsSelected, meetingPoint, paymentMethod);
-                JOptionPane.showMessageDialog(success = new JFrame(), "Assignment successfully confirmed!", "Assignment information",
-                        JOptionPane.INFORMATION_MESSAGE);
-                if (!success.isActive()) {
-                    GUICustomer.guiNewAssignment.dispatchEvent(new WindowEvent(GUICustomer.guiNewAssignment, WindowEvent.WINDOW_CLOSING));
-                    GUINewAssignment.guiChooseDogsitter.dispatchEvent(new WindowEvent(GUINewAssignment.guiChooseDogsitter, WindowEvent.WINDOW_CLOSING));
-                    guiConfirmAssignment.dispatchEvent(new WindowEvent(guiConfirmAssignment, WindowEvent.WINDOW_CLOSING));
+                Date todayDate = new Date();
+                if (!strPaymentMethod.equals("Cash") && ((customerProxy.getPaymentMethod().getAmount() < doubleAmount) || customerProxy.getPaymentMethod().getExpirationDate().before(todayDate))) {
+                    JOptionPane.showMessageDialog(null, "Payment failed, check your credit card!", "Error!", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    customerProxy.addAssignment(mailDogsitter, dateStartAssignment, dateEndAssignment, dogsSelected, meetingPoint, paymentMethod);
+                    JOptionPane.showMessageDialog(success = new JFrame(), "Assignment successfully created!", "Assignment information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    if (!success.isActive()) {
+                        GUICustomer.guiNewAssignment.dispatchEvent(new WindowEvent(GUICustomer.guiNewAssignment, WindowEvent.WINDOW_CLOSING));
+                        GUINewAssignment.guiChooseDogsitter.dispatchEvent(new WindowEvent(GUINewAssignment.guiChooseDogsitter, WindowEvent.WINDOW_CLOSING));
+                        guiConfirmAssignment.dispatchEvent(new WindowEvent(guiConfirmAssignment, WindowEvent.WINDOW_CLOSING));
+                    }
                 }
             }
         };

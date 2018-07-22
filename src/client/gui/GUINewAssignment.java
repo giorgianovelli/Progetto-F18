@@ -21,8 +21,6 @@ import java.util.HashSet;
 
 public class GUINewAssignment extends JFrame{
 
-    //TODO controllo su validità indirizzo;
-
     final int WIDTH = 800;
     final int HEIGHT = 600;
 
@@ -164,11 +162,14 @@ public class GUINewAssignment extends JFrame{
                     paymentMethod = true;
                 } else if (radioButtonCreditCard.isSelected()) {
                     paymentMethod = false;
+
                 }
 
-                if (dateStart.after(dateEnd) || strDateStart.equals(strDateEnd)) {
+                Date todayDate = new Date();
+                if (dateStart.after(dateEnd) || strDateStart.equals(strDateEnd) || ((dateStart.getTime() - todayDate.getTime())) < 86400000) {
                     JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
+
 
                 } else if (dogsSelected.size() == 0) {
                     JOptionPane.showMessageDialog(new JFrame(), "No dogs selected!", "Assignment error",

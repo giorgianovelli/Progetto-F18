@@ -1,7 +1,7 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+//import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ; che è sta roba?? dà errore @Riccardo
 import server.Assignment;
 import server.Review;
 import client.clientEnumerations.CalendarState;

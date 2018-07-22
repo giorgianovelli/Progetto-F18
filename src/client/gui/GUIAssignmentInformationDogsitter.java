@@ -68,7 +68,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
 
     private String email;
     private GUIShowDogsitterAssignment guiShowDogsitterAssignment = null;
-
+    private GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter = null;
 
     /**
      * Constuctor of the class
@@ -148,6 +148,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        this.guiDailyAssignmentDogsitter = guiDailyAssignmentDogsitter;
         setLayout(new BorderLayout());
 
         guiDailyAssignmentDogsitter.setEnabled(false);
@@ -225,10 +226,17 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
                 int action = (JOptionPane.showConfirmDialog(null, "Confirm assignment?", "Confirm", JOptionPane.YES_NO_OPTION));
                 if (action == JOptionPane.YES_OPTION) {
                     dogSitterProxy.updateAssignmentState(assignment.getCode(), true);
-                    guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+                    if (!(guiDailyAssignmentDogsitter == null)) {
+                        guiDailyAssignmentDogsitter.dispatchEvent(new WindowEvent(guiDailyAssignmentDogsitter, WindowEvent.WINDOW_CLOSING));
+                        guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+                    } else if (!(guiShowDogsitterAssignment == null)) {
+                        guiShowDogsitterAssignment.dispatchEvent(new WindowEvent(guiShowDogsitterAssignment, WindowEvent.WINDOW_CLOSING));
+                        guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
 
+                    } else {
+                        guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+                    }
                 }
-
             }
         };
 
@@ -238,8 +246,17 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
                 int action = (JOptionPane.showConfirmDialog(null, "Delete assignment?","Delete",JOptionPane.YES_NO_OPTION));
                 if (action == JOptionPane.YES_OPTION) {
                     dogSitterProxy.updateAssignmentState(assignment.getCode(), false);
-                    guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+                    if (!(guiDailyAssignmentDogsitter == null)) {
+                        guiDailyAssignmentDogsitter.dispatchEvent(new WindowEvent(guiDailyAssignmentDogsitter, WindowEvent.WINDOW_CLOSING));
+                        guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+                    } else if (!(guiShowDogsitterAssignment == null)) {
+                        int i;
+                        guiShowDogsitterAssignment.dispatchEvent(new WindowEvent(guiShowDogsitterAssignment, WindowEvent.WINDOW_CLOSING));
+                        guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
 
+                    } else {
+                        guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
+                    }
                 }
             }
         };
