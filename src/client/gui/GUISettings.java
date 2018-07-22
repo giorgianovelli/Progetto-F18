@@ -56,7 +56,7 @@ public class GUISettings extends JFrame {
     protected JTextField textName = new JTextField();
     protected JTextField textSurname = new JTextField();
     protected JTextField textStreet = new JTextField();
-    protected JTextField textNumber = new JTextField();
+    protected JTextField textStreetNumber = new JTextField();
     protected JTextField textCity = new JTextField();
     protected JTextField textCountry = new JTextField();
     protected JTextField textCap = new JTextField();
@@ -98,7 +98,7 @@ public class GUISettings extends JFrame {
      * Costruttore
      *
      * @param email: riferimento all'utente
-     * @param guiHome interface where
+     * @param guiHome interface from where GUISettings is invoked
      */
 
 
@@ -202,7 +202,7 @@ public class GUISettings extends JFrame {
         panelData.add(labelAddress);
         panelAddress.setLayout(new BoxLayout(panelAddress, BoxLayout.X_AXIS));
         panelAddress.add(textStreet);
-        panelAddress.add(textNumber);
+        panelAddress.add(textStreetNumber);
         panelData.add(panelAddress);
 
         panelData.add(labelPhoneNumber);
@@ -288,22 +288,28 @@ public class GUISettings extends JFrame {
 
                 if (registrationAe.getActionCommand().equals("Confirm")) {
 
-                    Date inputDate = getNewExpirationDate();
+                    boolean inputCap = checkCapNumber(textCap.getText());
+                    boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
+                    boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
 
-                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("") || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
+                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("") || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
-                    } else if (dateBeforeToday(inputDate)) {
 
-                        JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Expiry Date ", "", JOptionPane.INFORMATION_MESSAGE);
+                    } else if (inputCap && inputAddressNumber && inputPhoneNumber) {
 
+                        boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
+                        Date inputDate = getNewExpirationDate();
+                        boolean inputCvv = checkCvvNumber(textSecurityCode.getText());
 
-                    } else {
-                        setNewValues();
-                        JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
-                        guiSettings.dispatchEvent(new WindowEvent(guiSettings, WindowEvent.WINDOW_CLOSING));
+                        if (inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv) {
+
+                            setNewValues();
+                            JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
+                            guiSettings.dispatchEvent(new WindowEvent(guiSettings, WindowEvent.WINDOW_CLOSING));
+                        }
+
                     }
-
                 }
             }
         };
@@ -332,9 +338,9 @@ public class GUISettings extends JFrame {
         textStreet.setEditable(true);
         labelStreet.setLabelFor(textStreet);
 
-        textNumber.setText(customerAddress.getNumber());
-        textNumber.setEditable(true);
-        labelStreet.setLabelFor(textNumber);
+        textStreetNumber.setText(customerAddress.getNumber());
+        textStreetNumber.setEditable(true);
+        labelStreet.setLabelFor(textStreetNumber);
 
         textCountry.setText(customerAddress.getCountry());
         textCountry.setEditable(true);
@@ -381,11 +387,11 @@ public class GUISettings extends JFrame {
      */
 
     protected void setNewValues() {
-        proxy.updateName(textName.getText());
+        proxy.updateName(textName.getText().toUpperCase());
         textName.setEditable(true);
         labelName.setLabelFor(textName);
 
-        proxy.updateSurname(textSurname.getText());
+        proxy.updateSurname(textSurname.getText().toUpperCase());
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
@@ -401,15 +407,15 @@ public class GUISettings extends JFrame {
             System.out.println("Error in updating the date of birth");
         }
 
-        proxy.updateAddress(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
+        proxy.updateAddress(textCountry.getText().toUpperCase(), textCity.getText().toUpperCase(), textStreet.getText().toUpperCase(), textStreetNumber.getText().toUpperCase(), textCap.getText().toUpperCase());
         textCountry.setEditable(true);
         labelCountry.setLabelFor(textCountry);
         textCity.setEditable(true);
         labelCity.setLabelFor(textCity);
         textStreet.setEditable(true);
         labelStreet.setLabelFor(textStreet);
-        textNumber.setEditable(true);
-        labelNumber.setLabelFor(textNumber);
+        textStreetNumber.setEditable(true);
+        labelNumber.setLabelFor(textStreetNumber);
         textCap.setEditable(true);
         labelCap.setLabelFor(textCap);
 
@@ -420,7 +426,7 @@ public class GUISettings extends JFrame {
         Date inputDate = getNewExpirationDate();// aggiorna la data di scadenza
 
 
-        boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), inputDate, textSecurityCode.getText());
+        boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
         System.out.println("upPaymentMethod " + upPaymentMethod);
 
         textCreditCardNumber.setEditable(true);
@@ -443,22 +449,144 @@ public class GUISettings extends JFrame {
 
     }
 
-
     /**
-     * controlla se la data di scadenza delle carte di credito inserita dall'utente nelle jcombobox è inferiore a quella odierna
-     *
-     * @param date data che viene controllata
-     * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
+     * controlla se il dato inserito è un numero
+     * @param number
+     * @return
      */
-    private boolean dateBeforeToday(Date date) {
-        Date todayDate = new Date(System.currentTimeMillis());
 
-        if (date.before(todayDate)) {
+    private boolean checkNumber (String number){
+        long n=0;
+
+        try{
+            n=Long.parseLong(number);
+
+        }catch(NumberFormatException e){}
+
+        if(n==0) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid number", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        }else{
             return true;
         }
 
-        return false;
     }
+
+
+    /**
+     * controlla se il CAP sia composto  da cifre o da lettere e che ne abbia 5 "es. E2"
+     * @param capNumber
+     * @return
+     */
+
+
+    private boolean checkCapNumber(String capNumber) {
+        int digits = capNumber.length();
+
+        if ((digits <= 5)) {
+            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Cap is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Cap ", "", JOptionPane.ERROR_MESSAGE);
+            textCap.setText("");
+            return false;
+        }
+
+    }
+
+
+    /**
+     * controllo numero dell'indirizzo può contenere oltre alle cifre anche le lettere  es. 28A
+     * @param addressNumber
+     * @return
+     */
+    private boolean checkAddressNumber(String addressNumber) {
+        int digits = addressNumber.length();
+
+        if ((digits < 5) ) {
+            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Street number is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Street number ", "", JOptionPane.ERROR_MESSAGE);
+            textStreetNumber.setText("");
+            return false;
+        }
+
+    }
+
+
+    /**
+     * CONTROLLA IL NUMERO DI TELEFONO inserito deve contenere solo cifre ed averne 10
+     * @param phoneNumber
+     * @return
+     */
+    private boolean checkPhoneNumber(String phoneNumber) {
+        boolean number = checkNumber(phoneNumber);
+
+        int digits = phoneNumber.length();
+
+        if ((digits == 10) && number) {
+            // JOptionPane.showMessageDialog(new JFrame(), "syntax of phone number is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number", "", JOptionPane.ERROR_MESSAGE);
+            textPhoneNumber.setText("");
+            return false;
+        }
+
+    }
+
+
+    /**
+     * controlla numero carta di credito solo cifre e 16
+     * @param crediCardNumber
+     * @return
+     */
+
+    private boolean checkCreditCardNumber(String crediCardNumber) {
+        boolean number = checkNumber(crediCardNumber);
+
+        int digits = crediCardNumber.length();
+
+        if ((digits == 16) && number) {
+            //  JOptionPane.showMessageDialog(new JFrame(), "syntax of Credit card number is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number ", "", JOptionPane.ERROR_MESSAGE);
+            textCreditCardNumber.setText("");
+            return false;
+        }
+
+    }
+
+
+
+
+    /**
+     * costruisce una data secondo il formato "dd/MM/yyyy"
+     * @param day stringa giorno
+     * @param month stringa mese
+     * @param year stringa anno
+     * @return data nel formato predefinito
+     */
+
+    private Date buildDate(String day, String month, String year) {
+
+        Date date = new Date();
+        String strDateOfBirth = day + "/" + month + "/" + year;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            date = dateFormat.parse(strDateOfBirth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }
+
+
 
     /**
      *implementa la data di scadenza della carta di credito
@@ -484,27 +612,47 @@ public class GUISettings extends JFrame {
     }
 
 
+
     /**
-     * costruisce una data secondo il formato "dd/MM/yyyy"
-     * @param day stringa giorno
-     * @param month stringa mese
-     * @param year stringa anno
-     * @return data nel formato predefinito
+     * controlla se la data di scadenza delle carte di credito inserita dall'utente nelle jcombobox è inferiore a quella odierna
+     *
+     * @param date data che viene controllata
+     * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
      */
+    private boolean dateBeforeToday(Date date) {
+        Date todayDate = new Date(System.currentTimeMillis());
 
-    private Date buildDate(String day, String month, String year) {
-
-        Date date = new Date();
-        String strDateOfBirth = day + "/" + month + "/" + year;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            date = dateFormat.parse(strDateOfBirth);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (date.before(todayDate)) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Expiry Date ", "", JOptionPane.ERROR_MESSAGE);
+            return true;
         }
 
-        return date;
+        return false;
+    }
+
+
+    /**
+     * controlla numero di CVV
+     * @param cvvNumber
+     * @return
+     */
+
+    private boolean checkCvvNumber(String cvvNumber) {
+        boolean number = checkNumber(cvvNumber);
+
+        int digits = cvvNumber.length();
+
+        if ((digits <= 3) && number) {
+            // JOptionPane.showMessageDialog(new JFrame(), " CVV is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid CVV ", "", JOptionPane.ERROR_MESSAGE);
+            textSecurityCode.setText("");
+            return false;
+        }
+
+
+
     }
 
 

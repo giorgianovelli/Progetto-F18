@@ -137,7 +137,7 @@ public class GUISignUp extends JFrame {
         /**
          * Panels
          */
-
+        panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(11, 1, 40, 5));
         panelData.setBorder(BorderFactory.createTitledBorder("FIRST STEP_Customer Fields: "));
         panelPayment.setBorder(BorderFactory.createTitledBorder("Credit Card information: "));
