@@ -32,6 +32,7 @@ public class GUISignUp extends JFrame {
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private GUISignUp guiSignUp;
+    private GUILogin guiLogin;
 
     private JPanel panelOut = new JPanel();
     private JPanel panelData = new JPanel();
@@ -111,16 +112,26 @@ public class GUISignUp extends JFrame {
      * Constructor
      */
 
-    public GUISignUp() {
+    public GUISignUp(GUILogin guiLogin) {
         setTitle("CaniBau (Sign up)");
         setSize(WIDTH, HEIGHT);
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
         proxy = new CustomerProxy(textEmail.getText());
-
+        this.guiLogin = guiLogin;
+        guiLogin.setEnabled(false);
         guiSignUp = this;
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiLogin.setEnabled(true);
+            }
+        });
+
 
 
         initComponents();
@@ -154,7 +165,7 @@ public class GUISignUp extends JFrame {
         panelData.add(textSurname);
         panelData.add(labelDate);
 
-        //-----------------------------------------------------------------------------------
+
 
         /**
          * JCOMBOBOX di DATE OF BIRTH
@@ -168,7 +179,7 @@ public class GUISignUp extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        //-----------------------------------------------------------------------------------
+
 
         /**
          * others panels
@@ -202,7 +213,7 @@ public class GUISignUp extends JFrame {
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
 
-        //-----------------------------------------------------------------------------------
+
         /**
          *   PAYMENT panels
          */
@@ -225,7 +236,7 @@ public class GUISignUp extends JFrame {
         textExpirationDays.setEditable(false);
         labelExpirationDate.setLabelFor(textExpirationDays);
 
-        //-----------------------------------------------------------------------------------
+
 
 
         /**
@@ -251,7 +262,6 @@ public class GUISignUp extends JFrame {
         panelButton.add(buttonCustomerConfirm, BorderLayout.SOUTH);
 
 
-        //-----------------------------------------------------------------------------------
 
         ActionListener registration = new ActionListener() {
             @Override
@@ -289,21 +299,15 @@ public class GUISignUp extends JFrame {
                                     JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
                                     GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
                                     guiCustomerLabel.setVisible(true);
-                                    dispose();
-                                   // guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING)); //TODO
+                                    guiSignUp.setVisible(false);
                                 }
                             }
                         }
                     }
                 }
-
-                if (registrationAe.getActionCommand().equals("Cancel")) {
-                    System.exit(0);
-                }
             }
-
         };
-        buttonCancel.addActionListener(registration);
+        buttonCancel.addActionListener(e -> guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING)));
         buttonCustomerConfirm.addActionListener(registration);
 
     }
@@ -649,7 +653,7 @@ public class GUISignUp extends JFrame {
 
     }
 
-
-
-
+    public GUILogin getGuiLogin() {
+        return guiLogin;
+    }
 }

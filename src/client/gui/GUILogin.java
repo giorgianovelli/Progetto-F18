@@ -27,6 +27,7 @@ public class GUILogin extends JFrame {
 
     private CustomerProxy proxy = new CustomerProxy();
     private DogSitterProxy dogSitterProxy = new DogSitterProxy();
+    private GUILogin guiLogin;
 
     public GUILogin() {
 
@@ -35,7 +36,7 @@ public class GUILogin extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        guiLogin = this;
         initComponents();
     }
 
@@ -194,9 +195,9 @@ public class GUILogin extends JFrame {
                 }
 
                 if (ae.getActionCommand().equals("Create a new account")){
-                    GUISignUp guiSignUp = new GUISignUp();
+                    GUISignUp guiSignUp = new GUISignUp(guiLogin);
                     guiSignUp.setVisible(true);
-                    setVisible(false);
+
                 }
             }
         };

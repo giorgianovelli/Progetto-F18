@@ -148,6 +148,10 @@ public class GUICustomerLabel extends JFrame {
      */
     private String email;
 
+    /**
+     *
+     */
+    private GUISignUp guiSignUp;
 
 
     /**
@@ -165,14 +169,13 @@ public class GUICustomerLabel extends JFrame {
         setLayout(new BorderLayout());
         this.email = email;
         proxy = new CustomerProxy(email);
-
-        guiSignUp.setEnabled(false);
+        this.guiSignUp = guiSignUp;
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                guiSignUp.setEnabled(true);
+                guiSignUp.getGuiLogin().setEnabled(true);
             }
         });
 
@@ -204,7 +207,6 @@ public class GUICustomerLabel extends JFrame {
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
-        //-----------------------------------------------------------------------------------
 
         /**
          * JCOMBOBOX of DATE OF BIRTH
@@ -217,7 +219,6 @@ public class GUICustomerLabel extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        //-----------------------------------------------------------------------------------
         /**
          * JCOMBOBOX for the breed of dogs
          */
@@ -233,7 +234,6 @@ public class GUICustomerLabel extends JFrame {
 
         breedList = new JComboBox<>(breed);
 
-       //-----------------------------------------------------------------------------------
 
         /**
          * others panel
@@ -254,8 +254,6 @@ public class GUICustomerLabel extends JFrame {
 
         add(panelOut);
 
-        //-----------------------------------------------------------------------------------
-
         ActionListener registration = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent registrationAe) {
@@ -269,10 +267,9 @@ public class GUICustomerLabel extends JFrame {
                         boolean add = newDog();
                         if(add){
                             JOptionPane.showMessageDialog(new JFrame(), "Thanks for your registration!", "", JOptionPane.INFORMATION_MESSAGE);
-                            // dispose();
                             guiCustomerLabel.dispatchEvent(new WindowEvent(guiCustomerLabel, WindowEvent.WINDOW_CLOSING));
-                            GUILogin guiLogin = new GUILogin();
-                            guiLogin.setVisible(true);
+                            guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING));
+
                         }
                     }
 
@@ -281,11 +278,7 @@ public class GUICustomerLabel extends JFrame {
         };
         buttonConfirm.addActionListener(registration);
 
-
-
     }
-
-
 
     /**
      * Add a new dog in the database

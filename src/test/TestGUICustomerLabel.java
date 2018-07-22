@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class TestGUICustomerLabel {
 
     public static void main(String[] args) throws Exception {
+        /*
         GUISignUp guiSignUp = new GUISignUp();
         String inputEmail;
 
@@ -24,5 +25,6 @@ public class TestGUICustomerLabel {
 
         GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(inputEmail, guiSignUp);
         guiCustomerLabel.setVisible(true);
+        */
     }
 }
