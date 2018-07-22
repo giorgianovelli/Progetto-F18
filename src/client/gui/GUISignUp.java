@@ -11,6 +11,7 @@ import server.bank.PaymentMethod;
 import server.places.Address;
 import server.places.Area;
 
+import javax.naming.NamingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -58,7 +59,7 @@ public class GUISignUp extends JFrame {
     private JPasswordField textPassword = new JPasswordField();
     private JPasswordField textConfirmPassword = new JPasswordField();
     private JTextField textStreet = new JTextField();
-    private JTextField textNumber = new JTextField();
+    private JTextField textStreetNumber = new JTextField();
     private JTextField textCity = new JTextField();
     private JTextField textCountry = new JTextField();
     private JTextField textCap = new JTextField();
@@ -102,7 +103,7 @@ public class GUISignUp extends JFrame {
 
     // attributo per client-server
     private CustomerProxy proxy;
-
+    private String inputEmail;
 
 
 
@@ -195,7 +196,7 @@ public class GUISignUp extends JFrame {
         panelData.add(labelAddress);
         panelAddress.setLayout(new BoxLayout(panelAddress, BoxLayout.X_AXIS));
         panelAddress.add(textStreet);
-        panelAddress.add(textNumber);
+        panelAddress.add(textStreetNumber);
         panelData.add(panelAddress);
 
         panelData.add(labelPhoneNumber);
@@ -265,38 +266,41 @@ public class GUISignUp extends JFrame {
 
 
 
-                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
+                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
                             Password == "" || confirmPassword == "" || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
+                        //todo metodo "isValidEmail da implementare"
+                    } else if (checkEmail(textEmail.getText()) /*&& (isValidEmail(textEmail.getText()))*/) {
 
-                    } else if (checkEmail(textEmail.getText())) {
                         boolean inputPassword = changePasswordFields(Password, confirmPassword);
-                        if(inputPassword){
+                        boolean inputCap = checkCapNumber(textCap.getText());
+                        boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
+                        boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
 
+                        if(inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
 
-                            boolean add = addCustomerValues();
-                            if (add) {
-                                JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
-                                GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
-                                guiCustomerLabel.setVisible(true);
-                                dispose();
+                            boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
+                            Date inputDate = getNewExpirationDate();
+                            boolean inputCvv = checkCvvNumber(textSecurityCode.getText());
 
-
+                            if(inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv) {
+                                boolean add = addCustomerValues();
+                                if (add) {
+                                    JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
+                                    GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
+                                    guiCustomerLabel.setVisible(true);
+                                    dispose();
+                                   // guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING)); //TODO
+                                }
+                            }
                         }
-
-
-                        }
-
                     }
-
                 }
 
                 if (registrationAe.getActionCommand().equals("Cancel")) {
                     System.exit(0);
                 }
-
             }
-
 
         };
         buttonCancel.addActionListener(registration);
@@ -339,7 +343,7 @@ public class GUISignUp extends JFrame {
 
         Date ex_Year = new Date();
 
-        Date inputDate;
+        Date inputDate  = getNewExpirationDate();// aggiorna la data di scadenza
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
 
         //prendo solo l'anno dalle comboBox per calcolare l'ultimo giorno del mese
@@ -349,12 +353,7 @@ public class GUISignUp extends JFrame {
             e.printStackTrace();
         }
 
-        //costruisco la data completa della nuova data di scadenza per la carta
-        inputDate = buildDate(Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), ex_Year)), expirationMonth.getSelectedItem().toString(), expirationYear.getSelectedItem().toString());
-
-        System.out.println(inputDate);
-
-        PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText(), textCreditCardOwneSurname.getText(), inputDate, textSecurityCode.getText(), amount);
+        PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText(), amount);
 
         /**
          * stampa il giorno sulla label nell'interfaccia
@@ -364,14 +363,40 @@ public class GUISignUp extends JFrame {
 
 
         String strPassword = readPassword(textPassword.getPassword());
-        Address address = new Address(textCountry.getText(), textCity.getText(), textStreet.getText(), textNumber.getText(), textCap.getText());
+        Address address = new Address(textCountry.getText().toUpperCase(), textCity.getText().toUpperCase(), textStreet.getText().toUpperCase(), textStreetNumber.getText().toUpperCase(), textCap.getText().toUpperCase());
 
 
-        return proxy.customerSignUp(textEmail.getText().toUpperCase(), textName.getText(), textSurname.getText(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
+        return proxy.customerSignUp(textEmail.getText().toUpperCase(), textName.getText().toUpperCase(), textSurname.getText().toUpperCase(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod);
 
 
     }
 
+
+    /**
+     * Controlla se l'email inserita corrisponda al formato "email@gmail.com"
+     * @param email inserita dall'utente
+     * @return true se corretta false altrimenti
+     */
+
+    private boolean checkEmail (String email) {
+
+        String expression = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
+
+        Pattern p = Pattern.compile(expression);
+        Matcher m = p.matcher(email);
+
+        boolean matchFound = m.matches();
+
+        if (matchFound) {
+            JOptionPane.showMessageDialog(new JFrame(), "Syntax of the email is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Email", "", JOptionPane.ERROR_MESSAGE);
+            textEmail.setText("");
+            return false;
+        }
+
+    }
 
 
 
@@ -388,9 +413,6 @@ public class GUISignUp extends JFrame {
         }
         return pwd;
     }
-
-
-
 
 
     /**
@@ -422,6 +444,116 @@ public class GUISignUp extends JFrame {
     }
 
 
+    /**
+     * controlla se il dato inserito è un numero
+     * @param number
+     * @return
+     */
+
+    private boolean checkNumber (String number){
+        long n=0;
+
+        try{
+            n=Long.parseLong(number);
+
+        }catch(NumberFormatException e){}
+
+        if(n==0) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid number", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        }else{
+            return true;
+        }
+
+    }
+
+
+    /**
+     * controlla se il CAP sia composto  da cifre o da lettere e che ne abbia 5 "es. E2"
+     * @param capNumber
+     * @return
+     */
+
+
+    private boolean checkCapNumber(String capNumber) {
+        int digits = capNumber.length();
+
+        if ((digits <= 5)) {
+            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Cap is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Cap ", "", JOptionPane.ERROR_MESSAGE);
+            textCap.setText("");
+            return false;
+        }
+
+    }
+
+
+    /**
+     * controllo numero dell'indirizzo può contenere oltre alle cifre anche le lettere  es. 28A
+     * @param addressNumber
+     * @return
+     */
+    private boolean checkAddressNumber(String addressNumber) {
+        int digits = addressNumber.length();
+
+        if ((digits < 5) ) {
+            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Street number is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Street number ", "", JOptionPane.ERROR_MESSAGE);
+            textStreetNumber.setText("");
+            return false;
+        }
+
+    }
+
+
+    /**
+     * CONTROLLA IL NUMERO DI TELEFONO inserito deve contenere solo cifre ed averne 10
+     * @param phoneNumber
+     * @return
+     */
+    private boolean checkPhoneNumber(String phoneNumber) {
+        boolean number = checkNumber(phoneNumber);
+
+        int digits = phoneNumber.length();
+
+        if ((digits == 10) && number) {
+            // JOptionPane.showMessageDialog(new JFrame(), "syntax of phone number is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number", "", JOptionPane.ERROR_MESSAGE);
+            textPhoneNumber.setText("");
+            return false;
+        }
+
+    }
+
+
+    /**
+     * controlla numero carta di credito solo cifre e 16
+     * @param crediCardNumber
+     * @return
+     */
+
+    private boolean checkCreditCardNumber(String crediCardNumber) {
+        boolean number = checkNumber(crediCardNumber);
+
+        int digits = crediCardNumber.length();
+
+        if ((digits == 16) && number) {
+            //  JOptionPane.showMessageDialog(new JFrame(), "syntax of Credit card number is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number ", "", JOptionPane.ERROR_MESSAGE);
+            textCreditCardNumber.setText("");
+            return false;
+        }
+
+    }
 
 
     /**
@@ -449,31 +581,73 @@ public class GUISignUp extends JFrame {
     }
 
     /**
-     * Controlla se l'email inserita corrisponda al formato "email@gmail.com"
-     * @param email inserita dall'utente
-     * @return true se corretta false altrimenti
+     * implementa la data di scadenza della carta di credito
+     * @return data di scadenza
      */
+    private Date getNewExpirationDate() {
+        Date exYear = new Date();
+        Date inputDate;
+        SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
 
-    private boolean checkEmail (String email) {
-
-        String expression = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
-
-        Pattern p = Pattern.compile(expression);
-        Matcher m = p.matcher(email);
-
-        boolean matchFound = m.matches();
-
-        if (matchFound) {
-            JOptionPane.showMessageDialog(new JFrame(), "Email is correct", "", JOptionPane.INFORMATION_MESSAGE);
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Email", "", JOptionPane.ERROR_MESSAGE);
-            textEmail.setText("");
-            return false;
+        //prendo solo l'anno dalle comboBox per calcolare l'ultimo giorno del mese
+        try {
+            exYear = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString()); //prende come data solo l'anno
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+
+        //costruisco la data completa della nuova data di scadenza per la carta
+        inputDate = buildDate(Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), exYear)), expirationMonth.getSelectedItem().toString(), expirationYear.getSelectedItem().toString());
+
+        return inputDate;
 
     }
 
+
+
+    /**
+     * controlla se la data di scadenza delle carte di credito inserita dall'utente nelle jcombobox è inferiore a quella odierna
+     *
+     * @param date data che viene controllata
+     * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
+     */
+    private boolean dateBeforeToday(Date date) {
+        Date todayDate = new Date(System.currentTimeMillis());
+
+        if (date.before(todayDate)) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Expiry Date ", "", JOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+
+    /**
+     * controlla numero di CVV
+     * @param cvvNumber
+     * @return
+     */
+
+    private boolean checkCvvNumber(String cvvNumber) {
+        boolean number = checkNumber(cvvNumber);
+
+        int digits = cvvNumber.length();
+
+        if ((digits <= 3) && number) {
+           // JOptionPane.showMessageDialog(new JFrame(), " CVV is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid CVV ", "", JOptionPane.ERROR_MESSAGE);
+            textSecurityCode.setText("");
+            return false;
+        }
+
+
+
+    }
 
 
 
