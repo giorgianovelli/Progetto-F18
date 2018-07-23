@@ -3,7 +3,9 @@
  */
 
 package server;
-
+/**
+ * This class provides all the information about a dog.
+ */
 public class Dog {
 
     /**

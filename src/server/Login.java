@@ -6,11 +6,31 @@ import enumeration.TypeUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class allows the login to the project.
+ */
 public class Login{
+    /**
+     * The user.
+     */
     private String user;
+    /**
+     * The user's password.
+     */
     private String password;
+    /**
+     * The type user.
+     */
     private TypeUser typeUser;
 
+
+    /**
+     * Perform the login of a customer through the database.
+     * @param inputUser the email address inserted by the user.
+     * @param inputPasword the password inserted by the user.
+     * @return true if the access is allowed ,else
+     * @return false
+     */
     public boolean customerAccessDataVerifier(String inputUser, String inputPasword) throws SQLException {
         String user = "";
         DBConnector dbConnector = new DBConnector();
@@ -30,6 +50,13 @@ public class Login{
         }
     }
 
+    /**
+     * Perform the login of a dogsitter through the database.
+     * @param inputUser the email address inserted by the user.
+     * @param inputPasword the password inserted by the user.
+     * @return true if the access is allowed ,else
+     * @return false
+     */
     public boolean dogSitterAccessDataVerifier(String inputUser, String inputPasword) throws SQLException {
         String user = "";
         DBConnector dbConnector = new DBConnector();

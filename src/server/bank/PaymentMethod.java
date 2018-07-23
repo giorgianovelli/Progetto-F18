@@ -2,6 +2,9 @@ package server.bank;
 
 import java.util.Date;
 
+/**
+ * This class contains all the data that a credit card has.
+ */
 public class PaymentMethod {
     /**
      * The owner's name

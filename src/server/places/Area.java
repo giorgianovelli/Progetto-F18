@@ -2,7 +2,9 @@ package server.places;
 
 import java.util.HashSet;
 
-
+/**
+ * This class shows the work area of the dog sitter.
+ */
 public class Area {
 
     /**

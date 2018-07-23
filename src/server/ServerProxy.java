@@ -14,7 +14,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-
+/**
+ * This class provides the server connection.
+ */
 public class ServerProxy extends Thread {
 
     /**

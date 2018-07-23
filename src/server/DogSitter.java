@@ -18,8 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-
-
+/**
+ * This class show the description of a dogsitter.
+ */
 public class DogSitter extends User implements InterfaceDogSitter {
     /**
      * The places where the dog sitter works.
