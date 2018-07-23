@@ -291,7 +291,35 @@ public class GUIAddDog extends JFrame {
             e.printStackTrace();
         }
 
+        if(!checkNumber(textWeight.getText())){
+           return false;
+        }
+
         return proxy.addDog(email,textName.getText().toUpperCase(), breedList.getSelectedItem().toString(), dateOfBirth, Double.parseDouble(textWeight.getText()));
+
+    }
+
+    /**
+     * check if the weight of the inserted dog is a number
+     * @param number number to check
+     * @return false if entered data is not a number
+     */
+
+    private boolean checkNumber (String number){
+        double n=0;
+
+        try{
+            n = Double.valueOf(number).doubleValue();
+
+        }catch(NumberFormatException e){}
+
+        if(n==0) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid dog's weight", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        }else{
+            return true;
+        }
 
     }
 

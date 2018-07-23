@@ -301,8 +301,7 @@ public class GUIDogInfo extends JFrame {
         int dogID = dog.getID();
         boolean updateName = proxy.updateDogName(dogID,textName.getText().toUpperCase());
         boolean updateBreed = proxy.updateDogBreed(dogID, breedList.getSelectedItem().toString());
-        boolean updateWeight = proxy.updateDogWeight(dogID, Double.parseDouble(textWeight.getText()));
-
+        boolean updateWeight = false;
 
         Date dateOfBirth = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -315,6 +314,10 @@ public class GUIDogInfo extends JFrame {
         }
         boolean updateDate = proxy.updateDogAge(dogID, dateOfBirth );
 
+        if(checkNumber(textWeight.getText())){
+            updateWeight = proxy.updateDogWeight(dogID, Double.parseDouble(textWeight.getText()));
+        }
+
 
         if(updateName && updateBreed && updateWeight && updateDate){
             update = true;
@@ -323,6 +326,24 @@ public class GUIDogInfo extends JFrame {
 
         return update;
 
+
+    }
+
+    private boolean checkNumber (String number){
+        double n=0;
+
+        try{
+            n = Double.valueOf(number).doubleValue();
+
+        }catch(NumberFormatException e){}
+
+        if(n==0) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid dog's weight", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        }else{
+            return true;
+        }
 
     }
 }
