@@ -9,7 +9,9 @@ import server.places.Address;
 
 import java.util.Date;
 import java.util.HashMap;
-
+/**
+ * This class contains the information that each user has.
+ */
 public abstract class User {
 
     /**

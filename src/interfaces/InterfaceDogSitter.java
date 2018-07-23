@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This interface provides all the parameters that a dog sitter has.
+ */
 public interface InterfaceDogSitter {
 
     /**

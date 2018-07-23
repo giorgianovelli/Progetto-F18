@@ -8,7 +8,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/**
+ * This class contains the components to create and respond to a review.
+ */
 public class Review {
 
     /**

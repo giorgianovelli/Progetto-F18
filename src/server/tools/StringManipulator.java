@@ -2,6 +2,9 @@ package server.tools;
 
 import java.util.StringTokenizer;
 
+/**
+ * This class allows the manipulation of a string.
+ */
 public class StringManipulator {
     /**
      * Capitalize the first letter for each word in the string.
