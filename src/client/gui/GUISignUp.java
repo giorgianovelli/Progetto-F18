@@ -104,12 +104,12 @@ public class GUISignUp extends JFrame {
 
     // attributo per client-server
     private CustomerProxy proxy;
-    private String inputEmail;
 
 
 
     /**
      * Constructor
+     * @param guiLogin
      */
 
     public GUISignUp(GUILogin guiLogin) {
@@ -213,7 +213,6 @@ public class GUISignUp extends JFrame {
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
 
-
         /**
          *   PAYMENT panels
          */
@@ -233,11 +232,6 @@ public class GUISignUp extends JFrame {
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
-        textExpirationDays.setEditable(false);
-        labelExpirationDate.setLabelFor(textExpirationDays);
-
-
-
 
         /**
          * PANEL DI EXPIRATION DATE per sistemare le jcombobox
@@ -245,7 +239,6 @@ public class GUISignUp extends JFrame {
          */
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
-        panelExpiration.add(textExpirationDays);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelPayment.add(panelExpiration);
@@ -274,37 +267,16 @@ public class GUISignUp extends JFrame {
                     Password = readPassword(textPassword.getPassword());
                     confirmPassword = readPassword(textConfirmPassword.getPassword());
 
-
-
                     if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
-                            Password == "" || confirmPassword == "" || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
+                            textEmail.getText().equals("") || Password == "" || confirmPassword == "" || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
-                        //todo metodo "isValidEmail da implementare"
-                    } else if (checkEmail(textEmail.getText()) /*&& (isValidEmail(textEmail.getText()))*/) {
 
-                        boolean inputPassword = changePasswordFields(Password, confirmPassword);
-                        boolean inputCap = checkCapNumber(textCap.getText());
-                        boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
-                        boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
 
-                        if(inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
-
-                            boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
-                            Date inputDate = getNewExpirationDate();
-                            boolean inputCvv = checkCvvNumber(textSecurityCode.getText());
-
-                            if(inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv) {
-                                boolean add = addCustomerValues();
-                                if (add) {
-                                    JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
-                                    GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
-                                    guiCustomerLabel.setVisible(true);
-                                    guiSignUp.setVisible(false);
-                                }
-                            }
-                        }
+                    }else if (checkEmail(textEmail.getText()) ) {
+                        checkAddCustomerValues();
                     }
                 }
+
             }
         };
         buttonCancel.addActionListener(e -> guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING)));
@@ -376,6 +348,38 @@ public class GUISignUp extends JFrame {
     }
 
 
+    private void checkAddCustomerValues() {
+
+        boolean inputPassword = changePasswordFields(Password, confirmPassword);
+        boolean inputCap = checkCapNumber(textCap.getText());
+        boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
+        boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
+
+        if(inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
+
+            boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
+            Date inputDate = getNewExpirationDate();
+            boolean inputCvv = checkCvvNumber(textSecurityCode.getText());
+
+            if(inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv){
+                if(addCustomerValues()){
+                    JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
+                    GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
+                    guiCustomerLabel.setVisible(true);
+                    guiSignUp.setVisible(false);
+
+                }
+
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "ERROR! Email address already used!", "", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+
+
+
     /**
      * Controlla se l'email inserita corrisponda al formato "email@gmail.com"
      * @param email inserita dall'utente
@@ -392,7 +396,7 @@ public class GUISignUp extends JFrame {
         boolean matchFound = m.matches();
 
         if (matchFound) {
-            JOptionPane.showMessageDialog(new JFrame(), "Syntax of the email is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            // JOptionPane.showMessageDialog(new JFrame(), "Syntax of the email is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Email", "", JOptionPane.ERROR_MESSAGE);
@@ -430,7 +434,7 @@ public class GUISignUp extends JFrame {
         boolean updatePassword;
 
         if (Password.equals(confirmPassword)) {
-            JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+          //  JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
             updatePassword = true;
 
 
@@ -463,7 +467,7 @@ public class GUISignUp extends JFrame {
         }catch(NumberFormatException e){}
 
         if(n==0) {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid number", "", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid number", "", JOptionPane.ERROR_MESSAGE);
             return false;
 
         }else{
@@ -529,7 +533,7 @@ public class GUISignUp extends JFrame {
             // JOptionPane.showMessageDialog(new JFrame(), "syntax of phone number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number\n Please enter 10 digits", "", JOptionPane.ERROR_MESSAGE);
             textPhoneNumber.setText("");
             return false;
         }
@@ -552,7 +556,7 @@ public class GUISignUp extends JFrame {
             //  JOptionPane.showMessageDialog(new JFrame(), "syntax of Credit card number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number ", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number\n Please enter 16 digits ", "", JOptionPane.ERROR_MESSAGE);
             textCreditCardNumber.setText("");
             return false;
         }
@@ -641,7 +645,7 @@ public class GUISignUp extends JFrame {
         int digits = cvvNumber.length();
 
         if ((digits <= 3) && number) {
-           // JOptionPane.showMessageDialog(new JFrame(), " CVV is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            // JOptionPane.showMessageDialog(new JFrame(), " CVV is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid CVV ", "", JOptionPane.ERROR_MESSAGE);
