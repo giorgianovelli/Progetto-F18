@@ -12,6 +12,10 @@ import java.util.HashMap;
 
 import static server.tools.DoubleTools.round2Decimal;
 
+/**
+ * This class gives the possibility of having a bank transaction
+ * when selecting the payment method with credit cards.
+ */
 public class Bank {
 
     /**

@@ -18,53 +18,177 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-
+/**
+ * This GUI object is the form for booking a new assignment.
+ *
+ */
 public class GUINewAssignment extends JFrame{
 
+    /**
+     * The frame's width.
+     */
     final int WIDTH = 800;
+
+    /**
+     * The frame's height.
+     */
     final int HEIGHT = 600;
 
     //Panels
 
+    /**
+     * The most external panel.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * Panel that contains everything but the buttons.
+     */
     private JPanel panelNoButtons = new JPanel();
+
+    /**
+     * The panel box
+     */
     private JPanel panelBox = new JPanel();
+
+    /**
+     * The panel that contains the combobox.
+     */
     private JPanel panelCombo = new JPanel();
+
+    /**
+     * Panel that contains the addreess.
+     */
     private JPanel panelAddress = new JPanel();
+
+    /**
+     * Panel that contains a label.
+     */
     private JPanel panelLabel = new JPanel();
+
+    /**
+     * Panel that contains a label.
+     */
     private JPanel panelLabel2 = new JPanel();
+
+    /**
+     * Panel that contains the buttons.
+     */
     private JPanel panelButtons = new JPanel();
+
+    /**
+     * Panel that contains the Dogs check boxes.
+     */
     private JPanel panelDogs = new JPanel();
+
+    /**
+     * Panel that contains payment labels.
+     */
     private JPanel panelPayment = new JPanel();
+
+    /**
+     * ScrollPanel for scrolling.
+     */
     private JScrollPane scrollPane = new JScrollPane(panelOut);
+
+    /**
+     * The list of the dogs owned from the customer.
+     */
     private HashSet<Dog> dogList;
+
+    /**
+     * The list of dogsitters email.
+     */
     private HashSet<String> dogsittersMailList;
+
+    /**
+     * Boolean for the payment method, cash or credit card.
+     */
     private boolean paymentMethod = true;
+
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy customerProxy;
 
-    //Others
-
+    /**
+     * The GUI that will be created by this object.
+     */
     static GUIChooseDogsitter guiChooseDogsitter;
 
+    /**
+     * GridLayout for displaying multiple dogs.
+     */
     private GridLayout gridLayout = new GridLayout(1,1);
 
+    /**
+     * Label that introduces to the Meeting point section.
+     */
     private JLabel labelMeetingPoint = new JLabel("Choose where you would like to meet the dogsitter: ");
+
+    /**
+     * Label that introduces to the dogs section.
+     */
     private JLabel labelDogs = new JLabel("Select your dogs: ");
+
+    /**
+     * Label that introduces to the payment method section.
+     */
     private JLabel labelPayment = new JLabel("Select your payment method: ");
 
+    /**
+     * Jradiobutton for the credit card
+     */
     private JRadioButton radioButtonCreditCard = new JRadioButton("Credit Card");
+
+    /**
+     * Jradiobutton for the cash
+     */
     private JRadioButton radioButtonCash = new JRadioButton("Cash");
 
+    /**
+     * Button for closing the GUI.
+     */
     private JButton buttonCancel = new JButton("Cancel");
+
+    /**
+     * Button for searching the dogsitter.
+     */
     private JButton buttonSearch = new JButton("Search");
 
+    /**
+     * The box for choosing the dates.
+     */
     private NewAssignmentBox newAssignmentBox;
+
+    /**
+     * Arraylist of checkboxes.
+     */
     private ArrayList<NewAssignmentCheckBox> listCheckbox = new ArrayList<>();
 
+    /**
+     * Label and text for the country.
+     */
     private NewAssignmentText country = new NewAssignmentText("Country: ");
+
+    /**
+     * Label and text for the city.
+     */
     private NewAssignmentText city = new NewAssignmentText("City: ");
+
+    /**
+     * Label and text for the address.
+     */
     private NewAssignmentText address = new NewAssignmentText("Address: ");
+
+    /**
+     * Label and text for the postal code.
+     */
     private NewAssignmentText cap = new NewAssignmentText("Postal Code: ");
+
+    /**
+     * Label and text for the number.
+     */
     private NewAssignmentText number = new NewAssignmentText("Number: ");
 
     /**
@@ -374,17 +498,44 @@ public class GUINewAssignment extends JFrame{
 
 class NewAssignmentBox extends JPanel{
 
-
-
+    /**
+     * Jcombobox for the ending date (day).
+     */
     private JComboBox<String> tdayList;
+
+    /**
+     * Jcombobox for the ending date (month).
+     */
     private JComboBox<String> tmonthList;
+
+    /**
+     * Jcombobox for the ending date (year).
+     */
     private JComboBox<String> tyearList;
+
+    /**
+     * Jcombobox for the starting and ending date (hour).
+     */
     private JComboBox<String> fhourList, thourList;
+
+    /**
+     * Jcombobox for the starting and ending date (minute).
+     */
     private JComboBox<String> fminuteList, tminuteList;
 
-
+    /**
+     * Label that displays the starting date (day).
+     */
     private JLabel fromDayLabel = new JLabel("");
+
+    /**
+     * Label that displays the starting date (month).
+     */
     private JLabel fromMonthLabel = new JLabel("");
+
+    /**
+     * Label that displays the starting date (year).
+     */
     private JLabel fromYearLabel = new JLabel("");
 
 
@@ -535,6 +686,10 @@ class NewAssignmentBox extends JPanel{
 
 
 class NewAssignmentText extends JPanel{
+
+    /**
+     * A textfield to be filled with a part of the addess for the meeting point.
+     */
     private TextField field;
 
     /**
@@ -553,6 +708,10 @@ class NewAssignmentText extends JPanel{
         add(field, gridBagConstraints);
     }
 
+    /**
+     * Getter method
+     * @return field
+     */
     TextField getField() {
         return field;
     }
@@ -566,6 +725,9 @@ class NewAssignmentText extends JPanel{
 
 class NewAssignmentCheckBox extends JPanel {
 
+    /**
+     * A checkbox for selecting a dog.
+     */
     private JCheckBox checkBox;
 
     /**

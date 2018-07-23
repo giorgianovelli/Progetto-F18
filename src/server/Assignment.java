@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This class provides all the information that an assignment has.
+ */
 public class Assignment {
 
     /**
@@ -119,7 +122,7 @@ public class Assignment {
 
     /**
      * Get a string corresponding to the list of dogs.
-     * @return the string corresponfing to the list of dogs.
+     * @return the string corresponding to the list of dogs.
      */
     public String printDogList() {
         String toReturn = "";

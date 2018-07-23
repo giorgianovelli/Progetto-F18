@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * In this class identifies the types of users with their respective credit card.
+ */
 public class BankUser {
 
     /**

@@ -1,5 +1,8 @@
 package server.places;
 
+/**
+ * This class contains all the data about an address.
+ */
 public class Address {
 
     /**

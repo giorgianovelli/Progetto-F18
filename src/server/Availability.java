@@ -6,7 +6,9 @@ package server;
 
 import server.dateTime.WorkingTime;
 import server.dateTime.WeekDays;
-
+/**
+ * This class shows the working time of the dog sitter.
+ */
 public class Availability {
 
     /**

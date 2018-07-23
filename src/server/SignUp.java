@@ -12,9 +12,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This class allows registration for new types of users.
+ */
 public class SignUp {
+    /**
+     * The number of days for a week.
+     */
     private final int NWEEKDAYS = 7;
 
+    /**
+     * This method contains all the parameters for a new registration as costumer.
+     * @return  false if the email is already used else
+     * @return true and update the database with the now costumer registration.
+     */
     public boolean customerSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
 
         if (!(checkCustomerEmail(email))){
@@ -28,8 +39,17 @@ public class SignUp {
         String strExpiration = dateFormat.format(paymentMethod.getExpirationDate());
 
         try {
-            dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + paymentMethod.getNumber() + "', '" + paymentMethod.getName() + "', '" + paymentMethod.getSurname() + "', '" + strExpiration + "', " + paymentMethod.getCvv() + ", " + paymentMethod.getAmount() + ");");
-            dbConnector.updateDB("INSERT INTO ADDRESS VALUES ('" + email + "', '" + address.getCountry() + "', '" + address.getCity() + "', '" + address.getStreet() + "', '" + address.getNumber() + "', '" + address.getCap() + "');");
+            if (!(checkIfPaymentMethodExists(paymentMethod.getNumber(), paymentMethod.getCvv()))){
+                dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + paymentMethod.getNumber() + "', '" + paymentMethod.getName() + "', '" + paymentMethod.getSurname() + "', '" + strExpiration + "', " + paymentMethod.getCvv() + ", " + paymentMethod.getAmount() + ");");
+            } else {
+                if (!(checkCvv(paymentMethod.getNumber(), paymentMethod.getCvv()))){
+                    return false;
+                }
+            }
+
+            if (checkCustomerEmail(email) && checkDogSitterEmail(email)){
+                dbConnector.updateDB("INSERT INTO ADDRESS VALUES ('" + email + "', '" + address.getCountry() + "', '" + address.getCity() + "', '" + address.getStreet() + "', '" + address.getNumber() + "', '" + address.getCap() + "');");
+            }
             dbConnector.updateDB("INSERT INTO CUSTOMERS VALUES ('" + email + "', '" + name + "', '" + surname + "', '" + password + "', '" + phoneNumber + "', '" + strBirth + "', '" + paymentMethod.getNumber() + "');");
             dbConnector.closeUpdate();
             return true;
@@ -39,6 +59,11 @@ public class SignUp {
         }
     }
 
+    /**
+     * This method contains all the parameters for a new registration as dogsitter.
+     * @return  false if the email is already used else
+     * @return true and update the database with the now dogsitter registration.
+     */
     public boolean dogSitterSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                                    Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
                                    String biography, Availability dateTimeAvailability, boolean acceptCash){
@@ -80,8 +105,15 @@ public class SignUp {
 
 
         try {
-            dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + paymentMethod.getNumber() + "', '" + paymentMethod.getName() + "', '" + paymentMethod.getSurname() + "', '" + strExpiration + "', '" + paymentMethod.getCvv() + "', " + paymentMethod.getAmount() + ");");
-            dbConnector.updateDB("INSERT INTO ADDRESS VALUES ('" + email + "', '" + address.getCountry() + "', '" + address.getCity() + "', '" + address.getStreet() + "', '" + address.getNumber() + "', '" + address.getCap() + "');");
+            if (!(checkIfPaymentMethodExists(paymentMethod.getNumber(), paymentMethod.getCvv()))){
+                dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + paymentMethod.getNumber() + "', '" + paymentMethod.getName() + "', '" + paymentMethod.getSurname() + "', '" + strExpiration + "', '" + paymentMethod.getCvv() + "', " + paymentMethod.getAmount() + ");");
+            } else if (!checkCvv(paymentMethod.getNumber(), paymentMethod.getCvv())){
+                return false;
+            }
+
+            if (checkCustomerEmail(email) && checkDogSitterEmail(email)){
+                dbConnector.updateDB("INSERT INTO ADDRESS VALUES ('" + email + "', '" + address.getCountry() + "', '" + address.getCity() + "', '" + address.getStreet() + "', '" + address.getNumber() + "', '" + address.getCap() + "');");
+            }
 
             dbConnector.updateDB("INSERT INTO DOGSITTERS VALUES ('" + email + "', '" + name + "', '" + surname + "', '" + password + "', '" + phoneNumber + "', '" + strBirth + "', '" + paymentMethod.getNumber() + "', " + acceptCash + ", " + dogsNumber + ", '" + biography + "');");
 
@@ -115,6 +147,11 @@ public class SignUp {
         }
     }
 
+    /**
+     * This method makes a check in the database about
+     * @param email of the costumer
+     * @return true if the e-mail is not in the database
+     */
     private boolean checkCustomerEmail(String email){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs;
@@ -132,6 +169,11 @@ public class SignUp {
         }
     }
 
+    /**
+     * This method makes a check in the database about
+     * @param email of the dogsitter
+     * @return true if the e-mail is not in the database
+     */
     private boolean checkDogSitterEmail(String email){
         DBConnector dbConnector = new DBConnector();
         ResultSet rs;
@@ -139,6 +181,41 @@ public class SignUp {
             rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS WHERE EMAIL = '" + email + "'");
             rs.last();
             if (rs.getRow() == 0){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean checkIfPaymentMethodExists(String number, String cvv){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs;
+        try {
+            rs = dbConnector.askDB("SELECT NUM FROM CREDIT_CARDS WHERE NUM = '" + number + "'");
+            rs.last();
+            if (rs.getRow() == 0){
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean checkCvv(String number, String cvvToVerify){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs;
+        try {
+            rs = dbConnector.askDB("SELECT CVV FROM CREDIT_CARDS WHERE NUM = '" + number + "'");
+            rs.next();
+            String cvv = rs.getString("CVV");
+            if (cvv.equals(cvvToVerify)){
                 return true;
             } else {
                 return false;

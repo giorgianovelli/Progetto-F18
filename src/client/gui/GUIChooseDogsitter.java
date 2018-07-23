@@ -12,22 +12,80 @@ import java.awt.event.WindowEvent;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This object is a GUI which is created when a customer fills the form for a new assignment
+ * and the search is completed succesfully.
+ */
 public class GUIChooseDogsitter extends JFrame {
+
+    /**
+     * The frame width.
+     */
     final int WIDTH = 800;
+
+    /**
+     * The frame height.
+     */
     final int HEIGHT = 600;
 
+    /**
+     * The most external panel.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * Panel that contains the close button.
+     */
     private JPanel panelClose = new JPanel(new BorderLayout());
+
+    /**
+     * Grid layout that will grow in size when there are more than one dogsitter available.
+     */
     private GridLayout gridLayout = new GridLayout(1,1,5,0);
+
+    /**
+     * ScrollPanel for scrolling.
+     */
     private JScrollPane panelScroll = new JScrollPane(panelOut);
+
+    /**
+     * Button that closes the GUI.
+     */
     private JButton buttonClose = new JButton("Close");
 
+    /**
+     * The list of dogsitters obtained from the search.
+     */
     private HashSet<String> dogsitterList;
+
+    /**
+     * The assignment starting date.
+     */
     private Date dateStartAssignment;
+
+    /**
+     * The assignment ending date.
+     */
     private Date dateEndAssignment;
+
+    /**
+     * Dogs selected for the assignment.
+     */
     private HashSet<Dog> selectedDogs;
+
+    /**
+     * Meeting point of the assignment.
+     */
     private Address meetingPoint;
+
+    /**
+     * Boolean for checking if payment method is Cash or Credit card.
+     */
     private boolean paymentInCash;
+
+    /**
+     * Email of the customer.
+     */
     private String emailCustomer;
 
     /**
