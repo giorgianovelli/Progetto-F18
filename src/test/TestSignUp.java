@@ -1,5 +1,6 @@
 package test;
 
+import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 import server.Availability;
 import server.DogSize;
@@ -59,11 +60,11 @@ public class TestSignUp {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //PaymentMethod paymentMethod = new PaymentMethod("1234567890987654", "NICOLAS", "CAROLO", expiration, 000, 1000);
-        PaymentMethod paymentMethod2 = new PaymentMethod("0987653267490924", "NICOLAS", "CAROLO", expiration, "111", 2000);
-        //CustomerProxy proxy = new CustomerProxy();
-        DogSitterProxy dsProxy = new DogSitterProxy();
-        //proxy.customerSignUp("NICOLAS.CAROLO@EMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod);
-        dsProxy.dogSitterSignUp("NICOLAS.DOGSITTER@EMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod2, area, dogSizes, 2, "Mi presento...", availability, false);
+        PaymentMethod paymentMethod = new PaymentMethod("1234567890987654", "NICOLAS", "CAROLO", expiration, "000", 1000);
+        //PaymentMethod paymentMethod2 = new PaymentMethod("0987653267490924", "NICOLAS", "CAROLO", expiration, "111", 2000);
+        CustomerProxy proxy = new CustomerProxy();
+        //DogSitterProxy dsProxy = new DogSitterProxy();
+        proxy.customerSignUp("RICCARDO.GIURA@GMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod);
+        //dsProxy.dogSitterSignUp("MARCO.CARTA2@GMAIL.COM", "NICOLAS", "CAROLO", "CIAOBELLO", "3337755000", birth, address, paymentMethod2, area, dogSizes, 2, "Mi presento...", availability, false);
     }
 }
