@@ -6,6 +6,7 @@ import server.dateTime.WorkingTime;
 import server.places.Address;
 import server.places.Area;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,10 +16,17 @@ public class SignUp {
     private final int NWEEKDAYS = 7;
 
     public boolean customerSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth, Address address, PaymentMethod paymentMethod){
+
+        if (!(checkCustomerEmail(email))){
+            System.out.println("Error: email address already used!");
+            return false;
+        }
+
         DBConnector dbConnector = new DBConnector();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strBirth = dateFormat.format(dateOfBirth);
         String strExpiration = dateFormat.format(paymentMethod.getExpirationDate());
+
         try {
             dbConnector.updateDB("INSERT INTO CREDIT_CARDS VALUES ('" + paymentMethod.getNumber() + "', '" + paymentMethod.getName() + "', '" + paymentMethod.getSurname() + "', '" + strExpiration + "', " + paymentMethod.getCvv() + ", " + paymentMethod.getAmount() + ");");
             dbConnector.updateDB("INSERT INTO ADDRESS VALUES ('" + email + "', '" + address.getCountry() + "', '" + address.getCity() + "', '" + address.getStreet() + "', '" + address.getNumber() + "', '" + address.getCap() + "');");
@@ -34,6 +42,12 @@ public class SignUp {
     public boolean dogSitterSignUp(String email, String name, String surname, String password, String phoneNumber, Date dateOfBirth,
                                    Address address, PaymentMethod paymentMethod, Area area, HashSet<DogSize> listDogSize, int dogsNumber,
                                    String biography, Availability dateTimeAvailability, boolean acceptCash){
+
+        if (!(checkDogSitterEmail(email))){
+            System.out.println("Error: email address already used!");
+            return false;
+        }
+
         int i;
         DBConnector dbConnector = new DBConnector();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,6 +109,40 @@ public class SignUp {
 
             dbConnector.closeUpdate();
             return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean checkCustomerEmail(String email){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs;
+        try {
+            rs = dbConnector.askDB("SELECT EMAIL FROM CUSTOMERS WHERE EMAIL = '" + email + "'");
+            rs.last();
+            if (rs.getRow() == 0){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean checkDogSitterEmail(String email){
+        DBConnector dbConnector = new DBConnector();
+        ResultSet rs;
+        try {
+            rs = dbConnector.askDB("SELECT EMAIL FROM DOGSITTERS WHERE EMAIL = '" + email + "'");
+            rs.last();
+            if (rs.getRow() == 0){
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
