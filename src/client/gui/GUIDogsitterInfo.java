@@ -13,51 +13,153 @@ import java.util.Map;
 
 public class GUIDogsitterInfo extends JFrame {
 
+    /**
+     * The frame width.
+     */
     final int WIDTH = 512;
+
+    /**
+     * The frame height.
+     */
     final int HEIGHT = 512;
 
-
+    /**
+     * This GUI object.
+     */
     private GUIDogsitterInfo guiDogsitterInfo;
 
-
+    /**
+     * The most external panel
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * The panel that displays the info of the dogsitter.
+     */
     private JPanel panelInfo = new JPanel();
+
+    /**
+     * The panel that displays the info and the biography if the dogsitter.
+     */
     private JPanel panelInfoBio  = new JPanel();
+
+    /**
+     * The panel that contains the name of the dogsitter.
+     */
     private JPanel panelName = new JPanel();
+
+    /**
+     * The panel that contains the surname of the dogsitter.
+     */
     private JPanel panelSurname = new JPanel();
+
+    /**
+     * The panel that contains the birthdate of the dogsitter.
+     */
     private JPanel panelBirth = new JPanel();
+
+    /**
+     * The panel that contains the average vote of the dogsitter.
+     */
     private JPanel panelAverage = new JPanel();
+
+    /**
+     * The panel that contains the biography of the dogsitter.
+     */
     private JPanel panelBio = new JPanel();
+
+    /**
+     * The panel that contains the reviews of the assignment.
+     */
     private JPanel panelReviews = new JPanel();
+
+    /**
+     * The panel that contains the close button.
+     */
     private JPanel panelClose = new JPanel();
+
+    /**
+     * GridLayout for the panel.
+     */
     private GridLayout gridLayout = new GridLayout(1,1);
 
+    /**
+     * ScrollPanel for scrolling.
+     */
     private JScrollPane scrollPane = new JScrollPane(panelOut);
 
-
+    /**
+     * Label that displays the name of the dogsitter.
+     */
     private JLabel labelName = new JLabel("Name: ");
+
+    /**
+     * Label that displays the surname of the dogsitter.
+     */
     private JLabel labelSurname = new JLabel("Surname: ");
+
+    /**
+     * Label that displays the birthdate of the dogsitter.
+     */
     private JLabel labelBirth = new JLabel("Birth date: ");
+
+    /**
+     * Label that displays the average vote of the dogsitter.
+     */
     private JLabel labelAverage = new JLabel("Average reviews: ");
+
+    /**
+     * Label that displays the biography of the dogsitter.
+     */
     private JLabel labelBio = new JLabel("\nBiography: ");
 
+    /**
+     * Label that displays the name of the dogsitter.
+     */
     private JLabel labelNameToBeFilled = new JLabel();
+
+    /**
+     * Label that displays the surname of the dogsitter.
+     */
     private JLabel labelSurnameToBeFilled = new JLabel();
+
+    /**
+     * Label that displays the birthdate of the dogsitter.
+     */
     private JLabel labelBirthToBeFilled = new JLabel();
+
+    /**
+     * Label that displays the average vote of the dogsitter.
+     */
     private JLabel labelAverageToBeFilled = new JLabel();
+
+    /**
+     * TextArea that displays the biography of the dogsitter.
+     */
     private JTextArea textBiography = new JTextArea();
 
+    /**
+     * Button for closing.
+     */
     private JButton buttonClose = new JButton("Close");
 
-
+    /**
+     * The dogsitter proxy.
+     */
     private DogSitterProxy dogSitterProxy;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    private SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
+    /**
+     * Simple date format for the date.
+     */
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+    /**
+     * Simple date format for date and hour.
+     */
+    private SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     /**
      * Constructor of GUIDogsitterInfo's class
-     *
      * @param mailDogsitter mail of the dogsitter
      */
 

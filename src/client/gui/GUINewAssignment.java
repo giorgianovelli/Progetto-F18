@@ -18,19 +18,52 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-
+/**
+ * This GUI object is the form for booking a new assignment.
+ *
+ */
 public class GUINewAssignment extends JFrame{
 
+    /**
+     * The frame's width.
+     */
     final int WIDTH = 800;
+
+    /**
+     * The frame's height.
+     */
     final int HEIGHT = 600;
 
     //Panels
 
+    /**
+     * The most external panel.
+     */
     private JPanel panelOut = new JPanel();
+
+    /**
+     * Panel that contains everything but the buttons.
+     */
     private JPanel panelNoButtons = new JPanel();
+
+    /**
+     * The panel box
+     */
     private JPanel panelBox = new JPanel();
+
+    /**
+     * The panel that contains the combobox.
+     */
     private JPanel panelCombo = new JPanel();
+
+    /**
+     * Panel that contains the addreess.
+     */
     private JPanel panelAddress = new JPanel();
+
+    /**
+     *
+     */
     private JPanel panelLabel = new JPanel();
     private JPanel panelLabel2 = new JPanel();
     private JPanel panelButtons = new JPanel();

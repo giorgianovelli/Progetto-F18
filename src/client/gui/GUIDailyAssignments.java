@@ -297,7 +297,7 @@ public class GUIDailyAssignments extends JFrame {
                                 int action = JOptionPane.showConfirmDialog(null, "Are you sure to cancel ?", "Conferm Actions", JOptionPane.YES_NO_OPTION);
                                 if (action == JOptionPane.YES_OPTION) {
                                     proxy.removeAssignment(todayAssigment.get(i).getCode()); //TODO funzionante e verificato
-                                    dispose();
+                                    guiDailyAssignments.dispatchEvent(new WindowEvent(guiDailyAssignments, WindowEvent.WINDOW_CLOSING));
                                 }
 
                             }
