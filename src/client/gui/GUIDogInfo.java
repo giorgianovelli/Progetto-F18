@@ -339,6 +339,7 @@ public class GUIDogInfo extends JFrame {
 
         if(n==0) {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid dog's weight", "", JOptionPane.ERROR_MESSAGE);
+            textWeight.setText("");
             return false;
 
         }else{
