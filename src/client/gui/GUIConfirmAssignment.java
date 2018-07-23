@@ -16,55 +16,207 @@ import java.util.Date;
 import java.util.HashSet;
 
  class GUIConfirmAssignment extends JFrame {
-    final int WIDTH = 512;
-    final int HEIGHT = 512;
-    private GUIConfirmAssignment guiConfirmAssignment;
+     /**
+      * The frame width.
+      */
+     final int WIDTH = 512;
 
+     /**
+      * The frame height.
+      */
+     final int HEIGHT = 512;
+
+     /**
+      * This GUI object.
+       */
+     private GUIConfirmAssignment guiConfirmAssignment;
+
+     /**
+      * The most external panel.
+      */
     private JPanel panelOut = new JPanel();
+
+     /**
+      * Panel that contains the buttons.
+      */
     private JPanel panelButtons = new JPanel();
+
+     /**
+      * Gridlayout that will grow in size.
+      */
     private GridLayout gridLayout2 = new GridLayout(1, 1);
+
+     /**
+      * Default GridLayout for the panels.
+      */
     private GridLayout gridLayout = new GridLayout(1, 2);
+
+     /**
+      * Panel that displays the doglist.
+      */
     private JPanel panelDogs = new JPanel(gridLayout2);
+
+     /**
+      * GridLayout for the panelAssignmentData.
+      */
     private GridLayout gridLayout3 = new GridLayout(6, 2, 0, 10);
+
+     /**
+      * Panel that displays the data.
+      */
     private JPanel panelAssignmentData = new JPanel(gridLayout3);
+
+     /**
+      * ScrollPanel for scrolling.
+      */
     private JScrollPane scrollPane = new JScrollPane(panelOut);
 
+     /**
+      * Panel that displays starting date.
+      */
     private JPanel panelStartDate = new JPanel(gridLayout);
+
+     /**
+      * Panel containg the assignment's ending date.
+      */
     private JPanel panelEndDate = new JPanel(gridLayout);
+
+     /**
+      * Panel containg the assignment's dogsttier.
+      */
     private JPanel panelDogsitter = new JPanel(gridLayout);
+
+     /**
+      * Panel containg the assignment's meeting point.
+      */
     private JPanel panelMeetingPoint = new JPanel(gridLayout);
-    private JPanel panelAmount = new JPanel(gridLayout);
+
+     /**
+      * Panel containg the assignment's amount.
+      */
+     private JPanel panelAmount = new JPanel(gridLayout);
+
+     /**
+      * Panel containg the assignment's amount.
+      */
     private JPanel panelPaymentMethod = new JPanel(gridLayout);
 
 
-    private JLabel labelStartDate1 = new JLabel("Start Date: ");
-    private JLabel labelEndDate1 = new JLabel("End Date: ");
-    private JLabel labelDogsitter1 = new JLabel("Dogsitter: ");
-    private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ");
-    private JLabel labelAmount1 = new JLabel("Amount: ");
-    private JLabel labelPaymentMethod1 = new JLabel("Paymenth Method: ");
+     /**
+      * Label that permanently displays "Start Date:"
+      */
+     private JLabel labelStartDate1 = new JLabel("Start Date: ");
+
+     /**
+      * Label that permanently displays "End Date:"
+      */
+     private JLabel labelEndDate1 = new JLabel("End Date: ");
+
+     /**
+      * Label that permanently displays "Dogsitter:"
+      */
+     private JLabel labelDogsitter1 = new JLabel("Dogsitter: ");
 
 
-    private JLabel labelStartDate2 = new JLabel();
-    private JLabel labelEndDate2 = new JLabel();
-    private JLabel labelDogsitter2 = new JLabel();
-    private JLabel labelMeetingPoint2 = new JLabel();
-    private JLabel labelAmount2 = new JLabel();
-    private JLabel labelPaymentMethod2 = new JLabel();
+     /**
+      * Label that permanently displays "Meeting Point:"
+      */
+     private JLabel labelMeetingPoint1 = new JLabel("Meeting Point: ");
 
+     /**
+      * Label that permanently displays "Amount:"
+      */
+     private JLabel labelAmount1 = new JLabel("Amount: ");
+
+     /**
+      * Label that permanently displays "Payment Method:"
+      */
+     private JLabel labelPaymentMethod1 = new JLabel("Payment Method: ");
+
+
+     /**
+      * Label that displays the assignment's starting date.
+      */
+     private JLabel labelStartDate2 = new JLabel();
+
+     /**
+      * Label that displays the assignment's enduing date.
+      */
+     private JLabel labelEndDate2 = new JLabel();
+
+     /**
+      * Label that displays the assignment's dogsitter.
+      */
+     private JLabel labelDogsitter2 = new JLabel();
+
+     /**
+      * Label that displays the assignment's meeting point.
+      */
+     private JLabel labelMeetingPoint2 = new JLabel();
+
+     /**
+      * Label that displays the assignment's amount.
+      */
+     private JLabel labelAmount2 = new JLabel();
+
+     /**
+      * Label that displays the assignment's payment method.
+      */
+     private JLabel labelPaymentMethod2 = new JLabel();
+
+     /**
+      * Button for closing the GUI.
+      */
     private JButton buttonCancel = new JButton("Cancel");
+
+     /**
+      * Button for confirming the assignment.
+      */
     private JButton buttonConfirm = new JButton("Confirm");
 
-
+     /**
+      * Frame that appears when you complete the assignment.
+      */
     private JFrame success = new JFrame();
 
+     /**
+      * Mail of the dogsitter.
+      */
     private String mailDogsitter;
+
+     /**
+      * Starting date of the assignment.
+      */
     private Date dateStartAssignment;
+
+     /**
+      * Ending date of the assignment.
+      */
     private Date dateEndAssignment;
+
+     /**
+      * List of the selected dogs.
+      */
     private HashSet<Dog> dogsSelected;
+
+     /**
+      * Meeting point of the assignment.
+      */
     private Address meetingPoint;
+
+     /**
+      * The customer proxy.
+      */
     private CustomerProxy customerProxy;
+
+     /**
+      * The dogsitter proxy.
+      */
     private DogSitterProxy dogSitterProxy;
+
+     /**
+      * Boolean for checking if the payment method is "cash" or "credit card".
+      */
     private boolean paymentMethod;
 
 
