@@ -17,8 +17,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * This class allow the Customer to write a review
- * and also show the list of assignment and their state.
+ * This class allows the Customer to write a review
+ * and also shows the list of assignment and their state.
  */
 public class GUIListAssignments extends JFrame{
 
