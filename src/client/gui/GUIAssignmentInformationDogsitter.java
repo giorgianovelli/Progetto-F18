@@ -2,6 +2,7 @@ package client.gui;
 
 import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
+import enumeration.AssignmentState;
 import server.Assignment;
 import server.Dog;
 import server.Review;
@@ -393,7 +394,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int action = (JOptionPane.showConfirmDialog(null, "Confirm assignment?", "Confirm", JOptionPane.YES_NO_OPTION));
                 if (action == JOptionPane.YES_OPTION) {
-                    dogSitterProxy.updateAssignmentState(assignment.getCode(), true);
+                    dogSitterProxy.updateAssignmentState(assignment.getCode(), AssignmentState.CONFIRMED);
                     if (!(guiDailyAssignmentDogsitter == null)) {
                         guiDailyAssignmentDogsitter.dispatchEvent(new WindowEvent(guiDailyAssignmentDogsitter, WindowEvent.WINDOW_CLOSING));
                         guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
@@ -413,7 +414,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int action = (JOptionPane.showConfirmDialog(null, "Delete assignment?","Delete",JOptionPane.YES_NO_OPTION));
                 if (action == JOptionPane.YES_OPTION) {
-                    dogSitterProxy.updateAssignmentState(assignment.getCode(), false);
+                    dogSitterProxy.updateAssignmentState(assignment.getCode(), AssignmentState.DELETED);
                     if (!(guiDailyAssignmentDogsitter == null)) {
                         guiDailyAssignmentDogsitter.dispatchEvent(new WindowEvent(guiDailyAssignmentDogsitter, WindowEvent.WINDOW_CLOSING));
                         guiAssignmentInformationDogsitter.dispatchEvent(new WindowEvent(guiAssignmentInformationDogsitter, WindowEvent.WINDOW_CLOSING));
@@ -431,7 +432,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
 
         buttonConfirm.addActionListener(actionListener1);
         buttonDelete.addActionListener(actionListener2);
-        if (assignment.getState() == null) {
+        if (assignment.getState().equals(AssignmentState.WAITING)) {
             buttonDelete.setEnabled(true);
             buttonConfirm.setEnabled(true);
         } else {
@@ -443,13 +444,21 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
 
-        if (assignment.getState() == null) {
+        if (assignment.getState().equals(AssignmentState.WAITING)) {
+            labelState2.setText("To be confirmed");
+        } else if (assignment.getState().equals(AssignmentState.DELETED)) {
+            labelState2.setText("Deleted");
+        } else {
+            labelState2.setText("Confirmed");
+        }
+
+        /*if (assignment.getState() == null) {
             labelState2.setText("To be confirmed");
         } else if (!assignment.getState()) {
             labelState2.setText("Deleted");
         } else {
             labelState2.setText("Confirmed");
-        }
+        }*/
 
 
 

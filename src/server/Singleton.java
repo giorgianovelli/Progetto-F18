@@ -1,6 +1,7 @@
 package server;
 
 import database.DBConnector;
+import enumeration.AssignmentState;
 import server.bank.PaymentMethod;
 import server.dateTime.WeekDays;
 import server.dateTime.WorkingTime;
@@ -428,15 +429,17 @@ public class Singleton {
         HashMap<Integer, Assignment> assignmentList = new HashMap<>();
         while (rs.next()){
             int code = rs.getInt("CODE");
-            Boolean state;
             String strState = rs.getString("CONFIRMATION");
-            if (strState.equals("TRUE")){
+
+            AssignmentState state = AssignmentState.valueOf(strState);
+
+            /*if (strState.equals("TRUE")){
                 state = true;
             } else if (strState.equals("FALSE")){
                 state = false;
             } else {
                 state = null;
-            }
+            }*/
             Date dateStart = rs.getTimestamp("DATE_START");
             Date dateEnd = rs.getTimestamp("DATE_END");
             Address meetingPoint = getMeetingPointFromDB(code);

@@ -1,5 +1,6 @@
 package interfaces;
 
+import enumeration.AssignmentState;
 import server.Assignment;
 import server.Availability;
 import server.DogSize;
@@ -146,7 +147,7 @@ public interface InterfaceDogSitter {
      * @param state new state of the Assignment.
      * @return true if the update is successfully performed.
      */
-    boolean updateAssignmentState(int code, Boolean state);
+    boolean updateAssignmentState(int code, AssignmentState state);
 
     /**
      * Add a new city in which dog sitter works.

@@ -5,6 +5,7 @@
 package server;
 
 import database.DBConnector;
+import enumeration.AssignmentState;
 import interfaces.InterfaceDogSitter;
 import server.bank.Bank;
 import server.bank.PaymentMethod;
@@ -472,7 +473,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
      * @param state the new state of the assignment.
      * @return true if the update is successfully performed.
      */
-    public boolean updateAssignmentState(int code, Boolean state){
+    public boolean updateAssignmentState(int code, AssignmentState state){
         DBConnector dbConnector = new DBConnector();
 
         String strState;
@@ -492,7 +493,7 @@ public class DogSitter extends User implements InterfaceDogSitter {
                     assignmentList.get(code).setState(null);
                 } else {
                     assignmentList.get(code).setState(state);
-                    if (state == false){
+                    if (state == AssignmentState.DELETED){
                         if (!refundCustomer(code)){
                            return false;
                         }

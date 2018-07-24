@@ -82,7 +82,6 @@ public class Customer extends User implements InterfaceCustomer{
      * @param paymentInCash true if customer will pay dog sitter in cash
      * @return true if assignment is successfully confirmed.
      */
-    //TODO refactor
     public boolean addAssignment(String emailDogSitter, Date dateStartAssignment, Date dateEndAssignment, HashSet<Dog> selectedDogs, Address meetingPoint, boolean paymentInCash) {
         //chiamata alla classe banca per effettuare la transazione
         DBConnector dbConnector = new DBConnector();
@@ -114,7 +113,7 @@ public class Customer extends User implements InterfaceCustomer{
             //salva la prenotazione nel database
 
             try {
-                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', 'NULL', '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
+                dbConnector.updateDB("INSERT INTO ASSIGNMENT VALUES (" + code + ", '" + email + "', '" + emailDogSitter + "', 'WAITING', '" + dateStringStartAssigment + "', '" + dateStringEndAssigment + "')");
                 dbConnector.updateDB("INSERT INTO MEETING_POINT VALUES (" + code + ", '" + meetingPoint.getCountry() + "', '" + meetingPoint.getCity() + "', '" + meetingPoint.getStreet() + "', '" + meetingPoint.getCap() + "', '" + meetingPoint.getCap() + "')");
                 for (Dog d : selectedDogs) {
                     dbConnector.updateDB("INSERT INTO DOG_ASSIGNMENT VALUES (" + code + ", " + d.getID() + ")");

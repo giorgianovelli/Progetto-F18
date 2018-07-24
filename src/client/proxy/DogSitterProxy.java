@@ -6,6 +6,7 @@
 
 package client.proxy;
 
+import enumeration.AssignmentState;
 import interfaces.InterfaceDogSitter;
 import server.*;
 import server.bank.PaymentMethod;
@@ -299,7 +300,7 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
      * @param state new state of the Assignment.
      * @return true if the update is successfully performed.
      */
-    public boolean updateAssignmentState(int code, Boolean state){
+    public boolean updateAssignmentState(int code, AssignmentState state){
         String serverMsg = getReply("DOGSITTER#UPDATEASSIGNMENTSTATE#" + email + "#" + code + "#" + state);
         if (serverMsg.equals("true")) {
             return true;

@@ -467,15 +467,15 @@ public enum ExecDogSitterEnum {
             String email = tokenMsg.nextToken();
             int code = Integer.parseInt(tokenMsg.nextToken());
             String strState = tokenMsg.nextToken();
-            Boolean state;
+            AssignmentState state = AssignmentState.valueOf(strState);
 
-            if (strState.equals("true")){
+            /*if (strState.equals("true")){
                 state = true;
             } else if (strState.equals("false")){
                 state = false;
             } else {
                 state = null;
-            }
+            }*/
 
             Singleton singleton = new Singleton();
             DogSitter dogSitter = singleton.createDogSitterFromDB(email);

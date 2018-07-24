@@ -1,5 +1,6 @@
 package server;
 
+import enumeration.AssignmentState;
 import server.places.Address;
 
 import java.text.ParseException;
@@ -37,7 +38,7 @@ public class Assignment {
      * null if it is not already confirmed,
      * false if it is rejected by the dog sitter.
      */
-    private Boolean state;
+    private AssignmentState state;
 
     /**
      * The place where customer and dog sitter will meet.
@@ -58,7 +59,7 @@ public class Assignment {
         this.dogList = dogList;      //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
-        this.state = true;
+        this.state = AssignmentState.CONFIRMED;
         this.meetingPoint = meetingPoint;
     }
 
@@ -71,7 +72,7 @@ public class Assignment {
      * @param dateEnd the assignment's end.
      * @param meetingPoint the place where customer and dog sitter will meet.
      */
-    public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, Boolean state, Address meetingPoint) {
+    public Assignment(int code, HashSet<Dog> dogList, Date dateStart, Date dateEnd, AssignmentState state, Address meetingPoint) {
         this.code = code;
         this.dogList = dogList;      //Sostituire tipo String con tipo server.Dog quando sarà disponibile la classe
         this.dateStart = dateStart;
@@ -201,7 +202,7 @@ public class Assignment {
      * Get the assignment's state.
      * @return the assignment's state.
      */
-    public Boolean getState() {
+    public AssignmentState getState() {
         return state;
     }
 
@@ -219,7 +220,7 @@ public class Assignment {
      * Set the assignment's state.
      * @param state the assignment's state.
      */
-    public void setState(Boolean state) {
+    public void setState(AssignmentState state) {
         this.state = state;
     }
 }

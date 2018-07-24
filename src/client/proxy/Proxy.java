@@ -5,6 +5,7 @@
 
 package client.proxy;
 
+import enumeration.AssignmentState;
 import server.Assignment;
 import server.Dog;
 import server.DogSize;
@@ -142,15 +143,15 @@ public abstract class Proxy {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Boolean state;
             String strState = tokenMsg.nextToken();
-            if (strState.equals("true")) {
+            AssignmentState state = AssignmentState.valueOf(strState);
+            /*if (strState.equals("true")) {
                 state = true;
             } else if (strState.equals("false")) {
                 state = false;
             } else {
                 state = null;
-            }
+            }*/
             Address meetingPoint = decodeMeetingPoint(tokenMsg.nextToken());
             Assignment a = new Assignment(code, dogList, dateStart, dateEnd, state, meetingPoint);
             assignmentList.put(code, a);

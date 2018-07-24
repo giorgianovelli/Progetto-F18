@@ -2,6 +2,7 @@ package client.gui;
 
 import client.proxy.CustomerProxy;
 //import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ; che è sta roba?? dà errore @Riccardo
+import enumeration.AssignmentState;
 import server.Assignment;
 import server.Review;
 import client.clientEnumerations.CalendarState;
@@ -403,7 +404,7 @@ public class GUIListAssignments extends JFrame{
         ImageIcon yellow = transformImage(new ImageIcon("images/yellow.jpg"), 30, 30);
         ImageIcon red = transformImage(new ImageIcon("images/red-180x180.png"), 30, 30);
 
-        Boolean state = a.getState();
+        AssignmentState state = a.getState();
 
         JLabel label = new JLabel(yellow);
 
@@ -412,10 +413,10 @@ public class GUIListAssignments extends JFrame{
             label = new JLabel(gray);
 
         }
-        else if (state == Boolean.TRUE){
+        else if (state == AssignmentState.CONFIRMED){
             label = new JLabel(green);
 
-        }else if (state == Boolean.FALSE){
+        }else if (state == AssignmentState.DELETED){
             label = new JLabel(red);
 
         }

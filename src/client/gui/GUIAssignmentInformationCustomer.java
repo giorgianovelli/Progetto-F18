@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
+import enumeration.AssignmentState;
 import server.Assignment;
 import server.Dog;
 import server.Review;
@@ -373,13 +374,20 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelState.add(labelState);
         panelState.add(labelState2);
 
-        if (a.getState() == null) {
+        if (a.getState() == AssignmentState.WAITING) {
+            labelState2.setText("To be confirmed by the dogsitter");
+        } else if (a.getState() == AssignmentState.CONFIRMED) {
+            labelState2.setText("Confirmed");
+        } else {
+            labelState2.setText("Deleted");
+        }
+        /*if (a.getState() == null) {
             labelState2.setText("To be confirmed by the dogsitter");
         } else if (a.getState()) {
             labelState2.setText("Confirmed");
         } else {
             labelState2.setText("Deleted");
-        }
+        }*/
 
         panelButtonReview.add(buttonReview);
         panelReview.add(labelReview, BorderLayout.WEST);
@@ -451,7 +459,10 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         // Creazione e passaggio JLabel per i cani
 
         if (!(a.getState() == null)) {
-            if (!a.getState() && !strPayment.equals("Cash")) {
+            /*if (!a.getState() && !strPayment.equals("Cash")) {
+                labelPaymentMethod2.setText("Refunded");
+            }*/
+            if (!(a.getState().equals(AssignmentState.CONFIRMED)) && !strPayment.equals("Cash")) {
                 labelPaymentMethod2.setText("Refunded");
             }
         }
