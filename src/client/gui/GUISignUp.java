@@ -34,82 +34,82 @@ public class GUISignUp extends JFrame {
     private GUISignUp guiSignUp;
     private GUILogin guiLogin;
 
-    private JPanel panelOut = new JPanel();
-    private JPanel panelData = new JPanel();
-    private JPanel panelButton = new JPanel();
-    private JPanel panelDate = new JPanel();
-    private JPanel panelAddress = new JPanel();
-    private JPanel panelExpiration = new JPanel();
-    private JPanel panelPayment = new JPanel();
+    protected JPanel panelOut = new JPanel();
+    protected JPanel panelData = new JPanel();
+    protected JPanel panelButton = new JPanel();
+    protected JPanel panelDate = new JPanel();
+    protected JPanel panelAddress = new JPanel();
+    protected JPanel panelExpiration = new JPanel();
+    protected JPanel panelPayment = new JPanel();
 
-    private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
-    private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
-    private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
-    private JLabel labelEmail = new JLabel("Email:", SwingConstants.LEFT);
-    private JLabel labelPassword = new JLabel("Password:", SwingConstants.LEFT);
-    private JLabel labelConfirmPassword = new JLabel("Confirm Password:", SwingConstants.LEFT);
-    private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
-    private JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
-    private JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
-    private JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
-    private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
+    protected JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
+    protected JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
+    protected JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
+    protected JLabel labelEmail = new JLabel("Email:", SwingConstants.LEFT);
+    protected JLabel labelPassword = new JLabel("Password:", SwingConstants.LEFT);
+    protected JLabel labelConfirmPassword = new JLabel("Confirm Password:", SwingConstants.LEFT);
+    protected JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
+    protected JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
+    protected JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
+    protected JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
+    protected JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
 
-    private JTextField textName = new JTextField();
-    private JTextField textSurname = new JTextField();
-    private JTextField textEmail = new JTextField();
-    private JPasswordField textPassword = new JPasswordField();
-    private JPasswordField textConfirmPassword = new JPasswordField();
-    private JTextField textStreet = new JTextField();
-    private JTextField textStreetNumber = new JTextField();
-    private JTextField textCity = new JTextField();
-    private JTextField textCountry = new JTextField();
-    private JTextField textCap = new JTextField();
-    private JTextField textPhoneNumber = new JTextField();
+    protected JTextField textName = new JTextField();
+    protected JTextField textSurname = new JTextField();
+    protected JTextField textEmail = new JTextField();
+    protected JPasswordField textPassword = new JPasswordField();
+    protected JPasswordField textConfirmPassword = new JPasswordField();
+    protected JTextField textStreet = new JTextField();
+    protected JTextField textStreetNumber = new JTextField();
+    protected JTextField textCity = new JTextField();
+    protected JTextField textCountry = new JTextField();
+    protected JTextField textCap = new JTextField();
+    protected JTextField textPhoneNumber = new JTextField();
 
-    private String Password;
-    private String confirmPassword;
+    protected String Password;
+    protected String confirmPassword;
 
-    private JButton buttonCustomerConfirm = new JButton("Next");
-    private JButton buttonCancel = new JButton("Cancel");
+    protected JButton buttonCustomerConfirm = new JButton("Next");
+    protected JButton buttonCancel = new JButton("Cancel");
 
 
-    private JComboBox<String> dayList;
-    private JComboBox<String> monthList;
-    private JComboBox<String> yearList;
+    protected JComboBox<String> dayList;
+    protected JComboBox<String> monthList;
+    protected JComboBox<String> yearList;
 
-    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
-    private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private ArrayList<String> years_tmp = new ArrayList<>();
+    protected String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    protected String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    protected ArrayList<String> years_tmp = new ArrayList<>();
 
     // valori per payment method
 
-    private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
-    private JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
-    private JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT);
-    private JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
-    private JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
+    protected JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
+    protected JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
+    protected JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT);
+    protected JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
+    protected JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
 
-    private JTextField textCreditCardOwneSurname = new JTextField();
-    private JTextField textCreditCardOwnerName = new JTextField();
-    private JTextField textCreditCardNumber = new JTextField();
+    protected JTextField textCreditCardOwneSurname = new JTextField();
+    protected JTextField textCreditCardOwnerName = new JTextField();
+    protected JTextField textCreditCardNumber = new JTextField();
 
-    private JComboBox<String> expirationMonth;
-    private JComboBox<String> expirationYear;
-    private JTextField textSecurityCode = new JTextField();
+    protected JComboBox<String> expirationMonth;
+    protected JComboBox<String> expirationYear;
+    protected JTextField textSecurityCode = new JTextField();
 
-    private String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
-    private JTextField textExpirationDays = new JTextField();
+    protected String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+    protected JTextField textExpirationDays = new JTextField();
 
 
     // attributo per client-server
     private CustomerProxy proxy;
+    private String inputEmail;
 
 
 
     /**
      * Constructor
-     * @param guiLogin
      */
 
     public GUISignUp(GUILogin guiLogin) {
@@ -119,7 +119,7 @@ public class GUISignUp extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-        proxy = new CustomerProxy(textEmail.getText());
+
         this.guiLogin = guiLogin;
         guiLogin.setEnabled(false);
         guiSignUp = this;
@@ -143,8 +143,9 @@ public class GUISignUp extends JFrame {
      * inizializza le componenti dell'interfaccia
      */
 
-    private void initComponents() {
+    protected void initComponents() {
 
+        proxy = new CustomerProxy(textEmail.getText());
         /**
          * Panels
          */
@@ -213,6 +214,7 @@ public class GUISignUp extends JFrame {
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
 
+
         /**
          *   PAYMENT panels
          */
@@ -232,6 +234,11 @@ public class GUISignUp extends JFrame {
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
+        textExpirationDays.setEditable(false);
+        labelExpirationDate.setLabelFor(textExpirationDays);
+
+
+
 
         /**
          * PANEL DI EXPIRATION DATE per sistemare le jcombobox
@@ -239,6 +246,7 @@ public class GUISignUp extends JFrame {
          */
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
+        panelExpiration.add(textExpirationDays);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelPayment.add(panelExpiration);
@@ -266,6 +274,8 @@ public class GUISignUp extends JFrame {
                     confirmPassword = "";
                     Password = readPassword(textPassword.getPassword());
                     confirmPassword = readPassword(textConfirmPassword.getPassword());
+                    // boolean add = addCustomerValues();
+
 
                     if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
                             textEmail.getText().equals("") || Password == "" || confirmPassword == "" || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
@@ -276,7 +286,7 @@ public class GUISignUp extends JFrame {
                         checkAddCustomerValues();
                     }
                 }
-
+                // }
             }
         };
         buttonCancel.addActionListener(e -> guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING)));
@@ -284,12 +294,11 @@ public class GUISignUp extends JFrame {
 
     }
 
-
     /**
      * metodo per inserire le tuple nel database
      */
 
-    private boolean addCustomerValues() {
+    protected boolean addCustomerValues() {
         /**
          *  data di nascita
          */
@@ -348,7 +357,7 @@ public class GUISignUp extends JFrame {
     }
 
 
-    private void checkAddCustomerValues() {
+    protected void checkAddCustomerValues() {
 
         boolean inputPassword = changePasswordFields(Password, confirmPassword);
         boolean inputCap = checkCapNumber(textCap.getText());
@@ -367,16 +376,24 @@ public class GUISignUp extends JFrame {
                     GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
                     guiCustomerLabel.setVisible(true);
                     guiSignUp.setVisible(false);
-
+                    //return true;
                 }
 
                 else {
                     JOptionPane.showMessageDialog(new JFrame(), "ERROR! Email address already used!", "", JOptionPane.ERROR_MESSAGE);
+                    //return false;
+
                 }
+
+
             }
         }
-    }
 
+
+        // JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
+
+        //return false;
+    }
 
 
 
@@ -386,7 +403,7 @@ public class GUISignUp extends JFrame {
      * @return true se corretta false altrimenti
      */
 
-    private boolean checkEmail (String email) {
+    protected boolean checkEmail (String email) {
 
         String expression = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
 
@@ -396,7 +413,7 @@ public class GUISignUp extends JFrame {
         boolean matchFound = m.matches();
 
         if (matchFound) {
-            // JOptionPane.showMessageDialog(new JFrame(), "Syntax of the email is correct", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "Syntax of the email is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Email", "", JOptionPane.ERROR_MESSAGE);
@@ -414,7 +431,7 @@ public class GUISignUp extends JFrame {
      * @return stringa che contiene la password letta
      */
 
-    private String readPassword(char[] password) {
+    protected String readPassword(char[] password) {
         String pwd = "";
         for (int i = 0; i < password.length; i++) {
             pwd += password[i];
@@ -430,11 +447,11 @@ public class GUISignUp extends JFrame {
      * @return true se le due password coincidono false altrimenti
      */
 
-    public boolean changePasswordFields(String Password, String confirmPassword) {
+    protected boolean changePasswordFields(String Password, String confirmPassword) {
         boolean updatePassword;
 
         if (Password.equals(confirmPassword)) {
-          //  JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
             updatePassword = true;
 
 
@@ -458,7 +475,7 @@ public class GUISignUp extends JFrame {
      * @return
      */
 
-    private boolean checkNumber (String number){
+    protected boolean checkNumber (String number){
         long n=0;
 
         try{
@@ -467,7 +484,7 @@ public class GUISignUp extends JFrame {
         }catch(NumberFormatException e){}
 
         if(n==0) {
-            // JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid number", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid number", "", JOptionPane.ERROR_MESSAGE);
             return false;
 
         }else{
@@ -484,7 +501,7 @@ public class GUISignUp extends JFrame {
      */
 
 
-    private boolean checkCapNumber(String capNumber) {
+    protected boolean checkCapNumber(String capNumber) {
         int digits = capNumber.length();
 
         if ((digits <= 5)) {
@@ -504,7 +521,7 @@ public class GUISignUp extends JFrame {
      * @param addressNumber
      * @return
      */
-    private boolean checkAddressNumber(String addressNumber) {
+    protected boolean checkAddressNumber(String addressNumber) {
         int digits = addressNumber.length();
 
         if ((digits < 5) ) {
@@ -524,7 +541,7 @@ public class GUISignUp extends JFrame {
      * @param phoneNumber
      * @return
      */
-    private boolean checkPhoneNumber(String phoneNumber) {
+    protected boolean checkPhoneNumber(String phoneNumber) {
         boolean number = checkNumber(phoneNumber);
 
         int digits = phoneNumber.length();
@@ -533,7 +550,7 @@ public class GUISignUp extends JFrame {
             // JOptionPane.showMessageDialog(new JFrame(), "syntax of phone number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number\n Please enter 10 digits", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number", "", JOptionPane.ERROR_MESSAGE);
             textPhoneNumber.setText("");
             return false;
         }
@@ -547,7 +564,7 @@ public class GUISignUp extends JFrame {
      * @return
      */
 
-    private boolean checkCreditCardNumber(String crediCardNumber) {
+    protected boolean checkCreditCardNumber(String crediCardNumber) {
         boolean number = checkNumber(crediCardNumber);
 
         int digits = crediCardNumber.length();
@@ -556,7 +573,7 @@ public class GUISignUp extends JFrame {
             //  JOptionPane.showMessageDialog(new JFrame(), "syntax of Credit card number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number\n Please enter 16 digits ", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number ", "", JOptionPane.ERROR_MESSAGE);
             textCreditCardNumber.setText("");
             return false;
         }
@@ -573,7 +590,7 @@ public class GUISignUp extends JFrame {
      */
 
 
-    private Date buildDate(String day, String month, String year) {
+    protected Date buildDate(String day, String month, String year) {
 
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -592,7 +609,7 @@ public class GUISignUp extends JFrame {
      * implementa la data di scadenza della carta di credito
      * @return data di scadenza
      */
-    private Date getNewExpirationDate() {
+    protected Date getNewExpirationDate() {
         Date exYear = new Date();
         Date inputDate;
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
@@ -619,7 +636,7 @@ public class GUISignUp extends JFrame {
      * @param date data che viene controllata
      * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
      */
-    private boolean dateBeforeToday(Date date) {
+    protected boolean dateBeforeToday(Date date) {
         Date todayDate = new Date(System.currentTimeMillis());
 
         if (date.before(todayDate)) {
@@ -639,7 +656,7 @@ public class GUISignUp extends JFrame {
      * @return
      */
 
-    private boolean checkCvvNumber(String cvvNumber) {
+    protected boolean checkCvvNumber(String cvvNumber) {
         boolean number = checkNumber(cvvNumber);
 
         int digits = cvvNumber.length();
