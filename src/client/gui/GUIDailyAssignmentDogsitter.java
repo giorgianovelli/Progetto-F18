@@ -3,6 +3,7 @@ package client.gui;
 
 import client.proxy.DogSitterProxy;
 import client.clientEnumerations.CalendarState;
+import enumeration.AssignmentState;
 import server.Assignment;
 
 import javax.swing.*;
@@ -105,9 +106,12 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
             }
 
 
-            labelDescription = new JLabel[todayAssigment.size()];
+
+
+
+            /*labelDescription = new JLabel[todayAssigment.size()];
             button = new JButton[todayAssigment.size()];
-            infoPanel = new JPanel[todayAssigment.size()];
+            infoPanel = new JPanel[todayAssigment.size()];*/
 
 
             if (todayAssigment.isEmpty()) {
@@ -118,29 +122,46 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
             } else {
 
-                int j = 0;
+                HashMap<Integer, Assignment> assignmentHashMap = assignmentToCancel(todayAssigment);
 
-                for (Map.Entry<Integer, Assignment> entry : todayAssigment.entrySet()) {
-                    Assignment a = null;
-                    String labelString = "";
-                    a = entry.getValue();
-                    String nameCostumer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
-                    String surnameCostumer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
-                    labelString = "<html>" + "Assignment with " + nameCostumer + " " + surnameCostumer + "</html>";
+                if (assignmentHashMap.isEmpty()) {
+                    lb = new JLabel(" There aren't assignments today ", SwingConstants.CENTER);
 
+                    p.add(lb);
+                } else {
 
-                    labelDescription[j] = new JLabel(labelString);
-                    button[j] = new JButton("More info");
-                    System.out.println(entry.getValue());
-                    System.out.println(email);
-                    button[j].addActionListener(e -> new GUIAssignmentInformationDogsitter(entry.getValue(), email, guiDailyAssignmentDogsitter).setVisible(true));
+                    labelDescription = new JLabel[assignmentHashMap.size()];
+                    button = new JButton[assignmentHashMap.size()];
+                    infoPanel = new JPanel[assignmentHashMap.size()];
+                    int j = 0;
 
 
-                    createPanelOrder(j);
-                    gridLayout.setRows(gridLayout.getRows() + 1);
-                    j++;
+                    for (Map.Entry<Integer, Assignment> entry : assignmentHashMap.entrySet()) {
 
 
+                        Assignment a = null;
+                        String labelString = "";
+                        a = entry.getValue();
+
+
+                        String nameCostumer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
+                        String surnameCostumer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
+                        labelString = "<html>" + "Assignment with " + nameCostumer + " " + surnameCostumer + "</html>";
+
+
+                        labelDescription[j] = new JLabel(labelString);
+                        button[j] = new JButton("More info");
+                        System.out.println(entry.getValue());
+                        System.out.println(email);
+                        button[j].addActionListener(e -> new GUIAssignmentInformationDogsitter(entry.getValue(), email, guiDailyAssignmentDogsitter).setVisible(true));
+
+
+                        createPanelOrder(j);
+                        gridLayout.setRows(gridLayout.getRows() + 1);
+                        j++;
+
+
+                    }
                 }
             }
             scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -148,6 +169,18 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
         }
 
+    }
+
+    private HashMap<Integer, Assignment> assignmentToCancel(HashMap<Integer, Assignment> listAssignment){
+        HashMap<Integer, Assignment> assignmentHashMap = new HashMap<>();
+
+        for(Integer i : listAssignment.keySet()){
+            if(listAssignment.get(i).getState() != AssignmentState.DELETED){
+                assignmentHashMap.put(i, listAssignment.get(i));
+            }
+        }
+
+        return assignmentHashMap;
     }
 
 }
