@@ -170,7 +170,7 @@ public class GUIDogSitter extends GUIHome{
         }
 
         if ((!(cae.getActionCommand().equals(""))) &&  ((calendarState.equals(CalendarState.NORMAL)))){
-            GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter = new GUIDailyAssignmentDogsitter(calendarState, email, todayDate);
+            GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter = new GUIDailyAssignmentDogsitter(calendarState, email, todayDate, guiHome);
             guiDailyAssignmentDogsitter.setVisible(true);
         }
 

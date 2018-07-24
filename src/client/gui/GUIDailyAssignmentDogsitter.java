@@ -7,6 +7,8 @@ import server.Assignment;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,13 +41,23 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
      * @param todayDate  identifies the days in the calendar
      *
      */
-    public GUIDailyAssignmentDogsitter(CalendarState cs, String email, Date todayDate) {
+    public GUIDailyAssignmentDogsitter(CalendarState cs, String email, Date todayDate, GUIHome guiCustomer) {
 
         super(cs, email, todayDate);
 
+        guiCustomer.setEnabled(false);
         this.email = email;
         this.todayDate = todayDate;
         guiDailyAssignmentDogsitter = this;
+        guiCustomer.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiCustomer.setEnabled(true);
+            }
+        });
         initComponents(cs);
 
 
