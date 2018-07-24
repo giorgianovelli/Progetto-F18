@@ -7,6 +7,7 @@ package client.gui;
 import client.clientEnumerations.CalendarAction;
 import client.clientEnumerations.MenuBarAction;
 import client.proxy.Proxy;
+import enumeration.AssignmentState;
 import server.Assignment;
 import client.clientEnumerations.CalendarState;
 import server.dateTime.WeekDays;
@@ -559,30 +560,33 @@ public abstract class GUIHome extends JFrame{
         boolean included = false;
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
-            Date dateStart = a.getDateStart();
-            Date dateEnd = a.getDateEnd();
-            SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-            String strDateStart = date.format(dateStart);
-            String strDateEnd = date.format(dateEnd);
-            int i;
-            String strButtonDate;
-            for (i = 0; i < NDAYMONTH; i++){
-                int day = i + 1;
-                if (day < 10){
-                    strButtonDate = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
-                } else {
-                    strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
-                }
-                if (strButtonDate.equals(strDateStart) ){
-                    buttonDay[i].setBackground(Color.ORANGE);
-                    included = true;
-                }
-                if (strButtonDate.equals(strDateEnd) ){
-                    buttonDay[i].setBackground(Color.ORANGE);
-                    included = false;
-                }
-                if (included){
-                    buttonDay[i].setBackground(Color.ORANGE);
+
+            if (!a.getState().equals(AssignmentState.DELETED)){
+                Date dateStart = a.getDateStart();
+                Date dateEnd = a.getDateEnd();
+                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+                String strDateStart = date.format(dateStart);
+                String strDateEnd = date.format(dateEnd);
+                int i;
+                String strButtonDate;
+                for (i = 0; i < NDAYMONTH; i++){
+                    int day = i + 1;
+                    if (day < 10){
+                        strButtonDate = "0" + buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+                    } else {
+                        strButtonDate = buttonDay[i].getText() + "/" + labelDateMonthYear.getText();
+                    }
+                    if (strButtonDate.equals(strDateStart) ){
+                        buttonDay[i].setBackground(Color.ORANGE);
+                        included = true;
+                    }
+                    if (strButtonDate.equals(strDateEnd) ){
+                        buttonDay[i].setBackground(Color.ORANGE);
+                        included = false;
+                    }
+                    if (included){
+                        buttonDay[i].setBackground(Color.ORANGE);
+                    }
                 }
             }
         }
@@ -601,19 +605,21 @@ public abstract class GUIHome extends JFrame{
         HashMap<Integer, Assignment> listAssignment = proxy.getAssignmentList();
         for (Integer key : listAssignment.keySet()) {
             Assignment a = listAssignment.get(key);
-            String strDateStart = date.format(a.getDateStart());
-            String strTodayDate = date.format(todayDate);
-            String strDateEnd = date.format(a.getDateEnd());
-            try {
-                Date dayStart = date.parse(strDateStart);
-                Date dayEnd = date.parse(strDateEnd);
-                Date today = date.parse(strTodayDate);
+            if (!a.getState().equals(AssignmentState.DELETED)){
+                String strDateStart = date.format(a.getDateStart());
+                String strTodayDate = date.format(todayDate);
+                String strDateEnd = date.format(a.getDateEnd());
+                try {
+                    Date dayStart = date.parse(strDateStart);
+                    Date dayEnd = date.parse(strDateEnd);
+                    Date today = date.parse(strTodayDate);
 
-                if ((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)){
-                    nAssignments++;
+                    if ((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)){
+                        nAssignments++;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
         return nAssignments;
@@ -837,19 +843,22 @@ public abstract class GUIHome extends JFrame{
 
         for (Integer key : assignmentList.keySet()) {
             Assignment a = assignmentList.get(key);
-            String strDateStart = date.format(a.getDateStart());
-            String strDateEnd = date.format(a.getDateEnd());
-            String strTodayDate = date.format(todayDate);
-            try {
-                Date dayStart = date.parse(strDateStart);
-                Date dayEnd = date.parse(strDateEnd);
-                Date today = date.parse(strTodayDate);
-                if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
-                    codeFirstFiveAssignmentsList.add(key);
-                    i++;
+
+            if (!a.getState().equals(AssignmentState.DELETED)){
+                String strDateStart = date.format(a.getDateStart());
+                String strDateEnd = date.format(a.getDateEnd());
+                String strTodayDate = date.format(todayDate);
+                try {
+                    Date dayStart = date.parse(strDateStart);
+                    Date dayEnd = date.parse(strDateEnd);
+                    Date today = date.parse(strTodayDate);
+                    if (((today.after(dayStart) || today.equals(dayStart)) && (today.before(dayEnd)) || today.equals(dayEnd)) && (i < nShownAssignments)){
+                        codeFirstFiveAssignmentsList.add(key);
+                        i++;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
         return codeFirstFiveAssignmentsList;
