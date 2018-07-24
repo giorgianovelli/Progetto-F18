@@ -67,7 +67,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
     /**
      * Panel contaning data.
      */
-    private JPanel panelAssignmentData = new JPanel(new GridLayout(7, 1));
+    private JPanel panelAssignmentData = new JPanel(new GridLayout(8, 1));
 
     /**
      * Panel displaying the dog list.
@@ -119,6 +119,8 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
      */
     private JPanel panelPaymentMethod = new JPanel(gridLayout);
 
+    private JPanel panelState = new JPanel(gridLayout);
+
     /**
      * ScrollPanel for scrolling
      */
@@ -156,6 +158,11 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
     private JLabel labelPaymentMethod1 = new JLabel("Payment Method: ");
 
     /**
+     * Label displaying "State:".
+     */
+    private JLabel labelState1 = new JLabel("State:");
+
+    /**
      * Label that displays the assignment's starting date.
      */
     private JLabel labelStartDate2 = new JLabel();
@@ -184,6 +191,8 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
      * Label that displays the assignment's payment method.
      */
     private JLabel labelPaymentMethod2 = new JLabel();
+
+    private JLabel labelState2 = new JLabel();
 
 
     /**
@@ -348,6 +357,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         panelAssignmentData.add(panelMeetingPoint);
         panelAssignmentData.add(panelAmount);
         panelAssignmentData.add(panelPaymentMethod);
+        panelAssignmentData.add(panelState);
 
         panelStartDate.add(labelStartDate1);
         panelStartDate.add(labelStartDate2);
@@ -361,6 +371,8 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         panelAmount.add(labelAmount2);
         panelPaymentMethod.add(labelPaymentMethod1);
         panelPaymentMethod.add(labelPaymentMethod2);
+        panelState.add(labelState1);
+        panelState.add(labelState2);
 
         panelButtonReview.add(buttonReview);
         panelReview.add(labelReview, BorderLayout.WEST);
@@ -430,6 +442,14 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane);
+
+        if (assignment.getState() == null) {
+            labelState2.setText("To be confirmed");
+        } else if (!assignment.getState()) {
+            labelState2.setText("Deleted");
+        } else {
+            labelState2.setText("Confirmed");
+        }
 
 
 

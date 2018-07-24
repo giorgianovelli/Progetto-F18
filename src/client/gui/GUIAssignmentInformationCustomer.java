@@ -63,7 +63,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     /**
      * Panel contaning data.
      */
-    private JPanel panelAssignmentData = new JPanel(new GridLayout(7, 1));
+    private JPanel panelAssignmentData = new JPanel(new GridLayout(8, 1));
 
     /**
      * Panel displaying the dog list.
@@ -121,6 +121,10 @@ public class GUIAssignmentInformationCustomer extends JFrame {
     private JPanel panelPaymentMethod = new JPanel(gridLayout);
 
     /**
+     * Panel state.
+     */
+    private JPanel panelState = new JPanel(gridLayout);
+    /**
      * ScrollPanel for scrolling
      */
     private JScrollPane scrollPane = new JScrollPane(panelOut);
@@ -161,6 +165,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
      */
     private JLabel labelPaymentMethod1 = new JLabel("Payment Method: ");
 
+    private JLabel labelState = new JLabel("State: ");
+
 
     /**
      * Label that displays the assignment's code.
@@ -196,6 +202,8 @@ public class GUIAssignmentInformationCustomer extends JFrame {
      * Label that displays the assignment's payment method.
      */
     private JLabel labelPaymentMethod2 = new JLabel();
+
+    private JLabel labelState2 = new JLabel();
 
     /**
      * Label that displays the assignment's review, if possible.
@@ -346,6 +354,7 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelAssignmentData.add(panelMeetingPoint);
         panelAssignmentData.add(panelAmount);
         panelAssignmentData.add(panelPaymentMethod);
+        panelAssignmentData.add(panelState);
 
         panelCode.add(labelCode1);
         panelCode.add(labelCode2);
@@ -361,7 +370,16 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         panelAmount.add(labelAmount2);
         panelPaymentMethod.add(labelPaymentMethod1);
         panelPaymentMethod.add(labelPaymentMethod2);
+        panelState.add(labelState);
+        panelState.add(labelState2);
 
+        if (a.getState() == null) {
+            labelState2.setText("To be confirmed by the dogsitter");
+        } else if (a.getState()) {
+            labelState2.setText("Confirmed");
+        } else {
+            labelState2.setText("Deleted");
+        }
 
         panelButtonReview.add(buttonReview);
         panelReview.add(labelReview, BorderLayout.WEST);
@@ -432,6 +450,11 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         // Creazione e passaggio JLabel per i cani
 
+        if (!(a.getState() == null)) {
+            if (!a.getState() && !strPayment.equals("Cash")) {
+                labelPaymentMethod2.setText("Refunded");
+            }
+        }
 
         int i = 1;
         for (Dog dog : dogList) {

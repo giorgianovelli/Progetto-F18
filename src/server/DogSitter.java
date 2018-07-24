@@ -6,6 +6,7 @@ package server;
 
 import database.DBConnector;
 import interfaces.InterfaceDogSitter;
+import server.bank.Bank;
 import server.bank.PaymentMethod;
 import server.dateTime.WorkingTime;
 import server.places.Address;
@@ -491,6 +492,11 @@ public class DogSitter extends User implements InterfaceDogSitter {
                     assignmentList.get(code).setState(null);
                 } else {
                     assignmentList.get(code).setState(state);
+                    if (state == false){
+                        if (!refundCustomer(code)){
+                           return false;
+                        }
+                    }
                 }
                 return true;
             } else {
@@ -728,6 +734,21 @@ public class DogSitter extends User implements InterfaceDogSitter {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    /**
+     * Refund the customer if the payment was with credit card.
+     * @param code the assignment's code.
+     * @return true if the customer is correctly refunded.
+     */
+    private boolean refundCustomer(int code){
+        Bank bank = new Bank();
+        if (bank.refundCustomer(code)){
+            return true;
+        } else {
+            return false;
         }
     }
 
