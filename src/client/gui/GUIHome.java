@@ -17,10 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.util.Timer;
 
 import static client.Calendar.getNDayOfMonth;
 
@@ -256,6 +254,7 @@ public abstract class GUIHome extends JFrame{
         panelGridCalendar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         this.email = email;
         guiHome = this;
+
     }
 
 
@@ -321,6 +320,11 @@ public abstract class GUIHome extends JFrame{
         SimpleDateFormat dateYear = new SimpleDateFormat("yyyy");
         Date currentYear = new Date();
         labelDateMonthYear.setText(dateMonth.format(currentMonth) + "/" + dateYear.format(currentYear));
+
+        Timer timer = new Timer();
+        TimerHome timerTask = new TimerHome(this, proxy, monthNumber);
+        timer.schedule(timerTask, 60000, 60000);
+
         updateCalendar(monthNumber, proxy);
     }
 
