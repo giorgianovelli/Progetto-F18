@@ -1,6 +1,5 @@
 package test;
 
-import client.gui.GUIDOGSITTERSIGNUPPROVAMIA;
 import client.gui.GUIDogSitterSignUp;
 import client.gui.GUILogin;
 
