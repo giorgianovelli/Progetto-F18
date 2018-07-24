@@ -163,6 +163,7 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
         String surnameCustomer = "";
 
         String dateStringReview ="";
+        String dateStringAssignment = "";
 
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         date.setLenient(false);
@@ -175,9 +176,12 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
 
 
         if(a!=null){
+            Date assignmentDate = a.getDateStart();
+            dateStringAssignment = date.format(assignmentDate);
+
             nameCustomer = dogSitterProxy.getCustomerNameOfAssignment(a.getCode());
             surnameCustomer = dogSitterProxy.getCustomerSurnameOfAssignment(a.getCode());
-            strLabel.put(CalendarState.NORMAL, "Assignment with " + nameCustomer + " " + surnameCustomer);
+            strLabel.put(CalendarState.NORMAL, "<html> Assignment with " + nameCustomer + " " + surnameCustomer +"<br/>"+ dateStringAssignment + "</html>");
         }
     }
 
