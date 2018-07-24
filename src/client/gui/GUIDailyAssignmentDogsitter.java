@@ -183,6 +183,12 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
 
     }
 
+    /**
+     * This method allows the dog sitter to refuse an assignment without graphic traces
+     *
+     * @param listAssignment identifies the list of assignments for each day on the calendar
+     * @return assignmentHashMap
+     */
     private HashMap<Integer, Assignment> assignmentToCancel(HashMap<Integer, Assignment> listAssignment){
         HashMap<Integer, Assignment> assignmentHashMap = new HashMap<>();
 

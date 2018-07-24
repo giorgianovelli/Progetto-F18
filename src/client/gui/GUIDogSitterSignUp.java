@@ -27,58 +27,150 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class allows the registration of a new dogsitter.
+ */
 public class GUIDogSitterSignUp extends GUISignUp {
 
+    /**
+     * The dog sitter proxy.
+     */
     private DogSitterProxy dogSitterProxy;
+
+    /**
+     * This GUI.
+     */
     private GUIDogSitterSignUp guiDogsitterSignUp;
 
-
-
+    /**
+     * Panel containing biography.
+     */
     private JPanel bioPanel;
+
+    /**
+     * The north panel containing the dog sitter parameters.
+     */
     private JPanel northPanel;
+
+    /**
+     * A internal panel who contains other panels.
+     */
     private JPanel inPanel;
 
+    /**
+     * Label containing the biography of the dog sitter.
+     */
     private JLabel bioLabel ;
+
+    /**
+     * The text area for the biography.
+     */
     private JTextArea bioText;
+
+    /**
+     * Scroll Panel for the biography of the dog sitter.
+     */
     private JScrollPane bioScroll ;
 
+    /**
+     * Label containing the numbers of dogs.
+     */
     private JLabel labelDogsNumber;
+
+    /**
+     * Combo box for the numbers of dogs.
+     */
     private JComboBox<String> dogsNumber;
+
+    /**
+     * Array of string for the numbers of dogs.
+     */
     private String[] numberOfDogs;
 
+    /**
+     * Panel of radio button.
+     */
     private JRadioButton cashflag;
+
+    /**
+     * Panel of radio button.
+     */
     private JRadioButton cashflag2;
+
+    /**
+     * Label that allows the selection of cash payment.
+     */
     private JLabel labelCash;
 
+    /**
+     * Label for the place of work of the dog sitter.
+     */
     private JLabel areaLabel;
+
+    /**
+     * The text area for the place of work of the dog sitter.
+     */
     private JTextField areaField;
 
+    /**
+     * The central panel containing the dog sitter availability.
+     */
     private JPanel centerPanel;
+
+    /**
+     * Panel of radio buttons.
+     */
     private JPanel panelRadioButton;
 
+    /**
+     * Panel containing the availability.
+     */
     private JPanel availabilityPanel;
 
+    /**
+     * Panel containing the dogs size.
+     */
     private JPanel dogSizePanel;
 
-
+    /**
+     * Label containing the dogs size.
+     */
     private JLabel dogSizeLabel;
+
+    /**
+     * The list containing the dogs size.
+     */
     private JList dogSizeList;
+
+    /**
+     * Array of string containing the dog size.
+     */
     private String[] dogSize;
 
+    /**
+     * Combo box for dogsitter availability.
+     */
     private AvailabilityBox availabilityBox;
 
+    /**
+     * The list of the dogs size.
+     */
+    private HashSet <DogSize> listDogSize;
 
-    private HashSet<DogSize > listDogSize;
-
-
-
+    /**
+     * Scroll Panel for the external panel.
+     */
     private JScrollPane scrollPane;
 
 
 
 
-
-
+    /**
+     * Constructor
+     *
+     * @param guiLogin GUI from which is invoked.
+     *
+     */
     public GUIDogSitterSignUp(GUILogin guiLogin){
         super(guiLogin);
 
@@ -87,6 +179,10 @@ public class GUIDogSitterSignUp extends GUISignUp {
         guiDogsitterSignUp = this;
     }
 
+
+    /**
+     * Method that initializes graphic components of the GUI
+     */
     @Override
     protected void initComponents() {
         dogSitterProxy = new DogSitterProxy(textEmail.getText());
@@ -350,6 +446,11 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
     }
 
+
+    /**
+     * Method that checks the correct functionality of same parameters.
+     *
+     */
     @Override
     protected void checkAddCustomerValues() {
         boolean inputPassword = changePasswordFields(Password, confirmPassword);
@@ -381,10 +482,14 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
     }
 
+    /**
+     * Method that allows to add new information
+     *
+     */
     @Override
     protected boolean addCustomerValues() {
         /**
-         *  data di nascita
+         *  date of birth
          */
         Date dateOfBirth2 = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -399,7 +504,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         }
 
         /**
-         * generazione casuale di amount
+         * random generation o amount
          */
         Double max = MAX_AMOUNT;
         Double min = MIN_AMOUNT;
@@ -407,7 +512,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         Double amount = Math.round((min + (max - min) * rand.nextDouble()) * 100d) / 100d;
 
         /**
-         *  data di scadenza
+         *  Expiration date
          */
 
         Date ex_Year = new Date();
@@ -472,25 +577,81 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
 
 }
-
+/**
+ * This class is a graphic class that contains combo boxes and labels for
+ * selecting date and hour of the availability of the dog sitter
+ */
 class AvailabilityBox extends JPanel{
 
+    /**
+     * an initialized attribute.
+     */
     private final int DAYS = 7;
+
+    /**
+     * Array of label for the days of the week
+     */
     private JLabel[] dayLabel;
 
+    /**
+     * Array of panel for the starting and ending date.
+     */
     private JPanel[] fTimeBox, tTimeBox, contentPanel;
+
+    /**
+     * An external panel.
+     */
     private JPanel outPanel = new JPanel();
+
+    /**
+     * Label that displays a period of time.
+     */
     private JPanel tagPanel;
+
+    /**
+     * Array of label for the period of time.
+     */
     private JLabel[] tagLabel;
+
+    /**
+     * Array of the days of week.
+     */
     private WeekDays[] weekDays = WeekDays.values();
+
+    /**
+     * Combo box for the starting and ending date (hour).
+     */
     private JComboBox<String> [] fhourList;
+
+    /**
+     * Combo box for the starting and ending date (hour).
+     */
     private JComboBox<String> [] thourList;
+
+    /**
+     * Combo box for the starting and ending date (minute).
+     */
     private JComboBox<String> [] fminuteList;
+
+    /**
+     * Combo box for the starting and ending date (minute).
+     */
     private JComboBox<String> [] tminuteList;
 
+    /**
+     * Array of string who shows the hour.
+     */
     private String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+
+    /**
+     * Array of string who shows the minutes.
+     */
     private String[] minute = new String[]{ "00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"};
 
+
+    /**
+     * Constructor for AvailabilityBox
+     */
     public AvailabilityBox(){
 
         fTimeBox = new JPanel[DAYS];
@@ -526,7 +687,10 @@ class AvailabilityBox extends JPanel{
         add(outPanel);
 
     }
-
+    /**
+     * method who create a panel who displayed the time.
+     * @param i panel index
+     */
     private JPanel createPanel(int i){
 
         fTimeBox[i] = new JPanel();
@@ -559,18 +723,34 @@ class AvailabilityBox extends JPanel{
 
     }
 
+    /**
+     * method who provides  data
+     * @return fhourList.
+     */
     public JComboBox<String>[] getFhourList() {
         return fhourList;
     }
 
+    /**
+     * method who provides data
+     * @return thourList.
+     */
     public JComboBox<String>[] getThourList() {
         return thourList;
     }
 
+    /**
+     * method who provides data
+     * @return fminuteList.
+     */
     public JComboBox<String>[] getFminuteList() {
         return fminuteList;
     }
 
+    /**
+     * method who provides data
+     * @return tminuteList.
+     */
     public JComboBox<String>[] getTminuteList() {
         return tminuteList;
     }
