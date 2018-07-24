@@ -20,7 +20,8 @@ public class GUILogin extends JFrame {
     private JPasswordField textPwd = new JPasswordField();
     private JButton buttonLogin = new JButton("Login as Costumer");
     private JButton buttonLoginSitter = new JButton("Login as Dogsitter");
-    private JButton buttonNewAccount = new JButton("Create a new account");
+    private JButton buttonNewAccount1 = new JButton("SignUp as Costumer");
+    private JButton buttonNewAccount2 = new JButton("SignUp as Dogsitter");
     private JPanel cont1 = new JPanel();   //pannello contenitore
     private GridBagLayout layout = new GridBagLayout();
     private GridBagConstraints lim = new GridBagConstraints();
@@ -34,7 +35,7 @@ public class GUILogin extends JFrame {
         setTitle("Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setResizable(false);
+        setResizable(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         guiLogin = this;
         initComponents();
@@ -42,7 +43,7 @@ public class GUILogin extends JFrame {
 
     private void initComponents(){
 
-        cont1.setLayout(new GridLayout(2, 1, 10, 0)); // mi sposta il pannello dei dati tranne i bottoni
+        cont1.setLayout(new GridLayout(2, 2, 10, 0));
         //cont1.setBorder(BorderFactory.createTitledBorder("Login"));
 
         //login automatico per velocizzare il debug
@@ -59,10 +60,11 @@ public class GUILogin extends JFrame {
         panelLoginData.add(textPwd);
         add(panelLoginData, BorderLayout.CENTER);
 
-        panelBottom.setLayout(new GridLayout(3,1));
+        panelBottom.setLayout(new GridLayout(2,2));
         panelBottom.add(buttonLogin);
         panelBottom.add(buttonLoginSitter);
-        panelBottom.add(buttonNewAccount);
+        panelBottom.add(buttonNewAccount1);
+        panelBottom.add(buttonNewAccount2);
         add(panelBottom, BorderLayout.SOUTH);
 
 
@@ -99,8 +101,8 @@ public class GUILogin extends JFrame {
 
         // le dimensioni del pannello in larghezza e altezza
 
-        cont1.setPreferredSize(new Dimension(525, 145)); //H-150
-        cont1.setMinimumSize(new Dimension(525, 145)); //W-420
+        cont1.setPreferredSize(new Dimension(500, 130)); //H-150
+        cont1.setMinimumSize(new Dimension(500, 130)); //W-420
 
        /* labelUser.setOpaque(isOpaque());
         labelPwd.setOpaque(isOpaque());*/
@@ -111,7 +113,7 @@ public class GUILogin extends JFrame {
         cont1.setOpaque(false);
 
 
-           ActionListener al = new ActionListener() {
+        ActionListener al = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -194,16 +196,21 @@ public class GUILogin extends JFrame {
 
                 }
 
-                if (ae.getActionCommand().equals("Create a new account")){
+                if (ae.getActionCommand().equals("SignUp as Costumer")){
                     GUISignUp guiSignUp = new GUISignUp(guiLogin);
                     guiSignUp.setVisible(true);
+                }
 
+                else if (ae.getActionCommand().equals("SignUp as Dogsitter")){
+                    GUIDogSitterSignUp guiDogSitterSignUp = new GUIDogSitterSignUp(guiLogin);
+                    guiDogSitterSignUp.setVisible(true);
                 }
             }
         };
 
         buttonLogin.addActionListener(al);
-        buttonNewAccount.addActionListener(al);
+        buttonNewAccount1.addActionListener(al);
+        buttonNewAccount2.addActionListener(al);
         buttonLoginSitter.addActionListener(al);
 
     }
@@ -211,42 +218,42 @@ public class GUILogin extends JFrame {
 
     private class ImagePanel extends JPanel {
 
-            private Image image;
+        private Image image;
 
 
-            public ImagePanel() {
+        public ImagePanel() {
 
-                //acquisisco l'immagine
-                image = Toolkit.getDefaultToolkit().getImage("images/logo.jpg");
-                MediaTracker tracker = new MediaTracker(this);
-                tracker.addImage(image, 0);
+            //acquisisco l'immagine
+            image = Toolkit.getDefaultToolkit().getImage("images/logo.jpg");
+            MediaTracker tracker = new MediaTracker(this);
+            tracker.addImage(image, 0);
 
-                try {
-                    tracker.waitForID(0);
-                } catch (InterruptedException exception) {
-
-                }
+            try {
+                tracker.waitForID(0);
+            } catch (InterruptedException exception) {
 
             }
 
-
-            public void paintComponent(Graphics g) {
-
-                super.paintComponent(g);
-
-                //acquisisco le dimensioni dello schermo
-                Toolkit kit = Toolkit.getDefaultToolkit();
-                Dimension screenSize = kit.getScreenSize();
-                int screenHeight = screenSize.height / 2;
-                int screenWidth = screenSize.width / 2;
-
-                //disegna l'immagine
-                int centroAscissaImage = screenWidth - image.getWidth(null) / 2;
-                int centroOrdinataImage = screenHeight - image.getHeight(null) / 2;
-                g.drawImage(image, centroAscissaImage, centroOrdinataImage, null);
+        }
 
 
+        public void paintComponent(Graphics g) {
 
-            }
+            super.paintComponent(g);
+
+            //acquisisco le dimensioni dello schermo
+            Toolkit kit = Toolkit.getDefaultToolkit();
+            Dimension screenSize = kit.getScreenSize();
+            int screenHeight = screenSize.height / 2;
+            int screenWidth = screenSize.width / 2;
+
+            //disegna l'immagine
+            int centroAscissaImage = screenWidth - image.getWidth(null) / 2;
+            int centroOrdinataImage = screenHeight - image.getHeight(null) / 2;
+            g.drawImage(image, centroAscissaImage, centroOrdinataImage, null);
+
+
+
         }
     }
+}
