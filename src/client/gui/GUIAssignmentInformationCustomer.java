@@ -426,8 +426,11 @@ public class GUIAssignmentInformationCustomer extends JFrame {
         Double doubleAmount = customerProxy.estimatePriceAssignment(a.getDogList(), a.getDateStart(), a.getDateEnd());              // Importo pagato o da pagare per l'appuntamento da prelevare dal DB
         String amount = "€ " + String.format("%.2f", doubleAmount).replace(",", ".");
         String strPayment = customerProxy.getPaymentMethod().getNumber();
+        String strCredit = "";
         if (customerProxy.isInCashPaymentMethodOfAssignment(a.getCode())) {
             strPayment = "Cash";
+        } else {
+            strCredit = customerProxy.getPaymentMethod().getNumber();
         }
 
         //Passaggio delle variabili alle Jlabel che contengono i dati
@@ -458,14 +461,9 @@ public class GUIAssignmentInformationCustomer extends JFrame {
 
         // Creazione e passaggio JLabel per i cani
 
-        if (!(a.getState() == null)) {
-            /*if (!a.getState() && !strPayment.equals("Cash")) {
-                labelPaymentMethod2.setText("Refunded");
-            }*/
-            if (!(a.getState().equals(AssignmentState.CONFIRMED)) && !strPayment.equals("Cash")) {
+        if ((a.getState().equals(AssignmentState.DELETED)) && !strCredit.equals("Cash")) {
                 labelPaymentMethod2.setText("Refunded");
             }
-        }
 
         int i = 1;
         for (Dog dog : dogList) {

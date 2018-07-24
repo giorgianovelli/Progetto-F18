@@ -476,9 +476,11 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         Double doubleAmount = customerProxy.estimatePriceAssignment(dogList, assignment.getDateStart(), assignment.getDateEnd());
         String amount = "€ " + String.format("%.2f", doubleAmount).replace(",", ".");
         String strPayment;
+        String strCredit = "";
 
         if (!customerProxy.isInCashPaymentMethodOfAssignment(assignment.getCode())) {
             strPayment = "Credit card";
+            strCredit = "Credit card";
         } else {
             strPayment = "Cash";
         }
@@ -515,6 +517,10 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             panelDogs.add(panelDog);
             panelDog.add(tmplabel);
             i++;
+        }
+
+        if ((assignment.getState().equals(AssignmentState.DELETED)) && !strCredit.equals("Cash")) {
+            labelPaymentMethod2.setText("Customer refunded");
         }
     }
 
