@@ -544,7 +544,7 @@ public class GUIListAssignments extends JFrame{
             dateStringStartAssigment = date.format(startAssignment);
             nameDogSitter = proxy.getDogSitterNameOfAssignment(a.getCode());
             surnameDogSitter = proxy.getDogSitterSurnameOfAssignment(a.getCode());
-            strLabel.put(CalendarState.NORMAL, "Assignment with " + nameDogSitter + " " + surnameDogSitter);
+            strLabel.put(CalendarState.NORMAL, "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + dateStringStartAssigment +  "</html>");
             strLabel.put(CalendarState.REVIEWING, "<html>" + "Assignment with " + nameDogSitter + " " + surnameDogSitter + "<br/>" + dateStringStartAssigment +  "</html>");
         }
 
