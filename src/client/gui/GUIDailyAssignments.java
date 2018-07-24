@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
+import enumeration.AssignmentState;
 import server.Assignment;
 import client.clientEnumerations.CalendarState;
 
@@ -335,16 +336,22 @@ public class GUIDailyAssignments extends JFrame {
             else{
 
                 if (todayAssigment.isEmpty()) {
+                    lb = new JLabel(" There aren't assignments today ", SwingConstants.CENTER);
+                    p.add(lb);
 
+                } else {
+
+                    HashMap<Integer, Assignment> assignmentHashMap = assignmentToCancel(todayAssigment);
+
+                    if (assignmentHashMap.isEmpty()) {
                         lb = new JLabel(" There aren't assignments today ", SwingConstants.CENTER);
 
                         p.add(lb);
-
-                    } else {
+                    }else{
 
                         int j = 0;
 
-                        for (Integer i : todayAssigment.keySet()) {
+                        for (Integer i : assignmentHashMap.keySet()) {
                             Assignment a = null;
                             String labelString = "";
                             a = todayAssigment.get(i);
@@ -375,6 +382,12 @@ public class GUIDailyAssignments extends JFrame {
 
 
                         }
+
+                    }
+
+
+
+
                     }
 
 
@@ -385,6 +398,10 @@ public class GUIDailyAssignments extends JFrame {
             }
         }
     }
+
+
+
+
 
 
         /**
@@ -440,6 +457,28 @@ public class GUIDailyAssignments extends JFrame {
 
         p.add(infoPanel[i]);
         }
+
+
+    /**
+     * This method allows the dog sitter to refuse an assignment without graphic traces
+     *
+     * @param listAssignment identifies the list of assignments for each day on the calendar
+     * @return assignmentHashMap
+     */
+        protected HashMap<Integer, Assignment> assignmentToCancel(HashMap<Integer, Assignment> listAssignment){
+            HashMap<Integer, Assignment> assignmentHashMap = new HashMap<>();
+
+            for(Integer i : listAssignment.keySet()){
+                if(listAssignment.get(i).getState() != AssignmentState.DELETED){
+                    assignmentHashMap.put(i, listAssignment.get(i));
+                }
+            }
+
+            return assignmentHashMap;
+        }
+
+
+
 
 
 }
