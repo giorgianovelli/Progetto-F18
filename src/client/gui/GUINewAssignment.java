@@ -290,9 +290,15 @@ public class GUINewAssignment extends JFrame{
                 }
 
                 Date todayDate = new Date();
-                if (dateStart.after(dateEnd) || strDateStart.equals(strDateEnd) || ((dateStart.getTime() - todayDate.getTime())) < 86400000) {
+                if (dateStart.after(dateEnd) || strDateStart.equals(strDateEnd)) {
                     JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
                             JOptionPane.ERROR_MESSAGE);
+
+
+                } else if ((dateStart.getTime() - todayDate.getTime()) < 86400000) {
+                    JOptionPane.showMessageDialog(new JFrame(), "You can't book an assignment starting less than 24h from now!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+
 
 
                 } else if (dogsSelected.size() == 0) {

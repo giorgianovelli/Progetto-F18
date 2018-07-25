@@ -92,8 +92,8 @@ public class GUIInfo extends JFrame {
         splashScreenIcon = new ImageIcon(newImageIcon);
         labelIcon = new JLabel(splashScreenIcon);
 
-        version = new JLabel("Version: 0.1.0 ", SwingConstants.CENTER);
-        date = new JLabel("Publication date: 12/06/2018", SwingConstants.CENTER);
+        version = new JLabel("Version: 1.0.0 Presentation preview", SwingConstants.CENTER);
+        date = new JLabel("Publication date: 26/07/2018", SwingConstants.CENTER);
         version.setFont(new Font("Calibri", Font.PLAIN, 24));
         date.setFont(new Font("Calibri", Font.PLAIN, 24));
 
