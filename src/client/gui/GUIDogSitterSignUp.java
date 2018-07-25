@@ -196,6 +196,8 @@ public class GUIDogSitterSignUp extends GUISignUp {
         bioPanel = new JPanel();
         bioLabel = new JLabel("Biography:",SwingConstants.LEFT);
         bioText = new JTextArea();
+        bioText.setLineWrap(true);
+        bioText.setWrapStyleWord(true);
         bioScroll = new JScrollPane(bioText);
 
         labelCash = new JLabel("Allow cash payment:",SwingConstants.LEFT);
