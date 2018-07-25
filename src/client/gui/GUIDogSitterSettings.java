@@ -20,61 +20,174 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * This class allows to change dogsitter settings by filling out all the required fields.
+ */
 public class GUIDogSitterSettings extends GUISettings {
 
+    /**
+     * The dog sitter proxy.
+     */
     private DogSitterProxy dogSitterProxy;
+
+    /**
+     * This GUI.
+     */
     private GUIDogSitterSettings guiDogSitterSettings;
 
-
+    /**
+     * Panel containing biography.
+     */
     private JPanel bioPanel;
+
+    /**
+     * The north panel containing the dog sitter parameters.
+     */
     private JPanel northPanel;
+
+    /**
+     * A internal panel who contains other panels.
+     */
     private JPanel inPanel;
 
+    /**
+     * Label containing the biography of the dog sitter.
+     */
     private JLabel bioLabel;
+
+    /**
+     * The text area for the biography.
+     */
     private JTextArea bioText;
+
+    /**
+     * Scroll Panel for the biography of the dog sitter.
+     */
     private JScrollPane bioScroll;
 
+    /**
+     * Label containing the numbers of dogs.
+     */
     private JLabel labelDogsNumber;
+
+    /**
+     * Combo box for the numbers of dogs.
+     */
     private JComboBox<String> dogsNumber;
+
+    /**
+     * Array of string for the numbers of dogs.
+     */
     private String[] numberOfDogs;
 
+    /**
+     * Panel of radio button.
+     */
     private JRadioButton cashflag;
+
+    /**
+     * Panel of radio button.
+     */
     private JRadioButton cashflag2;
+
+    /**
+     * Label that allows the selection of cash payment.
+     */
     private JLabel labelCash;
 
+    /**
+     * The central panel containing the dog sitter availability.
+     */
     private JPanel centerPanel;
+
+    /**
+     * Panel of radio buttons.
+     */
     private JPanel panelRadioButton;
 
+    /**
+     * Panel containing the availability.
+     */
     private JPanel availabilityPanel;
 
+    /**
+     * Panel containing the dogs size.
+     */
     private JPanel dogSizePanel;
 
-
+    /**
+     * Label containing the dogs size.
+     */
     private JLabel dogSizeLabel;
 
-
+    /**
+     * Label for the place of work of the dog sitter.
+     */
     private JLabel labelArea;
 
+    /**
+     * Panel containing list of panel.
+     */
     private JPanel areaListPanel;
 
+    /**
+     * The availability box of the dogsitter.
+     */
     private AvailabilityDogSitterBox availabilityBox;
 
-
+    /**
+     * The scroll panel for the external panel.
+     */
     private JScrollPane scrollPane;
 
+    /**
+     * A array list for check box size of the dogs.
+     */
     private ArrayList<SizeCheckBox> listCheckbox; //check box per le taglie
 
+    /**
+     * An array of string for the dogs size.
+     */
     String[] dogSizesArray;
 
+    /**
+     * Panel to add area.
+     */
     private JPanel addAreaPanel;
+
+    /**
+     * Panel to add field.
+     */
     private JPanel addFieldPanel;
+
+    /**
+     * Panel to add  button area.
+     */
     private JPanel areaButtonPanel;
+
+    /**
+     * Panel for area.
+     */
     private JPanel areaPanel;
 
+    /**
+     * Button with the inscription "Add".
+     */
     private JButton addAreaButton;
+
+    /**
+     * Button with the inscription "Remove".
+     */
     private JButton removeAreaButton;
 
+    /**
+     * A text field.
+     */
     private JTextField areaToAddField;
+
+    /**
+     * Label for select area.
+     */
     private JLabel selectedAreaLabel;
 
 
@@ -92,11 +205,12 @@ public class GUIDogSitterSettings extends GUISettings {
 
     }
 
-
+    /**
+     * Method that initializes the GUI components
+     */
     @Override
     protected void initComponents() {
         dogSitterProxy = new DogSitterProxy(email);
-
 
         buttonConfirm = new JButton("Confirm");
         scrollPane = new JScrollPane(panelOut);
@@ -276,7 +390,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
         /**
-         * JCOMBOBOX di DATE OF BIRTH
+         * JCOMBOBOX of DATE OF BIRTH
          */
 
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
@@ -288,9 +402,7 @@ public class GUIDogSitterSettings extends GUISettings {
         yearList = new JComboBox(years_tmp.toArray());
 
 
-        /**
-         *  Serve per fare in modo che le jcombobox di "Date of Birth" siano corrette
-         */
+
 
         Date strDate = dogSitterProxy.getDateOfBirth();
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
@@ -375,15 +487,13 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
         /**
-         * JCOMBOBOX di EXPIRATION DATE
+         * JCOMBOBOX of EXPIRATION DATE
          */
 
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
-        /**
-         *  Serve per fare in modo che le jcombobox di "ExpirationDate" siano corrette
-         */
+
         PaymentMethod strExpirationDate = dogSitterProxy.getPaymentMethod();
         SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
@@ -412,7 +522,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
         /**
-         * PANEL DI EXPIRATION DATE per sistemare le jcombobox
+         * PANEL of EXPIRATION DATE that fix the combo box
          *
          */
 
@@ -651,6 +761,9 @@ public class GUIDogSitterSettings extends GUISettings {
 
     }
 
+    /**
+     * Method that updates the database
+     */
     protected void setNewValues() {
 
         dogSitterProxy.updateName(textName.getText().toUpperCase());
@@ -661,9 +774,7 @@ public class GUIDogSitterSettings extends GUISettings {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        /**
-         * aggiorna la data di nascita
-         */
+
 
         Date dateOfBirth = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -794,7 +905,11 @@ public class GUIDogSitterSettings extends GUISettings {
 
     }
 
-
+    /**
+     * This method check and update the credit card information.
+     * @return true if credit card information was update successfully,else
+     * @return false with message error.
+     */
     protected boolean checkSetNewValues(){
         Date inputDate = getNewExpirationDate();// aggiorna la data di scadenza
         boolean upPaymentMethod = dogSitterProxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
@@ -811,36 +926,83 @@ public class GUIDogSitterSettings extends GUISettings {
     }
 
 
-
-
-
-
-
-
-
-
-
-
 }
 
+/**
+ * This class is a graphic class that contains combo boxes and labels for
+ * selecting date and hour of the availability of the dog sitter
+ */
 class AvailabilityDogSitterBox extends JPanel{
 
+    /**
+     * an initialized attribute.
+     */
     private final int DAYS = 7;
+
+    /**
+     * Array of label for the days of the week
+     */
     private JLabel[] dayLabel;
 
+    /**
+     * Array of panel for the starting and ending date.
+     */
     private JPanel[] fTimeBox, tTimeBox, contentPanel;
+
+    /**
+     * An external panel.
+     */
     private JPanel outPanel = new JPanel();
+
+    /**
+     * Panel that displays a period of time.
+     */
     private JPanel tagPanel;
+
+    /**
+     * Array of label for the period of time.
+     */
     private JLabel[] tagLabel;
+
+    /**
+     * Array of the days of week.
+     */
     private WeekDays[] weekDays = WeekDays.values();
+
+    /**
+     * Combo box for the starting and ending date (hour).
+     */
     private JComboBox<String> [] fhourList;
+
+    /**
+     * Combo box for the starting and ending date (hour).
+     */
     private JComboBox<String> [] thourList;
+
+    /**
+     * Combo box for the starting and ending date (minute).
+     */
     private JComboBox<String> [] fminuteList;
+
+    /**
+     * Combo box for the starting and ending date (minute).
+     */
     private JComboBox<String> [] tminuteList;
 
+    /**
+     * Array of string who shows the hours.
+     */
     private String[] hour = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+
+    /**
+     * Array of string who shows the minutes.
+     */
     private String[] minute = new String[]{ "00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"};
 
+
+    /**
+     * Constructor for AvailabilityBox
+     */
     public AvailabilityDogSitterBox(){
 
         fTimeBox = new JPanel[DAYS];
@@ -877,6 +1039,10 @@ class AvailabilityDogSitterBox extends JPanel{
 
     }
 
+    /**
+     * method who create a panel who displayed the time.
+     * @param i panel index
+     */
     private JPanel createPanel(int i){
 
         fTimeBox[i] = new JPanel();
@@ -909,24 +1075,44 @@ class AvailabilityDogSitterBox extends JPanel{
 
     }
 
+    /**
+     * method who provides  data
+     * @return fhourList.
+     */
     public JComboBox<String>[] getFhourList() {
         return fhourList;
     }
 
+    /**
+     * method who provides  data
+     * @return thourList.
+     */
     public JComboBox<String>[] getThourList() {
         return thourList;
     }
 
-    public JComboBox<String>[] getFminuteList() {
-        return fminuteList;
-    }
+    /**
+     * method who provides  data
+     * @return fminuteList.
+     */
+    public JComboBox<String>[] getFminuteList(){ return fminuteList; }
 
+    /**
+     * method who provides  data
+     * @return tminuteList.
+     */
     public JComboBox<String>[] getTminuteList() {
         return tminuteList;
     }
 
 
-
+    /**
+     * A setter method for array of hour and minute.
+     * @param startHour
+     * @param endHour
+     * @param startMinute
+     * @param endMinute
+     */
     public void setValues(String [] startHour, String [] startMinute, String[] endHour, String [] endMinute){
         for(int i = 0; i<DAYS; i++){
             fhourList[i].setSelectedItem(startHour[i]);

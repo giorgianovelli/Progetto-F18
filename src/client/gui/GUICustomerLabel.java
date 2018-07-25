@@ -152,7 +152,7 @@ public class GUICustomerLabel extends JFrame {
     private String email;
 
     /**
-     *
+     * The GUISignUp
      */
     private GUISignUp guiSignUp;
 
@@ -197,9 +197,6 @@ public class GUICustomerLabel extends JFrame {
 
     private void initComponents()  {
 
-        /**
-         * Panels
-         */
 
         panelData.setLayout(new GridLayout(4, 1, 70, 20));
         panelData.setBorder(BorderFactory.createTitledBorder("SECOND STEP_Customer Fields: "));
@@ -211,9 +208,7 @@ public class GUICustomerLabel extends JFrame {
         panelButton.add(buttonConfirm, BorderLayout.SOUTH);
 
 
-        /**
-         * JCOMBOBOX of DATE OF BIRTH
-         */
+
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
             years_tmp.add(years + "");
         }
@@ -222,9 +217,6 @@ public class GUICustomerLabel extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        /**
-         * JCOMBOBOX for the breed of dogs
-         */
 
         HashSet<String> breedSet = proxy.getDogsBreedsList();
         breed = new String[breedSet.size()];
@@ -238,9 +230,6 @@ public class GUICustomerLabel extends JFrame {
         breedList = new JComboBox<>(breed);
 
 
-        /**
-         * others panel
-         */
         panelData.add(labelDogsName);
         panelData.add(textDogsName);
         panelData.add(labelDogBreed);

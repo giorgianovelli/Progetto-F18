@@ -157,9 +157,14 @@ public class GUIDogSitterSignUp extends GUISignUp {
      */
     private JScrollPane scrollPane;
 
-
+    /**
+     * A array list for check box size of the dogs.
+     */
     private ArrayList<SizeCheckBox> listCheckbox;
 
+    /**
+     * An array of string for the dogs size.
+     */
     String[] dogSizesArray;
 
 
@@ -662,7 +667,7 @@ class AvailabilityBox extends JPanel{
     private JPanel outPanel = new JPanel();
 
     /**
-     * Label that displays a period of time.
+     * Panel that displays a period of time.
      */
     private JPanel tagPanel;
 
