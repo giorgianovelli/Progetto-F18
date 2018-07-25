@@ -56,8 +56,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
     private JLabel dogSizeLabel;
-    private JList dogSizeList;
-    private String[] dogSize;
+
 
     private JLabel labelArea;
     private JList dogsitterAreas;
@@ -67,9 +66,12 @@ public class GUIDogSitterSettings extends GUISettings {
 
     private AvailabilityDogSitterBox availabilityBox;
 
-    private HashSet<DogSize> listDogSize;
 
     private JScrollPane scrollPane;
+
+    private ArrayList<SizeCheckBox> listCheckbox; //check box per le taglie
+
+    String[] dogSizesArray;
 
 
     /**
@@ -108,17 +110,33 @@ public class GUIDogSitterSettings extends GUISettings {
         cashflag2 = new JRadioButton("NO");
         panelRadioButton = new JPanel();
 
-
+//----------------------------AGGIUNGE LA CHECK BOX -----------------------------------
         dogSizeLabel = new JLabel("Dog Size:");
-        dogSize = new String[]{"SMALL", "MEDIUM", "BIG", "GIANT"};
-        dogSizeList = new JList(dogSize);
 
+        listCheckbox = new ArrayList<>();
+        dogSizesArray = new String[]{"SMALL", "MEDIUM", "BIG", "GIANT"};
 
-        listDogSize = new HashSet<>();
-
-        dogSizePanel = new JPanel(new GridLayout(2, 1));
+        dogSizePanel = new JPanel(new GridLayout(5,1)); //aggiunge le checkBox
         dogSizePanel.add(dogSizeLabel);
-        dogSizePanel.add(dogSizeList);
+
+        SizeCheckBox checkBox;
+
+        for(int i = 0; i< dogSizesArray.length; i++){
+            checkBox = new SizeCheckBox(dogSizesArray[i]);
+            listCheckbox.add(checkBox);
+        }
+
+
+        for (SizeCheckBox checkBoxToAdd : listCheckbox){
+            dogSizePanel.add(checkBoxToAdd);
+
+        }
+
+
+        //listDogSize = new HashSet<>();
+
+
+
 
 
         labelArea = new JLabel("Area:");
@@ -250,7 +268,6 @@ public class GUIDogSitterSettings extends GUISettings {
         ButtonGroup group = new ButtonGroup();
         group.add(cashflag);
         group.add(cashflag2);
-        cashflag.setSelected(true);
 
         panelRadioButton.add(cashflag);
         panelRadioButton.add(cashflag2);
@@ -374,7 +391,7 @@ public class GUIDogSitterSettings extends GUISettings {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
 
-                    } else if (inputCap && inputAddressNumber && inputPhoneNumber) {
+                    } else if (checkDateOfBirth(dayList.getSelectedItem().toString(), monthList.getSelectedItem().toString(), yearList.getSelectedItem().toString()) && inputCap && inputAddressNumber && inputPhoneNumber) {
 
                         boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
                         Date inputDate = getNewExpirationDate();
@@ -382,6 +399,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
                         if (inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv) {
 
+                            checkSetNewValues();
                             setNewValues();
                             JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
                             guiDogSitterSettings.dispatchEvent(new WindowEvent(guiDogSitterSettings, WindowEvent.WINDOW_CLOSING));
@@ -466,16 +484,18 @@ public class GUIDogSitterSettings extends GUISettings {
 
         boolean acceptCash = dogSitterProxy.isAcceptingCash();
 
-        //PER SETTARE I RADIO BUTTON // non va
-        cashflag = new JRadioButton("YES", acceptCash);
-        cashflag2 = new JRadioButton("NO", acceptCash);
-       // cashflag = dogSitterProxy.updateCashFlag();
+
+        //PER SETTARE I RADIO BUTTON FUNZIONA
 
         ButtonGroup group = new ButtonGroup();
         group.add(cashflag);
         group.add(cashflag2);
-        // cashflag.getInheritsPopupMenu(acceptCash);
-        // cashflag2.getSelectedObjects();
+        if(acceptCash){
+            cashflag.setSelected(true);
+        }else{
+            cashflag2.setSelected(true);
+        }
+
 
 
         Availability dateTimeAvailability = dogSitterProxy.getDateTimeAvailability();
@@ -486,7 +506,7 @@ public class GUIDogSitterSettings extends GUISettings {
         String[] endHour = new String[7];
         String[] endMinute = new String[7];
 
-        for(int i = 0; i<7; i++){
+        for(int i = 0; i < 7; i++){
             SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
             SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
 
@@ -509,16 +529,19 @@ public class GUIDogSitterSettings extends GUISettings {
         availabilityBox.setValues(startHour, startMinute, endHour, endMinute);
 
 
-        HashSet<DogSize> listDogSizeProxy = new HashSet<>();
-        listDogSizeProxy = dogSitterProxy.getListDogSize();
-        int[] indexes = new int[listDogSizeProxy.size()];
-        int i = 0;
-        for (DogSize dogSize : listDogSizeProxy){
-            indexes[i] = dogSize.ordinal();
-            i++;
+       // SETTA LE CHECKBOX
+        HashSet<DogSize> dogSizes = dogSitterProxy.getListDogSize();
+
+
+        for(DogSize dogSize : dogSizes){
+            for(SizeCheckBox sizeCheckBox :listCheckbox){
+                if(sizeCheckBox.getCheckBox().getText() == dogSize.name()){
+                    sizeCheckBox.getCheckBox().setSelected(true);
+                }
+            }
         }
 
-        dogSizeList.setSelectedIndices(indexes);
+
 
         Area dogSitterProxyArea = dogSitterProxy.getArea();
         HashSet<String > dogsitterArea = dogSitterProxyArea.getPlaces();
@@ -623,7 +646,7 @@ public class GUIDogSitterSettings extends GUISettings {
         labelCreditCardOwnerName.setLabelFor(textCreditCardOwnerName);
         textCreditCardOwneSurname.setEditable(true);
         labelCrediCardOwnerSurname.setLabelFor(textCreditCardOwneSurname);
-
+      //TODO   textExpirationDays.setEditable(true);
         expirationMonth.setEnabled(true);
         expirationYear.setEnabled(true);
         textSecurityCode.setEditable(true);
@@ -663,54 +686,31 @@ public class GUIDogSitterSettings extends GUISettings {
 
         dogSitterProxy.updateDogsNumber(Integer.parseInt(dogsNumber.getSelectedItem().toString()));
 
+
+        //------------------------CARICA LE TAGLIE PER IL DOGSITTER NEL DB -------------
         boolean small = false;
         boolean medium = false;
         boolean big = false;
         boolean giant = false;
 
-
-
-
-        dogSizeList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-
-                listDogSize = new HashSet<>();
-
-                List<String> selectedValues = dogSizeList.getSelectedValuesList();
-
-
-                for (String dogSize : selectedValues) {
-                    listDogSize.add(DogSize.valueOf(dogSize));
+        for (SizeCheckBox sizeCheckBox: listCheckbox) {
+            if(sizeCheckBox.getCheckBox().isSelected()) {
+                if(sizeCheckBox.getCheckBox().getText() == DogSize.SMALL.toString()){
+                    small = true;
+                }else if(sizeCheckBox.getCheckBox().getText() == DogSize.MEDIUM.toString()){
+                    medium = true;
+                }else if(sizeCheckBox.getCheckBox().getText() == DogSize.BIG.toString()){
+                    big = true;
+                }else if(sizeCheckBox.getCheckBox().getText() == DogSize.GIANT.toString()){
+                    giant = true;
                 }
-
-
-
-            }
-        });
-
-
-        for (DogSize dogSize : listDogSize){
-
-            if(dogSize == DogSize.SMALL){
-                small = true;
-            }
-            else if(dogSize == DogSize.MEDIUM){
-                medium = true;
             }
 
-            else if(dogSize == DogSize.BIG){
-                big = true;
-            }
-
-            else if(dogSize == DogSize.GIANT){
-                giant = true;
-            }
         }
 
-      //  System.out.println("taglie " + small + medium + big + giant);
-
         dogSitterProxy.updateListDogSize(small, medium, big, giant);
+
+
 
         //SELEZIONE AREE da aggiungere
 
@@ -730,11 +730,40 @@ public class GUIDogSitterSettings extends GUISettings {
         }
 
 
-
+        dogSitterProxy.updateBiography(bioText.getText().toUpperCase());
+        bioText.setEditable(true);
+        bioLabel.setLabelFor(bioText);
 
 
 
     }
+
+
+    protected boolean checkSetNewValues(){
+        Date inputDate = getNewExpirationDate();// aggiorna la data di scadenza
+        boolean upPaymentMethod = dogSitterProxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
+
+        if(upPaymentMethod){
+            setNewValues();
+            JOptionPane.showMessageDialog(new JFrame(), "Credit card information has been updated", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Credit card information has not been updated\n" + " change credit card number please ", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
