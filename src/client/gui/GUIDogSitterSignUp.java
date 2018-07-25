@@ -277,7 +277,6 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
 
 
-
         panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
         panelDate.add(monthList);
@@ -338,6 +337,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         inPanel.add(bioPanel);
 
 
+
         panelPayment.add(labelCreditCardOwnerName);
         panelPayment.add(textCreditCardOwnerName);
         panelPayment.add(labelCrediCardOwnerSurname);
@@ -351,7 +351,6 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
-
 
 
 
@@ -468,7 +467,6 @@ public class GUIDogSitterSignUp extends GUISignUp {
      * @return false if the user try to enter more days that the month has, else
      * @return true
      */
-
     @Override
     protected boolean checkDateOfBirth(String day, String month, String year){
 
@@ -640,7 +638,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
     }
 
 
-    
+
 }
 /**
  * This class is a graphic class that contains combo boxes and labels for
@@ -822,7 +820,7 @@ class AvailabilityBox extends JPanel{
 }
 
 /**
- * Class that defines a checkbox size
+ * Class that defines a checkbox size.
  */
 class SizeCheckBox extends JPanel {
 

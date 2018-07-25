@@ -271,7 +271,7 @@ public class GUISettings extends JFrame {
      * An array of strings for the years number for the credit card expiration.
      */
     protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
-  //  protected JTextField textExpirationDays = new JTextField();
+    //  protected JTextField textExpirationDays = new JTextField();
 
 
 
@@ -344,6 +344,7 @@ public class GUISettings extends JFrame {
 
 
 
+
         panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(8, 1, 40, 10));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
@@ -359,6 +360,7 @@ public class GUISettings extends JFrame {
         panelData.add(labelSurname);
         panelData.add(textSurname);
         panelData.add(labelDate);
+
 
 
 
@@ -384,6 +386,7 @@ public class GUISettings extends JFrame {
         dayList.setSelectedItem(day);
         monthList.setSelectedItem(month);
         yearList.setSelectedItem(year);
+
 
 
 
@@ -418,6 +421,7 @@ public class GUISettings extends JFrame {
 
 
 
+
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
@@ -443,7 +447,7 @@ public class GUISettings extends JFrame {
         }
 
         //todo
-      //  String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
+        //  String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
 
 
 
@@ -582,7 +586,6 @@ public class GUISettings extends JFrame {
         labelSurname.setLabelFor(textSurname);
 
 
-
         Date dateOfBirth = buildDate(dayList.getSelectedItem().toString(), monthList.getSelectedItem().toString(), yearList.getSelectedItem().toString());
         System.out.println(dateOfBirth);
         boolean updateDate = proxy.updateDateOfBirth(dateOfBirth);
@@ -611,7 +614,7 @@ public class GUISettings extends JFrame {
 
 
         boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
-       // System.out.println("upPaymentMethod " + upPaymentMethod);
+        // System.out.println("upPaymentMethod " + upPaymentMethod);
 
         textCreditCardNumber.setEditable(true);
         labelCreditCardNumber.setLabelFor(textCreditCardNumber);
@@ -633,7 +636,7 @@ public class GUISettings extends JFrame {
     }
 
     /**
-     * Method that updates the credit card information
+     * This method check and update the credit card information.
      * @return true if credit card information was update successfully,else
      * @return false with message error.
      */
