@@ -111,13 +111,6 @@ public class GUILogin extends JFrame {
         cont1.setLayout(new GridLayout(2, 2, 10, 0));
         //cont1.setBorder(BorderFactory.createTitledBorder("Login"));
 
-        //login automatico per velocizzare il debug
-        //textUser.setText("MARCO.CARTA@GMAIL.COM");
-        textUser.setText("riccardogiura@gmail.com");
-        textPwd.setText("PROGETTO123");
-
-
-
         panelLoginData.setLayout(new GridLayout(2,2));
         panelLoginData.add(labelUser);
         panelLoginData.add(textUser);
@@ -182,11 +175,11 @@ public class GUILogin extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (ae.getActionCommand().equals("Login as Costumer")){
-                    if (proxy.customerAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
+                String password = new String(textPwd.getPassword());
+                if (ae.getActionCommand().equals("Login as Costumer") && (!(textUser.getText().equals("")) && !(password.equals("")))){
+                    if (proxy.customerAccessDataVerifier(textUser.getText(), password)){
                         GUICustomer guiCustomer = null;
                         try {
-
                             guiCustomer = new GUICustomer(textUser.getText());
                         } catch (ParseException e) {
                             //e.printStackTrace();
@@ -203,9 +196,9 @@ public class GUILogin extends JFrame {
                     }
                 }
 
-                if (ae.getActionCommand().equals("Login as Dogsitter")) {
+                if (ae.getActionCommand().equals("Login as Dogsitter") && (!(textUser.getText().equals("")) && !(password.equals("")))) {
 
-                    if (dogSitterProxy.dogSitterAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
+                    if (dogSitterProxy.dogSitterAccessDataVerifier(textUser.getText(), password)){
                         GUIDogSitter guiDogSitter = null;
 
                         try {
