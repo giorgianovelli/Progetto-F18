@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,6 +58,11 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 guiCustomer.setEnabled(true);
+                try {
+                    guiCustomer.updateCalendar(dogSitterProxy);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         initComponents(cs);

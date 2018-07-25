@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -236,6 +237,8 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
      */
     private GUIDailyAssignmentDogsitter guiDailyAssignmentDogsitter = null;
 
+    private DogSitterProxy dogSitterProxy;
+
     /**
      * Constuctor of the class
      * @param assignment of which informations are displayed
@@ -258,6 +261,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 guiShowDogsitterAssignment.setEnabled(true);
+
             }
         });
 
@@ -283,7 +287,7 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-
+        dogSitterProxy = new DogSitterProxy(email);
         guiDogSitter.setEnabled(false);
 
         this.addWindowListener(new WindowAdapter() {
@@ -291,6 +295,11 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 guiDogSitter.setEnabled(true);
+                try {
+                    guiDogSitter.updateCalendar(dogSitterProxy);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -451,16 +460,6 @@ public class GUIAssignmentInformationDogsitter extends JFrame {
         } else {
             labelState2.setText("Confirmed");
         }
-
-        /*if (assignment.getState() == null) {
-            labelState2.setText("To be confirmed");
-        } else if (!assignment.getState()) {
-            labelState2.setText("Deleted");
-        } else {
-            labelState2.setText("Confirmed");
-        }*/
-
-
 
         Integer intCode = assignment.getCode();
 

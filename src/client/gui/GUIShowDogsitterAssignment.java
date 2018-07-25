@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,6 +43,21 @@ public class GUIShowDogsitterAssignment extends GUIListAssignments {
     public GUIShowDogsitterAssignment(CalendarState cs, HashMap<Integer, Assignment> listAssignment, String email, GUIHome guiDogsitter){
         super(cs,listAssignment, email, guiDogsitter);
         guiShowDogsitterAssignment = this;
+
+        guiDogsitter.setEnabled(false);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                guiDogsitter.setEnabled(true);
+                try {
+                    guiDogsitter.updateCalendar(dogSitterProxy);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
         initComponents(cs, guiDogsitter);
 

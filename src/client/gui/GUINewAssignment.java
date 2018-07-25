@@ -215,6 +215,11 @@ public class GUINewAssignment extends JFrame{
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 guiCustomer.setEnabled(true);
+                try {
+                    guiCustomer.updateCalendar(customerProxy);
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
