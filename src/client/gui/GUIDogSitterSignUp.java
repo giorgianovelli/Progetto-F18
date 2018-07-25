@@ -140,7 +140,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
     /**
      * The list containing the dogs size.
      */
-    private JList dogSizeList;
+    //private JList dogSizeList;
 
     /**
      * Array of string containing the dog size.
@@ -163,6 +163,9 @@ public class GUIDogSitterSignUp extends GUISignUp {
     private JScrollPane scrollPane;
 
 
+    private ArrayList<SizeCheckBox> listCheckbox;
+
+    String[] dogSizesArray;
 
 
     /**
@@ -193,6 +196,8 @@ public class GUIDogSitterSignUp extends GUISignUp {
         bioPanel = new JPanel();
         bioLabel = new JLabel("Biography:",SwingConstants.LEFT);
         bioText = new JTextArea();
+        bioText.setLineWrap(true);
+        bioText.setWrapStyleWord(true);
         bioScroll = new JScrollPane(bioText);
 
         labelCash = new JLabel("Allow cash payment:",SwingConstants.LEFT);
@@ -205,30 +210,26 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
         dogSizeLabel = new JLabel("Dog Size:");
         dogSize = new String[]{"SMALL", "MEDIUM", "BIG", "GIANT"};
-        dogSizeList = new JList(dogSize);
 
+        listCheckbox = new ArrayList<>();
+        dogSizesArray = new String[]{"SMALL", "MEDIUM", "BIG", "GIANT"};
 
-        listDogSize = new HashSet<>();
-
-        dogSizeList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-
-                List<String>  selectedValues = dogSizeList.getSelectedValuesList();
-
-
-                for (String dogSize : selectedValues){
-                    listDogSize.add(DogSize.valueOf(dogSize));
-                }
-
-            }
-        });
-
-
-
-        dogSizePanel = new JPanel(new GridLayout(2,1));
+        dogSizePanel = new JPanel(new GridLayout(5,1));
         dogSizePanel.add(dogSizeLabel);
-        dogSizePanel.add(dogSizeList);
+
+        SizeCheckBox checkBox;
+
+        for(int i = 0; i< dogSizesArray.length; i++){
+            checkBox = new SizeCheckBox(dogSizesArray[i]);
+            listCheckbox.add(checkBox);
+        }
+
+
+        for (SizeCheckBox checkBoxToAdd : listCheckbox){
+            dogSizePanel.add(checkBoxToAdd);
+
+        }
+
 
         centerPanel = new JPanel();
 
@@ -311,8 +312,6 @@ public class GUIDogSitterSignUp extends GUISignUp {
         panelData.add(labelPhoneNumber);
         panelData.add(textPhoneNumber);
 
-
-
         panelData.add(areaLabel);
         panelData.add(areaField);
 
@@ -343,9 +342,6 @@ public class GUIDogSitterSignUp extends GUISignUp {
         dogSizePanel.setBorder(BorderFactory.createEmptyBorder(5,10,100,250));
         inPanel.add(dogSizePanel);
         inPanel.add(bioPanel);
-
-
-
 
 
         /**
@@ -395,10 +391,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
 
         panelOut.add(northPanel, BorderLayout.NORTH);
-
-
         panelOut.add(centerPanel, BorderLayout.CENTER); //biografia e taglia dei cani accettata
-
         panelOut.add(panelButton, BorderLayout.SOUTH);
 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -458,7 +451,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
         boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
 
-        if(inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
+        if(checkDateOfBirth(dayList.getSelectedItem().toString(), monthList.getSelectedItem().toString(), yearList.getSelectedItem().toString()) && inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
 
             boolean inputCreditCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
             Date inputDate = getNewExpirationDate();
@@ -481,6 +474,85 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
 
     }
+
+
+    @Override
+    protected boolean checkDateOfBirth(String day, String month, String year){
+
+        boolean check;
+
+
+        switch (month) {
+
+            case ("02"): {
+                if (Integer.parseInt(year) % 4 != 0) {
+                    if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                JOptionPane.ERROR_MESSAGE);
+                        check = false;
+                        break;
+
+
+                    }
+                }
+
+                if (Integer.parseInt(year) % 4 == 0) {
+                    if (day.equals("30") || day.equals("31")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                JOptionPane.ERROR_MESSAGE);
+                        check = false;
+                        break;
+                    }
+                }
+            }
+
+            case ("04"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("06"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("09"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("11"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+            default:{
+                check =true;
+                break;
+            }
+
+
+        }
+
+        return check;
+    }
+
+
 
     /**
      * Method that allows to add new information
@@ -567,15 +639,23 @@ public class GUIDogSitterSignUp extends GUISignUp {
         }
 
 
-        return dogSitterProxy.dogSitterSignUp(textEmail.getText().toUpperCase(), textName.getText().toUpperCase(), textSurname.getText().toUpperCase(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod, area , listDogSize, Integer.parseInt(dogsNumber.getSelectedItem().toString()), bioText.getText().toUpperCase(), dateTimeAvailability, acceptCash);
+        HashSet<DogSize> dogSizeSelected = new HashSet<>();
+        DogSize[] dogSizes = DogSize.values();
+        for (SizeCheckBox sizeCheckBox: listCheckbox) {
+            if(sizeCheckBox.getCheckBox().isSelected()) {
+                dogSizeSelected.add(sizeCheckBox.getDogSizeFromJCheckBox(sizeCheckBox.getCheckBox().getText(), dogSizes));
+            }
+
+        }
+
+        return dogSitterProxy.dogSitterSignUp(textEmail.getText().toUpperCase(), textName.getText().toUpperCase(), textSurname.getText().toUpperCase(), strPassword, textPhoneNumber.getText(), dateOfBirth2, address, paymentMethod, area , dogSizeSelected, Integer.parseInt(dogsNumber.getSelectedItem().toString()), bioText.getText().toUpperCase(), dateTimeAvailability, acceptCash);
 
 
 
     }
 
 
-
-
+    
 }
 /**
  * This class is a graphic class that contains combo boxes and labels for
@@ -753,5 +833,53 @@ class AvailabilityBox extends JPanel{
      */
     public JComboBox<String>[] getTminuteList() {
         return tminuteList;
+    }
+}
+
+
+class SizeCheckBox extends JPanel {
+
+    /**
+     * A checkbox for selecting a size.
+     */
+    private JCheckBox checkBox;
+
+    /**
+     * Constructor of the class SizeCheckBox
+     * @param text to be setted in the checkbox
+     */
+
+    SizeCheckBox(String text) {
+
+        setLayout(new GridLayout(1,1));
+        checkBox = new JCheckBox();
+        checkBox.setText(text);
+        add(checkBox);
+
+    }
+
+    /**
+     * Getter method
+     * @return checkbox
+     */
+
+    JCheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    /**
+     * Method for getting DogSize object from a checkBox
+     * @param name String checked in for each
+     * @param dogSizeList Hashset controlled to get the correct DogSize object
+     * @return the DogSize object
+     */
+
+    DogSize getDogSizeFromJCheckBox(String name, DogSize[] dogSizeList) {
+        for (DogSize dogSize: dogSizeList) {
+            if (dogSize.name().equals(name)) {
+                return dogSize;
+            }
+        }
+        return null;
     }
 }
