@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.proxy.CustomerProxy;
+import client.proxy.Proxy;
 import server.Assignment;
 import client.clientEnumerations.CalendarState;
 import javax.swing.*;
@@ -87,6 +88,7 @@ public class GUICustomer extends GUIHome{
         guiCustomer = this;
         this.email = email;
         this.proxy = new CustomerProxy(email);
+        startTimer(proxy);
         initComponents();
     }
 
@@ -175,6 +177,8 @@ public class GUICustomer extends GUIHome{
         menuSettings.setVisible(false);
         menuExtra.setVisible(false);
         menuItemCancel.setVisible(true);
+        beforeUpdateCalendar();
+
     }
 
 
@@ -197,6 +201,7 @@ public class GUICustomer extends GUIHome{
         if (!(calendarState.equals(CalendarState.ADDING)) && !(calendarState.equals(CalendarState.REMOVING))){
             showAssignmentsOnCalendar(email, proxy);
         }
+        beforeUpdateCalendar();
     }
 
 
@@ -220,6 +225,7 @@ public class GUICustomer extends GUIHome{
         menuSettings.setVisible(false);
         menuExtra.setVisible(false);
         menuItemCancel.setVisible(true);
+        beforeUpdateCalendar();
     }
 
 
@@ -379,5 +385,18 @@ public class GUICustomer extends GUIHome{
      */
     protected void callClickOnTodayAssignment(ActionEvent todayAssignmentAe){
         clickOnTodayAssignment(todayAssignmentAe, proxy, this);
+    }
+
+
+    /**
+     * refresh before update calendar.
+     */
+    private void beforeUpdateCalendar(){
+        try {
+            goBackYearCalendar(proxy);
+            goForwardYearCalendar(proxy);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

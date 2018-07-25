@@ -32,7 +32,7 @@ public class TimerHome extends TimerTask {
     @Override
     public void run() {
         try {
-            guiHome.updateCalendar(monthNumber, proxy);
+            guiHome.updateCalendar(proxy);
         } catch (ParseException e) {
             e.printStackTrace();
         }
