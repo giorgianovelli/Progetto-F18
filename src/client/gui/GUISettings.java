@@ -137,7 +137,7 @@ public class GUISettings extends JFrame {
 
     protected String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
-    protected JTextField textExpirationDays = new JTextField();
+  //  protected JTextField textExpirationDays = new JTextField();
 
     // attributi per client-server
     private CustomerProxy proxy;
@@ -161,7 +161,6 @@ public class GUISettings extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
         this.email = email;
-        //this.proxy = new CustomerProxy(email);
         guiSettings = this;
         guiHome.setEnabled(false);
 
@@ -173,7 +172,7 @@ public class GUISettings extends JFrame {
             }
         });
 
-       // setValues();
+
 
         initComponents();
     }
@@ -316,15 +315,9 @@ public class GUISettings extends JFrame {
             e.printStackTrace();
         }
 
-        String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
+        //todo
+      //  String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
 
-        /**
-         * stampa il giorno sulla label nell'interfaccia
-         */
-
-        textExpirationDays.setText(expiration_Days);
-        textExpirationDays.setEditable(false);
-        labelExpirationDate.setLabelFor(textExpirationDays);
 
 
         /**
@@ -334,7 +327,6 @@ public class GUISettings extends JFrame {
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
 
-        panelExpiration.add(textExpirationDays);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelPayment.add(panelExpiration);
@@ -364,7 +356,7 @@ public class GUISettings extends JFrame {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
 
-                    } else if (inputCap && inputAddressNumber && inputPhoneNumber) {
+                    } else if (checkDateOfBirth(dayList.getSelectedItem().toString(), monthList.getSelectedItem().toString(), yearList.getSelectedItem().toString()) && inputCap && inputAddressNumber && inputPhoneNumber) {
 
                         boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
                         Date inputDate = getNewExpirationDate();
@@ -372,9 +364,9 @@ public class GUISettings extends JFrame {
 
                         if (inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv) {
 
+                            checkSetNewValues();
                             setNewValues();
-                           
-                            JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(new JFrame(), "the information regarding the customer has been updated successfully", "", JOptionPane.INFORMATION_MESSAGE);
                             guiSettings.dispatchEvent(new WindowEvent(guiSettings, WindowEvent.WINDOW_CLOSING));
                         }
 
@@ -505,7 +497,6 @@ public class GUISettings extends JFrame {
         labelCreditCardOwnerName.setLabelFor(textCreditCardOwnerName);
         textCreditCardOwneSurname.setEditable(true);
         labelCrediCardOwnerSurname.setLabelFor(textCreditCardOwneSurname);
-        textExpirationDays.setEditable(true);
         expirationMonth.setEnabled(true);
         expirationYear.setEnabled(true);
         textSecurityCode.setEditable(true);
@@ -514,14 +505,26 @@ public class GUISettings extends JFrame {
 
         if (!(upPaymentMethod)) {
             System.out.println("Error in updating PaymentMethod");
-           // JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment non è stato agggiornato \n cambiare numero cra di credito prego", "", JOptionPane.ERROR_MESSAGE);
-
         }
 
 
     }
 
 
+    protected boolean checkSetNewValues(){
+        Date inputDate = getNewExpirationDate();// aggiorna la data di scadenza
+        boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
+
+        if(upPaymentMethod){
+            setNewValues();
+            JOptionPane.showMessageDialog(new JFrame(), "Credit card information has been updated", "", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR! Credit card information has not been updated\n" + " change credit card number please ", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    }
 
 
     /**
@@ -560,11 +563,9 @@ public class GUISettings extends JFrame {
         int digits = capNumber.length();
 
         if ((digits <= 5)) {
-            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Cap is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Cap ", "", JOptionPane.ERROR_MESSAGE);
-            textCap.setText("");
             return false;
         }
 
@@ -580,7 +581,6 @@ public class GUISettings extends JFrame {
         int digits = addressNumber.length();
 
         if ((digits < 5) ) {
-            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Street number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Street number ", "", JOptionPane.ERROR_MESSAGE);
@@ -602,11 +602,9 @@ public class GUISettings extends JFrame {
         int digits = phoneNumber.length();
 
         if ((digits == 10) && number) {
-            // JOptionPane.showMessageDialog(new JFrame(), "syntax of phone number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number", "", JOptionPane.ERROR_MESSAGE);
-            textPhoneNumber.setText("");
             return false;
         }
 
@@ -625,7 +623,6 @@ public class GUISettings extends JFrame {
         int digits = crediCardNumber.length();
 
         if ((digits == 16) && number) {
-            //  JOptionPane.showMessageDialog(new JFrame(), "syntax of Credit card number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number ", "", JOptionPane.ERROR_MESSAGE);
@@ -718,7 +715,6 @@ public class GUISettings extends JFrame {
         int digits = cvvNumber.length();
 
         if ((digits <= 3) && number) {
-            // JOptionPane.showMessageDialog(new JFrame(), " CVV is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid CVV ", "", JOptionPane.ERROR_MESSAGE);
@@ -726,9 +722,91 @@ public class GUISettings extends JFrame {
             return false;
         }
 
-
-
     }
+
+
+    /**
+     * controlla la data di nascita
+     * @param day
+     * @param month
+     * @param year
+     * @return
+     */
+
+    protected boolean checkDateOfBirth(String day, String month, String year){
+
+        boolean check;
+
+        switch (month) {
+
+            case ("02"): {
+                if (Integer.parseInt(year) % 4 != 0) {
+                    if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                JOptionPane.ERROR_MESSAGE);
+                        check = false;
+                        break;
+
+
+                    }
+                }
+
+                if (Integer.parseInt(year) % 4 == 0) {
+                    if (day.equals("30") || day.equals("31")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                JOptionPane.ERROR_MESSAGE);
+                        check = false;
+                        break;
+                    }
+                }
+            }
+
+            case ("04"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("06"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("09"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("11"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+            default:{
+                check =true;
+                break;
+            }
+
+
+        }
+
+        return check;
+    }
+
 
 
 

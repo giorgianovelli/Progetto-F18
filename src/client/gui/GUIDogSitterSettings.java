@@ -250,6 +250,7 @@ public class GUIDogSitterSettings extends GUISettings {
         ButtonGroup group = new ButtonGroup();
         group.add(cashflag);
         group.add(cashflag2);
+        cashflag.setSelected(true);
 
         panelRadioButton.add(cashflag);
         panelRadioButton.add(cashflag2);
@@ -622,7 +623,7 @@ public class GUIDogSitterSettings extends GUISettings {
         labelCreditCardOwnerName.setLabelFor(textCreditCardOwnerName);
         textCreditCardOwneSurname.setEditable(true);
         labelCrediCardOwnerSurname.setLabelFor(textCreditCardOwneSurname);
-        textExpirationDays.setEditable(true);
+
         expirationMonth.setEnabled(true);
         expirationYear.setEnabled(true);
         textSecurityCode.setEditable(true);

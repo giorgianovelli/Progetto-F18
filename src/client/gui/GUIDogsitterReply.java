@@ -163,7 +163,7 @@ public class GUIDogsitterReply extends JFrame {
                 if(strError){
                     JOptionPane.showMessageDialog(new JFrame(), error, "Error", JOptionPane.ERROR_MESSAGE);
 
-                } else if(proxy.replyToReview(review.getCode(), reply)){ //TODO da provare
+                } else if(proxy.replyToReview(review.getCode(), reply.toUpperCase())){ //TODO da provare
                     JOptionPane.showMessageDialog(new JFrame(), "Reply added!", "Reply", JOptionPane.INFORMATION_MESSAGE);
                     guiShowDogsitterReview.getGuiShowDogsitterAssignment().dispatchEvent(new WindowEvent(guiShowDogsitterReview.getGuiShowDogsitterAssignment(), WindowEvent.WINDOW_CLOSING));
                     guiShowDogsitterReview.dispatchEvent(new WindowEvent(guiShowDogsitterReview, WindowEvent.WINDOW_CLOSING));

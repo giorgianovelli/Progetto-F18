@@ -126,7 +126,7 @@ public class CustomerTest {
         HashSet<String> result = customer.search(startDate, endDate, address, dogs, payment);
         HashSet<String>  dogsitters = new HashSet<>();
         dogsitters.add("MARCO.CARTA@GMAIL.COM");
-
+        dogsitters.add("FABIOVERDI@GMAIL.COM");
         assertThat(result, is(dogsitters));
 
 
