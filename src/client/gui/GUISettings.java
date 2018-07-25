@@ -21,7 +21,9 @@ import java.util.Locale;
 
 import server.bank.PaymentMethod;
 
-
+/**
+ * This class allows to change customer settings by filling out all the required fields.
+ */
 public class GUISettings extends JFrame {
 
     /**
@@ -85,63 +87,207 @@ public class GUISettings extends JFrame {
     protected JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
 
     /**
-     *
+     * The label for the date of birth of the user.
      */
     protected JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
+
+    /**
+     * The label for the address of the user.
+     */
     protected JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
+
+    /**
+     * The label for the country of the user.
+     */
     protected JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
+
+    /**
+     * The label for the city of the user.
+     */
     protected JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
+
+    /**
+     * The label for the street address of the user.
+     */
     protected JLabel labelStreet = new JLabel("Street:", SwingConstants.LEFT);
+
+    /**
+     * The label for the number street of the user.
+     */
     protected JLabel labelNumber = new JLabel();
+
+    /**
+     * The label for the cap city of the user.
+     */
     protected JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
+
+    /**
+     * The label for the telephone number.
+     */
     protected JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
 
-    // label per titolare carta di credito
+    /**
+     * The label for the name of credit card owner.
+     */
     protected JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
+
+    /**
+     * The label for the credit card number.
+     */
     protected JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
+
+    /**
+     * The label for the expiration date of the credit card.
+     */
     protected JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT); //data di scadenza
+
+    /**
+     * The label for the security code of the credit cart.
+     */
     protected JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
+
+    /**
+     * The label for the surname of credit card owner.
+     */
     protected JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
 
+    /**
+     * The text area for the name of the costumer.
+     */
     protected JTextField textName = new JTextField();
+
+    /**
+     * The text area for the surname of the costumer.
+     */
     protected JTextField textSurname = new JTextField();
+
+    /**
+     * The text area for the street address.
+     */
     protected JTextField textStreet = new JTextField();
+
+    /**
+     * The text area for the number street address.
+     */
     protected JTextField textStreetNumber = new JTextField();
+
+    /**
+     * The text area for the city address.
+     */
     protected JTextField textCity = new JTextField();
+
+    /**
+     * The text area for the country where the costumer is live.
+     */
     protected JTextField textCountry = new JTextField();
+
+    /**
+     * The text area for the cap city.
+     */
     protected JTextField textCap = new JTextField();
+
+    /**
+     * The text area for the telephone number.
+     */
     protected JTextField textPhoneNumber = new JTextField();
 
 
-
-    // textfield per titolare carta di credito
+    /**
+     * The text area for the name of the credit card owner.
+     */
     protected JTextField textCreditCardOwnerName = new JTextField();
+
+    /**
+     * The text area for the credit card number.
+     */
     protected JTextField textCreditCardNumber = new JTextField();
+
+    /**
+     * The text area for the security code of the credit card.
+     */
     protected JTextField textSecurityCode = new JTextField();
+
+    /**
+     * The text area for the surname of the credit card owner.
+     */
     protected JTextField textCreditCardOwneSurname = new JTextField();
 
-
+    /**
+     * Button with the inscription "Confirm".
+     */
     protected JButton buttonConfirm = new JButton("Confirm");
+
+    /**
+     * Button with the inscription "Cancel".
+     */
     protected JButton buttonCancel = new JButton("Cancel");
 
+    /**
+     * Combo box with list of days.
+     */
     protected JComboBox<String> dayList;
+
+    /**
+     * Combo box with list of months.
+     */
     protected JComboBox<String> monthList;
+
+    /**
+     * Combo box with list of years.
+     */
     protected JComboBox<String> yearList;
 
+    /**
+     * Combo box with a list of month for the credit card expiration.
+     */
     protected JComboBox<String> expirationMonth;
+
+    /**
+     * Combo box with a list of years for the credit card expiration.
+     */
     protected JComboBox<String> expirationYear;
 
+    /**
+     * An array of strings for the days number.
+     */
     protected String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+
+    /**
+     * An array of strings for the months number.
+     */
     protected String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+
+    /**
+     * An array list for the years.
+     */
     protected ArrayList<String> years_tmp = new ArrayList<>();
 
+    /**
+     * An array of strings for the months number for the credit card expiration.
+     */
     protected String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+
+    /**
+     * An array of strings for the years number for the credit card expiration.
+     */
     protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
   //  protected JTextField textExpirationDays = new JTextField();
 
-    // attributi per client-server
+
+
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
+
+    /**
+     * The email address of the costumer.
+     */
     protected String email;
+
+    /**
+     * This GUI.
+     */
     private GUISettings guiSettings;
 
 
@@ -177,9 +323,8 @@ public class GUISettings extends JFrame {
         initComponents();
     }
 
-
     /**
-     * initialize the GUI components
+     * Method that initializes the GUI components
      */
 
     protected void initComponents() {
@@ -380,7 +525,7 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * insert the values content in the database
+     * Method that inserts the values content in the database
      */
 
     protected void setValues() {
@@ -445,7 +590,7 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * updates the database
+     * Method that updates the database
      */
 
     protected void setNewValues() {
@@ -528,9 +673,11 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * check if the entered data is a number
+     * Method that checks if the entered data is a number
      * @param number number to check
-     * @return false if entered data is not a number
+     * @return true if entered data is a number,else
+     * @return false with message error.
+     *
      */
 
     private boolean checkNumber (String number){
@@ -553,9 +700,10 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * controlla se il CAP sia composto  da cifre o da lettere e che ne abbia 5 "es. E2"
+     * This method checks if the cap number of the city has letters and numbers and has less than 5 digits.
      * @param capNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
 
 
@@ -573,9 +721,10 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * controllo numero dell'indirizzo può contenere oltre alle cifre anche le lettere  es. 28A
+     * This method checks if the street number has only numbers and has less than 5 digits.
      * @param addressNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
     protected boolean checkAddressNumber(String addressNumber) {
         int digits = addressNumber.length();
@@ -592,9 +741,10 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * check the telephone number that must be composed of ten digits
-     * @param phoneNumber number to check
-     * @return
+     * This method checks if the telephone number is composed by only ten digits.
+     * @param phoneNumber
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
     protected boolean checkPhoneNumber(String phoneNumber) {
         boolean number = checkNumber(phoneNumber);
@@ -614,7 +764,8 @@ public class GUISettings extends JFrame {
     /**
      * check credit card number which must be composed of sixteen digits
      * @param crediCardNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
 
     protected boolean checkCreditCardNumber(String crediCardNumber) {
@@ -636,11 +787,11 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * costruisce una data secondo il formato "dd/MM/yyyy"
-     * @param day stringa giorno
-     * @param month stringa mese
-     * @param year stringa anno
-     * @return data nel formato predefinito
+     * This method creates the date format "dd/MM/yyyy".
+     * @param day
+     * @param month
+     * @param year
+     * @return data the date format.
      */
 
     private Date buildDate(String day, String month, String year) {
@@ -661,22 +812,23 @@ public class GUISettings extends JFrame {
 
 
     /**
-     *implementa la data di scadenza della carta di credito
-     * @return data di scadenza
+     * This method implements the credit card expiration date.
+     * @return inputDate
      */
+
     protected Date getNewExpirationDate() {
         Date exYear = new Date();
         Date inputDate;
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
 
-        //prendo solo l'anno dalle comboBox per calcolare l'ultimo giorno del mese
+
         try {
             exYear = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString()); //prende come data solo l'anno
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        //costruisco la data completa della nuova data di scadenza per la carta
+
         inputDate = buildDate(Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), exYear)), expirationMonth.getSelectedItem().toString(), expirationYear.getSelectedItem().toString());
 
         return inputDate;
@@ -686,11 +838,12 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * controlla se la data di scadenza delle carte di credito inserita dall'utente nelle jcombobox è inferiore a quella odierna
-     *
-     * @param date data che viene controllata
-     * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
+     * This method check if the expiration date of credit cards entered by the user is lower than today.
+     * @param date the date entered by the user
+     * @return false if the condition occurs, else
+     * @return true with message error.
      */
+
     protected boolean dateBeforeToday(Date date) {
         Date todayDate = new Date(System.currentTimeMillis());
 
@@ -704,9 +857,10 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * controlla numero di CVV
+     * This method checks the security code of the credit card if is composed by only 3 digits
      * @param cvvNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
 
     protected boolean checkCvvNumber(String cvvNumber) {
@@ -726,11 +880,12 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * controlla la data di nascita
+     * This method checks the date of birth for the months that do not have 31 days
      * @param day
      * @param month
      * @param year
-     * @return
+     * @return false if the user try to enter more days that the month has, else
+     * @return true
      */
 
     protected boolean checkDateOfBirth(String day, String month, String year){
