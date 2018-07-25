@@ -1,7 +1,6 @@
 package server;
 
 import database.DBConnector;
-import enumeration.TypeUser;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,19 +9,6 @@ import java.sql.SQLException;
  * This class allows the login to the project.
  */
 public class Login{
-    /**
-     * The user.
-     */
-    private String user;
-    /**
-     * The user's password.
-     */
-    private String password;
-    /**
-     * The type user.
-     */
-    private TypeUser typeUser;
-
 
     /**
      * Perform the login of a customer through the database.
@@ -39,7 +25,7 @@ public class Login{
         System.out.println(inputUser);
         rs.last();
         rs.getRow();
-        if (rs.getRow() == 1){
+        if (rs.getRow() == 1 && inputPasword.equals(rs.getString("PASSWORD"))){
             System.out.println("Access allowed as customer!");
             dbConnector.closeConnection();
             return true;
@@ -65,7 +51,7 @@ public class Login{
         System.out.println(inputUser);
         rs.last();
         rs.getRow();
-        if (rs.getRow() == 1){
+        if (rs.getRow() == 1 && inputPasword.equals(rs.getString("PASSWORD"))){
             System.out.println("Access allowed as dogsitter!");
             dbConnector.closeConnection();
             return true;
@@ -74,9 +60,5 @@ public class Login{
             dbConnector.closeConnection();
             return false;
         }
-    }
-
-    public TypeUser getTypeUser() {
-        return typeUser;
     }
 }
