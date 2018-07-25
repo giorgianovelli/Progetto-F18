@@ -191,12 +191,12 @@ public class GUIChangePassword extends JFrame {
                     else if (checkPassword(currentPassword)) {
                         if(!(getSpecialCharacterCount(newPassword))){
                             if (changePasswordFields(newPassword, confirmPassword)) {
-                                JOptionPane.showMessageDialog(new JFrame(), "you have changed password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(new JFrame(), "You have changed password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
                                 guiChangePassword.dispatchEvent(new WindowEvent(guiChangePassword, WindowEvent.WINDOW_CLOSING));
                             }
                         }
                         else{
-                            JOptionPane.showMessageDialog(new JFrame(), " New Password is invalid!", "Password error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(new JFrame(), "New password is invalid!", "Password error", JOptionPane.ERROR_MESSAGE);
 
                         }
 
@@ -236,7 +236,6 @@ public class GUIChangePassword extends JFrame {
         String currentPwdProxy = proxy.getPassword();
 
         if (currentPwd.equals(currentPwdProxy)) {
-            JOptionPane.showMessageDialog(new JFrame(), "the current password is correct", "", JOptionPane.INFORMATION_MESSAGE);
             matchPassword = true;
 
         } else {
