@@ -54,9 +54,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
     private JLabel labelArea;
-    private JList dogsitterAreas;
-    private String[] areas;
-    private HashSet<String> listArea;
+
     private JPanel areaListPanel;
 
     private AvailabilityDogSitterBox availabilityBox;
@@ -787,8 +785,6 @@ public class GUIDogSitterSettings extends GUISettings {
         }
 
         dogSitterProxy.updateListDogSize(small, medium, big, giant);
-
-        
 
         dogSitterProxy.updateBiography(bioText.getText().toUpperCase());
         bioText.setEditable(true);

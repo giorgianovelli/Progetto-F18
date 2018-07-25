@@ -136,12 +136,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
      * Label containing the dogs size.
      */
     private JLabel dogSizeLabel;
-
-    /**
-     * The list containing the dogs size.
-     */
-    //private JList dogSizeList;
-
+    
     /**
      * Array of string containing the dog size.
      */
