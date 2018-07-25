@@ -98,6 +98,7 @@ public class TestDogSitterProxy {
         proxy.updateDateTimeAvailability(availability);*/
         //proxy.getBiography();
         //proxy.replyToReview(1, "prova review!");
-        proxy.getCustomerEmailOfAssignment(3);
+        //proxy.getCustomerEmailOfAssignment(3);
+        proxy.updateBiography("Prova update");
     }
 }

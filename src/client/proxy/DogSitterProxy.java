@@ -599,4 +599,19 @@ public class DogSitterProxy extends Proxy implements InterfaceDogSitter {
         return getReply("DOGSITTER#GETCUSTOMEREMAILOFASSIGNMENT#" + email + "#" + code);
     }
 
+
+    /**
+     * Update the dog sitter's biography.
+     * @param biography
+     * @return
+     */
+    public boolean updateBiography(String biography){
+        String serverMsg = getReply("DOGSITTER#UPDATEBIOGRAPHY#" + email + "#" + biography);
+        if (serverMsg.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -207,4 +207,12 @@ public interface InterfaceDogSitter {
      * @return the customer's email of the assignment specified.
      */
     String getCustomerEmailOfAssignment(int code);
+
+
+    /**
+     * Update the dog sitter's biography.
+     * @param biography
+     * @return
+     */
+    boolean updateBiography(String biography);
 }

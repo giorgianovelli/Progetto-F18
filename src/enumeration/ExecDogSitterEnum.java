@@ -920,6 +920,30 @@ public enum ExecDogSitterEnum {
             return dogSitter.getCustomerEmailOfAssignment(code);
         }
 
+    },
+
+    UPDATEBIOGRAPHY{
+
+        /**
+         * Update the dog sitter's biography.
+         * @param clientMsg the message received from the client.
+         * @return the message for the client.
+         */
+        public String execute(String clientMsg) {
+            StringTokenizer tokenMsg = new StringTokenizer(clientMsg, "#");
+            String email = tokenMsg.nextToken();
+            String biography = tokenMsg.nextToken();
+
+            Singleton singleton = new Singleton();
+            DogSitter dogSitter = singleton.createDogSitterFromDB(email);
+            if(dogSitter.updateBiography(biography)){
+                System.out.println("test reply");
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
     };
 
     /**

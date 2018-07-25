@@ -753,4 +753,30 @@ public class DogSitter extends User implements InterfaceDogSitter {
         }
     }
 
+    /**
+     * Update the dog sitter's biography.
+     * @param biography
+     * @return
+     */
+    public boolean updateBiography(String biography){
+        DBConnector dbConnector = new DBConnector();
+        try {
+            boolean isUpdated = dbConnector.updateDB("UPDATE DOGSITTERS SET BIOGRAPHY = '" + biography + "' WHERE EMAIL = '" + email + "';");
+            dbConnector.closeUpdate();
+
+            if (isUpdated) {
+                System.out.println("Biography is now up to date!");
+                this.biography = biography;
+                return true;
+            } else {
+                System.out.println("Error in updating biography!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
