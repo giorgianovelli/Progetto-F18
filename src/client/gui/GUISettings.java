@@ -271,7 +271,7 @@ public class GUISettings extends JFrame {
      * An array of strings for the years number for the credit card expiration.
      */
     protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
-  //  protected JTextField textExpirationDays = new JTextField();
+    //  protected JTextField textExpirationDays = new JTextField();
 
 
 
@@ -343,9 +343,7 @@ public class GUISettings extends JFrame {
 
 
 
-        /**
-         * Panels
-         */
+
 
         panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(8, 1, 40, 10));
@@ -365,9 +363,7 @@ public class GUISettings extends JFrame {
 
 
 
-        /**
-         * JCOMBOBOX of DATE OF BIRTH
-         */
+
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
             years_tmp.add(years + "");
         }
@@ -376,9 +372,7 @@ public class GUISettings extends JFrame {
         monthList = new JComboBox<>(month);
         yearList = new JComboBox(years_tmp.toArray());
 
-        /**
-         *  Serve per fare in modo che le jcombobox di "Date of Birth" siano corrette
-         */
+
 
         Date strDate = proxy.getDateOfBirth();
         SimpleDateFormat dateFormatdd = new SimpleDateFormat("dd");
@@ -394,9 +388,7 @@ public class GUISettings extends JFrame {
         yearList.setSelectedItem(year);
 
 
-        /**
-         * others panel
-         */
+
 
         panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
@@ -428,16 +420,12 @@ public class GUISettings extends JFrame {
         panelPayment.add(labelExpirationDate);
 
 
-        /**
-         * JCOMBOBOX of EXPIRATION DATE
-         */
+
 
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
-        /**
-         *  Serve per fare in modo che le jcombobox di "ExpirationDate" siano corrette
-         */
+
         PaymentMethod strExpirationDate = proxy.getPaymentMethod();
         SimpleDateFormat expirationDateFormatmm = new SimpleDateFormat("MM");
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
@@ -448,9 +436,7 @@ public class GUISettings extends JFrame {
         expirationMonth.setSelectedItem(expiration_Months);
         expirationYear.setSelectedItem(expiration_Years);
 
-        /**
-         * insertion last day of the month automatically
-         */
+
 
         Date exYear = new Date();
 
@@ -461,14 +447,11 @@ public class GUISettings extends JFrame {
         }
 
         //todo
-      //  String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
+        //  String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expiration_Months), exYear));
 
 
 
-        /**
-         * panel of expiration date to fix the jcomboboxes
-         * and panels of buttons
-         */
+
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
 
@@ -602,9 +585,6 @@ public class GUISettings extends JFrame {
         textSurname.setEditable(true);
         labelSurname.setLabelFor(textSurname);
 
-        /**
-         * aggiorna la data di nascita
-         */
 
         Date dateOfBirth = buildDate(dayList.getSelectedItem().toString(), monthList.getSelectedItem().toString(), yearList.getSelectedItem().toString());
         System.out.println(dateOfBirth);
@@ -634,7 +614,7 @@ public class GUISettings extends JFrame {
 
 
         boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
-       // System.out.println("upPaymentMethod " + upPaymentMethod);
+        // System.out.println("upPaymentMethod " + upPaymentMethod);
 
         textCreditCardNumber.setEditable(true);
         labelCreditCardNumber.setLabelFor(textCreditCardNumber);
@@ -655,7 +635,11 @@ public class GUISettings extends JFrame {
 
     }
 
-
+    /**
+     * This method check and update the credit card information.
+     * @return true if credit card information was update successfully,else
+     * @return false with message error.
+     */
     protected boolean checkSetNewValues(){
         Date inputDate = getNewExpirationDate();// aggiorna la data di scadenza
         boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
