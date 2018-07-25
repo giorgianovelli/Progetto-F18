@@ -5,6 +5,9 @@ import server.DogSitter;
 
 import javax.swing.*;
 
+/**
+ * This class allows to change the password from the dog sitter account.
+ */
 public class GUIDogSitterChangePassword extends GUIChangePassword {
 
     /**

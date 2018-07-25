@@ -15,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This class allows the creation of a new assignment with a dog sitter.
+ */
  class GUIConfirmAssignment extends JFrame {
      /**
       * The frame width.

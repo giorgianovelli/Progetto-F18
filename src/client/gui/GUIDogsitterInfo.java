@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class allows contain all the information related to a dog sitter.
+ */
 public class GUIDogsitterInfo extends JFrame {
 
     /**

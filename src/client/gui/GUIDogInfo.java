@@ -329,6 +329,12 @@ public class GUIDogInfo extends JFrame {
 
     }
 
+    /**
+     * This method allows to establish the weight of the dog.
+     * @param number which identifies the weight.
+     * @return false if the number is wrong, else
+     * @return true
+     */
     private boolean checkNumber (String number){
         double n=0;
 
