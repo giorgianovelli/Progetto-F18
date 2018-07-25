@@ -54,7 +54,13 @@ public abstract class Proxy {
      */
     protected String getReply(String clientMsg) {
         try {
-            socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
+
+            //local host:
+            //socket = new Socket("127.0.0.1", 4000); //4000 customer e 4001 dog sitter
+
+            //unipv settings:
+            socket = new Socket("10.87.245.189", 4000); //4000 customer e 4001 dog sitter
+
             msgIn = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
             msgOut = new PrintStream(socket.getOutputStream(), true);

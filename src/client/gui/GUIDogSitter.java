@@ -40,6 +40,7 @@ public class GUIDogSitter extends GUIHome{
 
         this.email = email;
         this.proxy = new DogSitterProxy(email);
+        startTimer(proxy);
 
         initComponents();
     }

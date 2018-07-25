@@ -321,11 +321,11 @@ public abstract class GUIHome extends JFrame{
         Date currentYear = new Date();
         labelDateMonthYear.setText(dateMonth.format(currentMonth) + "/" + dateYear.format(currentYear));
 
-        Timer timer = new Timer();
+        /*Timer timer = new Timer();
         TimerHome timerTask = new TimerHome(this, proxy, monthNumber);
-        timer.schedule(timerTask, 60000, 60000);
+        timer.schedule(timerTask, 60000, 60000);*/
 
-        updateCalendar(monthNumber, proxy);
+        updateCalendar(proxy);
     }
 
 
@@ -363,7 +363,7 @@ public abstract class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, proxy);
+        updateCalendar(proxy);
     }
 
 
@@ -398,7 +398,7 @@ public abstract class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, proxy);
+        updateCalendar(proxy);
     }
 
 
@@ -436,7 +436,7 @@ public abstract class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, proxy);
+        updateCalendar(proxy);
     }
 
 
@@ -471,17 +471,16 @@ public abstract class GUIHome extends JFrame{
             labelDateMonthYear.setText(monthNumber + "/" + strYear);
         }
 
-        updateCalendar(monthNumber, proxy);
+        updateCalendar(proxy);
     }
 
 
     /**
      * Update the calendar.
-     * @param monthNumber the number of the month.
      * @param proxy the client proxy.
      * @throws ParseException
      */
-    protected void updateCalendar(int monthNumber, Proxy proxy) throws ParseException {
+    protected void updateCalendar(Proxy proxy) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = "01/" + labelDateMonthYear.getText();
         Date currentDate = date.parse(strDate);
@@ -490,6 +489,16 @@ public abstract class GUIHome extends JFrame{
         String stringDayNumber = dateDayNumber.format(currentDate);
         int dayNumber = Integer.parseInt(stringDayNumber);
         labelEmpty= new JLabel[NEMPTYLABEL];
+
+        SimpleDateFormat formatDateMonth = new SimpleDateFormat("M");
+        Date dateMonth = null;
+        try {
+            dateMonth = formatDateMonth.parse(labelDateMonthYear.getText());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String strMonthNumber = formatDateMonth.format(dateMonth);
+        int monthNumber = Integer.parseInt(strMonthNumber);
 
         disposeEmptyLabel(dayNumber, monthNumber);
 
@@ -888,7 +897,7 @@ public abstract class GUIHome extends JFrame{
                 String strMonthNumber = dateMonth.format(date);
                 int monthNumber = Integer.parseInt(strMonthNumber);
                 try {
-                    updateCalendar(monthNumber, proxy);
+                    updateCalendar(proxy);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -969,6 +978,21 @@ public abstract class GUIHome extends JFrame{
                 buttonDay[i].setForeground(new Color(0, 0, 0));
             }
         }
+    }
+
+    public void startTimer(Proxy proxy){
+        SimpleDateFormat dateMonth = new SimpleDateFormat("M");
+        Date date = null;
+        try {
+            date = dateMonth.parse(labelDateMonthYear.getText());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String strMonthNumber = dateMonth.format(date);
+        int monthNumber = Integer.parseInt(strMonthNumber);
+        Timer timer = new Timer();
+        TimerHome timerTask = new TimerHome(this, proxy, monthNumber);
+        timer.schedule(timerTask, 20000, 20000);
     }
 
 }
