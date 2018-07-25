@@ -379,9 +379,8 @@ public class GUISignUp extends JFrame {
     protected void initComponents() {
 
         proxy = new CustomerProxy(textEmail.getText());
-        /**
-         * Panels
-         */
+
+
         panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(11, 1, 40, 5));
         panelData.setBorder(BorderFactory.createTitledBorder("FIRST STEP_Customer Fields: "));

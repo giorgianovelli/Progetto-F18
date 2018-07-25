@@ -245,9 +245,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         availabilityPanel.setBorder(BorderFactory.createTitledBorder("Availability"));
         availabilityPanel.add(availabilityBox);
 
-        /**
-         * Panels
-         */
+
 
         northPanel = new JPanel();
         inPanel = new JPanel();
@@ -266,9 +264,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
 
 
-        /**
-         * JCOMBOBOX di DATE OF BIRTH
-         */
+
 
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
             years_tmp.add(years + "");
@@ -280,9 +276,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
 
 
-        /**
-         * others panels
-         */
+
 
         panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
@@ -344,9 +338,6 @@ public class GUIDogSitterSignUp extends GUISignUp {
         inPanel.add(bioPanel);
 
 
-        /**
-         *   PAYMENT panels
-         */
         panelPayment.add(labelCreditCardOwnerName);
         panelPayment.add(textCreditCardOwnerName);
         panelPayment.add(labelCrediCardOwnerSurname);
@@ -356,18 +347,14 @@ public class GUIDogSitterSignUp extends GUISignUp {
         panelPayment.add(labelExpirationDate);
 
 
-        /**
-         * JCOMBOBOX di EXPIRATION DATE
-         */
+
 
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
 
 
-        /**
-         * PANEL DI EXPIRATION DATE per sistemare le jcombobox
-         *
-         */
+
+
 
         panelExpiration.setLayout(new GridLayout(1, 2, 5, 5));
         panelExpiration.add(expirationMonth);
@@ -398,9 +385,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane);
 
-        /**
-         * Button panels
-         */
+
         panelButton.setLayout(new GridLayout(1, 2, 5, 5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(15, 200, 10, 200));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
@@ -475,6 +460,14 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
     }
 
+    /**
+     * This method checks the date of birth for the months that do not have 31 days
+     * @param day
+     * @param month
+     * @param year
+     * @return false if the user try to enter more days that the month has, else
+     * @return true
+     */
 
     @Override
     protected boolean checkDateOfBirth(String day, String month, String year){
@@ -560,9 +553,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
      */
     @Override
     protected boolean addCustomerValues() {
-        /**
-         *  date of birth
-         */
+
         Date dateOfBirth2 = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strDateOfBirth = dayList.getSelectedItem().toString() + "/" + monthList.getSelectedItem().toString() + "/" + yearList.getSelectedItem().toString();
@@ -575,17 +566,13 @@ public class GUIDogSitterSignUp extends GUISignUp {
             e.printStackTrace();
         }
 
-        /**
-         * random generation o amount
-         */
+
         Double max = MAX_AMOUNT;
         Double min = MIN_AMOUNT;
         Random rand = new Random();
         Double amount = Math.round((min + (max - min) * rand.nextDouble()) * 100d) / 100d;
 
-        /**
-         *  Expiration date
-         */
+
 
         Date ex_Year = new Date();
 
@@ -601,9 +588,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
 
         PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText(), amount);
 
-        /**
-         * stampa il giorno sulla label nell'interfaccia
-         */
+
         String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), ex_Year));
         textExpirationDays.setText(expiration_Days);
 
@@ -836,7 +821,9 @@ class AvailabilityBox extends JPanel{
     }
 }
 
-
+/**
+ * Class that defines a checkbox size
+ */
 class SizeCheckBox extends JPanel {
 
     /**
