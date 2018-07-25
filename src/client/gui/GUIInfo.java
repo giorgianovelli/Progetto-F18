@@ -6,22 +6,60 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ *  This class shows general information about the project.
+ */
 public class GUIInfo extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 500;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 400;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
 
+    /**
+     * The panel containing the project icon.
+     */
     private JPanel panelIcon;
+
+    /**
+     * The panel containing other panels.
+     */
     private JPanel panelLabel;
+
+    /**
+     * The type parameter Image icon that acquires the icon.
+     */
     ImageIcon splashScreenIcon;
+
+    /**
+     * The label containing the project icon.
+     */
     private JLabel labelIcon;
+
+    /**
+     * The label containing version of the project.
+     */
     private JLabel version;
+
+    /**
+     * The label containing the publication  data of the project.
+     */
     private JLabel date;
+
 
     /**
      * Constuctor of the class
      */
-
     public GUIInfo(GUIHome guiCustomer) {
         guiCustomer.setEnabled(false);
         this.addWindowListener(new WindowAdapter() {
@@ -34,10 +72,10 @@ public class GUIInfo extends JFrame {
         initComponent();
     }
 
+
     /**
      * initialize the interface components
      */
-
     private void initComponent(){
         setTitle("Info");
         setSize(WIDTH, HEIGHT);

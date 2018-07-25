@@ -6,6 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateTimeTools {
+
+    /**
+     * Type method DateTimeDHMS
+     * @param d1 to calculate the difference in milliseconds
+     * @param d2 to calculate the difference in milliseconds
+     * @return a new DateTimeDHMS
+     */
     public static DateTimeDHMS dateTimeDiff(Date d2, Date d1){
         try {
             long millisDiff = d2.getTime() - d1.getTime();
@@ -20,6 +27,11 @@ public class DateTimeTools {
         }
     }
 
+
+    /**
+     * Method that acquires the date of birth
+     * @param dateOfBirth
+     */
     public static int getAge(Date dateOfBirth){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
         String strBirth = dateFormat.format(dateOfBirth);

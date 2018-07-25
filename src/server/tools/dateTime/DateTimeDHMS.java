@@ -1,11 +1,17 @@
 package server.tools.dateTime;
 
+/**
+ *  This class returns type parameters such as : days,hours,minutes and seconds.
+ */
 public class DateTimeDHMS {
     private int days;
     private int hours;
     private int minutes;
     private int seconds;
 
+    /**
+     * The constructor of the class.
+     */
     public DateTimeDHMS(int days, int hours, int minutes, int seconds) {
         this.days = days;
         this.hours = hours;
@@ -13,6 +19,9 @@ public class DateTimeDHMS {
         this.seconds = seconds;
     }
 
+    /**
+     * Methods getter.
+     */
     public int getDays() {
         return days;
     }
@@ -29,6 +38,9 @@ public class DateTimeDHMS {
         return seconds;
     }
 
+    /**
+     * Methods getter.
+     */
     public void setDays(int days) {
         this.days = days;
     }

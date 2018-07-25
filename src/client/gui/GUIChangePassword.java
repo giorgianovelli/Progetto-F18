@@ -10,7 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
+/**
+ * This class allows to change the password of the user account.
+ */
 public class GUIChangePassword extends JFrame {
 
     /**

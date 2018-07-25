@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
+/**
+ * This class allows the creation of a new customer through the parameters.
+ */
 public class GUICustomerLabel extends JFrame {
 
     /**

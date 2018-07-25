@@ -5,9 +5,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Check if the email syntax is valid.
+ * A Email class to control the syntax.
  */
 public class Email {
+
+    /**
+     * Method that check if the email syntax is valid.
+     * @param email
+     * @return true if the email is correct,else
+     * @return false
+     */
     public static boolean mailSyntaxCheck(String email) {
         Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
         Matcher m = p.matcher(email);
