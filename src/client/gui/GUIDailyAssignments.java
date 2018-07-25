@@ -26,7 +26,7 @@ public class GUIDailyAssignments extends JFrame {
     /**
      * Frame width.
      */
-    final int WIDTH = 512;
+    final int WIDTH = 600;
 
     /**
      * Frame height.
