@@ -104,7 +104,7 @@ public class GUISignUp extends JFrame {
 
     // attributo per client-server
     private CustomerProxy proxy;
-    private String inputEmail;
+
 
 
 
@@ -238,15 +238,12 @@ public class GUISignUp extends JFrame {
         labelExpirationDate.setLabelFor(textExpirationDays);
 
 
-
-
         /**
          * PANEL DI EXPIRATION DATE per sistemare le jcombobox
          *
          */
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
-        panelExpiration.add(textExpirationDays);
         panelExpiration.add(expirationMonth);
         panelExpiration.add(expirationYear);
         panelPayment.add(panelExpiration);
@@ -274,7 +271,6 @@ public class GUISignUp extends JFrame {
                     confirmPassword = "";
                     Password = readPassword(textPassword.getPassword());
                     confirmPassword = readPassword(textConfirmPassword.getPassword());
-                    // boolean add = addCustomerValues();
 
 
                     if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("") ||
@@ -286,7 +282,7 @@ public class GUISignUp extends JFrame {
                         checkAddCustomerValues();
                     }
                 }
-                // }
+
             }
         };
         buttonCancel.addActionListener(e -> guiSignUp.dispatchEvent(new WindowEvent(guiSignUp, WindowEvent.WINDOW_CLOSING)));
@@ -364,7 +360,7 @@ public class GUISignUp extends JFrame {
         boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
         boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
 
-        if(inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
+        if(checkDateOfBirth(dayList.getSelectedItem().toString(), monthList.getSelectedItem().toString(), yearList.getSelectedItem().toString()) && inputPassword && inputCap && inputAddressNumber && inputPhoneNumber){
 
             boolean inputCrediCardNumber = checkCreditCardNumber(textCreditCardNumber.getText());
             Date inputDate = getNewExpirationDate();
@@ -376,12 +372,12 @@ public class GUISignUp extends JFrame {
                     GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
                     guiCustomerLabel.setVisible(true);
                     guiSignUp.setVisible(false);
-                    //return true;
+
                 }
 
                 else {
                     JOptionPane.showMessageDialog(new JFrame(), "ERROR! Email address already used!", "", JOptionPane.ERROR_MESSAGE);
-                    //return false;
+
 
                 }
 
@@ -390,9 +386,7 @@ public class GUISignUp extends JFrame {
         }
 
 
-        // JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
 
-        //return false;
     }
 
 
@@ -505,7 +499,6 @@ public class GUISignUp extends JFrame {
         int digits = capNumber.length();
 
         if ((digits <= 5)) {
-            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Cap is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Cap ", "", JOptionPane.ERROR_MESSAGE);
@@ -525,7 +518,6 @@ public class GUISignUp extends JFrame {
         int digits = addressNumber.length();
 
         if ((digits < 5) ) {
-            // JOptionPane.showMessageDialog(new JFrame(), "syntax of Street number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Street number ", "", JOptionPane.ERROR_MESSAGE);
@@ -547,7 +539,6 @@ public class GUISignUp extends JFrame {
         int digits = phoneNumber.length();
 
         if ((digits == 10) && number) {
-            // JOptionPane.showMessageDialog(new JFrame(), "syntax of phone number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid phone number", "", JOptionPane.ERROR_MESSAGE);
@@ -570,7 +561,6 @@ public class GUISignUp extends JFrame {
         int digits = crediCardNumber.length();
 
         if ((digits == 16) && number) {
-            //  JOptionPane.showMessageDialog(new JFrame(), "syntax of Credit card number is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid Credit card number ", "", JOptionPane.ERROR_MESSAGE);
@@ -662,7 +652,6 @@ public class GUISignUp extends JFrame {
         int digits = cvvNumber.length();
 
         if ((digits <= 3) && number) {
-            // JOptionPane.showMessageDialog(new JFrame(), " CVV is correct", "", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR! Invalid CVV ", "", JOptionPane.ERROR_MESSAGE);
@@ -674,7 +663,106 @@ public class GUISignUp extends JFrame {
 
     }
 
+
+    protected boolean checkDateOfBirth(String day, String month, String year){
+
+        boolean check;
+
+
+        switch (month) {
+
+            case ("02"): {
+                if (Integer.parseInt(year) % 4 != 0) {
+                    if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                JOptionPane.ERROR_MESSAGE);
+                        check = false;
+                        break;
+
+
+                    }
+                }
+
+                if (Integer.parseInt(year) % 4 == 0) {
+                    if (day.equals("30") || day.equals("31")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                                JOptionPane.ERROR_MESSAGE);
+                        check = false;
+                        break;
+                    }
+                }
+            }
+
+            case ("04"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("06"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("09"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+
+            case ("11"): {
+                if (day.equals("31")) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Date selected is wrong!", "Assignment error",
+                            JOptionPane.ERROR_MESSAGE);
+                    check = false;
+                    break;
+                }
+            }
+            default:{
+                check =true;
+                break;
+            }
+
+
+        }
+
+        return check;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public GUILogin getGuiLogin() {
         return guiLogin;
     }
+
+
+
+
+
+
+
+
+
+
 }
