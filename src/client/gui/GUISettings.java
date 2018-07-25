@@ -23,35 +23,85 @@ import server.bank.PaymentMethod;
 
 
 public class GUISettings extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 600;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 600;
+
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+    /**
+     * Out panel, it contains all the other panels.
+     */
     protected JPanel panelOut = new JPanel();
-    protected JPanel panelData = new JPanel();
-    protected JPanel panelButton = new JPanel();
-    private JPanel panelDate = new JPanel();
-    private JPanel panelAddress = new JPanel();
-    private JPanel panelPayment = new JPanel();
-    private JPanel panelExpiration = new JPanel();
 
-    private JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
-    private JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
-    private JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
-    private JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
-    private JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
-    private JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
-    private JLabel labelStreet = new JLabel("Street:", SwingConstants.LEFT);
-    private JLabel labelNumber = new JLabel();
-    private JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
-    private JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
+    /**
+     * The panel  contains Customer fields (Name, Surname, Date of Birth, Country, City, Cap, Address, Phone Number).
+     */
+    protected JPanel panelData = new JPanel();
+
+    /**
+     * The panel contains buttons to confirm the changes that the user has made or cancel them
+     */
+    protected JPanel panelButton = new JPanel();
+
+    /**
+     * The panel allows to enter the date of birth.
+     */
+    protected JPanel panelDate = new JPanel();
+
+    /**
+     * The panel  contains address fields ( Street, Number of Street ).
+     */
+    protected JPanel panelAddress = new JPanel();
+
+    /**
+     * The panel  contains Credit Card information.
+     */
+    protected JPanel panelPayment = new JPanel();
+
+    /**
+     * The panel allows to enter the expiration date.
+     */
+    protected JPanel panelExpiration = new JPanel();
+
+    /**
+     * The label for the Name of the user
+     */
+    protected JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
+
+    /**
+     * The label for the Surname of the user
+     */
+    protected JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
+
+    /**
+     *
+     */
+    protected JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
+    protected JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
+    protected JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
+    protected JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
+    protected JLabel labelStreet = new JLabel("Street:", SwingConstants.LEFT);
+    protected JLabel labelNumber = new JLabel();
+    protected JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
+    protected JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
 
     // label per titolare carta di credito
-    private JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
-    private JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
-    private JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT); //data di scadenza
-    private JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
-    private JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
+    protected JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
+    protected JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
+    protected JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT); //data di scadenza
+    protected JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
+    protected JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
 
     protected JTextField textName = new JTextField();
     protected JTextField textSurname = new JTextField();
@@ -61,6 +111,8 @@ public class GUISettings extends JFrame {
     protected JTextField textCountry = new JTextField();
     protected JTextField textCap = new JTextField();
     protected JTextField textPhoneNumber = new JTextField();
+
+
 
     // textfield per titolare carta di credito
     protected JTextField textCreditCardOwnerName = new JTextField();
@@ -72,32 +124,31 @@ public class GUISettings extends JFrame {
     protected JButton buttonConfirm = new JButton("Confirm");
     protected JButton buttonCancel = new JButton("Cancel");
 
-    private JComboBox<String> dayList;
-    private JComboBox<String> monthList;
-    private JComboBox<String> yearList;
+    protected JComboBox<String> dayList;
+    protected JComboBox<String> monthList;
+    protected JComboBox<String> yearList;
 
-    private JComboBox<String> expirationMonth;
-    private JComboBox<String> expirationYear;
+    protected JComboBox<String> expirationMonth;
+    protected JComboBox<String> expirationYear;
 
-    private String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
-    private String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private ArrayList<String> years_tmp = new ArrayList<>();
+    protected String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    protected String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    protected ArrayList<String> years_tmp = new ArrayList<>();
 
-    private String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
-    private JTextField textExpirationDays = new JTextField();
+    protected String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+    protected JTextField textExpirationDays = new JTextField();
 
     // attributi per client-server
     private CustomerProxy proxy;
-    private String email;
+    protected String email;
     private GUISettings guiSettings;
 
 
 
     /**
-     * Costruttore
-     *
-     * @param email: riferimento all'utente
+     * Constructor
+     * @param email  the user's email.
      * @param guiHome interface from where GUISettings is invoked
      */
 
@@ -110,7 +161,7 @@ public class GUISettings extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
         this.email = email;
-        this.proxy = new CustomerProxy(email);
+        //this.proxy = new CustomerProxy(email);
         guiSettings = this;
         guiHome.setEnabled(false);
 
@@ -122,21 +173,37 @@ public class GUISettings extends JFrame {
             }
         });
 
-        setValues();
+       // setValues();
 
         initComponents();
     }
 
 
     /**
-     * inizializza le componenti dell'interfaccia
+     * initialize the GUI components
      */
 
-    private void initComponents() {
+    protected void initComponents() {
+
+        this.proxy = new CustomerProxy(email);
+        setValues();
+
+        panelOut = new JPanel();
+        panelData = new JPanel();
+        panelButton = new JPanel();
+        panelDate = new JPanel();
+        panelAddress = new JPanel();
+        panelPayment = new JPanel();
+        panelExpiration = new JPanel();
+
+
+
+
         /**
-         * Panel
+         * Panels
          */
-       
+
+        panelOut.setLayout(new BorderLayout());
         panelData.setLayout(new GridLayout(8, 1, 40, 10));
         panelData.setBorder(BorderFactory.createTitledBorder("Customer Fields: "));
         panelPayment.setBorder(BorderFactory.createTitledBorder("Credit Card information: "));
@@ -155,7 +222,7 @@ public class GUISettings extends JFrame {
 
 
         /**
-         * JCOMBOBOX di DATE OF BIRTH
+         * JCOMBOBOX of DATE OF BIRTH
          */
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
             years_tmp.add(years + "");
@@ -218,7 +285,7 @@ public class GUISettings extends JFrame {
 
 
         /**
-         * JCOMBOBOX di EXPIRATION DATE
+         * JCOMBOBOX of EXPIRATION DATE
          */
 
         expirationMonth = new JComboBox<>(expirationMonths);
@@ -238,7 +305,7 @@ public class GUISettings extends JFrame {
         expirationYear.setSelectedItem(expiration_Years);
 
         /**
-         * inserimento ultimo giorno del mese in modo automatico
+         * insertion last day of the month automatically
          */
 
         Date exYear = new Date();
@@ -261,8 +328,8 @@ public class GUISettings extends JFrame {
 
 
         /**
-         * PANEL DI EXPIRATION DATE per sistemare le jcombobox
-         * e PANEL dei BOTTONI
+         * panel of expiration date to fix the jcomboboxes
+         * and panels of buttons
          */
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
@@ -292,7 +359,8 @@ public class GUISettings extends JFrame {
                     boolean inputAddressNumber = checkAddressNumber(textStreetNumber.getText());
                     boolean inputPhoneNumber = checkPhoneNumber(textPhoneNumber.getText());
 
-                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("") || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
+                    if (textName.getText().equals("") || textSurname.getText().equals("") || textCountry.getText().equals("") || textCity.getText().equals("") || textCap.getText().equals("") || textStreet.getText().equals("") || textStreetNumber.getText().equals("") || textPhoneNumber.getText().equals("")
+                            || textCreditCardOwnerName.getText().equals("") || textCreditCardOwneSurname.getText().equals("") || textCreditCardNumber.getText().equals("") || textSecurityCode.getText().equals("")) {
                         JOptionPane.showMessageDialog(new JFrame(), "ERROR! Empty fields", "", JOptionPane.ERROR_MESSAGE);
 
 
@@ -305,6 +373,7 @@ public class GUISettings extends JFrame {
                         if (inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv) {
 
                             setNewValues();
+                           
                             JOptionPane.showMessageDialog(new JFrame(), "the data update was successful", "", JOptionPane.INFORMATION_MESSAGE);
                             guiSettings.dispatchEvent(new WindowEvent(guiSettings, WindowEvent.WINDOW_CLOSING));
                         }
@@ -317,8 +386,9 @@ public class GUISettings extends JFrame {
         buttonConfirm.addActionListener(registration);
     }
 
+
     /**
-     * METODO PER INSERIRE I VALORI CONTENUTI NEL DATABASE
+     * insert the values content in the database
      */
 
     protected void setValues() {
@@ -383,7 +453,7 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * METODO PER  AGGIORNARE IL DATABASE
+     * updates the database
      */
 
     protected void setNewValues() {
@@ -427,7 +497,7 @@ public class GUISettings extends JFrame {
 
 
         boolean upPaymentMethod = proxy.updatePaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText());
-        System.out.println("upPaymentMethod " + upPaymentMethod);
+       // System.out.println("upPaymentMethod " + upPaymentMethod);
 
         textCreditCardNumber.setEditable(true);
         labelCreditCardNumber.setLabelFor(textCreditCardNumber);
@@ -444,15 +514,20 @@ public class GUISettings extends JFrame {
 
         if (!(upPaymentMethod)) {
             System.out.println("Error in updating PaymentMethod");
+           // JOptionPane.showMessageDialog(new JFrame(), "ERROR! Payment non è stato agggiornato \n cambiare numero cra di credito prego", "", JOptionPane.ERROR_MESSAGE);
+
         }
 
 
     }
 
+
+
+
     /**
-     * controlla se il dato inserito è un numero
-     * @param number
-     * @return
+     * check if the entered data is a number
+     * @param number number to check
+     * @return false if entered data is not a number
      */
 
     private boolean checkNumber (String number){
@@ -481,7 +556,7 @@ public class GUISettings extends JFrame {
      */
 
 
-    private boolean checkCapNumber(String capNumber) {
+    protected boolean checkCapNumber(String capNumber) {
         int digits = capNumber.length();
 
         if ((digits <= 5)) {
@@ -501,7 +576,7 @@ public class GUISettings extends JFrame {
      * @param addressNumber
      * @return
      */
-    private boolean checkAddressNumber(String addressNumber) {
+    protected boolean checkAddressNumber(String addressNumber) {
         int digits = addressNumber.length();
 
         if ((digits < 5) ) {
@@ -517,11 +592,11 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * CONTROLLA IL NUMERO DI TELEFONO inserito deve contenere solo cifre ed averne 10
-     * @param phoneNumber
+     * check the telephone number that must be composed of ten digits
+     * @param phoneNumber number to check
      * @return
      */
-    private boolean checkPhoneNumber(String phoneNumber) {
+    protected boolean checkPhoneNumber(String phoneNumber) {
         boolean number = checkNumber(phoneNumber);
 
         int digits = phoneNumber.length();
@@ -539,12 +614,12 @@ public class GUISettings extends JFrame {
 
 
     /**
-     * controlla numero carta di credito solo cifre e 16
+     * check credit card number which must be composed of sixteen digits
      * @param crediCardNumber
      * @return
      */
 
-    private boolean checkCreditCardNumber(String crediCardNumber) {
+    protected boolean checkCreditCardNumber(String crediCardNumber) {
         boolean number = checkNumber(crediCardNumber);
 
         int digits = crediCardNumber.length();
@@ -592,7 +667,7 @@ public class GUISettings extends JFrame {
      *implementa la data di scadenza della carta di credito
      * @return data di scadenza
      */
-    private Date getNewExpirationDate() {
+    protected Date getNewExpirationDate() {
         Date exYear = new Date();
         Date inputDate;
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
@@ -619,7 +694,7 @@ public class GUISettings extends JFrame {
      * @param date data che viene controllata
      * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
      */
-    private boolean dateBeforeToday(Date date) {
+    protected boolean dateBeforeToday(Date date) {
         Date todayDate = new Date(System.currentTimeMillis());
 
         if (date.before(todayDate)) {
@@ -637,7 +712,7 @@ public class GUISettings extends JFrame {
      * @return
      */
 
-    private boolean checkCvvNumber(String cvvNumber) {
+    protected boolean checkCvvNumber(String cvvNumber) {
         boolean number = checkNumber(cvvNumber);
 
         int digits = cvvNumber.length();
