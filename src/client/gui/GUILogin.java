@@ -9,27 +9,89 @@ import java.text.ParseException;
 import client.proxy.CustomerProxy;
 import client.proxy.DogSitterProxy;
 
-
+/**
+ * This class is the login window for the project.
+ */
 public class GUILogin extends JFrame {
 
+    /**
+     * Panel containing "labelUser","labelPwd","textUser" and "textPdw".
+     */
     private JPanel panelLoginData = new JPanel();
-    private JPanel panelBottom = new JPanel();
-    private JLabel labelUser = new JLabel("Email", SwingConstants.LEFT);
-    private JLabel labelPwd = new JLabel("Password", SwingConstants.LEFT);
-    private JTextField textUser = new JTextField();
-    private JPasswordField textPwd = new JPasswordField();
-    private JButton buttonLogin = new JButton("Login as Costumer");
-    private JButton buttonLoginSitter = new JButton("Login as Dogsitter");
-    private JButton buttonNewAccount1 = new JButton("SignUp as Costumer");
-    private JButton buttonNewAccount2 = new JButton("SignUp as Dogsitter");
-    private JPanel cont1 = new JPanel();   //pannello contenitore
-    private GridBagLayout layout = new GridBagLayout();
-    private GridBagConstraints lim = new GridBagConstraints();
 
+    /**
+     * Panel containing "buttonLogin","buttonLoginSitter","buttonNewAccount1" and "buttonNewAccount2".
+     */
+    private JPanel panelBottom = new JPanel();
+
+    /**
+     * Label containing email field.
+     */
+    private JLabel labelUser = new JLabel("Email", SwingConstants.LEFT);
+
+    /**
+     * Label containing password field.
+     */
+    private JLabel labelPwd = new JLabel("Password", SwingConstants.LEFT);
+
+    /**
+     * Text area containing user text.
+     */
+    private JTextField textUser = new JTextField();
+
+    /**
+     * Text area containing password text.
+     */
+    private JPasswordField textPwd = new JPasswordField();
+
+    /**
+     * Button with the inscription "Login as Costumer".
+     */
+    private JButton buttonLogin = new JButton("Login as Costumer");
+
+    /**
+     * Button with the inscription "Login as Dogsitter".
+     */
+    private JButton buttonLoginSitter = new JButton("Login as Dogsitter");
+
+    /**
+     * Button with the inscription "SignUp as Costumer".
+     */
+    private JButton buttonNewAccount1 = new JButton("SignUp as Costumer");
+
+    /**
+     * Button with the inscription "SignUp as Dogsitter".
+     */
+    private JButton buttonNewAccount2 = new JButton("SignUp as Dogsitter");
+
+    /**
+     * The external panel.
+     */
+    private JPanel cont1 = new JPanel();
+
+    /**
+     * Grid Bag Layout.
+     */
+    private GridBagLayout layout = new GridBagLayout();
+
+    /**
+     * The costumer proxy.
+     */
     private CustomerProxy proxy = new CustomerProxy();
+
+    /**
+     * The dogsitter proxy.
+     */
     private DogSitterProxy dogSitterProxy = new DogSitterProxy();
+
+    /**
+     * This GUI.
+     */
     private GUILogin guiLogin;
 
+    /**
+     * The class constructor.
+     */
     public GUILogin() {
 
         setTitle("Login");
@@ -41,6 +103,9 @@ public class GUILogin extends JFrame {
         initComponents();
     }
 
+    /**
+     * Initialize the GUI components.
+     */
     private void initComponents(){
 
         cont1.setLayout(new GridLayout(2, 2, 10, 0));
@@ -84,7 +149,7 @@ public class GUILogin extends JFrame {
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
 
-        //centra il frame nello schermo
+
         setSize(screenWidth / 2, screenHeight / 2);
         setLocation(screenWidth / 4, screenHeight / 4);
 
@@ -150,7 +215,7 @@ public class GUILogin extends JFrame {
                     if (proxy.customerAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
                         GUICustomer guiCustomer = null;
                         try {
-                            //guiCustomer = new GUICustomer(textUser.getText());
+
                             guiCustomer = new GUICustomer(textUser.getText());
                         } catch (ParseException e) {
                             //e.printStackTrace();
@@ -215,15 +280,21 @@ public class GUILogin extends JFrame {
 
     }
 
-
+    /**
+     * This class allows to have the image in the background.
+     */
     private class ImagePanel extends JPanel {
 
+        /**
+         * In image type attribute.
+         */
         private Image image;
 
-
+        /**
+         * The constructor of the class ImagePanel.
+         */
         public ImagePanel() {
 
-            //acquisisco l'immagine
             image = Toolkit.getDefaultToolkit().getImage("images/logo.jpg");
             MediaTracker tracker = new MediaTracker(this);
             tracker.addImage(image, 0);
@@ -237,17 +308,21 @@ public class GUILogin extends JFrame {
         }
 
 
+        /**
+         * Method that allows to capture the image and draw it on the screen.
+         * @param g
+         */
         public void paintComponent(Graphics g) {
 
             super.paintComponent(g);
 
-            //acquisisco le dimensioni dello schermo
+
             Toolkit kit = Toolkit.getDefaultToolkit();
             Dimension screenSize = kit.getScreenSize();
             int screenHeight = screenSize.height / 2;
             int screenWidth = screenSize.width / 2;
 
-            //disegna l'immagine
+
             int centroAscissaImage = screenWidth - image.getWidth(null) / 2;
             int centroOrdinataImage = screenHeight - image.getHeight(null) / 2;
             g.drawImage(image, centroAscissaImage, centroOrdinataImage, null);

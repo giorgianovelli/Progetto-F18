@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.TimerTask;
 
 /**
- * This class  is a timer type for updating assignments in real time.
+ * This class  contains methods that are executed periodically for updating home.
  */
 public class TimerHome extends TimerTask {
 
