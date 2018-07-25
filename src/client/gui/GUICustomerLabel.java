@@ -25,7 +25,7 @@ public class GUICustomerLabel extends JFrame {
     /**
      * Frame width.
      */
-    final int WIDTH = 600;
+    final int WIDTH = 650;
 
     /**
      * Frame height.

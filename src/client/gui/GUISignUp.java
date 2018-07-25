@@ -577,7 +577,7 @@ public class GUISignUp extends JFrame {
 
             if(inputCrediCardNumber && !(dateBeforeToday(inputDate)) && inputCvv){
                 if(addCustomerValues()){
-                    JOptionPane.showMessageDialog(new JFrame(), "Account creation was successful!", "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new JFrame(), "Account successfully created!", "", JOptionPane.INFORMATION_MESSAGE);
                     GUICustomerLabel guiCustomerLabel = new GUICustomerLabel(textEmail.getText().toUpperCase(), guiSignUp);
                     guiCustomerLabel.setVisible(true);
                     guiSignUp.setVisible(false);
@@ -656,7 +656,7 @@ public class GUISignUp extends JFrame {
         boolean updatePassword;
 
         if (Password.equals(confirmPassword)) {
-            JOptionPane.showMessageDialog(new JFrame(), "you entered password correctly!", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "Passwords match!", "", JOptionPane.INFORMATION_MESSAGE);
             updatePassword = true;
 
 
