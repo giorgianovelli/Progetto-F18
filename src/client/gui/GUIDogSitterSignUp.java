@@ -178,7 +178,8 @@ public class GUIDogSitterSignUp extends GUISignUp {
     public GUIDogSitterSignUp(GUILogin guiLogin){
         super(guiLogin);
 
-        setSize(WIDTH + 350, HEIGHT);
+        setSize(WIDTH + 800, HEIGHT);
+        setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
 
         guiDogsitterSignUp = this;
     }

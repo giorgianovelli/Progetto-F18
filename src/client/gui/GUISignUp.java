@@ -52,7 +52,7 @@ public class GUISignUp extends JFrame {
     /**
      * The screen's dimension.
      */
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    protected Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     /**
      * This GUI.
