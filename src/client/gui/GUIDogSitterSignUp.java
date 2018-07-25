@@ -205,7 +205,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
         cashflag2 = new JRadioButton("NO");
         panelRadioButton = new JPanel();
 
-        areaLabel = new JLabel("Area:");
+        areaLabel = new JLabel("City of work (you can add more in settings):");
         areaField = new JTextField();
 
         dogSizeLabel = new JLabel("Dog Size:");
