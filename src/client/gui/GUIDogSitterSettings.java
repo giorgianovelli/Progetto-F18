@@ -1,8 +1,6 @@
 package client.gui;
 
 import client.Calendar;
-import client.gui.GUIHome;
-import client.gui.GUISettings;
 import client.proxy.DogSitterProxy;
 import server.Availability;
 import server.DogSize;
@@ -13,8 +11,6 @@ import server.places.Address;
 import server.places.Area;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +19,6 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
 public class GUIDogSitterSettings extends GUISettings {
 
@@ -72,6 +67,17 @@ public class GUIDogSitterSettings extends GUISettings {
     private ArrayList<SizeCheckBox> listCheckbox; //check box per le taglie
 
     String[] dogSizesArray;
+
+    private JPanel addAreaPanel;
+    private JPanel addFieldPanel;
+    private JPanel areaButtonPanel;
+    private JPanel areaPanel;
+
+    private JButton addAreaButton;
+    private JButton removeAreaButton;
+
+    private JTextField areaToAddField;
+    private JLabel selectedAreaLabel;
 
 
     /**
@@ -137,31 +143,101 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
 
-
+        areaPanel = new JPanel();
 
         labelArea = new JLabel("Area:");
-        areas = new String[]{"GENOVA","TORINO", "BELGIOSO", "VERCELLI", "TORTONA", "PAVIA", "MILANO", "PIACENZA"};
-        dogsitterAreas = new JList(areas);
 
-        listArea = new HashSet<>();
 
-        dogsitterAreas.addListSelectionListener(new ListSelectionListener() {
+        areaListPanel = new JPanel();
+        areaListPanel.setLayout(new GridLayout(1, 1));
+        areaListPanel.setBorder(BorderFactory.createTitledBorder(""));
+
+        areaButtonPanel = new JPanel(new GridLayout(1,2));
+        addAreaButton = new JButton("Add");
+
+        addAreaButton.addActionListener(new ActionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                List<String> selectedValues = dogsitterAreas.getSelectedValuesList();
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("Add")){
 
-
-                for (String area : selectedValues) {
-                    listArea.add(area);
+                    String strLabel = "<html>";
+                    if(areaToAddField.getText() != null)
+                        dogSitterProxy.addNewPlaceArea(areaToAddField.getText().toUpperCase());
+                    Area dogSitterProxyArea = dogSitterProxy.getArea();
+                    HashSet<String > dogsitterArea = dogSitterProxyArea.getPlaces();
+                    for (String area: dogsitterArea){
+                        System.out.println(area);
+                        strLabel+=area + "<br/>";
+                        selectedAreaLabel.setText(strLabel);
+                    }
+                    areaToAddField.setText("");
                 }
             }
         });
 
+        removeAreaButton = new JButton("Remove");
+        removeAreaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("Remove")){
+
+                    String strLabel = "<html>";
+                    if(areaToAddField.getText() != null)
+                        dogSitterProxy.removePlaceArea(areaToAddField.getText().toUpperCase());
+
+                    Area dogSitterProxyArea = dogSitterProxy.getArea();
+                    HashSet<String > dogsitterArea = dogSitterProxyArea.getPlaces();
+                    for (String area: dogsitterArea){
+                        System.out.println(area);
+                        strLabel+=area + "<br/>";
+                        selectedAreaLabel.setText(strLabel);
+                    }
+                    areaToAddField.setText("");
+                }
+            }
+        });
+
+        areaButtonPanel.add(addAreaButton);
+        areaButtonPanel.add(removeAreaButton);
+
+        addFieldPanel = new JPanel(); //text field + bottoni
+        addFieldPanel.setBorder(BorderFactory.createTitledBorder(""));
+        addFieldPanel.setBorder(BorderFactory.createEmptyBorder(5,5,20,0));
+        addFieldPanel.setLayout(new GridLayout(2,1));
+        //addFieldPanel.setBorder(BorderFactory.createEmptyBorder(10,5,50,60));
+
+        areaToAddField = new JTextField();
+        addFieldPanel.add(areaToAddField);
+        addFieldPanel.add(areaButtonPanel);
 
 
-        areaListPanel = new JPanel(new GridLayout(2, 1));
-        areaListPanel.add(labelArea);
-        areaListPanel.add(dogsitterAreas);
+        addAreaPanel = new JPanel();
+        addAreaPanel.setLayout(new BorderLayout());
+        addAreaPanel.add(labelArea, BorderLayout.NORTH);
+        addAreaPanel.add(addFieldPanel, BorderLayout.CENTER);
+
+        areaListPanel.add(addAreaPanel);
+
+        selectedAreaLabel = new JLabel();
+        Area dogSitterProxyArea = dogSitterProxy.getArea();
+        HashSet<String > dogsitterArea = dogSitterProxyArea.getPlaces();
+
+        String strLabel = "<html>";
+
+        for (String area: dogsitterArea){
+            System.out.println(area);
+            strLabel+=area + "<br/>";
+            selectedAreaLabel.setText(strLabel);
+        }
+
+        //areaPanel.setBorder(BorderFactory.createTitledBorder(""));
+        areaPanel.add(selectedAreaLabel);
+        //areaListPanel.add(areaPanel);
+
+
+
+
+
 
 
 
@@ -186,7 +262,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
         northPanel = new JPanel();
         inPanel = new JPanel();
-        inPanel.setLayout(new GridLayout(2, 2, 10, 10));
+        inPanel.setLayout(new GridLayout(1, 2, 10, 10));
         panelData.setLayout(new GridLayout(10, 1, 40, 5));
         panelData.setBorder(BorderFactory.createTitledBorder("FIRST STEP_Dogsitter Fields: "));
         panelPayment.setBorder(BorderFactory.createTitledBorder("Credit Card information: "));
@@ -286,7 +362,7 @@ public class GUIDogSitterSettings extends GUISettings {
         inPanel.add(dogSizePanel);
         inPanel.add(bioPanel);
         areaListPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 100, 250));
-        inPanel.add(areaListPanel);
+        //inPanel.add(areaListPanel);
 
         /**
          *   PAYMENT panels
@@ -360,7 +436,9 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
         inPanel.setBorder(BorderFactory.createTitledBorder(""));
-        centerPanel.add(inPanel, BorderLayout.CENTER);
+        centerPanel.add(inPanel, BorderLayout.NORTH);
+        centerPanel.add(areaListPanel, BorderLayout.WEST);
+        centerPanel.add(areaPanel, BorderLayout.CENTER);
 
 
         panelOut.add(northPanel, BorderLayout.NORTH);
@@ -543,10 +621,10 @@ public class GUIDogSitterSettings extends GUISettings {
 
 
 
-        Area dogSitterProxyArea = dogSitterProxy.getArea();
-        HashSet<String > dogsitterArea = dogSitterProxyArea.getPlaces();
 
 
+
+/*
         int[] areaIndexes = new int[dogsitterArea.size()];
         int j = 0;
         for (String area : dogsitterArea){
@@ -561,7 +639,7 @@ public class GUIDogSitterSettings extends GUISettings {
         }
 
 
-        dogsitterAreas.setSelectedIndices(areaIndexes);
+        dogsitterAreas.setSelectedIndices(areaIndexes);*/
 
 
         int dNumber = dogSitterProxy.getDogsNumber();
@@ -710,25 +788,7 @@ public class GUIDogSitterSettings extends GUISettings {
 
         dogSitterProxy.updateListDogSize(small, medium, big, giant);
 
-
-
-        //SELEZIONE AREE da aggiungere
-
-        Area dogSitterProxyArea = dogSitterProxy.getArea();
-        HashSet<String > dogsitterArea = dogSitterProxyArea.getPlaces();
-        ArrayList<String> areasToAdd = new ArrayList<>();
-
-        for(String area : listArea){
-            if(!dogsitterArea.contains(area)){
-                areasToAdd.add(area);
-            }
-
-        }
-
-        for(String area : areasToAdd){
-            dogSitterProxy.addNewPlaceArea(area);
-        }
-
+        
 
         dogSitterProxy.updateBiography(bioText.getText().toUpperCase());
         bioText.setEditable(true);
