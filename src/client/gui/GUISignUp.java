@@ -24,92 +24,325 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * This class allows to sign up as a new customer by filling out all the required fields.
+ */
 public class GUISignUp extends JFrame {
+
+    /**
+     * Frame width.
+     */
     final int WIDTH = 600;
+
+    /**
+     * Frame height.
+     */
     final int HEIGHT = 650;
+
+    /**
+     * The initialized attribute maximum amount.
+     */
     final double MAX_AMOUNT = 500.0;
+
+    /**
+     * The initialized attribute minimum amount.
+     */
     final double MIN_AMOUNT = 50.0;
 
+    /**
+     * The screen's dimension.
+     */
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    /**
+     * This GUI.
+     */
     private GUISignUp guiSignUp;
+
+    /**
+     * The GUILogin.
+     */
     private GUILogin guiLogin;
 
+    /**
+     * Out panel, it contains all the other panels.
+     */
     protected JPanel panelOut = new JPanel();
+
+    /**
+     * The panel  contains Customer fields (Name, Surname, Date of Birth, Country, City, Cap, Address, Phone Number).
+     */
     protected JPanel panelData = new JPanel();
+
+    /**
+     * The panel contains buttons to confirm or cancel the changes that the user made
+     */
     protected JPanel panelButton = new JPanel();
+
+    /**
+     * The panel allows to enter the date of birth.
+     */
     protected JPanel panelDate = new JPanel();
+
+    /**
+     * The panel  contains address fields ( Street, Number of Street ).
+     */
     protected JPanel panelAddress = new JPanel();
+
+    /**
+     * The panel allows to enter the expiration date of the credit card.
+     */
     protected JPanel panelExpiration = new JPanel();
+
+    /**
+     * The panel  contains Credit Card information.
+     */
     protected JPanel panelPayment = new JPanel();
 
+    /**
+     * The label for the Name of the user.
+     */
     protected JLabel labelName = new JLabel("Name:", SwingConstants.LEFT);
+
+    /**
+     * The label for the Surname of the user.
+     */
     protected JLabel labelSurname = new JLabel("Surname:", SwingConstants.LEFT);
+
+    /**
+     * The label for the date of birth of the user.
+     */
     protected JLabel labelDate = new JLabel("Date of birth:", SwingConstants.LEFT);
+
+    /**
+     * The label for the email field.
+     */
     protected JLabel labelEmail = new JLabel("Email:", SwingConstants.LEFT);
+
+    /**
+     * The label for the password field.
+     */
     protected JLabel labelPassword = new JLabel("Password:", SwingConstants.LEFT);
+
+    /**
+     * The label for the confirm password field.
+     */
     protected JLabel labelConfirmPassword = new JLabel("Confirm Password:", SwingConstants.LEFT);
+
+    /**
+     * The label for the address of the user.
+     */
     protected JLabel labelAddress = new JLabel("Address:", SwingConstants.LEFT);
+
+    /**
+     * The label for the country of the user.
+     */
     protected JLabel labelCountry = new JLabel("Country:", SwingConstants.LEFT);
+
+    /**
+     * The label for the city of the user.
+     */
     protected JLabel labelCity = new JLabel("City:", SwingConstants.LEFT);
+
+    /**
+     * The label for the cap city of the user.
+     */
     protected JLabel labelCap = new JLabel("Cap:", SwingConstants.LEFT);
+
+    /**
+     * The label for the telephone number.
+     */
     protected JLabel labelPhoneNumber = new JLabel("Phone number:", SwingConstants.LEFT);
 
+    /**
+     * The text area for the name of the user.
+     */
     protected JTextField textName = new JTextField();
+
+    /**
+     * The text area for the surname of the user.
+     */
     protected JTextField textSurname = new JTextField();
+
+    /**
+     * The text area for the email of the user.
+     */
     protected JTextField textEmail = new JTextField();
+
+    /**
+     * The text area for the email password of the user.
+     */
     protected JPasswordField textPassword = new JPasswordField();
+
+    /**
+     * The text area for the confirmation the email password of the user.
+     */
     protected JPasswordField textConfirmPassword = new JPasswordField();
+
+    /**
+     * The text area for the street address.
+     */
     protected JTextField textStreet = new JTextField();
+
+    /**
+     * The text area for the street number address.
+     */
     protected JTextField textStreetNumber = new JTextField();
+
+    /**
+     * The text area for the city.
+     */
     protected JTextField textCity = new JTextField();
+
+    /**
+     * The text area for the country where the user live.
+     */
     protected JTextField textCountry = new JTextField();
+
+    /**
+     * The text area for the cap city.
+     */
     protected JTextField textCap = new JTextField();
+
+    /**
+     * The text area for the telephone number.
+     */
     protected JTextField textPhoneNumber = new JTextField();
 
+    /**
+     * Password attribute of string type.
+     */
     protected String Password;
+
+    /**
+     * Confirm password attribute of string type.
+     */
     protected String confirmPassword;
 
+    /**
+     * Button with the inscription "Next".
+     */
     protected JButton buttonCustomerConfirm = new JButton("Next");
+
+    /**
+     * Button with the inscription "Cancel".
+     */
     protected JButton buttonCancel = new JButton("Cancel");
 
-
+    /**
+     * Combo box with list of days.
+     */
     protected JComboBox<String> dayList;
+
+    /**
+     * Combo box with list of months.
+     */
     protected JComboBox<String> monthList;
+
+    /**
+     * Combo box with list of years.
+     */
     protected JComboBox<String> yearList;
 
+    /**
+     * An array of strings for the days number.
+     */
     protected String[] day = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+
+    /**
+     * An array of strings for the months number.
+     */
     protected String[] month = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+
+    /**
+     * An array list for the years.
+     */
     protected ArrayList<String> years_tmp = new ArrayList<>();
 
-    // valori per payment method
 
+    /**
+     * The label for the name of credit card owner.
+     */
     protected JLabel labelCreditCardOwnerName = new JLabel("Name of the credit card holder:", SwingConstants.LEFT);
+
+    /**
+     * The label for the credit card number.
+     */
     protected JLabel labelCreditCardNumber = new JLabel("16-digit Credit card number:", SwingConstants.LEFT);
+
+    /**
+     * The label for the expiration date of the credit card.
+     */
     protected JLabel labelExpirationDate = new JLabel("Expiration Date:", SwingConstants.LEFT);
+
+    /**
+     * The label for the security code of the credit cart.
+     */
     protected JLabel labelSecurityCode = new JLabel("Security code:", SwingConstants.LEFT);
+
+    /**
+     * The label for the surname of credit card owner.
+     */
     protected JLabel labelCrediCardOwnerSurname = new JLabel("Owner Surname:", SwingConstants.LEFT);
 
+
+    /**
+     * The text area for the surname of the credit card owner.
+     */
     protected JTextField textCreditCardOwneSurname = new JTextField();
+
+    /**
+     * The text area for the name of the credit card owner.
+     */
     protected JTextField textCreditCardOwnerName = new JTextField();
+
+    /**
+     * The text area for the credit card number.
+     */
     protected JTextField textCreditCardNumber = new JTextField();
 
+    /**
+     * Combo box with a list of month for the credit card expiration.
+     */
     protected JComboBox<String> expirationMonth;
+
+    /**
+     * Combo box with a list of year for the credit card expiration.
+     */
     protected JComboBox<String> expirationYear;
+
+    /**
+     * The text area for the security code of the credit card.
+     */
     protected JTextField textSecurityCode = new JTextField();
 
+    /**
+     * An array of strings for the months number.
+     */
     protected String[] expirationMonths = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+
+    /**
+     * An array of strings for the years number.
+     */
     protected String[] expirationYears = new String[]{"2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040"};
+
+    /**
+     * The text area for the expiration days.
+     */
     protected JTextField textExpirationDays = new JTextField();
 
 
-    // attributo per client-server
+    /**
+     * The customer proxy.
+     */
     private CustomerProxy proxy;
 
 
 
 
     /**
-     * Constructor
+     * Constructor of this class
+     * @param guiLogin interface from where GUISignUp is invoked
      */
 
     public GUISignUp(GUILogin guiLogin) {
@@ -140,7 +373,7 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * inizializza le componenti dell'interfaccia
+     * Method that initializes the GUI components
      */
 
     protected void initComponents() {
@@ -168,9 +401,6 @@ public class GUISignUp extends JFrame {
 
 
 
-        /**
-         * JCOMBOBOX di DATE OF BIRTH
-         */
 
         for (int years = 1930; years <= Calendar.getCurrentYear(); years++) {
             years_tmp.add(years + "");
@@ -182,9 +412,6 @@ public class GUISignUp extends JFrame {
 
 
 
-        /**
-         * others panels
-         */
 
         panelDate.setLayout(new GridLayout(1, 3, 5, 5));
         panelDate.add(dayList);
@@ -215,9 +442,6 @@ public class GUISignUp extends JFrame {
         panelData.add(textPhoneNumber);
 
 
-        /**
-         *   PAYMENT panels
-         */
         panelPayment.add(labelCreditCardOwnerName);
         panelPayment.add(textCreditCardOwnerName);
         panelPayment.add(labelCrediCardOwnerSurname);
@@ -227,9 +451,6 @@ public class GUISignUp extends JFrame {
         panelPayment.add(labelExpirationDate);
 
 
-        /**
-         * JCOMBOBOX di EXPIRATION DATE
-         */
 
         expirationMonth = new JComboBox<>(expirationMonths);
         expirationYear = new JComboBox<>(expirationYears);
@@ -238,10 +459,6 @@ public class GUISignUp extends JFrame {
         labelExpirationDate.setLabelFor(textExpirationDays);
 
 
-        /**
-         * PANEL DI EXPIRATION DATE per sistemare le jcombobox
-         *
-         */
 
         panelExpiration.setLayout(new GridLayout(1, 3, 5, 5));
         panelExpiration.add(expirationMonth);
@@ -251,9 +468,7 @@ public class GUISignUp extends JFrame {
         panelPayment.add(textSecurityCode);
         add(panelOut);
 
-        /**
-         * Button panels
-         */
+
         panelButton.setLayout(new GridLayout(1, 2, 5, 5));
         panelButton.setBorder(BorderFactory.createEmptyBorder(30, 90, 10, 90));
         panelButton.add(buttonCancel, BorderLayout.SOUTH);
@@ -291,13 +506,11 @@ public class GUISignUp extends JFrame {
     }
 
     /**
-     * metodo per inserire le tuple nel database
+     * This method inserts the parameters provided for the customer into the database.
      */
 
     protected boolean addCustomerValues() {
-        /**
-         *  data di nascita
-         */
+
         Date dateOfBirth2 = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String strDateOfBirth = dayList.getSelectedItem().toString() + "/" + monthList.getSelectedItem().toString() + "/" + yearList.getSelectedItem().toString();
@@ -310,35 +523,28 @@ public class GUISignUp extends JFrame {
             e.printStackTrace();
         }
 
-        /**
-         * generazione casuale di amount
-         */
+
         Double max = MAX_AMOUNT;
         Double min = MIN_AMOUNT;
         Random rand = new Random();
         Double amount = Math.round((min + (max - min) * rand.nextDouble()) * 100d) / 100d;
 
-        /**
-         *  data di scadenza
-         */
 
         Date ex_Year = new Date();
 
-        Date inputDate  = getNewExpirationDate();// aggiorna la data di scadenza
+        Date inputDate  = getNewExpirationDate();
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
 
-        //prendo solo l'anno dalle comboBox per calcolare l'ultimo giorno del mese
+
         try {
-            ex_Year = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString()); //prende come data solo l'anno
+            ex_Year = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         PaymentMethod paymentMethod = new PaymentMethod(textCreditCardNumber.getText(), textCreditCardOwnerName.getText().toUpperCase(), textCreditCardOwneSurname.getText().toUpperCase(), inputDate, textSecurityCode.getText(), amount);
 
-        /**
-         * stampa il giorno sulla label nell'interfaccia
-         */
+
         String expiration_Days = Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), ex_Year));
         textExpirationDays.setText(expiration_Days);
 
@@ -353,6 +559,11 @@ public class GUISignUp extends JFrame {
     }
 
 
+    /**
+     * This method check that the parameters provided for the customer are correctly included into the database.
+     * @return true if the account was created successfully
+     * else return a message error.
+     */
     protected void checkAddCustomerValues() {
 
         boolean inputPassword = changePasswordFields(Password, confirmPassword);
@@ -392,9 +603,10 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * Controlla se l'email inserita corrisponda al formato "email@gmail.com"
-     * @param email inserita dall'utente
-     * @return true se corretta false altrimenti
+     * This method checks  if the email entered matches with the standard format
+     * @param email insert by the user
+     * @return true if the syntax of the email is correct,else
+     * @return false with message error.
      */
 
     protected boolean checkEmail (String email) {
@@ -420,9 +632,9 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * legge password inserita dall'utente
-     * @param password password inserita dall'utente
-     * @return stringa che contiene la password letta
+     * This method allows the reading of the password parameter insert by the user
+     * @param password  the password insert by the user
+     * @return pdw the password read
      */
 
     protected String readPassword(char[] password) {
@@ -435,10 +647,11 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * controlla se la password inserita nel campo "Password" corrisponda al campo "confirmPassword"
-     * @param Password nuova password inserita dall'utente
-     * @param confirmPassword  controlla la password inserita
-     * @return true se le due password coincidono false altrimenti
+     * This method check if the password entered in the "Password" field corresponds to the "confirmPassword" field
+     * @param Password the new password inserts by the costumer
+     * @param confirmPassword  must be like "Password"
+     * @return true if the passwords are correctly insert,else
+     * @return false with message error
      */
 
     protected boolean changePasswordFields(String Password, String confirmPassword) {
@@ -464,9 +677,10 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * controlla se il dato inserito è un numero
-     * @param number
-     * @return
+     * Method that checks if the entered data is a number
+     * @param number number to check
+     * @return true if entered data is a number,else
+     * @return false with message error.
      */
 
     protected boolean checkNumber (String number){
@@ -489,11 +703,11 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * controlla se il CAP sia composto  da cifre o da lettere e che ne abbia 5 "es. E2"
+     * This method checks if the cap number of the city has letters and numbers and has less than 5 digits.
      * @param capNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
-
 
     protected boolean checkCapNumber(String capNumber) {
         int digits = capNumber.length();
@@ -508,11 +722,11 @@ public class GUISignUp extends JFrame {
 
     }
 
-
     /**
-     * controllo numero dell'indirizzo può contenere oltre alle cifre anche le lettere  es. 28A
+     * This method checks if the street number has only numbers and has less than 5 digits.
      * @param addressNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
     protected boolean checkAddressNumber(String addressNumber) {
         int digits = addressNumber.length();
@@ -529,9 +743,10 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * CONTROLLA IL NUMERO DI TELEFONO inserito deve contenere solo cifre ed averne 10
+     * This method checks if the telephone number is composed by only ten digits.
      * @param phoneNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
     protected boolean checkPhoneNumber(String phoneNumber) {
         boolean number = checkNumber(phoneNumber);
@@ -550,9 +765,10 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * controlla numero carta di credito solo cifre e 16
+     * check credit card number which must be composed of sixteen digits
      * @param crediCardNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
 
     protected boolean checkCreditCardNumber(String crediCardNumber) {
@@ -572,13 +788,12 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     *costruisce una data secondo il formato "dd/MM/yyyy"
-     * @param day stringa giorno
-     * @param month stringa mese
-     * @param year stringa anno
-     * @return data nel formato predefinito
+     * This method creates the date format "dd/MM/yyyy".
+     * @param day
+     * @param month
+     * @param year
+     * @return data the date format.
      */
-
 
     protected Date buildDate(String day, String month, String year) {
 
@@ -596,22 +811,21 @@ public class GUISignUp extends JFrame {
     }
 
     /**
-     * implementa la data di scadenza della carta di credito
-     * @return data di scadenza
+     * This method implements the credit card expiration date.
+     * @return inputDate
      */
     protected Date getNewExpirationDate() {
         Date exYear = new Date();
         Date inputDate;
         SimpleDateFormat expirationDateFormatyyyy = new SimpleDateFormat("yyyy");
 
-        //prendo solo l'anno dalle comboBox per calcolare l'ultimo giorno del mese
+
         try {
-            exYear = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString()); //prende come data solo l'anno
+            exYear = expirationDateFormatyyyy.parse(expirationYear.getSelectedItem().toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        //costruisco la data completa della nuova data di scadenza per la carta
         inputDate = buildDate(Integer.toString(Calendar.getNDayOfMonth(Integer.parseInt(expirationMonth.getSelectedItem().toString()), exYear)), expirationMonth.getSelectedItem().toString(), expirationYear.getSelectedItem().toString());
 
         return inputDate;
@@ -621,11 +835,12 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * controlla se la data di scadenza delle carte di credito inserita dall'utente nelle jcombobox è inferiore a quella odierna
-     *
-     * @param date data che viene controllata
-     * @return ritorna true se la data da controllare è precedente rispetto a quella odierna
+     * This method check if the expiration date of credit cards entered by the user is lower than today.
+     * @param date the date entered by the user
+     * @return false if the condition occurs, else
+     * @return true with message error.
      */
+
     protected boolean dateBeforeToday(Date date) {
         Date todayDate = new Date(System.currentTimeMillis());
 
@@ -641,9 +856,10 @@ public class GUISignUp extends JFrame {
 
 
     /**
-     * controlla numero di CVV
+     * This method checks the security code of the credit card if is composed by only 3 digits
      * @param cvvNumber
-     * @return
+     * @return true if the condition occurs, else
+     * @return false with message error.
      */
 
     protected boolean checkCvvNumber(String cvvNumber) {
@@ -664,6 +880,14 @@ public class GUISignUp extends JFrame {
     }
 
 
+    /**
+     * This method checks the date of birth for the months that do not have 31 days
+     * @param day
+     * @param month
+     * @param year
+     * @return false if the user try to enter more days that the month has, else
+     * @return true
+     */
     protected boolean checkDateOfBirth(String day, String month, String year){
 
         boolean check;
@@ -741,27 +965,12 @@ public class GUISignUp extends JFrame {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Method getter for the GuiLogin.
+     */
     public GUILogin getGuiLogin() {
         return guiLogin;
     }
-
-
-
-
-
-
-
 
 
 
