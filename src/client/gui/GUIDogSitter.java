@@ -201,9 +201,8 @@ public class GUIDogSitter extends GUIHome{
      * Open the account settings.
      */
     public void accountSettings(){
-        //TODO da implementare
-        //GUIDogSitterSettings guiDogSitterSettings = new GUIDogSitterSettings(email);
-        //guiDogSitterSettings.setVisible(true);
+        GUIDogSitterSettings guiDogSitterSettings = new GUIDogSitterSettings(email, guiHome);
+        guiDogSitterSettings.setVisible(true);
     }
 
 
