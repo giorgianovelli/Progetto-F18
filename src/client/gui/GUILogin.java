@@ -182,36 +182,7 @@ public class GUILogin extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                /*if (ae.getActionCommand().equals("Login") && !(textUser.equals("")) && !(textPwd.equals(""))){
-                    Login login = new Login();
-                    try {
-                        if(login.customerAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
-                            //open GUICustomer
-                            GUICustomer guiCustomer = null;
-                            try {
-                                guiCustomer = new GUICustomer(textUser.getText());
-                            } catch (ParseException e) {
-                                //e.printStackTrace();
-                                System.out.println("Error in parsing data");
-                            }
-                            guiCustomer.setVisible(true);
-                            setVisible(false);
-                        } else{
-                            //show error message
-                            JOptionPane.showMessageDialog(new JFrame(), "Incorrect user or password!", "Login error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            textUser.setText("");
-                            textPwd.setText("");
-                        }
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }*/
-
-                if (ae.getActionCommand().equals("Login as Costumer") && !(textUser.equals("RICCARDOGIURA@GMAIL.COM")) && !(textPwd.equals("PROVAPROVA123"))){
-                    //String clientMsg = textUser.getText() + new String(textPwd.getPassword());
-                    //proxy.getReply(clientMsg);
+                if (ae.getActionCommand().equals("Login as Costumer")){
                     if (proxy.customerAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
                         GUICustomer guiCustomer = null;
                         try {
@@ -232,7 +203,7 @@ public class GUILogin extends JFrame {
                     }
                 }
 
-                if (ae.getActionCommand().equals("Login as Dogsitter") && !(textUser.equals("MARCO.CARTA@GMAIL.COM")) && !(textPwd.equals("PROGETTO123"))) {
+                if (ae.getActionCommand().equals("Login as Dogsitter")) {
 
                     if (dogSitterProxy.dogSitterAccessDataVerifier(textUser.getText(), new String(textPwd.getPassword()))){
                         GUIDogSitter guiDogSitter = null;
