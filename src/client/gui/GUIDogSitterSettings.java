@@ -191,6 +191,7 @@ public class GUIDogSitterSettings extends GUISettings {
     private JLabel selectedAreaLabel;
 
 
+
     /**
      * Constructor
      *

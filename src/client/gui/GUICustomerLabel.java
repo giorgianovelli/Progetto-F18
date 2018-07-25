@@ -157,6 +157,7 @@ public class GUICustomerLabel extends JFrame {
     private GUISignUp guiSignUp;
 
 
+
     /**
      * Constructor
      * @param email the user's email

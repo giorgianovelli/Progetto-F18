@@ -168,6 +168,7 @@ public class GUIDogSitterSignUp extends GUISignUp {
     String[] dogSizesArray;
 
 
+
     /**
      * Constructor
      *
