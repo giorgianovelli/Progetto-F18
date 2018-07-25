@@ -189,7 +189,7 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
      * @param listAssignment identifies the list of assignments for each day on the calendar
      * @return assignmentHashMap
      */
-    private HashMap<Integer, Assignment> assignmentToCancel(HashMap<Integer, Assignment> listAssignment){
+    /*private HashMap<Integer, Assignment> assignmentToCancel(HashMap<Integer, Assignment> listAssignment){
         HashMap<Integer, Assignment> assignmentHashMap = new HashMap<>();
 
         for(Integer i : listAssignment.keySet()){
@@ -199,7 +199,7 @@ public class GUIDailyAssignmentDogsitter extends GUIDailyAssignments {
         }
 
         return assignmentHashMap;
-    }
+    }*/
 
 }
 
