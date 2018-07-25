@@ -261,8 +261,13 @@ public class GUIDogsitterInfo extends JFrame {
             sum += entry.getValue().getRating();
             c++;
         }
+
         average = sum / c;
         String format  = String.format("%.2f", average).replace(",",".");
+        if (c == 0) {
+            format = "No reviews";
+        }
+
         labelAverageToBeFilled.setText(format);
 
 
@@ -306,10 +311,4 @@ public class GUIDogsitterInfo extends JFrame {
 
         buttonClose.addActionListener(e -> guiDogsitterInfo.dispatchEvent(new WindowEvent(guiDogsitterInfo, WindowEvent.WINDOW_CLOSING)));
     }
-
-
-
-
-
-
 }
