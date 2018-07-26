@@ -211,8 +211,8 @@ public interface InterfaceDogSitter {
 
     /**
      * Update the dog sitter's biography.
-     * @param biography
-     * @return
+     * @param biography the dog sitter's biography.
+     * @return true if the dog sitter's is successfully updated.
      */
     boolean updateBiography(String biography);
 }
