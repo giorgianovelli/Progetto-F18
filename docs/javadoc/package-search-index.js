@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"client"},{"l":"client.clientEnumerations"},{"l":"client.gui"},{"l":"client.proxy"},{"l":"database"},{"l":"enumeration"},{"l":"interfaces"},{"l":"server"},{"l":"server.bank"},{"l":"server.dateTime"},{"l":"server.places"},{"l":"server.tools"},{"l":"server.tools.dateTime"},{"l":"test"}]

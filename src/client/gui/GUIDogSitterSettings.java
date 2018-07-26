@@ -201,7 +201,7 @@ public class GUIDogSitterSettings extends GUISettings {
     public GUIDogSitterSettings(String email, GUIHome guiHome) {
         super(email, guiHome);
 
-        setSize(WIDTH + 350, HEIGHT);
+        setSize(1600, HEIGHT);
         guiDogSitterSettings = this;
 
     }
